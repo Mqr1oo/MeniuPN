@@ -5,612 +5,669 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Meniuri Digitale &mdash; Piatra Neamț</title>
 <meta name="description" content="Portal de meniuri digitale pentru restaurante din Piatra Neamț.">
-<meta name="theme-color" content="#1c2b22">
+<meta name="theme-color" content="#13231B">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon-192.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --stone:#e8e2d2;
-    --stone-deep:#dcd4bf;
-    --pine:#1c2b22;
-    --pine-2:#243527;
-    --rust:#b5622a;
-    --rust-light:#d98a4f;
-    --slate:#5a5f52;
-    --cream:#f6f2e6;
-    --paper:#fffdf7;
-    --sage:#6f8062;
-    --gold:#c4913d;
-    --ink:#132017;
+  :root {
+    /* Tematică inspirată de Piatra Neamț: Verde Pădure, Piatră & Cupru Cald */
+    --bg-main: #0E1A14;       /* Verde închis profund, elegant */
+    --hero-bg: #13231B;       /* Verde amurg */
+    --card-bg: #182C22;       /* Carduri cu textură de pădure montană */
+    
+    --text-dark: #F4F7F4;     /* Alb curat natural */
+    --text-muted: #A3B3AB;    /* Gri-verde cald secundar */
+    --text-light: #6C8276;    /* Detalii */
+    
+    --accent: #E0823F;        /* Cupru / Terracotta cald (stimulează pofta de mâncare) */
+    --accent-glow: rgba(224, 130, 63, 0.25);
+    --border-color: #243D30;  /* Contur fin inspirat de piatră */
+    
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:'IBM Plex Sans',sans-serif;
-    background:var(--stone);
-    color:var(--pine);
-    min-height:100vh;
-    overflow-x:hidden;
-  }
-  h1,h2{font-family:'Newsreader',serif;text-transform:uppercase;font-weight:600;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  p, .go, .idx, .eyebrow, footer{text-transform:uppercase;}
-
-  .peak-wrap{
-    position:relative;
-    width:100%;
-    height:46vh;
-    min-height:280px;
-    background:linear-gradient(180deg,#2a3d2e 0%,var(--pine) 55%,var(--pine-2) 100%);
-    overflow:hidden;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-  }
-  .peak-wrap svg{width:100%;height:100%;position:absolute;bottom:0;left:0;}
-  .sky-dot{
-    position:absolute;
-    border-radius:50%;
-    background:var(--rust-light);
-    opacity:.55;
-    filter:blur(1px);
-    animation:twinkle 3.2s ease-in-out infinite;
-  }
-  @keyframes twinkle{
-    0%,100%{opacity:.25;transform:scale(1);}
-    50%{opacity:.75;transform:scale(1.4);}
-  }
-  .peak-wrap svg path{
-    animation:drift 12s ease-in-out infinite;
-    transform-origin:center bottom;
-  }
-  .peak-wrap svg path:last-child{animation-duration:16s;animation-direction:reverse;}
-  @keyframes drift{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-4px);}
-  }
-  .hero-copy{
-    position:relative;
-    z-index:5;
-    text-align:center;
-    color:var(--cream);
-    padding-bottom:2.4rem;
-    animation:rise .9s cubic-bezier(.2,.8,.2,1) both;
-  }
-  @keyframes rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:.72rem;
-    letter-spacing:.32em;
-    text-transform:uppercase;
-    color:var(--rust-light);
-    margin-bottom:.9rem;
-  }
-  .hero-copy h1{
-    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
-    font-size:clamp(2.2rem,6vw,3.6rem);
-    font-weight:900;
-    font-style:normal;
-    margin:0 0 .5rem;
-    line-height:1.05;
-  }
-  .hero-copy h1 span{
-    display:block;
-    font-style:normal;
-    background:linear-gradient(90deg,var(--rust-light),#f0b876,var(--rust-light));
-    background-size:200% auto;
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation:shine 4s linear infinite;
-  }
-  @keyframes shine{
-    0%{background-position:0% center;}
-    100%{background-position:200% center;}
-  }
-  .hero-copy p{
-    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
-    font-size:.92rem;
-    font-weight:900;
-    font-style:normal;
-    letter-spacing:.02em;
-    color:#cfd6c8;
-    max-width:32rem;
-    margin:0 auto;
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  main{
-    position:relative;
-    max-width:none;
-    margin:0;
-    padding:0;
-    background:
-      radial-gradient(circle at 10% 12%, rgba(217,138,79,.22), transparent 28rem),
-      radial-gradient(circle at 88% 0%, rgba(111,128,98,.22), transparent 24rem),
-      linear-gradient(180deg,#fffdf7 0%,#f7f1e3 100%);
-    overflow:hidden;
-  }
-  main::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    opacity:.42;
-    background-image:
-      linear-gradient(rgba(28,43,34,.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(28,43,34,.04) 1px, transparent 1px);
-    background-size:34px 34px;
-    mask-image:linear-gradient(180deg, transparent 0%, #000 12%, #000 86%, transparent 100%);
-  }
-  .restaurant-section{
-    position:relative;
-    max-width:1080px;
-    margin:0 auto;
-    padding:3.2rem 1.4rem 4.5rem;
-  }
-  .section-head{
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:1.5rem;
-    margin-bottom:1.5rem;
-  }
-  .section-kicker{
-    display:inline-flex;
-    align-items:center;
-    gap:.55rem;
-    margin:0 0 .5rem;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:.72rem;
-    font-weight:700;
-    letter-spacing:.18em;
-    color:var(--rust);
-    text-transform:uppercase;
-  }
-  .section-kicker::before{
-    content:'';
-    width:28px;
-    height:2px;
-    border-radius:2px;
-    background:linear-gradient(90deg,var(--rust),var(--gold));
-  }
-  .section-head h2{
-    margin:0;
-    font-size:clamp(1.65rem,4vw,2.45rem);
-    line-height:.95;
-    color:var(--ink);
-  }
-  .section-copy{
-    max-width:24rem;
-    margin:0;
-    color:var(--slate);
-    font-size:.82rem;
-    font-weight:700;
-    line-height:1.55;
-    letter-spacing:.03em;
-  }
-  #status{
-    text-align:center;
-    color:var(--slate);
-    padding:2rem 0;
-    text-transform:uppercase;
-    font-weight:700;
-    letter-spacing:.03em;
-  }
-  #status.error{color:var(--rust);}
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-    gap:1rem;
+  /* HEADER & LOGO DIN IMAGINE */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 100;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    background: rgba(14, 26, 20, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(36, 61, 48, 0.6);
+    transition: all 0.3s ease;
   }
 
-  .card{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    min-height:236px;
-    background:
-      linear-gradient(135deg,rgba(255,255,255,.84),rgba(246,242,230,.96)),
-      var(--paper);
-    border:1px solid rgba(198,184,154,.82);
-    border-radius:8px;
-    padding:1.15rem;
-    text-decoration:none;
-    color:inherit;
-    overflow:hidden;
-    isolation:isolate;
-    opacity:0;
-    transform:translateY(28px) scale(.96);
-    filter:blur(4px);
-    animation:cardRise .7s cubic-bezier(.2,.8,.2,1) forwards;
-    box-shadow:0 12px 34px -26px rgba(19,32,23,.45);
-    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s, background .35s;
-    will-change:transform;
-  }
-  @keyframes cardRise{
-    to{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
-  }
-  .card .contour{
-    position:absolute;
-    inset:-20%;
-    z-index:-2;
-    opacity:.38;
-    pointer-events:none;
-    transition:opacity .35s, transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  .card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(circle at 18% 10%, rgba(217,138,79,.34), transparent 13rem),
-      linear-gradient(140deg,var(--pine),#17261d 62%,#0e1812);
-    opacity:0;
-    z-index:-1;
-    transition:opacity .35s;
-  }
-  .card::after{
-    content:'';
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:4px;
-    background:linear-gradient(90deg,var(--rust),var(--gold),var(--sage));
-    transform:scaleX(.38);
-    transform-origin:left center;
-    transition:transform .35s cubic-bezier(.2,.8,.2,1);
-  }
-  .card:hover::before{opacity:1;}
-  .card:hover{
-    transform:translateY(-8px) scale(1);
-    border-color:rgba(181,98,42,.9);
-    box-shadow:0 24px 46px -22px rgba(19,32,23,.68), 0 0 0 1px rgba(181,98,42,.28);
-  }
-  .card:hover::after{
-    transform:scaleX(1);
-  }
-  .card:hover .contour{
-    opacity:.18;
-    transform:scale(1.06) rotate(-2deg);
-  }
-  .card-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:1.15rem;
-  }
-  .card .idx{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:.68rem;
-    letter-spacing:.18em;
-    color:var(--rust);
-    transition:color .35s;
-  }
-  .card:hover .idx{color:var(--rust-light);}
-  .ring{
-    width:38px;height:38px;
-    border-radius:50%;
-    border:1px solid rgba(181,98,42,.55);
-    background:rgba(255,253,247,.66);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:.7rem;
-    font-weight:600;
-    color:var(--rust);
-    transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .35s, color .35s, background .35s;
-  }
-  .card:hover .ring{
-    transform:rotate(180deg);
-    border-color:var(--rust-light);
-    color:var(--rust-light);
-    background:rgba(255,253,247,.08);
-  }
-  .restaurant-type{
-    display:inline-flex;
-    width:max-content;
-    max-width:100%;
-    margin-bottom:.85rem;
-    padding:.32rem .55rem;
-    border-radius:999px;
-    background:rgba(111,128,98,.12);
-    color:var(--sage);
-    font-family:'IBM Plex Mono',monospace;
-    font-size:.62rem;
-    font-weight:700;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    transition:background .35s, color .35s;
-  }
-  .card:hover .restaurant-type{
-    background:rgba(217,138,79,.16);
-    color:#f0b876;
-  }
-  .card h2{
-    font-size:clamp(1.35rem,4vw,1.75rem);
-    font-weight:600;
-    line-height:1;
-    margin:0 0 .55rem;
-    text-transform:uppercase;
-    transition:color .35s, transform .35s;
-  }
-  .card:hover h2{color:var(--cream);transform:translateX(2px);}
-  .card p{
-    font-size:.82rem;
-    font-weight:700;
-    letter-spacing:.02em;
-    color:var(--slate);
-    margin:0 0 1.4rem;
-    transition:color .35s;
-  }
-  .card:hover p{color:#c9d2c4;}
-  .chip-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.45rem;
-    margin:auto 0 1.2rem;
-  }
-  .chip{
-    display:inline-flex;
-    align-items:center;
-    min-height:26px;
-    padding:.28rem .52rem;
-    border:1px solid rgba(198,184,154,.85);
-    border-radius:999px;
-    color:#59604f;
-    background:rgba(255,253,247,.58);
-    font-size:.66rem;
-    font-weight:700;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    transition:color .35s, border-color .35s, background .35s;
-  }
-  .card:hover .chip{
-    color:#dfe7d8;
-    border-color:rgba(217,138,79,.32);
-    background:rgba(255,253,247,.06);
-  }
-  .card-bottom{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-top:1rem;
-    border-top:1px solid rgba(198,184,154,.64);
-    transition:border-color .35s;
-  }
-  .card:hover .card-bottom{
-    border-color:rgba(217,138,79,.22);
-  }
-  .go{
-    display:inline-flex;
-    align-items:center;
-    gap:.45rem;
-    font-size:.82rem;
-    font-weight:700;
-    letter-spacing:.03em;
-    color:var(--pine);
-    transition:color .35s;
-  }
-  .card:hover .go{color:var(--rust-light);}
-  .go svg{width:15px;height:15px;transition:transform .35s;}
-  .card:hover .go svg{transform:translateX(5px);}
-  .bar{
-    flex:1;
-    max-width:76px;
-    height:2px;
-    background:var(--stone-deep);
-    margin-left:1rem;
-    position:relative;
-    overflow:hidden;
-    border-radius:2px;
-  }
-  .bar::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:var(--rust);
-    transform:translateX(-100%);
-    transition:transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  .card:hover .bar::after{transform:translateX(0);}
-
-  footer{
-    text-align:center;
-    color:var(--slate);
-    font-size:.75rem;
-    letter-spacing:.04em;
-    padding:2rem 0 2.4rem;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--text-dark);
+    text-decoration: none;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .card,.hero-copy,.hero-copy h1 span,.sky-dot,.peak-wrap svg path{animation:none !important;opacity:1;filter:none;transform:none;}
+  /* Containerul logo-ului încărcat de tine */
+  .logo-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    flex-shrink: 0;
   }
-  @media (max-width:700px){
-    .restaurant-section{padding:2.5rem 1rem 3.5rem;}
-    .section-head{display:block;margin-bottom:1.25rem;}
-    .section-copy{margin-top:.8rem;}
-    .grid{grid-template-columns:1fr;}
-    .card{min-height:222px;}
+
+  .logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-text span:first-child {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .brand-text span:last-child {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  /* HERO SECTION */
+  .hero {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(180deg, var(--hero-bg) 0%, var(--bg-main) 100%);
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Elemente decorative subtile de fundal montan */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 20%, rgba(224, 130, 63, 0.07) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid rgba(224, 130, 63, 0.35);
+    border-radius: 50px;
+    background: rgba(224, 130, 63, 0.08);
+  }
+  
+  /* TITLU ARIAL BLACK, FARA ITALIC, FARA DESCRIERE MICĂ */
+  .hero h1 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6.5vw, 4.8rem);
+    line-height: 1.12;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--text-dark);
+  }
+  
+  .hero h1 span {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  /* MAIN CONTENT */
+  main {
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .section-head h2 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .section-head p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  #status {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 0;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .loader {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* GRID & CARDS */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+    transform: translateY(-6px);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(224, 130, 63, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+
+  .card:hover .card-icon {
+    transform: scale(1.1) rotate(-5deg);
+    background: var(--accent);
+    color: #FFFFFF;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--text-dark);
+  }
+  
+  .card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    line-height: 1.5;
+  }
+
+  .card-bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.2rem;
+  }
+
+  .go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    transition: color 0.2s;
+  }
+  
+  .go svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+  }
+  
+  .card:hover .go { color: var(--accent); }
+  .card:hover .go svg { 
+    transform: translateX(5px); 
+    color: var(--accent);
+  }
+  
+  .card .idx {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border-color);
+    background: var(--hero-bg);
+    padding: 3rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .legal-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .legal-btn:hover { 
+    border-color: var(--accent); 
+    color: var(--accent);
+  }
+
+  /* MODAL LEGAL UNIFICAT */
+  #legalOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 26, 20, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  #legalOverlay.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  #legalOverlay.active .modal-content { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  .close-btn {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .modal-body h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dark);
+    margin: 1.5rem 0 0.5rem;
+  }
+  
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body p { margin-bottom: 1rem; }
+  
+  .important-note {
+    background: rgba(224, 130, 63, 0.08);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .navbar { padding: 0.8rem 1rem; }
+    .hero { padding: 8rem 1.2rem 4rem; }
+    .hero h1 { font-size: 2.1rem; }
+    main { padding: 2.5rem 1rem 4rem; }
+    .section-head h2 { font-size: 1.3rem; }
+    .modal-body { padding: 1.5rem 1rem; }
+    .modal-header { padding: 1.2rem 1rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="peak-wrap">
-  <div class="sky-dot" style="width:6px;height:6px;top:18%;left:22%;"></div>
-  <div class="sky-dot" style="width:4px;height:4px;top:30%;left:68%;"></div>
-  <div class="sky-dot" style="width:5px;height:5px;top:12%;left:80%;"></div>
+<header class="navbar" id="navbar">
+  <a href="#" class="brand">
+    <div class="logo-box">
+      <!-- Imaginea de logo încărcată de tine -->
+      <img src="1000076752.jpg" alt="Logo Meniuri Digitale Piatra Neamț" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'44\' height=\'44\'><rect width=\'44\' height=\'44\' fill=\'%23182C22\'/><text x=\'50%దిక\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23E0823F\' font-family=\'sans-serif\' font-size=\'16\' font-weight=\'bold\'>PN</text></svg>'">
+    </div>
+    <div class="brand-text">
+      <span>Meniuri Digitale</span>
+      <span>Piatra Neamț</span>
+    </div>
+  </a>
+</header>
 
-  <svg viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,400 L0,260 L140,180 L230,240 L340,120 L420,190 L520,60 L610,170 L700,100 L800,220 L900,150 L1000,230 L1080,170 L1200,260 L1200,400 Z"
-          fill="#16241a" opacity="0.9"/>
-    <path d="M0,400 L0,310 L120,250 L260,300 L360,210 L460,270 L560,160 L650,240 L760,190 L860,280 L980,220 L1100,290 L1200,250 L1200,400 Z"
-          fill="#0f1c14"/>
-  </svg>
-
-  <div class="hero-copy">
-    <div class="eyebrow">Neamț &middot; Moldova</div>
-    <h1>Piatra Neamț <span>Gastronomie</span></h1>
-    <p>Alege un restaurant pentru a descoperi meniul său digital.</p>
+<div class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">Platformă HoReCa Neamț</span>
+    <h1>Restaurantele din<br><span>Piatra Neamț</span></h1>
   </div>
 </div>
 
 <main>
-  <section class="restaurant-section" aria-labelledby="restaurants-title">
-    <div class="section-head">
-      <div>
-        <div class="section-kicker">Meniuri digitale</div>
-        <h2 id="restaurants-title">Restaurante alese</h2>
-      </div>
-      <p class="section-copy">Locuri din Piatra Neamț pregătite pentru poftă, cafea bună și meniuri rapide pe telefon.</p>
-    </div>
-    <div id="status">Se caută restaurante...</div>
-    <div class="grid" id="restaurants-container"></div>
-  </section>
+  <div class="section-head">
+    <h2>Restaurante Partenere</h2>
+    <p>Lista actualizată a locațiilor care oferă meniuri digitale interactive.</p>
+  </div>
+  
+  <div id="status">
+    <div class="loader"></div>
+    <span>Se încarcă portofoliul de restaurante...</span>
+  </div>
+  
+  <div class="grid" id="restaurants-container"></div>
 </main>
 
-<footer>&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România &middot; <button id="openPrivacy" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;text-transform:uppercase;padding:0;">Politica de confidențialitate</button></footer>
+<footer>
+  <div class="footer-text">&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România</div>
+  <button id="openLegal" class="legal-btn">Termeni & Confidențialitate</button>
+</footer>
 
-<div id="privacyOverlay" style="display:none;position:fixed;inset:0;background:rgba(12,20,15,.72);z-index:50;align-items:center;justify-content:center;padding:1.2rem;">
-  <div style="background:var(--cream);max-width:560px;width:100%;max-height:82vh;overflow-y:auto;border-radius:8px;padding:2rem 1.8rem;position:relative;">
-    <button id="closePrivacy" aria-label="Inchide" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:var(--pine);">&times;</button>
-    <h2 style="margin-top:0;font-size:1.4rem;">Politica de confidentialitate</h2>
-    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Aceasta aplicatie nu colecteaza, nu stocheaza si nu prelucreaza niciun fel de date personale.
-      Nu folosim cookie-uri, conturi, formulare sau baze de date proprii. Nu se salveaza nume,
-      adrese, numere de telefon, locatie sau orice alta informatie despre vizitatori.
-    </p>
-    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Singura conexiune externa este catre API-ul public GitHub, folosit exclusiv pentru a afisa
-      lista de restaurante disponibile. Aceasta cerere nu transmite date despre tine, ci doar
-      solicita continutul public al repository-ului.
-    </p>
-    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Service worker-ul aplicatiei salveaza local, doar pe dispozitivul tau, fisierele necesare
-      pentru functionarea offline (pagina, stilurile, iconitele). Aceste fisiere nu contin si nu
-      transmit informatii personale catre niciun server.
-    </p>
-    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);margin-bottom:0;">
-      Pe scurt: nu se stocheaza absolut nicio informatie despre tine, nici local, nici pe server.
-    </p>
+<!-- MODAL LEGAL -->
+<div id="legalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Termeni și Condiții / GDPR</h2>
+      <button class="close-btn" id="closeLegal" aria-label="Închide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+      <div class="important-note">
+        <strong>Notă informativă:</strong> Această platformă funcționează ca un catalog digital informativ. <strong>Nu</strong> procesează comenzi online cu plată și <strong>nu</strong> livrează preparate la domiciliu.
+      </div>
+
+      <h3>Art. 1 - Colectarea Datelor (GDPR)</h3>
+      <p>Respectăm cu strictețe legislația privind protecția datelor (Regulamentul UE 2016/679). Platforma <strong>NU colectează, NU stochează și NU distribuie date cu caracter personal</strong> (nume, adrese de e-mail sau numere de telefon).</p>
+      <p>Nu folosim cookie-uri de urmărire publicitară. Se utilizează exclusiv stocarea locală a browserului (<em>Local Storage</em>) strict pentru preferințe vizuale de navigare.</p>
+
+      <h3>Art. 2 - Responsabilitatea pentru Conținut</h3>
+      <p>Aplicația interoghează un repository public pentru a prelua lista partenerilor. Conținutul meniurilor (preparate, prețuri, imagini) este administrat integral de către reprezentanții fiecărui local.</p>
+      <p>Fotografiile au caracter informativ. <strong>Prețurile finale valabile sunt cele afișate în unitatea fizică a restaurantului</strong> în momentul comenzii.</p>
+
+      <h3>Art. 3 - Informații despre Alergeni</h3>
+      <p>Preparatele pot conține ingrediente cu potențial alergen. <strong>Vă rugăm să contactați personalul restaurantului înainte de plasarea comenzii</strong> pentru lămuriri suplimentare privind compoziția alimentelor.</p>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
-  var USERNAME = 'mqr1oo';
-  var REPO = 'MeniuPN';
+  const USERNAME = 'mqr1oo';
+  const REPO = 'MeniuPN';
 
-  var container = document.getElementById('restaurants-container');
-  var status = document.getElementById('status');
+  const container = document.getElementById('restaurants-container');
+  const status = document.getElementById('status');
 
-  function contourSVG(seed){
-    var colors = ['#dcd4bf','#c4913d','#6f8062'];
-    var paths = '';
-    for(var i=0;i<3;i++){
-      var r = 60 + i*30 + (seed % 10) * 2;
-      paths += '<circle cx="50%" cy="10%" r="' + r + '%" fill="none" stroke="' + colors[i%2] + '" stroke-width="1"/>';
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 10) {
+      nav.style.boxShadow = '0 6px 25px rgba(0,0,0,0.5)';
+      nav.style.borderBottom = '1px solid rgba(224, 130, 63, 0.2)';
+    } else {
+      nav.style.boxShadow = 'none';
+      nav.style.borderBottom = '1px solid rgba(36, 61, 48, 0.6)';
     }
-    return '<svg class="contour" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' + paths + '</svg>';
-  }
+  });
 
   function formatTitle(name){
     return name
       .replace(/[-_]+/g,' ')
-      .replace(/\b\w/g,function(letter){ return letter.toUpperCase(); });
+      .replace(/\b\w/g, letter => letter.toUpperCase());
   }
 
   function fetchRestaurants(){
-    fetch('https://api.github.com/repos/' + USERNAME + '/' + REPO + '/contents/')
-      .then(function(res){
-        if(!res.ok) throw new Error('GitHub API error');
+    fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/contents/`)
+      .then(res => {
+        if(!res.ok) throw new Error('Network response was not ok');
         return res.json();
       })
-      .then(function(data){
-        var folders = data.filter(function(item){
-          return item.type === 'dir' && item.name !== '.git' && item.name !== 'images' && item.name !== 'icons';
-        });
+      .then(data => {
+        const folders = data.filter(item => 
+          item.type === 'dir' && !['.git', 'images', 'icons', 'css', 'js'].includes(item.name)
+        );
 
         status.style.display = 'none';
 
         if(folders.length === 0){
-          status.style.display = 'block';
-          status.textContent = 'Niciun restaurant disponibil momentan.';
+          status.style.display = 'flex';
+          status.innerHTML = '<span>Niciun meniu disponibil momentan.</span>';
           return;
         }
 
-        folders.forEach(function(folder, i){
-          var name = folder.name;
-          var title = formatTitle(name);
-          var a = document.createElement('a');
-          a.href = './' + name + '/';
+        folders.forEach((folder, i) => {
+          const title = formatTitle(folder.name);
+          const a = document.createElement('a');
+          a.href = `./${folder.name}/`;
           a.className = 'card';
-          a.setAttribute('aria-label','Deschide meniul pentru ' + title);
-          a.style.animationDelay = (i * 100) + 'ms';
-          a.innerHTML =
-            contourSVG(i) +
-            '<div class="card-top">' +
-              '<span class="idx">' + String(i+1).padStart(2,'0') + ' / RESTAURANT</span>' +
-              '<span class="ring">' + String(i+1).padStart(2,'0') + '</span>' +
-            '</div>' +
-            '<span class="restaurant-type">Local guide</span>' +
-            '<h2>' + title + '</h2>' +
-            '<p>Descoperă meniul digital ' + title + '.</p>' +
-            '<div class="chip-row">' +
-              '<span class="chip">Meniu rapid</span>' +
-              '<span class="chip">Piatra Neamț</span>' +
-            '</div>' +
-            '<div class="card-bottom">' +
-              '<span class="go">Vezi meniul' +
-                '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
-              '</span>' +
-              '<span class="bar"></span>' +
-            '</div>';
+          a.style.transitionDelay = `${i * 60}ms`;
+          
+          a.innerHTML = `
+            <div class="card-top">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+                  <path d="M7 2v20"></path>
+                  <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+                </svg>
+              </div>
+              <span class="idx">#0${i+1}</span>
+            </div>
+            <h2>${title}</h2>
+            <p>Descoperă meniul digital complet, preparatele și băuturile oferite de locație.</p>
+            <div class="card-bottom">
+              <span class="go">
+                Deschide Meniul
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          `;
           container.appendChild(a);
-        });
-
-        var io = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            if(entry.isIntersecting){
-              entry.target.style.animationPlayState = 'running';
-              io.unobserve(entry.target);
-            }
-          });
-        }, {threshold: 0.15});
-
-        document.querySelectorAll('.card').forEach(function(card){
-          card.style.animationPlayState = 'paused';
-          io.observe(card);
+          
+          setTimeout(() => {
+            a.classList.add('visible');
+          }, 50 + (i * 60));
         });
       })
-      .catch(function(err){
+      .catch(err => {
         console.error(err);
-        status.textContent = 'Eroare la incarcarea listei de restaurante.';
-        status.classList.add('error');
+        status.innerHTML = '<span style="color:var(--accent)">Eroare la încărcarea meniurilor. Verifică conexiunea.</span>';
       });
   }
 
   fetchRestaurants();
 
-  var overlay = document.getElementById('privacyOverlay');
-  document.getElementById('openPrivacy').addEventListener('click', function(){
+  // Logica pentru Modalul Legal
+  const overlay = document.getElementById('legalOverlay');
+  const openBtn = document.getElementById('openLegal');
+  const closeBtn = document.getElementById('closeLegal');
+
+  function openModal() {
     overlay.style.display = 'flex';
-  });
-  document.getElementById('closePrivacy').addEventListener('click', function(){
-    overlay.style.display = 'none';
-  });
-  overlay.addEventListener('click', function(e){
-    if(e.target === overlay) overlay.style.display = 'none';
+    setTimeout(() => overlay.classList.add('active'), 10);
+    document.body.style.overflow = 'hidden'; 
+  }
+
+  function closeModal() {
+    overlay.classList.remove('active');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeModal();
   });
 
   if('serviceWorker' in navigator){
-    window.addEventListener('load', function(){
-      navigator.serviceWorker.register('sw.js').catch(function(e){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(e => {
         console.warn('SW registration failed', e);
       });
     });
