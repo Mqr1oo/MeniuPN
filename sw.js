@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meniu-pn-v1';
+const CACHE_NAME = 'meniu-pn-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -28,13 +28,17 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch: network-first pentru API GitHub (date live),
-// cache-first pentru restul (shell, imagini, fonturi)
+// Fetch:
+// - navigări (index.html) și API GitHub -> network-first (mereu conținut proaspăt)
+// - restul fișierelor statice (css, iconițe, fonturi) -> cache-first
 self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
 
-  if (url.hostname === 'api.github.com') {
+  const isNavigation = req.mode === 'navigate' ||
+    (req.method === 'GET' && req.headers.get('accept')?.includes('text/html'));
+
+  if (isNavigation || url.hostname === 'api.github.com') {
     event.respondWith(
       fetch(req)
         .then(res => {
@@ -42,7 +46,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
           return res;
         })
-        .catch(() => caches.match(req))
+        .catch(() => caches.match(req).then(cached => cached || caches.match('./index.html')))
     );
     return;
   }
