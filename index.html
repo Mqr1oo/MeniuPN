@@ -37,7 +37,6 @@
   .mono{font-family:'IBM Plex Mono',monospace;}
   p, .go, .idx, .eyebrow, footer{text-transform:uppercase;}
 
-  /* ===== Hero mountain signature ===== */
   .peak-wrap{
     position:relative;
     width:100%;
@@ -97,8 +96,18 @@
     line-height:1.05;
   }
   .hero-copy h1 span{
+    display:block;
     font-style:normal;
-    color:var(--rust-light);
+    background:linear-gradient(90deg,var(--rust-light),#f0b876,var(--rust-light));
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shine 4s linear infinite;
+  }
+  @keyframes shine{
+    0%{background-position:0% center;}
+    100%{background-position:200% center;}
   }
   .hero-copy p{
     font-family:'Arial Black','Arial Bold',Arial,sans-serif;
@@ -111,9 +120,8 @@
     margin:0 auto;
   }
 
-  /* ===== Main ===== */
   main{
-    max-width:920px;
+    max-width:960px;
     margin:0 auto;
     padding:3rem 1.4rem 4rem;
   }
@@ -129,31 +137,36 @@
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:1.1rem;
+    gap:1.2rem;
   }
+
   .card{
     position:relative;
     display:block;
     background:var(--cream);
     border:1px solid var(--stone-deep);
-    border-radius:6px;
-    padding:1.6rem 1.5rem;
+    border-radius:10px;
+    padding:1.8rem 1.6rem 1.6rem;
     text-decoration:none;
     color:inherit;
     overflow:hidden;
     isolation:isolate;
     opacity:0;
-    animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards;
-    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+    transform:translateY(28px) scale(.96);
+    filter:blur(4px);
+    animation:cardRise .7s cubic-bezier(.2,.8,.2,1) forwards;
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s;
+    will-change:transform;
   }
-  .card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 14px 30px -12px rgba(28,43,34,.35), 0 0 0 1px var(--rust);
-    animation:glow 1.8s ease-in-out infinite;
+  @keyframes cardRise{
+    to{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
   }
-  @keyframes glow{
-    0%,100%{box-shadow:0 14px 30px -12px rgba(28,43,34,.35), 0 0 0 1px var(--rust);}
-    50%{box-shadow:0 14px 34px -10px rgba(181,98,42,.45), 0 0 0 1px var(--rust-light);}
+  .card .contour{
+    position:absolute;
+    inset:-20%;
+    z-index:-2;
+    opacity:.5;
+    pointer-events:none;
   }
   .card::before{
     content:'';
@@ -162,36 +175,69 @@
     background:linear-gradient(140deg,var(--pine),var(--pine-2));
     opacity:0;
     z-index:-1;
-    transition:opacity .35s;
+    transition:opacity .4s;
   }
   .card:hover::before{opacity:1;}
+  .card:hover{
+    box-shadow:0 18px 34px -14px rgba(28,43,34,.4), 0 0 0 1px var(--rust);
+    animation:cardRise .7s cubic-bezier(.2,.8,.2,1) forwards, glow 1.8s ease-in-out infinite;
+  }
+  @keyframes glow{
+    0%,100%{box-shadow:0 18px 34px -14px rgba(28,43,34,.4), 0 0 0 1px var(--rust);}
+    50%{box-shadow:0 18px 38px -12px rgba(181,98,42,.5), 0 0 0 1px var(--rust-light);}
+  }
+  .card-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:1rem;
+  }
   .card .idx{
     font-family:'IBM Plex Mono',monospace;
     font-size:.68rem;
     letter-spacing:.18em;
     color:var(--rust);
-    display:block;
-    margin-bottom:.7rem;
     transition:color .35s;
   }
   .card:hover .idx{color:var(--rust-light);}
+  .ring{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1.5px solid var(--rust);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;
+    font-weight:600;
+    color:var(--rust);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .35s, color .35s;
+  }
+  .card:hover .ring{
+    transform:rotate(180deg);
+    border-color:var(--rust-light);
+    color:var(--rust-light);
+  }
   .card h2{
     font-size:1.5rem;
     font-weight:600;
     margin:0 0 .4rem;
     text-transform:uppercase;
-    transition:color .35s;
+    transition:color .35s, transform .35s;
   }
-  .card:hover h2{color:var(--cream);}
+  .card:hover h2{color:var(--cream);transform:translateX(2px);}
   .card p{
     font-size:.82rem;
     font-weight:700;
     letter-spacing:.02em;
     color:var(--slate);
-    margin:0 0 1.3rem;
+    margin:0 0 1.4rem;
     transition:color .35s;
   }
   .card:hover p{color:#c9d2c4;}
+  .card-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
   .go{
     display:inline-flex;
     align-items:center;
@@ -204,7 +250,26 @@
   }
   .card:hover .go{color:var(--rust-light);}
   .go svg{width:15px;height:15px;transition:transform .35s;}
-  .card:hover .go svg{transform:translateX(4px);}
+  .card:hover .go svg{transform:translateX(5px);}
+  .bar{
+    flex:1;
+    max-width:60px;
+    height:2px;
+    background:var(--stone-deep);
+    margin-left:1rem;
+    position:relative;
+    overflow:hidden;
+    border-radius:2px;
+  }
+  .bar::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:var(--rust);
+    transform:translateX(-100%);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .card:hover .bar::after{transform:translateX(0);}
 
   footer{
     text-align:center;
@@ -215,7 +280,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .card,.hero-copy{animation:none;opacity:1;}
+    .card,.hero-copy,.hero-copy h1 span,.sky-dot,.peak-wrap svg path{animation:none !important;opacity:1;filter:none;transform:none;}
   }
 </style>
 </head>
@@ -226,7 +291,6 @@
   <div class="sky-dot" style="width:4px;height:4px;top:30%;left:68%;"></div>
   <div class="sky-dot" style="width:5px;height:5px;top:12%;left:80%;"></div>
 
-  <!-- Signature: silhouette of Ceahlău / Piatra Neamț stone ridge -->
   <svg viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,400 L0,260 L140,180 L230,240 L340,120 L420,190 L520,60 L610,170 L700,100 L800,220 L900,150 L1000,230 L1080,170 L1200,260 L1200,400 Z"
           fill="#16241a" opacity="0.9"/>
@@ -250,104 +314,132 @@
 
 <div id="privacyOverlay" style="display:none;position:fixed;inset:0;background:rgba(12,20,15,.72);z-index:50;align-items:center;justify-content:center;padding:1.2rem;">
   <div style="background:var(--cream);max-width:560px;width:100%;max-height:82vh;overflow-y:auto;border-radius:8px;padding:2rem 1.8rem;position:relative;">
-    <button id="closePrivacy" aria-label="Închide" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:var(--pine);">&times;</button>
-    <h2 style="margin-top:0;font-size:1.4rem;">Politica de confidențialitate</h2>
+    <button id="closePrivacy" aria-label="Inchide" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:var(--pine);">&times;</button>
+    <h2 style="margin-top:0;font-size:1.4rem;">Politica de confidentialitate</h2>
     <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Această aplicație nu colectează, nu stochează și nu prelucrează niciun fel de date personale.
-      Nu folosim cookie-uri, conturi, formulare sau baze de date proprii. Nu se salvează nume,
-      adrese, numere de telefon, locație sau orice altă informație despre vizitatori.
+      Aceasta aplicatie nu colecteaza, nu stocheaza si nu prelucreaza niciun fel de date personale.
+      Nu folosim cookie-uri, conturi, formulare sau baze de date proprii. Nu se salveaza nume,
+      adrese, numere de telefon, locatie sau orice alta informatie despre vizitatori.
     </p>
     <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Singura conexiune externă este către API-ul public GitHub, folosit exclusiv pentru a afișa
-      lista de restaurante disponibile. Această cerere nu transmite date despre tine, ci doar
-      solicită conținutul public al repository-ului.
+      Singura conexiune externa este catre API-ul public GitHub, folosit exclusiv pentru a afisa
+      lista de restaurante disponibile. Aceasta cerere nu transmite date despre tine, ci doar
+      solicita continutul public al repository-ului.
     </p>
     <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
-      Service worker-ul aplicației salvează local, doar pe dispozitivul tău, fișierele necesare
-      pentru funcționarea offline (pagina, stilurile, iconițele). Aceste fișiere nu conțin și nu
-      transmit informații personale către niciun server.
+      Service worker-ul aplicatiei salveaza local, doar pe dispozitivul tau, fisierele necesare
+      pentru functionarea offline (pagina, stilurile, iconitele). Aceste fisiere nu contin si nu
+      transmit informatii personale catre niciun server.
     </p>
     <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);margin-bottom:0;">
-      Pe scurt: nu se stochează absolut nicio informație despre tine, nici local, nici pe server.
+      Pe scurt: nu se stocheaza absolut nicio informatie despre tine, nici local, nici pe server.
     </p>
   </div>
 </div>
 
 <script>
-  const USERNAME = 'mqr1oo';
-  const REPO = 'MeniuPN';
+(function(){
+  var USERNAME = 'mqr1oo';
+  var REPO = 'MeniuPN';
 
-  const container = document.getElementById('restaurants-container');
-  const status = document.getElementById('status');
+  var container = document.getElementById('restaurants-container');
+  var status = document.getElementById('status');
 
-  async function fetchRestaurants(){
-    try{
-      const res = await fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/contents/`);
-      if(!res.ok) throw new Error('GitHub API error');
-      const data = await res.json();
-      const folders = data.filter(i => i.type === 'dir' && i.name !== '.git' && i.name !== 'images' && i.name !== 'icons');
-
-      status.style.display = 'none';
-
-      if(folders.length === 0){
-        status.style.display = 'block';
-        status.textContent = 'Niciun restaurant disponibil momentan.';
-        return;
-      }
-
-      folders.forEach((folder, i) => {
-        const name = folder.name;
-        const title = name.charAt(0).toUpperCase() + name.slice(1);
-        const a = document.createElement('a');
-        a.href = `./${name}/`;
-        a.className = 'card';
-        a.style.animationDelay = `${i * 90}ms`;
-        a.innerHTML = `
-          <span class="idx">${String(i+1).padStart(2,'0')} / RESTAURANT</span>
-          <h2>${title}</h2>
-          <p>Descoperă meniul digital ${title}.</p>
-          <span class="go">Vezi meniul
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </span>`;
-        container.appendChild(a);
-      });
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting){
-            entry.target.style.animationPlayState = 'running';
-            io.unobserve(entry.target);
-          }
-        });
-      }, {threshold: 0.15});
-      document.querySelectorAll('.card').forEach(card => {
-        card.style.animationPlayState = 'paused';
-        io.observe(card);
-      });
-    }catch(err){
-      console.error(err);
-      status.textContent = 'Eroare la încărcarea listei de restaurante.';
-      status.classList.add('error');
+  function contourSVG(seed){
+    var colors = ['#dcd4bf','#d3c9ae'];
+    var paths = '';
+    for(var i=0;i<3;i++){
+      var r = 60 + i*30 + (seed % 10) * 2;
+      paths += '<circle cx="50%" cy="10%" r="' + r + '%" fill="none" stroke="' + colors[i%2] + '" stroke-width="1"/>';
     }
+    return '<svg class="contour" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' + paths + '</svg>';
   }
+
+  function fetchRestaurants(){
+    fetch('https://api.github.com/repos/' + USERNAME + '/' + REPO + '/contents/')
+      .then(function(res){
+        if(!res.ok) throw new Error('GitHub API error');
+        return res.json();
+      })
+      .then(function(data){
+        var folders = data.filter(function(item){
+          return item.type === 'dir' && item.name !== '.git' && item.name !== 'images' && item.name !== 'icons';
+        });
+
+        status.style.display = 'none';
+
+        if(folders.length === 0){
+          status.style.display = 'block';
+          status.textContent = 'Niciun restaurant disponibil momentan.';
+          return;
+        }
+
+        folders.forEach(function(folder, i){
+          var name = folder.name;
+          var title = name.charAt(0).toUpperCase() + name.slice(1);
+          var a = document.createElement('a');
+          a.href = './' + name + '/';
+          a.className = 'card';
+          a.style.animationDelay = (i * 100) + 'ms';
+          a.innerHTML =
+            contourSVG(i) +
+            '<div class="card-top">' +
+              '<span class="idx">' + String(i+1).padStart(2,'0') + ' / RESTAURANT</span>' +
+              '<span class="ring">0' + (i+1) + '</span>' +
+            '</div>' +
+            '<h2>' + title + '</h2>' +
+            '<p>Descopera meniul digital ' + title + '.</p>' +
+            '<div class="card-bottom">' +
+              '<span class="go">Vezi meniul' +
+                '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
+              '</span>' +
+              '<span class="bar"></span>' +
+            '</div>';
+          container.appendChild(a);
+        });
+
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              entry.target.style.animationPlayState = 'running';
+              io.unobserve(entry.target);
+            }
+          });
+        }, {threshold: 0.15});
+
+        document.querySelectorAll('.card').forEach(function(card){
+          card.style.animationPlayState = 'paused';
+          io.observe(card);
+        });
+      })
+      .catch(function(err){
+        console.error(err);
+        status.textContent = 'Eroare la incarcarea listei de restaurante.';
+        status.classList.add('error');
+      });
+  }
+
   fetchRestaurants();
 
-  const overlay = document.getElementById('privacyOverlay');
-  document.getElementById('openPrivacy').addEventListener('click', () => {
+  var overlay = document.getElementById('privacyOverlay');
+  document.getElementById('openPrivacy').addEventListener('click', function(){
     overlay.style.display = 'flex';
   });
-  document.getElementById('closePrivacy').addEventListener('click', () => {
+  document.getElementById('closePrivacy').addEventListener('click', function(){
     overlay.style.display = 'none';
   });
-  overlay.addEventListener('click', (e) => {
+  overlay.addEventListener('click', function(e){
     if(e.target === overlay) overlay.style.display = 'none';
   });
 
   if('serviceWorker' in navigator){
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW registration failed', e));
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').catch(function(e){
+        console.warn('SW registration failed', e);
+      });
     });
   }
+})();
 </script>
 </body>
 </html>
