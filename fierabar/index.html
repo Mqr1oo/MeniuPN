@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es" id="htmlRoot">
 <head>
@@ -386,9 +387,7 @@
   .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
   .ingredients{ font-size:13px; color:var(--ink-soft); margin:0; }
   .ingredients b{ color:var(--ink); font-weight:600; }
-  .nutri-info{ font-size:12px; color:var(--ink-soft); margin:0; font-family:'Space Mono', monospace; letter-spacing:.02em; }
-  .nutri-info b{ color:var(--pink-bright); font-weight:700; }
-
+  
   .allergens-wrap{ margin-top:auto; padding-top:12px; border-top: 1px dashed var(--paper-dim); }
   .allergen-label { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
   .allergens{ display:flex; flex-wrap:wrap; gap:6px; }
@@ -547,7 +546,7 @@
     border-radius: var(--radius-lg);
     padding: 36px 24px;
     text-align: center;
-    max-width: 360px;
+    max-width: 400px;
     width: 100%;
     box-shadow: 0 20px 50px rgba(255, 42, 133, 0.2);
     transform: scale(0.9) translateY(20px);
@@ -572,9 +571,10 @@
   .welcome-modal p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
 
   /* ALEGE LIMBA IN WELCOME MODAL */
-  .welcome-langs { display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; }
+  .welcome-langs { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;}
   .lang-btn {
     flex: 1;
+    min-width: 100px;
     padding: 12px 10px;
     border: 1.5px solid var(--paper-dim);
     background: transparent;
@@ -607,10 +607,40 @@
   /* ---------- MODALS LEGAL & WA ---------- */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:150; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);}
   .modal-overlay.open{ display:flex; }
-  .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:400px; width:100%; max-height:90vh; overflow-y:auto; border-radius:var(--radius-lg); padding:30px; position:relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6);}
-  .modal h2{ font-size:1.4rem; margin-bottom:14px; color: var(--ink); }
-  .modal p{ font-size:14px; color:var(--ink-soft); margin:0 0 16px; }
-  .modal-close{ position:absolute; top:14px; right:14px; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-soft); line-height:1; padding:8px; }
+  
+  /* STILIZARE NOUĂ PENTRU MODALUL LEGAL (SERIOS ȘI ELEGANT) */
+  .modal{ 
+    background:var(--bg-card); 
+    border: 1px solid var(--paper-dim); 
+    max-width:550px; 
+    width:100%; 
+    max-height:85vh; 
+    overflow-y:auto; 
+    border-radius:var(--radius-lg); 
+    padding:30px; 
+    position:relative; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  
+  /* Custom scrollbar pentru modalul legal */
+  .modal::-webkit-scrollbar { width: 6px; }
+  .modal::-webkit-scrollbar-track { background: transparent; }
+  .modal::-webkit-scrollbar-thumb { background: var(--paper-dim); border-radius: 10px; }
+  
+  .modal-close{ 
+    position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); 
+    border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; 
+    font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--pink-main); color: #fff; border-color: var(--pink-main); }
+  
+  .legal-content-box { margin-top: 10px; }
+  .legal-content-box h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 24px; line-height: 1.2; border-bottom: 2px solid var(--pink-main); padding-bottom: 12px; display: inline-block;}
+  .legal-content-box h3 { font-size: 1.1rem; color: var(--ink); margin: 24px 0 10px; font-family: 'Work Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;}
+  .legal-content-box p { font-size: 14px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.6; }
+  .legal-content-box ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.6;}
+  .legal-content-box li { margin-bottom: 8px; }
+  .legal-content-box strong { color: var(--ink); font-weight: 600; }
   
   .input-table {
     width: 100%;
@@ -739,7 +769,7 @@
 
 <header class="hero">
   <div class="top-actions">
-    <button class="lang-toggle" id="langToggle" type="button">🇬🇧 EN</button>
+    <button class="lang-toggle" id="langToggle" type="button">🇪🇸 ES</button>
   </div>
   <div class="wrap hero-inner">
     <div class="hero-text">
@@ -810,7 +840,7 @@
       <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <h2 id="txtWelcomeTitle">Fiera Bar</h2>
-    <p id="txtWelcomeDesc">Por favor, selecciona tu idioma / Please select your language:</p>
+    <p id="txtWelcomeDesc">Por favor, selecciona tu idioma:</p>
 
     <div class="welcome-langs">
       <button class="lang-btn active" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
@@ -835,11 +865,9 @@
 <div class="modal-overlay" id="legalOverlay">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
     <button class="modal-close" id="closeLegal" aria-label="Cerrar">&times;</button>
-    <h2 id="legalTitle"></h2>
-    <p id="legalP1"></p>
-    <p id="legalP2"></p>
-    <p id="legalP3"></p>
-    <p id="legalP4"></p>
+    <div id="legalContent" class="legal-content-box">
+      <!-- Conținut injectat din JS în funcție de limbă -->
+    </div>
   </div>
 </div>
 
@@ -904,38 +932,32 @@
       "imageNumber": 1,
       "name": "Fabada Asturiana",
       "price": 16.50,
-      "weight": "450 g",
-      "kcal": 620,
       "description": "Guiso de fabes cocinado a fuego lento, con carnes ahumadas y un toque de pimentón.",
       "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta"],
       "allergens": ["Sulfitos"],
       "tags": ["principal", "tradicional", "sin gluten"],
       "translations": { 
         "en": { "name": "Fabada Asturiana", "description": "Slow-simmered bean stew with smoky cured meats.", "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly"], "allergens": ["Sulphites"] },
-        "ro": { "name": "Fabada Asturiană", "description": "Tocană de fasole gătită lent, cu cărnuri afumate și o notă de boia.", "ingredients": ["Fasole albă", "Cârnați Chorizo", "Sângerete", "Piept de porc"], "allergens": ["Sulfiți"] }
+        "ro": { "name": "Fabada Asturiana", "description": "Tocană tradițională de fasole albă gătită lent, cu cărnuri afumate.", "ingredients": ["Fasole albă", "Cârnat", "Sângerete", "Piept de porc"], "allergens": ["Sulfiți"] }
       }
     },
     {
       "imageNumber": 2,
       "name": "Cachopo de Cabrales",
       "price": 19.00,
-      "weight": "500 g",
-      "kcal": 890,
       "description": "Dos filetes de ternera empanados y rellenos de queso Cabrales fundido y jamón serrano.",
       "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Huevo"],
       "allergens": ["Gluten", "Lácteos", "Huevo"],
       "tags": ["principal", "especialidad", "para compartir"],
       "translations": { 
         "en": { "name": "Cachopo de Cabrales", "description": "Breaded veal fillets stuffed with Cabrales blue cheese and serrano ham.", "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
-        "ro": { "name": "Cachopo de Cabrales", "description": "Fileuri de vițel pane, umplute cu brânză albastră Cabrales și jamon serrano.", "ingredients": ["Vițel", "Jamon serrano", "Brânză Cabrales", "Ou"], "allergens": ["Gluten", "Lactate", "Ou"] }
+        "ro": { "name": "Cachopo cu Cabrales", "description": "Fileuri de vită pane, umplute cu brânză Cabrales topită și șuncă serrano.", "ingredients": ["Vită", "Șuncă serrano", "Brânză Cabrales", "Ou"], "allergens": ["Gluten", "Lactate", "Ou"] }
       }
     },
     {
       "imageNumber": 3,
       "name": "Mojito de Fresa",
       "price": 8.50,
-      "weight": "300 ml",
-      "kcal": 180,
       "description": "Ron blanco, lima fresca, hierbabuena, puré de fresa natural y soda.",
       "ingredients": ["Ron", "Lima", "Hierbabuena", "Fresas", "Soda"],
       "allergens": [],
@@ -949,82 +971,46 @@
       "imageNumber": 4,
       "name": "Tortos de Maíz con Picadillo",
       "price": 9.50,
-      "weight": "280 g",
-      "kcal": 510,
       "description": "Tortas de maíz crujientes cubiertas de picadillo de cerdo especiado y huevo frito.",
       "ingredients": ["Harina de maíz", "Picadillo de cerdo", "Huevo frito"],
       "allergens": ["Huevo"],
       "tags": ["entrante", "tradicional"],
       "translations": { 
         "en": { "name": "Corn Tortos with Picadillo", "description": "Crisp corn flatbreads topped with spiced minced pork and a fried egg.", "ingredients": ["Corn flour", "Minced pork", "Fried egg"], "allergens": ["Egg"] },
-        "ro": { "name": "Turtă de Mălai cu Picadillo", "description": "Turte crocante de mălai acoperite cu carne tocată de porc condimentată și un ou prăjit.", "ingredients": ["Făină de mălai", "Carne tocată de porc", "Ou prăjit"], "allergens": ["Ou"] }
+        "ro": { "name": "Turtă de Mălai cu Carne", "description": "Lipii crocante de mălai, acoperite cu carne de porc tocată condimentată și ou prăjit.", "ingredients": ["Făină de mălai", "Carne tocată", "Ou prăjit"], "allergens": ["Ou"] }
       }
     },
     {
       "imageNumber": 5,
       "name": "Arroz con Leche Quemado",
       "price": 6.50,
-      "weight": "220 g",
-      "kcal": 340,
       "description": "Cremoso arroz con leche asturiano, frío, terminado con una capa de azúcar caramelizada.",
       "ingredients": ["Arroz", "Leche", "Canela", "Azúcar"],
       "allergens": ["Lácteos"],
       "tags": ["postre", "tradicional"],
       "translations": { 
         "en": { "name": "Burnt Rice Pudding", "description": "Creamy Asturian rice pudding with caramelized sugar crust.", "ingredients": ["Rice", "Milk", "Cinnamon", "Sugar"], "allergens": ["Dairy"] },
-        "ro": { "name": "Orez cu Lapte Ars", "description": "Orez cu lapte cremos asturian, servit rece, cu crustă de zahăr caramelizat.", "ingredients": ["Orez", "Lapte", "Scorțișoară", "Zahăr"], "allergens": ["Lactate"] }
+        "ro": { "name": "Orez cu Lapte Caramelizat", "description": "Orez cu lapte cremos servit rece, acoperit cu o crustă crocantă de zahăr ars.", "ingredients": ["Orez", "Lapte", "Scorțișoară", "Zahăr"], "allergens": ["Lactate"] }
       }
     },
     {
       "imageNumber": 6,
       "name": "Sidra Natural (Botella)",
       "price": 7.00,
-      "weight": "700 ml",
-      "kcal": 260,
       "description": "Sidra natural seca de un llagar local, escanciada desde lo alto.",
       "ingredients": ["Zumo de manzana fermentado"],
       "allergens": ["Sulfitos"],
       "tags": ["bebida", "sidra", "tradicional"],
       "translations": { 
         "en": { "name": "Natural Cider (Bottle)", "description": "Dry natural cider poured in traditional style.", "ingredients": ["Fermented apple juice"], "allergens": ["Sulphites"] },
-        "ro": { "name": "Cidru Natural (Sticlă)", "description": "Cidru natural sec turnat în stil tradițional.", "ingredients": ["Suc de mere fermentat"], "allergens": ["Sulfiți"] }
-      }
-    },
-    {
-      "imageNumber": 7,
-      "name": "Gin Tonic de Pepino y Romero",
-      "price": 9.50,
-      "weight": "350 ml",
-      "kcal": 210,
-      "description": "Ginebra premium, tónica artesana, pepino fresco y un toque de romero.",
-      "ingredients": ["Ginebra", "Tónica", "Pepino", "Romero"],
-      "allergens": [],
-      "tags": ["coctel", "especialidad"],
-      "translations": {
-        "en": { "name": "Cucumber & Rosemary Gin Tonic", "description": "Premium gin, artisan tonic, fresh cucumber and a touch of rosemary.", "ingredients": ["Gin", "Tonic water", "Cucumber", "Rosemary"], "allergens": [] },
-        "ro": { "name": "Gin Tonic cu Castravete și Rozmarin", "description": "Gin premium, apă tonică artizanală, castravete proaspăt și o notă de rozmarin.", "ingredients": ["Gin", "Apă tonică", "Castravete", "Rozmarin"], "allergens": [] }
-      }
-    },
-    {
-      "imageNumber": 8,
-      "name": "Piña Colada",
-      "price": 9.00,
-      "weight": "320 ml",
-      "kcal": 380,
-      "description": "Ron, crema de coco y piña natural triturada, servida bien fría.",
-      "ingredients": ["Ron", "Crema de coco", "Piña"],
-      "allergens": ["Frutos secos"],
-      "tags": ["coctel"],
-      "translations": {
-        "en": { "name": "Piña Colada", "description": "Rum, coconut cream and crushed fresh pineapple, served ice cold.", "ingredients": ["Rum", "Coconut cream", "Pineapple"], "allergens": ["Nuts"] },
-        "ro": { "name": "Piña Colada", "description": "Rom, cremă de cocos și ananas proaspăt zdrobit, servit foarte rece.", "ingredients": ["Rom", "Cremă de cocos", "Ananas"], "allergens": ["Fructe cu coajă"] }
+        "ro": { "name": "Cidru Natural (Sticlă)", "description": "Cidru natural sec de la un producător local, turnat tradițional de la înălțime.", "ingredients": ["Suc de mere fermentat"], "allergens": ["Sulfiți"] }
       }
     }
   ];
 
   const CATEGORIES = [
     { key:'entrante', es:'Entrantes', en:'Starters', ro:'Aperitive' },
-    { key:'principal', es:'Principales', en:'Mains', ro:'Feluri principale' },
+    { key:'principal', es:'Principales', en:'Mains', ro:'Fel Principal' },
     { key:'postre', es:'Postres', en:'Desserts', ro:'Deserturi' },
     { key:'bebida', es:'Bebidas', en:'Drinks', ro:'Băuturi' },
     { key:'coctel', es:'Cócteles', en:'Cocktails', ro:'Cocktailuri' }
@@ -1036,17 +1022,18 @@
     'especialidad': { es:'especialidad', en:'signature', ro:'specialitate' },
     'para compartir': { es:'para compartir', en:'to share', ro:'de împărțit' },
     'marisco': { es:'marisco', en:'seafood', ro:'fructe de mare' },
-    'temporada': { es:'temporada', en:'seasonal', ro:'de sezon' },
+    'temporada': { es:'temporada', en:'seasonal', ro:'sezonier' },
     'queso': { es:'queso', en:'cheese', ro:'brânză' },
     'sidra': { es:'sidra', en:'cider', ro:'cidru' },
     'sin gluten': { es:'sin gluten', en:'gluten-free', ro:'fără gluten' },
     'sin alcohol': { es:'sin alcohol', en:'alcohol-free', ro:'fără alcool' }
   };
+  
   const ALLERGEN_LABELS = {
     'Gluten': { es:'Gluten', en:'Gluten', ro:'Gluten' },
     'Lácteos': { es:'Lácteos', en:'Dairy', ro:'Lactate' },
     'Huevo': { es:'Huevo', en:'Egg', ro:'Ou' },
-    'Marisco': { es:'Marisco', en:'Shellfish', ro:'Fructe de mare' },
+    'Marisco': { es:'Marisco', en:'Shellfish', ro:'Crustacee' },
     'Pescado': { es:'Pescado', en:'Fish', ro:'Pește' },
     'Sulfitos': { es:'Sulfitos', en:'Sulphites', ro:'Sulfiți' },
     'Frutos secos': { es:'Frutos secos', en:'Nuts', ro:'Fructe cu coajă' }
@@ -1068,27 +1055,50 @@
       loadError: 'No se pudo cargar el menú. Comprueba que menu.json esté disponible.',
       legalLinkText: 'Aviso legal y privacidad',
       footerCopy: '© 2026 Fiera Bar',
-      modalTitle: 'Aviso legal y privacidad',
-      modalP1: 'Los precios, ingredientes y disponibilidad de los productos mostrados en este menú pueden variar.',
-      modalP2: 'Tus favoritos se guardan localmente en tu dispositivo.',
-      modalP3: 'La información mostrada tiene carácter orientativo.',
-      modalP4: 'Los alérgenos, gramajes y valores calóricos indicados son orientativos y pueden variar según la elaboración. Fiera Bar no se hace responsable de errores u omisiones en esta información; ante cualquier alergia o intolerancia, consulta siempre con el personal antes de realizar tu pedido.',
+      
+      legalHtml: `
+        <h2>Aviso Legal y Política de Privacidad</h2>
+        
+        <h3>1. Exención de Responsabilidad y Alérgenos</h3>
+        <p>El presente menú digital tiene una finalidad <strong>estrictamente informativa</strong>.</p>
+        <ul>
+          <li>Los precios, ingredientes, disponibilidad y descripciones de los productos pueden estar sujetos a cambios sin previo aviso debido a disponibilidad de mercado.</li>
+          <li>Las imágenes mostradas son ilustrativas y pueden no corresponder exactamente con el producto final.</li>
+          <li><strong>Alergias e intolerancias:</strong> Aunque nos esforzamos por ofrecer información precisa sobre los alérgenos, nuestras instalaciones manipulan diversos ingredientes. Si padece de alguna alergia alimentaria o dieta específica, <strong>es obligatorio que consulte con nuestro personal</strong> antes de realizar cualquier pedido. Fiera Bar no se hace responsable de posibles reacciones alérgicas derivadas de información no comunicada al personal en el momento del pedido.</li>
+        </ul>
+
+        <h3>2. Política de Privacidad y Cumplimiento RGPD</h3>
+        <p>En Fiera Bar nos tomamos muy en serio su privacidad. En cumplimiento del Reglamento General de Protección de Datos (RGPD) de la UE, le informamos de lo siguiente:</p>
+        <ul>
+          <li><strong>Ausencia de seguimiento (Tracking):</strong> Esta aplicación web <strong>NO</strong> utiliza cookies de rastreo, <strong>NO</strong> emplea herramientas analíticas de terceros (como Google Analytics) y <strong>NO</strong> rastrea su comportamiento en línea.</li>
+          <li><strong>Almacenamiento Local (Local Storage):</strong> Para mejorar su experiencia, utilizamos exclusivamente el almacenamiento local de su propio navegador (Local Storage) con fines puramente técnicos. Esto nos permite guardar temporalmente: su selección de idioma y los productos añadidos a "Mi Selección" (el carrito de pedidos). <strong>Estos datos no abandonan su dispositivo en ningún momento</strong> y no se envían a nuestros servidores.</li>
+          <li><strong>Recopilación de Datos Personales:</strong> Fiera Bar <strong>NO</strong> recopila, <strong>NO</strong> almacena, ni procesa datos personales (nombres, correos electrónicos, tarjetas de crédito) a través de esta plataforma digital.</li>
+        </ul>
+
+        <h3>3. Transferencia de Datos mediante WhatsApp</h3>
+        <p>Nuestra aplicación ofrece la funcionalidad de enviar su pedido de forma rápida a través de la opción "Pedir WhatsApp". Al utilizar esta función:</p>
+        <ul>
+          <li>Usted consiente voluntariamente transferir los detalles de su pedido (productos seleccionados y número de mesa) desde nuestra web hacia su aplicación nativa de mensajería (WhatsApp).</li>
+          <li>Dicha comunicación pasa a estar regida por los Términos y la Política de Privacidad de WhatsApp (Meta Platforms, Inc.).</li>
+          <li>El envío del mensaje a través de WhatsApp <strong>no constituye un contrato de compraventa oficial y vinculante</strong> hasta que el personal de Fiera Bar confirme explícitamente su pedido de forma presencial o mediante respuesta digital.</li>
+        </ul>
+        
+        <h3>4. Propiedad Intelectual</h3>
+        <p>Todo el contenido de este sitio web (textos, diseño, logotipos, estructura) es propiedad intelectual de Fiera Bar. Queda prohibida su reproducción total o parcial sin autorización expresa.</p>
+      `,
+      
       favShortcutLabel: 'Mi Selección',
-      toggleLabel: '🇬🇧 EN', // Next lang logic
       totalLabel: 'Total Selección:',
       btnWhatsApp: 'Pedir WhatsApp',
       btnWaiter: 'Mostrar al Camarero',
       ribbonSpecial: 'Especialidad',
       waModalTitle: 'Número de Mesa',
       waModalDesc: 'Por favor, indica tu número de mesa para enviar el pedido a la barra.',
-      sendWaBtn: 'Enviar',
+      sendWaBtn: 'Enviar Pedido',
       waiterTitle: 'Selección de la Mesa',
       closeWaiterBtn: 'Volver al Menú',
       clearWaiterBtn: '¡Pedido Tomado!',
       whatsappIntro: '¡Hola! Somos la mesa {mesa}. Nos gustaría pedir:',
-      weightLabel: 'Peso',
-      kcalLabel: 'kcal',
-      
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Por favor, selecciona tu idioma:',
       welcomeBtn: 'Continuar'
@@ -1108,13 +1118,39 @@
       loadError: 'Could not load the menu. Check that menu.json is available.',
       legalLinkText: 'Legal notice & privacy',
       footerCopy: '© 2026 Fiera Bar',
-      modalTitle: 'Legal notice & privacy',
-      modalP1: 'Prices, ingredients and availability of products may change.',
-      modalP2: 'Your favorites are saved locally on your device.',
-      modalP3: 'The information shown is for guidance only.',
-      modalP4: 'Allergen, weight and calorie information is indicative and may vary depending on preparation. Fiera Bar is not responsible for errors or omissions in this information; for any allergy or intolerance, always check with staff before ordering.',
+      
+      legalHtml: `
+        <h2>Legal Notice & Privacy Policy</h2>
+        
+        <h3>1. Disclaimer and Allergen Information</h3>
+        <p>This digital menu is provided for <strong>informational purposes only</strong>.</p>
+        <ul>
+          <li>Prices, ingredients, product availability, and descriptions are subject to change without prior notice due to market conditions.</li>
+          <li>Images shown are for illustrative purposes and may not represent the final product exactly.</li>
+          <li><strong>Allergies and Intolerances:</strong> While we strive to provide accurate allergen information, our kitchen and bar handle a wide variety of ingredients. If you have any food allergy or specific dietary requirement, <strong>it is mandatory to inform our staff</strong> before placing your order. Fiera Bar assumes no liability for adverse reactions if allergies are not communicated to our staff at the time of ordering.</li>
+        </ul>
+
+        <h3>2. Privacy Policy & GDPR Compliance</h3>
+        <p>At Fiera Bar, we take your privacy seriously. In compliance with the EU General Data Protection Regulation (GDPR), we inform you of the following:</p>
+        <ul>
+          <li><strong>No Tracking:</strong> This web application <strong>DOES NOT</strong> use tracking cookies, <strong>DOES NOT</strong> use third-party analytics (like Google Analytics), and <strong>DOES NOT</strong> track your online behavior.</li>
+          <li><strong>Local Storage:</strong> To enhance your user experience, we exclusively use your browser's Local Storage for strictly functional purposes. This temporarily saves: your preferred language and the items in your "My Selection" (order cart). <strong>This data never leaves your device</strong> and is never sent to our servers.</li>
+          <li><strong>Personal Data Collection:</strong> Fiera Bar <strong>DOES NOT</strong> collect, store, or process any personal data (names, emails, credit card information) through this digital platform.</li>
+        </ul>
+
+        <h3>3. Data Transfer via WhatsApp</h3>
+        <p>Our application features a "WhatsApp Order" button for quick and easy ordering. By using this feature:</p>
+        <ul>
+          <li>You voluntarily consent to transfer your order details (selected items and table number) from our website to your native messaging application (WhatsApp).</li>
+          <li>This communication then becomes subject to the Terms of Service and Privacy Policy of WhatsApp (Meta Platforms, Inc.).</li>
+          <li>Sending the message via WhatsApp <strong>does not constitute an official and binding sales contract</strong> until a Fiera Bar staff member explicitly acknowledges and confirms your order in person or via digital response.</li>
+        </ul>
+
+        <h3>4. Intellectual Property</h3>
+        <p>All content on this website (text, design, logos, structure) is the intellectual property of Fiera Bar. Total or partial reproduction without explicit authorization is strictly prohibited.</p>
+      `,
+      
       favShortcutLabel: 'My Selection',
-      toggleLabel: '🇷🇴 RO', // Next lang logic
       totalLabel: 'Total Selection:',
       btnWhatsApp: 'WhatsApp Order',
       btnWaiter: 'Show to Waiter',
@@ -1126,9 +1162,6 @@
       closeWaiterBtn: 'Back to Menu',
       clearWaiterBtn: 'Order Taken!',
       whatsappIntro: 'Hi! We are table {mesa}. We would like to order:',
-      weightLabel: 'Weight',
-      kcalLabel: 'kcal',
-
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Please select your language:',
       welcomeBtn: 'Continue'
@@ -1136,7 +1169,7 @@
     ro: {
       eyebrow: 'Meniu digital',
       titleEm: 'Fiera Bar',
-      tagline: 'Cocktailuri exclusive, atmosferă vibrantă și cele mai bune momente ale nopții.',
+      tagline: 'Cocktailuri exclusiviste, atmosferă vibrantă și cele mai bune momente ale nopții.',
       hoursLabel: 'Program',
       hoursValue: '18:00 – 02:00',
       searchPlaceholder: 'Caută un cocktail sau preparat...',
@@ -1144,33 +1177,56 @@
       ingredientsLabel: 'Ingrediente:',
       allergensLabel: 'Alergeni:',
       noAllergens: 'Fără alergeni',
-      emptyState: 'Niciun produs nu corespunde căutării tale.',
-      loadError: 'Meniul nu a putut fi încărcat. Verificați fișierul menu.json.',
-      legalLinkText: 'Aviz legal și confidențialitate',
+      emptyState: 'Niciun produs nu corespunde căutării.',
+      loadError: 'Nu s-a putut încărca meniul. Verifică dacă menu.json este disponibil.',
+      legalLinkText: 'Termeni legali și confidențialitate',
       footerCopy: '© 2026 Fiera Bar',
-      modalTitle: 'Aviz legal și confidențialitate',
-      modalP1: 'Prețurile, ingredientele și disponibilitatea produselor se pot modifica.',
-      modalP2: 'Favoritele tale sunt salvate local pe dispozitiv.',
-      modalP3: 'Informațiile afișate au doar caracter orientativ.',
-      modalP4: 'Informațiile despre alergeni, gramaj și calorii sunt orientative și pot varia în funcție de preparare. Fiera Bar nu își asumă răspunderea pentru erori sau omisiuni în aceste informații; în cazul oricărei alergii sau intoleranțe, te rugăm să consulți întotdeauna personalul înainte de a comanda.',
+      
+      legalHtml: `
+        <h2>Termeni Legali și Politica de Confidențialitate</h2>
+        
+        <h3>1. Exonerare de Răspundere și Alergeni</h3>
+        <p>Acest meniu digital are un scop <strong>strict informativ</strong>.</p>
+        <ul>
+          <li>Prețurile, ingredientele, disponibilitatea și descrierea produselor pot suferi modificări fără notificare prealabilă, în funcție de disponibilitatea pe piață.</li>
+          <li>Imaginile afișate au caracter ilustrativ și pot diferi de produsul final servit.</li>
+          <li><strong>Alergii și intoleranțe:</strong> Deși depunem toate eforturile pentru a oferi informații exacte privind alergenii, în locația noastră se manipulează o mare varietate de ingrediente. Dacă suferiți de alergii alimentare sau aveți cerințe dietetice specifice, <strong>este obligatoriu să informați personalul nostru</strong> înainte de a plasa comanda. Fiera Bar nu își asumă responsabilitatea pentru nicio reacție adversă în cazul în care alergiile nu au fost comunicate personalului la momentul comenzii.</li>
+        </ul>
+
+        <h3>2. Politica de Confidențialitate și Conformitate GDPR</h3>
+        <p>Fiera Bar tratează cu maximă seriozitate confidențialitatea datelor dumneavoastră. În conformitate cu Regulamentul General privind Protecția Datelor (GDPR) din UE, vă informăm următoarele:</p>
+        <ul>
+          <li><strong>Fără urmărire (No Tracking):</strong> Această aplicație web <strong>NU</strong> utilizează cookie-uri de urmărire (tracking), <strong>NU</strong> folosește instrumente analitice terțe (precum Google Analytics) și <strong>NU</strong> vă monitorizează comportamentul online.</li>
+          <li><strong>Stocare Locală (Local Storage):</strong> Pentru a vă asigura o experiență fluidă, utilizăm exclusiv memoria locală a browserului dumneavoastră (Local Storage) în scopuri pur funcționale. Aici se salvează temporar: limba aleasă și produsele adăugate în „Selecția Mea” (coșul de cumpărături). <strong>Aceste date nu părăsesc niciodată dispozitivul dumneavoastră</strong> și nu sunt trimise către serverele noastre.</li>
+          <li><strong>Colectarea Datelor Personale:</strong> Fiera Bar <strong>NU</strong> colectează, <strong>NU</strong> stochează și <strong>NU</strong> procesează date cu caracter personal (nume, adrese de e-mail, date bancare) prin intermediul acestei platforme digitale.</li>
+        </ul>
+
+        <h3>3. Transferul de Date prin WhatsApp</h3>
+        <p>Aplicația noastră oferă funcționalitatea „Comandă WhatsApp” pentru a simplifica procesul de plasare a comenzilor. Prin utilizarea acestei funcții:</p>
+        <ul>
+          <li>Vă exprimați consimțământul voluntar pentru a transfera detaliile comenzii (produsele selectate și numărul mesei) de pe site-ul nostru către aplicația dumneavoastră de mesagerie (WhatsApp).</li>
+          <li>Această comunicare devine supusă Termenilor și Condițiilor și Politicii de Confidențialitate ale WhatsApp (Meta Platforms, Inc.).</li>
+          <li>Trimiterea mesajului prin WhatsApp <strong>nu constituie un contract de vânzare-cumpărare oficial și obligatoriu</strong> până când personalul Fiera Bar nu confirmă explicit preluarea comenzii fizic sau printr-un mesaj de răspuns.</li>
+        </ul>
+        
+        <h3>4. Proprietate Intelectuală</h3>
+        <p>Întregul conținut al acestui site web (texte, design, logo-uri, structură) este proprietatea intelectuală a Fiera Bar. Orice reproducere totală sau parțială fără autorizație explicită este strict interzisă.</p>
+      `,
+      
       favShortcutLabel: 'Selecția Mea',
-      toggleLabel: '🇪🇸 ES', // Next lang logic
       totalLabel: 'Total Selecție:',
       btnWhatsApp: 'Comandă WhatsApp',
-      btnWaiter: 'Arată Chelnerului',
+      btnWaiter: 'Arată Ospătarului',
       ribbonSpecial: 'Specialitate',
-      waModalTitle: 'Număr Masă',
+      waModalTitle: 'Numărul Mesei',
       waModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar.',
       sendWaBtn: 'Trimite Comanda',
       waiterTitle: 'Selecția Mesei',
       closeWaiterBtn: 'Înapoi la Meniu',
       clearWaiterBtn: 'Comandă Preluată!',
       whatsappIntro: 'Bună! Suntem masa {mesa}. Am dori să comandăm:',
-      weightLabel: 'Greutate',
-      kcalLabel: 'kcal',
-
       welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Te rugăm să selectezi limba / Please select your language:',
+      welcomeDesc: 'Alege limba / Choose language / Elige idioma:',
       welcomeBtn: 'Continuă'
     }
   };
@@ -1195,10 +1251,10 @@
   }
   function loadLang(){
     try{ 
-      let l = window.localStorage.getItem(LANG_KEY);
-      if (l === 'en' || l === 'ro') return l;
-      return 'es'; 
-    } catch(e){ return 'es'; }
+      const l = window.localStorage.getItem(LANG_KEY);
+      return ['en', 'es', 'ro'].includes(l) ? l : 'es'; 
+    }
+    catch(e){ return 'es'; }
   }
   function saveLang(){
     try{ window.localStorage.setItem(LANG_KEY, currentLang); }catch(e){}
@@ -1230,7 +1286,6 @@
     saveFavorites();
   }
 
-  /* MODIFICARE: Rezolvă dinamic traducerile pe baza limbii curente */
   function itemText(item){
     if(currentLang !== 'es' && item.translations && item.translations[currentLang]){
       const t = item.translations[currentLang];
@@ -1270,7 +1325,13 @@
   function applyStaticText(){
     const t = UI[currentLang];
     htmlRoot.lang = currentLang;
-    langToggle.innerHTML = t.toggleLabel;
+    
+    let nextLangTxt = '';
+    if(currentLang === 'es') nextLangTxt = '🇬🇧 EN';
+    else if(currentLang === 'en') nextLangTxt = '🇷🇴 RO';
+    else if(currentLang === 'ro') nextLangTxt = '🇪🇸 ES';
+    langToggle.innerHTML = nextLangTxt;
+
     favShortcut.setAttribute('aria-label', t.favShortcutLabel);
     document.getElementById('txtEyebrow').textContent = t.eyebrow;
     document.getElementById('txtTitle').textContent = t.titleEm;
@@ -1283,11 +1344,8 @@
     document.getElementById('openLegal').textContent = t.legalLinkText;
     document.getElementById('txtFooterCopy').textContent = t.footerCopy;
     
-    document.getElementById('legalTitle').textContent = t.modalTitle;
-    document.getElementById('legalP1').textContent = t.modalP1;
-    document.getElementById('legalP2').textContent = t.modalP2;
-    document.getElementById('legalP3').textContent = t.modalP3;
-    document.getElementById('legalP4').textContent = t.modalP4;
+    // Injectăm NOUA structură legală cu HTML complex în loc de paragrafe simple
+    document.getElementById('legalContent').innerHTML = t.legalHtml;
     
     document.getElementById('txtTotalLabel').textContent = t.totalLabel;
     document.getElementById('txtBtnWhatsApp').textContent = t.btnWhatsApp;
@@ -1454,16 +1512,6 @@
     desc.textContent = text.description;
     body.appendChild(desc);
 
-    if(item.weight || item.kcal){
-      const nutri = document.createElement('p');
-      nutri.className = 'nutri-info';
-      let parts = [];
-      if(item.weight) parts.push(`<b>${t.weightLabel}:</b> ${item.weight}`);
-      if(item.kcal) parts.push(`<b>${item.kcal}</b> ${t.kcalLabel}`);
-      nutri.innerHTML = parts.join('  ·  ');
-      body.appendChild(nutri);
-    }
-
     const ingredients = document.createElement('p');
     ingredients.className = 'ingredients';
     ingredients.innerHTML = `<b>${t.ingredientsLabel}</b> ${text.ingredients.join(', ')}`;
@@ -1592,7 +1640,6 @@
       let msg = t.whatsappIntro.replace('{mesa}', tableNr) + "\n\n";
       items.forEach(item => {
           let qty = getQty(item);
-          // Folosește automat textul tradus în limba activă
           msg += `▪ ${qty}x ${itemText(item).name} (${(item.price * qty).toFixed(2)} €)\n`;
       });
       msg += `\n*Total: ${total.toFixed(2)} €*`;
@@ -1634,10 +1681,11 @@
 
   searchInput.addEventListener('input', render);
   
-  /* MODIFICARE: Ciclarea limbii prin toate cele 3 variante */
   langToggle.addEventListener('click', () => { 
-    const langCycle = { 'es': 'en', 'en': 'ro', 'ro': 'es' };
-    currentLang = langCycle[currentLang]; 
+    if(currentLang === 'es') currentLang = 'en';
+    else if(currentLang === 'en') currentLang = 'ro';
+    else currentLang = 'es';
+    
     saveLang(); 
     refreshAll(); 
   });
