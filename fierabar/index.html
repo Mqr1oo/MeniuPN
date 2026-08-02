@@ -386,7 +386,9 @@
   .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
   .ingredients{ font-size:13px; color:var(--ink-soft); margin:0; }
   .ingredients b{ color:var(--ink); font-weight:600; }
-  
+  .nutri-info{ font-size:12px; color:var(--ink-soft); margin:0; font-family:'Space Mono', monospace; letter-spacing:.02em; }
+  .nutri-info b{ color:var(--pink-bright); font-weight:700; }
+
   .allergens-wrap{ margin-top:auto; padding-top:12px; border-top: 1px dashed var(--paper-dim); }
   .allergen-label { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
   .allergens{ display:flex; flex-wrap:wrap; gap:6px; }
@@ -837,6 +839,7 @@
     <p id="legalP1"></p>
     <p id="legalP2"></p>
     <p id="legalP3"></p>
+    <p id="legalP4"></p>
   </div>
 </div>
 
@@ -901,6 +904,8 @@
       "imageNumber": 1,
       "name": "Fabada Asturiana",
       "price": 16.50,
+      "weight": "450 g",
+      "kcal": 620,
       "description": "Guiso de fabes cocinado a fuego lento, con carnes ahumadas y un toque de pimentón.",
       "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta"],
       "allergens": ["Sulfitos"],
@@ -914,6 +919,8 @@
       "imageNumber": 2,
       "name": "Cachopo de Cabrales",
       "price": 19.00,
+      "weight": "500 g",
+      "kcal": 890,
       "description": "Dos filetes de ternera empanados y rellenos de queso Cabrales fundido y jamón serrano.",
       "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Huevo"],
       "allergens": ["Gluten", "Lácteos", "Huevo"],
@@ -927,6 +934,8 @@
       "imageNumber": 3,
       "name": "Mojito de Fresa",
       "price": 8.50,
+      "weight": "300 ml",
+      "kcal": 180,
       "description": "Ron blanco, lima fresca, hierbabuena, puré de fresa natural y soda.",
       "ingredients": ["Ron", "Lima", "Hierbabuena", "Fresas", "Soda"],
       "allergens": [],
@@ -940,6 +949,8 @@
       "imageNumber": 4,
       "name": "Tortos de Maíz con Picadillo",
       "price": 9.50,
+      "weight": "280 g",
+      "kcal": 510,
       "description": "Tortas de maíz crujientes cubiertas de picadillo de cerdo especiado y huevo frito.",
       "ingredients": ["Harina de maíz", "Picadillo de cerdo", "Huevo frito"],
       "allergens": ["Huevo"],
@@ -953,6 +964,8 @@
       "imageNumber": 5,
       "name": "Arroz con Leche Quemado",
       "price": 6.50,
+      "weight": "220 g",
+      "kcal": 340,
       "description": "Cremoso arroz con leche asturiano, frío, terminado con una capa de azúcar caramelizada.",
       "ingredients": ["Arroz", "Leche", "Canela", "Azúcar"],
       "allergens": ["Lácteos"],
@@ -966,6 +979,8 @@
       "imageNumber": 6,
       "name": "Sidra Natural (Botella)",
       "price": 7.00,
+      "weight": "700 ml",
+      "kcal": 260,
       "description": "Sidra natural seca de un llagar local, escanciada desde lo alto.",
       "ingredients": ["Zumo de manzana fermentado"],
       "allergens": ["Sulfitos"],
@@ -973,6 +988,36 @@
       "translations": { 
         "en": { "name": "Natural Cider (Bottle)", "description": "Dry natural cider poured in traditional style.", "ingredients": ["Fermented apple juice"], "allergens": ["Sulphites"] },
         "ro": { "name": "Cidru Natural (Sticlă)", "description": "Cidru natural sec turnat în stil tradițional.", "ingredients": ["Suc de mere fermentat"], "allergens": ["Sulfiți"] }
+      }
+    },
+    {
+      "imageNumber": 7,
+      "name": "Gin Tonic de Pepino y Romero",
+      "price": 9.50,
+      "weight": "350 ml",
+      "kcal": 210,
+      "description": "Ginebra premium, tónica artesana, pepino fresco y un toque de romero.",
+      "ingredients": ["Ginebra", "Tónica", "Pepino", "Romero"],
+      "allergens": [],
+      "tags": ["coctel", "especialidad"],
+      "translations": {
+        "en": { "name": "Cucumber & Rosemary Gin Tonic", "description": "Premium gin, artisan tonic, fresh cucumber and a touch of rosemary.", "ingredients": ["Gin", "Tonic water", "Cucumber", "Rosemary"], "allergens": [] },
+        "ro": { "name": "Gin Tonic cu Castravete și Rozmarin", "description": "Gin premium, apă tonică artizanală, castravete proaspăt și o notă de rozmarin.", "ingredients": ["Gin", "Apă tonică", "Castravete", "Rozmarin"], "allergens": [] }
+      }
+    },
+    {
+      "imageNumber": 8,
+      "name": "Piña Colada",
+      "price": 9.00,
+      "weight": "320 ml",
+      "kcal": 380,
+      "description": "Ron, crema de coco y piña natural triturada, servida bien fría.",
+      "ingredients": ["Ron", "Crema de coco", "Piña"],
+      "allergens": ["Frutos secos"],
+      "tags": ["coctel"],
+      "translations": {
+        "en": { "name": "Piña Colada", "description": "Rum, coconut cream and crushed fresh pineapple, served ice cold.", "ingredients": ["Rum", "Coconut cream", "Pineapple"], "allergens": ["Nuts"] },
+        "ro": { "name": "Piña Colada", "description": "Rom, cremă de cocos și ananas proaspăt zdrobit, servit foarte rece.", "ingredients": ["Rom", "Cremă de cocos", "Ananas"], "allergens": ["Fructe cu coajă"] }
       }
     }
   ];
@@ -1027,6 +1072,7 @@
       modalP1: 'Los precios, ingredientes y disponibilidad de los productos mostrados en este menú pueden variar.',
       modalP2: 'Tus favoritos se guardan localmente en tu dispositivo.',
       modalP3: 'La información mostrada tiene carácter orientativo.',
+      modalP4: 'Los alérgenos, gramajes y valores calóricos indicados son orientativos y pueden variar según la elaboración. Fiera Bar no se hace responsable de errores u omisiones en esta información; ante cualquier alergia o intolerancia, consulta siempre con el personal antes de realizar tu pedido.',
       favShortcutLabel: 'Mi Selección',
       toggleLabel: '🇬🇧 EN', // Next lang logic
       totalLabel: 'Total Selección:',
@@ -1040,6 +1086,8 @@
       closeWaiterBtn: 'Volver al Menú',
       clearWaiterBtn: '¡Pedido Tomado!',
       whatsappIntro: '¡Hola! Somos la mesa {mesa}. Nos gustaría pedir:',
+      weightLabel: 'Peso',
+      kcalLabel: 'kcal',
       
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Por favor, selecciona tu idioma:',
@@ -1064,6 +1112,7 @@
       modalP1: 'Prices, ingredients and availability of products may change.',
       modalP2: 'Your favorites are saved locally on your device.',
       modalP3: 'The information shown is for guidance only.',
+      modalP4: 'Allergen, weight and calorie information is indicative and may vary depending on preparation. Fiera Bar is not responsible for errors or omissions in this information; for any allergy or intolerance, always check with staff before ordering.',
       favShortcutLabel: 'My Selection',
       toggleLabel: '🇷🇴 RO', // Next lang logic
       totalLabel: 'Total Selection:',
@@ -1077,6 +1126,8 @@
       closeWaiterBtn: 'Back to Menu',
       clearWaiterBtn: 'Order Taken!',
       whatsappIntro: 'Hi! We are table {mesa}. We would like to order:',
+      weightLabel: 'Weight',
+      kcalLabel: 'kcal',
 
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Please select your language:',
@@ -1101,6 +1152,7 @@
       modalP1: 'Prețurile, ingredientele și disponibilitatea produselor se pot modifica.',
       modalP2: 'Favoritele tale sunt salvate local pe dispozitiv.',
       modalP3: 'Informațiile afișate au doar caracter orientativ.',
+      modalP4: 'Informațiile despre alergeni, gramaj și calorii sunt orientative și pot varia în funcție de preparare. Fiera Bar nu își asumă răspunderea pentru erori sau omisiuni în aceste informații; în cazul oricărei alergii sau intoleranțe, te rugăm să consulți întotdeauna personalul înainte de a comanda.',
       favShortcutLabel: 'Selecția Mea',
       toggleLabel: '🇪🇸 ES', // Next lang logic
       totalLabel: 'Total Selecție:',
@@ -1114,6 +1166,8 @@
       closeWaiterBtn: 'Înapoi la Meniu',
       clearWaiterBtn: 'Comandă Preluată!',
       whatsappIntro: 'Bună! Suntem masa {mesa}. Am dori să comandăm:',
+      weightLabel: 'Greutate',
+      kcalLabel: 'kcal',
 
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Te rugăm să selectezi limba / Please select your language:',
@@ -1233,6 +1287,7 @@
     document.getElementById('legalP1').textContent = t.modalP1;
     document.getElementById('legalP2').textContent = t.modalP2;
     document.getElementById('legalP3').textContent = t.modalP3;
+    document.getElementById('legalP4').textContent = t.modalP4;
     
     document.getElementById('txtTotalLabel').textContent = t.totalLabel;
     document.getElementById('txtBtnWhatsApp').textContent = t.btnWhatsApp;
@@ -1398,6 +1453,16 @@
     desc.className = 'desc';
     desc.textContent = text.description;
     body.appendChild(desc);
+
+    if(item.weight || item.kcal){
+      const nutri = document.createElement('p');
+      nutri.className = 'nutri-info';
+      let parts = [];
+      if(item.weight) parts.push(`<b>${t.weightLabel}:</b> ${item.weight}`);
+      if(item.kcal) parts.push(`<b>${item.kcal}</b> ${t.kcalLabel}`);
+      nutri.innerHTML = parts.join('  ·  ');
+      body.appendChild(nutri);
+    }
 
     const ingredients = document.createElement('p');
     ingredients.className = 'ingredients';
