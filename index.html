@@ -33,8 +33,9 @@
     min-height:100vh;
     overflow-x:hidden;
   }
-  h1,h2{font-family:'Newsreader',serif;}
+  h1,h2{font-family:'Newsreader',serif;text-transform:uppercase;font-weight:600;}
   .mono{font-family:'IBM Plex Mono',monospace;}
+  p, .go, .idx, .eyebrow, footer{text-transform:uppercase;}
 
   /* ===== Hero mountain signature ===== */
   .peak-wrap{
@@ -55,6 +56,20 @@
     background:var(--rust-light);
     opacity:.55;
     filter:blur(1px);
+    animation:twinkle 3.2s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.25;transform:scale(1);}
+    50%{opacity:.75;transform:scale(1.4);}
+  }
+  .peak-wrap svg path{
+    animation:drift 12s ease-in-out infinite;
+    transform-origin:center bottom;
+  }
+  .peak-wrap svg path:last-child{animation-duration:16s;animation-direction:reverse;}
+  @keyframes drift{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
   }
   .hero-copy{
     position:relative;
@@ -84,7 +99,9 @@
     color:var(--rust-light);
   }
   .hero-copy p{
-    font-size:1rem;
+    font-size:.92rem;
+    font-weight:600;
+    letter-spacing:.02em;
     color:#cfd6c8;
     max-width:32rem;
     margin:0 auto;
@@ -100,6 +117,9 @@
     text-align:center;
     color:var(--slate);
     padding:2rem 0;
+    text-transform:uppercase;
+    font-weight:700;
+    letter-spacing:.03em;
   }
   #status.error{color:var(--rust);}
   .grid{
@@ -124,7 +144,12 @@
   }
   .card:hover{
     transform:translateY(-4px);
-    box-shadow:0 14px 30px -12px rgba(28,43,34,.35);
+    box-shadow:0 14px 30px -12px rgba(28,43,34,.35), 0 0 0 1px var(--rust);
+    animation:glow 1.8s ease-in-out infinite;
+  }
+  @keyframes glow{
+    0%,100%{box-shadow:0 14px 30px -12px rgba(28,43,34,.35), 0 0 0 1px var(--rust);}
+    50%{box-shadow:0 14px 34px -10px rgba(181,98,42,.45), 0 0 0 1px var(--rust-light);}
   }
   .card::before{
     content:'';
@@ -148,14 +173,16 @@
   .card:hover .idx{color:var(--rust-light);}
   .card h2{
     font-size:1.5rem;
-    font-weight:500;
+    font-weight:600;
     margin:0 0 .4rem;
-    text-transform:capitalize;
+    text-transform:uppercase;
     transition:color .35s;
   }
   .card:hover h2{color:var(--cream);}
   .card p{
-    font-size:.88rem;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.02em;
     color:var(--slate);
     margin:0 0 1.3rem;
     transition:color .35s;
@@ -166,7 +193,8 @@
     align-items:center;
     gap:.45rem;
     font-size:.82rem;
-    font-weight:600;
+    font-weight:700;
+    letter-spacing:.03em;
     color:var(--pine);
     transition:color .35s;
   }
@@ -253,6 +281,19 @@
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </span>`;
         container.appendChild(a);
+      });
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.style.animationPlayState = 'running';
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold: 0.15});
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.animationPlayState = 'paused';
+        io.observe(card);
       });
     }catch(err){
       console.error(err);
