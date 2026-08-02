@@ -89,18 +89,22 @@
     margin-bottom:.9rem;
   }
   .hero-copy h1{
+    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
     font-size:clamp(2.2rem,6vw,3.6rem);
-    font-weight:500;
+    font-weight:900;
+    font-style:normal;
     margin:0 0 .5rem;
     line-height:1.05;
   }
-  .hero-copy h1 em{
-    font-style:italic;
+  .hero-copy h1 span{
+    font-style:normal;
     color:var(--rust-light);
   }
   .hero-copy p{
+    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
     font-size:.92rem;
-    font-weight:600;
+    font-weight:900;
+    font-style:normal;
     letter-spacing:.02em;
     color:#cfd6c8;
     max-width:32rem;
@@ -232,8 +236,8 @@
 
   <div class="hero-copy">
     <div class="eyebrow">Neamț &middot; Moldova</div>
-    <h1>Piatra Neamț <em>Gastronomie</em></h1>
-    <p>Alege un restaurant pentru a descoperi meniul său digital, actualizat la zi.</p>
+    <h1>Piatra Neamț <span>Gastronomie</span></h1>
+    <p>Alege un restaurant pentru a descoperi meniul său digital.</p>
   </div>
 </div>
 
@@ -242,11 +246,36 @@
   <div class="grid" id="restaurants-container"></div>
 </main>
 
-<footer>&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România</footer>
+<footer>&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România &middot; <button id="openPrivacy" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;text-transform:uppercase;padding:0;">Politica de confidențialitate</button></footer>
+
+<div id="privacyOverlay" style="display:none;position:fixed;inset:0;background:rgba(12,20,15,.72);z-index:50;align-items:center;justify-content:center;padding:1.2rem;">
+  <div style="background:var(--cream);max-width:560px;width:100%;max-height:82vh;overflow-y:auto;border-radius:8px;padding:2rem 1.8rem;position:relative;">
+    <button id="closePrivacy" aria-label="Închide" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:var(--pine);">&times;</button>
+    <h2 style="margin-top:0;font-size:1.4rem;">Politica de confidențialitate</h2>
+    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
+      Această aplicație nu colectează, nu stochează și nu prelucrează niciun fel de date personale.
+      Nu folosim cookie-uri, conturi, formulare sau baze de date proprii. Nu se salvează nume,
+      adrese, numere de telefon, locație sau orice altă informație despre vizitatori.
+    </p>
+    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
+      Singura conexiune externă este către API-ul public GitHub, folosit exclusiv pentru a afișa
+      lista de restaurante disponibile. Această cerere nu transmite date despre tine, ci doar
+      solicită conținutul public al repository-ului.
+    </p>
+    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);">
+      Service worker-ul aplicației salvează local, doar pe dispozitivul tău, fișierele necesare
+      pentru funcționarea offline (pagina, stilurile, iconițele). Aceste fișiere nu conțin și nu
+      transmit informații personale către niciun server.
+    </p>
+    <p style="font-weight:700;text-transform:none;font-size:.92rem;line-height:1.6;color:var(--pine);margin-bottom:0;">
+      Pe scurt: nu se stochează absolut nicio informație despre tine, nici local, nici pe server.
+    </p>
+  </div>
+</div>
 
 <script>
   const USERNAME = 'mqr1oo';
-  const REPO = 'piatraneamt'; // schimbă dacă repo-ul are alt nume
+  const REPO = 'MeniuPN';
 
   const container = document.getElementById('restaurants-container');
   const status = document.getElementById('status');
@@ -299,6 +328,29 @@
       console.error(err);
       status.textContent = 'Eroare la încărcarea listei de restaurante.';
       status.classList.add('error');
+    }
+  }
+  fetchRestaurants();
+
+  const overlay = document.getElementById('privacyOverlay');
+  document.getElementById('openPrivacy').addEventListener('click', () => {
+    overlay.style.display = 'flex';
+  });
+  document.getElementById('closePrivacy').addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) overlay.style.display = 'none';
+  });
+
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW registration failed', e));
+    });
+  }
+</script>
+</body>
+</html>
     }
   }
   fetchRestaurants();
