@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" id="htmlRoot">
 <head>
@@ -738,7 +737,7 @@
 
 <header class="hero">
   <div class="top-actions">
-    <button class="lang-toggle" id="langToggle" type="button">🇪🇸 ES</button>
+    <button class="lang-toggle" id="langToggle" type="button">🇬🇧 EN</button>
   </div>
   <div class="wrap hero-inner">
     <div class="hero-text">
@@ -814,6 +813,7 @@
     <div class="welcome-langs">
       <button class="lang-btn active" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
       <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
+      <button class="lang-btn" data-lang="ro"><span class="flag">🇷🇴</span> Română</button>
     </div>
 
     <button class="btn-submit" id="btnWelcomeClose">Continuar</button>
@@ -879,7 +879,6 @@
   
   let appConfig = { whatsapp_number: "" }; 
 
-  // NOILE LIBRĂRII DE IMAGINI PREMIUM UNSPLASH
   const FALLBACK_DRINKS = [
     "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=480&q=80",
     "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=480&q=80",
@@ -906,7 +905,10 @@
       "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta"],
       "allergens": ["Sulfitos"],
       "tags": ["principal", "tradicional", "sin gluten"],
-      "translations": { "en": { "name": "Fabada Asturiana", "description": "Slow-simmered bean stew with smoky cured meats.", "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly"], "allergens": ["Sulphites"] } }
+      "translations": { 
+        "en": { "name": "Fabada Asturiana", "description": "Slow-simmered bean stew with smoky cured meats.", "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly"], "allergens": ["Sulphites"] },
+        "ro": { "name": "Fabada Asturiană", "description": "Tocană de fasole gătită lent, cu cărnuri afumate și o notă de boia.", "ingredients": ["Fasole albă", "Cârnați Chorizo", "Sângerete", "Piept de porc"], "allergens": ["Sulfiți"] }
+      }
     },
     {
       "imageNumber": 2,
@@ -916,7 +918,10 @@
       "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Huevo"],
       "allergens": ["Gluten", "Lácteos", "Huevo"],
       "tags": ["principal", "especialidad", "para compartir"],
-      "translations": { "en": { "name": "Cachopo de Cabrales", "description": "Breaded veal fillets stuffed with Cabrales blue cheese and serrano ham.", "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] } }
+      "translations": { 
+        "en": { "name": "Cachopo de Cabrales", "description": "Breaded veal fillets stuffed with Cabrales blue cheese and serrano ham.", "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+        "ro": { "name": "Cachopo de Cabrales", "description": "Fileuri de vițel pane, umplute cu brânză albastră Cabrales și jamon serrano.", "ingredients": ["Vițel", "Jamon serrano", "Brânză Cabrales", "Ou"], "allergens": ["Gluten", "Lactate", "Ou"] }
+      }
     },
     {
       "imageNumber": 3,
@@ -926,7 +931,10 @@
       "ingredients": ["Ron", "Lima", "Hierbabuena", "Fresas", "Soda"],
       "allergens": [],
       "tags": ["coctel", "especialidad"],
-      "translations": { "en": { "name": "Strawberry Mojito", "description": "White rum, fresh lime, mint, and strawberry puree.", "ingredients": ["Rum", "Lime", "Mint", "Strawberries", "Soda"], "allergens": [] } }
+      "translations": { 
+        "en": { "name": "Strawberry Mojito", "description": "White rum, fresh lime, mint, and strawberry puree.", "ingredients": ["Rum", "Lime", "Mint", "Strawberries", "Soda"], "allergens": [] },
+        "ro": { "name": "Mojito de Căpșuni", "description": "Rom alb, lime proaspăt, mentă, piure natural de căpșuni și apă minerală.", "ingredients": ["Rom", "Lime", "Mentă", "Căpșuni", "Apă minerală"], "allergens": [] }
+      }
     },
     {
       "imageNumber": 4,
@@ -936,7 +944,10 @@
       "ingredients": ["Harina de maíz", "Picadillo de cerdo", "Huevo frito"],
       "allergens": ["Huevo"],
       "tags": ["entrante", "tradicional"],
-      "translations": { "en": { "name": "Corn Tortos with Picadillo", "description": "Crisp corn flatbreads topped with spiced minced pork and a fried egg.", "ingredients": ["Corn flour", "Minced pork", "Fried egg"], "allergens": ["Egg"] } }
+      "translations": { 
+        "en": { "name": "Corn Tortos with Picadillo", "description": "Crisp corn flatbreads topped with spiced minced pork and a fried egg.", "ingredients": ["Corn flour", "Minced pork", "Fried egg"], "allergens": ["Egg"] },
+        "ro": { "name": "Turtă de Mălai cu Picadillo", "description": "Turte crocante de mălai acoperite cu carne tocată de porc condimentată și un ou prăjit.", "ingredients": ["Făină de mălai", "Carne tocată de porc", "Ou prăjit"], "allergens": ["Ou"] }
+      }
     },
     {
       "imageNumber": 5,
@@ -946,7 +957,10 @@
       "ingredients": ["Arroz", "Leche", "Canela", "Azúcar"],
       "allergens": ["Lácteos"],
       "tags": ["postre", "tradicional"],
-      "translations": { "en": { "name": "Burnt Rice Pudding", "description": "Creamy Asturian rice pudding with caramelized sugar crust.", "ingredients": ["Rice", "Milk", "Cinnamon", "Sugar"], "allergens": ["Dairy"] } }
+      "translations": { 
+        "en": { "name": "Burnt Rice Pudding", "description": "Creamy Asturian rice pudding with caramelized sugar crust.", "ingredients": ["Rice", "Milk", "Cinnamon", "Sugar"], "allergens": ["Dairy"] },
+        "ro": { "name": "Orez cu Lapte Ars", "description": "Orez cu lapte cremos asturian, servit rece, cu crustă de zahăr caramelizat.", "ingredients": ["Orez", "Lapte", "Scorțișoară", "Zahăr"], "allergens": ["Lactate"] }
+      }
     },
     {
       "imageNumber": 6,
@@ -956,38 +970,41 @@
       "ingredients": ["Zumo de manzana fermentado"],
       "allergens": ["Sulfitos"],
       "tags": ["bebida", "sidra", "tradicional"],
-      "translations": { "en": { "name": "Natural Cider (Bottle)", "description": "Dry natural cider poured in traditional style.", "ingredients": ["Fermented apple juice"], "allergens": ["Sulphites"] } }
+      "translations": { 
+        "en": { "name": "Natural Cider (Bottle)", "description": "Dry natural cider poured in traditional style.", "ingredients": ["Fermented apple juice"], "allergens": ["Sulphites"] },
+        "ro": { "name": "Cidru Natural (Sticlă)", "description": "Cidru natural sec turnat în stil tradițional.", "ingredients": ["Suc de mere fermentat"], "allergens": ["Sulfiți"] }
+      }
     }
   ];
 
   const CATEGORIES = [
-    { key:'entrante', es:'Entrantes', en:'Starters' },
-    { key:'principal', es:'Principales', en:'Mains' },
-    { key:'postre', es:'Postres', en:'Desserts' },
-    { key:'bebida', es:'Bebidas', en:'Drinks' },
-    { key:'coctel', es:'Cócteles', en:'Cocktails' }
+    { key:'entrante', es:'Entrantes', en:'Starters', ro:'Aperitive' },
+    { key:'principal', es:'Principales', en:'Mains', ro:'Feluri principale' },
+    { key:'postre', es:'Postres', en:'Desserts', ro:'Deserturi' },
+    { key:'bebida', es:'Bebidas', en:'Drinks', ro:'Băuturi' },
+    { key:'coctel', es:'Cócteles', en:'Cocktails', ro:'Cocktailuri' }
   ];
-  const OTHER_LABEL = { es:'Otros', en:'Other' };
+  const OTHER_LABEL = { es:'Otros', en:'Other', ro:'Altele' };
 
   const TAG_LABELS = {
-    'tradicional': { es:'tradicional', en:'traditional' },
-    'especialidad': { es:'especialidad', en:'signature' },
-    'para compartir': { es:'para compartir', en:'to share' },
-    'marisco': { es:'marisco', en:'seafood' },
-    'temporada': { es:'temporada', en:'seasonal' },
-    'queso': { es:'queso', en:'cheese' },
-    'sidra': { es:'sidra', en:'cider' },
-    'sin gluten': { es:'sin gluten', en:'gluten-free' },
-    'sin alcohol': { es:'sin alcohol', en:'alcohol-free' }
+    'tradicional': { es:'tradicional', en:'traditional', ro:'tradițional' },
+    'especialidad': { es:'especialidad', en:'signature', ro:'specialitate' },
+    'para compartir': { es:'para compartir', en:'to share', ro:'de împărțit' },
+    'marisco': { es:'marisco', en:'seafood', ro:'fructe de mare' },
+    'temporada': { es:'temporada', en:'seasonal', ro:'de sezon' },
+    'queso': { es:'queso', en:'cheese', ro:'brânză' },
+    'sidra': { es:'sidra', en:'cider', ro:'cidru' },
+    'sin gluten': { es:'sin gluten', en:'gluten-free', ro:'fără gluten' },
+    'sin alcohol': { es:'sin alcohol', en:'alcohol-free', ro:'fără alcool' }
   };
   const ALLERGEN_LABELS = {
-    'Gluten': { es:'Gluten', en:'Gluten' },
-    'Lácteos': { es:'Lácteos', en:'Dairy' },
-    'Huevo': { es:'Huevo', en:'Egg' },
-    'Marisco': { es:'Marisco', en:'Shellfish' },
-    'Pescado': { es:'Pescado', en:'Fish' },
-    'Sulfitos': { es:'Sulfitos', en:'Sulphites' },
-    'Frutos secos': { es:'Frutos secos', en:'Nuts' }
+    'Gluten': { es:'Gluten', en:'Gluten', ro:'Gluten' },
+    'Lácteos': { es:'Lácteos', en:'Dairy', ro:'Lactate' },
+    'Huevo': { es:'Huevo', en:'Egg', ro:'Ou' },
+    'Marisco': { es:'Marisco', en:'Shellfish', ro:'Fructe de mare' },
+    'Pescado': { es:'Pescado', en:'Fish', ro:'Pește' },
+    'Sulfitos': { es:'Sulfitos', en:'Sulphites', ro:'Sulfiți' },
+    'Frutos secos': { es:'Frutos secos', en:'Nuts', ro:'Fructe cu coajă' }
   };
 
   const UI = {
@@ -1011,7 +1028,7 @@
       modalP2: 'Tus favoritos se guardan localmente en tu dispositivo.',
       modalP3: 'La información mostrada tiene carácter orientativo.',
       favShortcutLabel: 'Mi Selección',
-      toggleLabel: '🇬🇧 EN',
+      toggleLabel: '🇬🇧 EN', // Next lang logic
       totalLabel: 'Total Selección:',
       btnWhatsApp: 'Pedir WhatsApp',
       btnWaiter: 'Mostrar al Camarero',
@@ -1048,7 +1065,7 @@
       modalP2: 'Your favorites are saved locally on your device.',
       modalP3: 'The information shown is for guidance only.',
       favShortcutLabel: 'My Selection',
-      toggleLabel: '🇪🇸 ES',
+      toggleLabel: '🇷🇴 RO', // Next lang logic
       totalLabel: 'Total Selection:',
       btnWhatsApp: 'WhatsApp Order',
       btnWaiter: 'Show to Waiter',
@@ -1064,6 +1081,43 @@
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Please select your language:',
       welcomeBtn: 'Continue'
+    },
+    ro: {
+      eyebrow: 'Meniu digital',
+      titleEm: 'Fiera Bar',
+      tagline: 'Cocktailuri exclusive, atmosferă vibrantă și cele mai bune momente ale nopții.',
+      hoursLabel: 'Program',
+      hoursValue: '18:00 – 02:00',
+      searchPlaceholder: 'Caută un cocktail sau preparat...',
+      allChip: 'Toate',
+      ingredientsLabel: 'Ingrediente:',
+      allergensLabel: 'Alergeni:',
+      noAllergens: 'Fără alergeni',
+      emptyState: 'Niciun produs nu corespunde căutării tale.',
+      loadError: 'Meniul nu a putut fi încărcat. Verificați fișierul menu.json.',
+      legalLinkText: 'Aviz legal și confidențialitate',
+      footerCopy: '© 2026 Fiera Bar',
+      modalTitle: 'Aviz legal și confidențialitate',
+      modalP1: 'Prețurile, ingredientele și disponibilitatea produselor se pot modifica.',
+      modalP2: 'Favoritele tale sunt salvate local pe dispozitiv.',
+      modalP3: 'Informațiile afișate au doar caracter orientativ.',
+      favShortcutLabel: 'Selecția Mea',
+      toggleLabel: '🇪🇸 ES', // Next lang logic
+      totalLabel: 'Total Selecție:',
+      btnWhatsApp: 'Comandă WhatsApp',
+      btnWaiter: 'Arată Chelnerului',
+      ribbonSpecial: 'Specialitate',
+      waModalTitle: 'Număr Masă',
+      waModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar.',
+      sendWaBtn: 'Trimite Comanda',
+      waiterTitle: 'Selecția Mesei',
+      closeWaiterBtn: 'Înapoi la Meniu',
+      clearWaiterBtn: 'Comandă Preluată!',
+      whatsappIntro: 'Bună! Suntem masa {mesa}. Am dori să comandăm:',
+
+      welcomeTitle: 'Fiera Bar',
+      welcomeDesc: 'Te rugăm să selectezi limba / Please select your language:',
+      welcomeBtn: 'Continuă'
     }
   };
 
@@ -1086,8 +1140,11 @@
     catch(e){}
   }
   function loadLang(){
-    try{ return window.localStorage.getItem(LANG_KEY) === 'en' ? 'en' : 'es'; }
-    catch(e){ return 'es'; }
+    try{ 
+      let l = window.localStorage.getItem(LANG_KEY);
+      if (l === 'en' || l === 'ro') return l;
+      return 'es'; 
+    } catch(e){ return 'es'; }
   }
   function saveLang(){
     try{ window.localStorage.setItem(LANG_KEY, currentLang); }catch(e){}
@@ -1119,9 +1176,10 @@
     saveFavorites();
   }
 
+  /* MODIFICARE: Rezolvă dinamic traducerile pe baza limbii curente */
   function itemText(item){
-    if(currentLang === 'en' && item.translations && item.translations.en){
-      const t = item.translations.en;
+    if(currentLang !== 'es' && item.translations && item.translations[currentLang]){
+      const t = item.translations[currentLang];
       return {
         name: t.name || item.name, description: t.description || item.description,
         ingredients: t.ingredients || item.ingredients, allergens: t.allergens || item.allergens
@@ -1142,7 +1200,6 @@
 
   function localImagePath(imageNumber){ return `images/${imageNumber}.jpg`; }
   
-  // FUNCȚIE ACTUALIZATĂ PENTRU LIBRĂRIA NOUĂ DE IMAGINI UNSPLASH
   function fallbackImageUrl(item){
     let seed = 0;
     if(item.name) { for (let i = 0; i < item.name.length; i++) seed += item.name.charCodeAt(i); }
@@ -1470,6 +1527,7 @@
       let msg = t.whatsappIntro.replace('{mesa}', tableNr) + "\n\n";
       items.forEach(item => {
           let qty = getQty(item);
+          // Folosește automat textul tradus în limba activă
           msg += `▪ ${qty}x ${itemText(item).name} (${(item.price * qty).toFixed(2)} €)\n`;
       });
       msg += `\n*Total: ${total.toFixed(2)} €*`;
@@ -1511,8 +1569,10 @@
 
   searchInput.addEventListener('input', render);
   
+  /* MODIFICARE: Ciclarea limbii prin toate cele 3 variante */
   langToggle.addEventListener('click', () => { 
-    currentLang = currentLang === 'es' ? 'en' : 'es'; 
+    const langCycle = { 'es': 'en', 'en': 'ro', 'ro': 'es' };
+    currentLang = langCycle[currentLang]; 
     saveLang(); 
     refreshAll(); 
   });
