@@ -23,6 +23,10 @@
     --rust-light:#d98a4f;
     --slate:#5a5f52;
     --cream:#f6f2e6;
+    --paper:#fffdf7;
+    --sage:#6f8062;
+    --gold:#c4913d;
+    --ink:#132017;
   }
   *{box-sizing:border-box;}
   body{
@@ -121,9 +125,74 @@
   }
 
   main{
-    max-width:960px;
+    position:relative;
+    max-width:none;
+    margin:0;
+    padding:0;
+    background:
+      radial-gradient(circle at 10% 12%, rgba(217,138,79,.22), transparent 28rem),
+      radial-gradient(circle at 88% 0%, rgba(111,128,98,.22), transparent 24rem),
+      linear-gradient(180deg,#fffdf7 0%,#f7f1e3 100%);
+    overflow:hidden;
+  }
+  main::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.42;
+    background-image:
+      linear-gradient(rgba(28,43,34,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,43,34,.04) 1px, transparent 1px);
+    background-size:34px 34px;
+    mask-image:linear-gradient(180deg, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  }
+  .restaurant-section{
+    position:relative;
+    max-width:1080px;
     margin:0 auto;
-    padding:3rem 1.4rem 4rem;
+    padding:3.2rem 1.4rem 4.5rem;
+  }
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:1.5rem;
+    margin-bottom:1.5rem;
+  }
+  .section-kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:.55rem;
+    margin:0 0 .5rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.18em;
+    color:var(--rust);
+    text-transform:uppercase;
+  }
+  .section-kicker::before{
+    content:'';
+    width:28px;
+    height:2px;
+    border-radius:2px;
+    background:linear-gradient(90deg,var(--rust),var(--gold));
+  }
+  .section-head h2{
+    margin:0;
+    font-size:clamp(1.65rem,4vw,2.45rem);
+    line-height:.95;
+    color:var(--ink);
+  }
+  .section-copy{
+    max-width:24rem;
+    margin:0;
+    color:var(--slate);
+    font-size:.82rem;
+    font-weight:700;
+    line-height:1.55;
+    letter-spacing:.03em;
   }
   #status{
     text-align:center;
@@ -136,17 +205,21 @@
   #status.error{color:var(--rust);}
   .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:1.2rem;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:1rem;
   }
 
   .card{
     position:relative;
-    display:block;
-    background:var(--cream);
-    border:1px solid var(--stone-deep);
-    border-radius:10px;
-    padding:1.8rem 1.6rem 1.6rem;
+    display:flex;
+    flex-direction:column;
+    min-height:236px;
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.84),rgba(246,242,230,.96)),
+      var(--paper);
+    border:1px solid rgba(198,184,154,.82);
+    border-radius:8px;
+    padding:1.15rem;
     text-decoration:none;
     color:inherit;
     overflow:hidden;
@@ -155,7 +228,8 @@
     transform:translateY(28px) scale(.96);
     filter:blur(4px);
     animation:cardRise .7s cubic-bezier(.2,.8,.2,1) forwards;
-    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s;
+    box-shadow:0 12px 34px -26px rgba(19,32,23,.45);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s, background .35s;
     will-change:transform;
   }
   @keyframes cardRise{
@@ -165,32 +239,51 @@
     position:absolute;
     inset:-20%;
     z-index:-2;
-    opacity:.5;
+    opacity:.38;
     pointer-events:none;
+    transition:opacity .35s, transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .card::before{
     content:'';
     position:absolute;
     inset:0;
-    background:linear-gradient(140deg,var(--pine),var(--pine-2));
+    background:
+      radial-gradient(circle at 18% 10%, rgba(217,138,79,.34), transparent 13rem),
+      linear-gradient(140deg,var(--pine),#17261d 62%,#0e1812);
     opacity:0;
     z-index:-1;
-    transition:opacity .4s;
+    transition:opacity .35s;
+  }
+  .card::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:4px;
+    background:linear-gradient(90deg,var(--rust),var(--gold),var(--sage));
+    transform:scaleX(.38);
+    transform-origin:left center;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
   }
   .card:hover::before{opacity:1;}
   .card:hover{
-    box-shadow:0 18px 34px -14px rgba(28,43,34,.4), 0 0 0 1px var(--rust);
-    animation:cardRise .7s cubic-bezier(.2,.8,.2,1) forwards, glow 1.8s ease-in-out infinite;
+    transform:translateY(-8px) scale(1);
+    border-color:rgba(181,98,42,.9);
+    box-shadow:0 24px 46px -22px rgba(19,32,23,.68), 0 0 0 1px rgba(181,98,42,.28);
   }
-  @keyframes glow{
-    0%,100%{box-shadow:0 18px 34px -14px rgba(28,43,34,.4), 0 0 0 1px var(--rust);}
-    50%{box-shadow:0 18px 38px -12px rgba(181,98,42,.5), 0 0 0 1px var(--rust-light);}
+  .card:hover::after{
+    transform:scaleX(1);
+  }
+  .card:hover .contour{
+    opacity:.18;
+    transform:scale(1.06) rotate(-2deg);
   }
   .card-top{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:1rem;
+    margin-bottom:1.15rem;
   }
   .card .idx{
     font-family:'IBM Plex Mono',monospace;
@@ -201,25 +294,48 @@
   }
   .card:hover .idx{color:var(--rust-light);}
   .ring{
-    width:34px;height:34px;
+    width:38px;height:38px;
     border-radius:50%;
-    border:1.5px solid var(--rust);
+    border:1px solid rgba(181,98,42,.55);
+    background:rgba(255,253,247,.66);
     display:flex;align-items:center;justify-content:center;
     font-family:'IBM Plex Mono',monospace;
     font-size:.7rem;
     font-weight:600;
     color:var(--rust);
-    transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .35s, color .35s;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .35s, color .35s, background .35s;
   }
   .card:hover .ring{
     transform:rotate(180deg);
     border-color:var(--rust-light);
     color:var(--rust-light);
+    background:rgba(255,253,247,.08);
+  }
+  .restaurant-type{
+    display:inline-flex;
+    width:max-content;
+    max-width:100%;
+    margin-bottom:.85rem;
+    padding:.32rem .55rem;
+    border-radius:999px;
+    background:rgba(111,128,98,.12);
+    color:var(--sage);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    transition:background .35s, color .35s;
+  }
+  .card:hover .restaurant-type{
+    background:rgba(217,138,79,.16);
+    color:#f0b876;
   }
   .card h2{
-    font-size:1.5rem;
+    font-size:clamp(1.35rem,4vw,1.75rem);
     font-weight:600;
-    margin:0 0 .4rem;
+    line-height:1;
+    margin:0 0 .55rem;
     text-transform:uppercase;
     transition:color .35s, transform .35s;
   }
@@ -233,10 +349,42 @@
     transition:color .35s;
   }
   .card:hover p{color:#c9d2c4;}
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.45rem;
+    margin:auto 0 1.2rem;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    min-height:26px;
+    padding:.28rem .52rem;
+    border:1px solid rgba(198,184,154,.85);
+    border-radius:999px;
+    color:#59604f;
+    background:rgba(255,253,247,.58);
+    font-size:.66rem;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    transition:color .35s, border-color .35s, background .35s;
+  }
+  .card:hover .chip{
+    color:#dfe7d8;
+    border-color:rgba(217,138,79,.32);
+    background:rgba(255,253,247,.06);
+  }
   .card-bottom{
     display:flex;
     align-items:center;
     justify-content:space-between;
+    padding-top:1rem;
+    border-top:1px solid rgba(198,184,154,.64);
+    transition:border-color .35s;
+  }
+  .card:hover .card-bottom{
+    border-color:rgba(217,138,79,.22);
   }
   .go{
     display:inline-flex;
@@ -253,7 +401,7 @@
   .card:hover .go svg{transform:translateX(5px);}
   .bar{
     flex:1;
-    max-width:60px;
+    max-width:76px;
     height:2px;
     background:var(--stone-deep);
     margin-left:1rem;
@@ -282,6 +430,13 @@
   @media (prefers-reduced-motion: reduce){
     .card,.hero-copy,.hero-copy h1 span,.sky-dot,.peak-wrap svg path{animation:none !important;opacity:1;filter:none;transform:none;}
   }
+  @media (max-width:700px){
+    .restaurant-section{padding:2.5rem 1rem 3.5rem;}
+    .section-head{display:block;margin-bottom:1.25rem;}
+    .section-copy{margin-top:.8rem;}
+    .grid{grid-template-columns:1fr;}
+    .card{min-height:222px;}
+  }
 </style>
 </head>
 <body>
@@ -306,8 +461,17 @@
 </div>
 
 <main>
-  <div id="status">Se caută restaurante...</div>
-  <div class="grid" id="restaurants-container"></div>
+  <section class="restaurant-section" aria-labelledby="restaurants-title">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Meniuri digitale</div>
+        <h2 id="restaurants-title">Restaurante alese</h2>
+      </div>
+      <p class="section-copy">Locuri din Piatra Neamț pregătite pentru poftă, cafea bună și meniuri rapide pe telefon.</p>
+    </div>
+    <div id="status">Se caută restaurante...</div>
+    <div class="grid" id="restaurants-container"></div>
+  </section>
 </main>
 
 <footer>&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România &middot; <button id="openPrivacy" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;text-transform:uppercase;padding:0;">Politica de confidențialitate</button></footer>
@@ -346,13 +510,19 @@
   var status = document.getElementById('status');
 
   function contourSVG(seed){
-    var colors = ['#dcd4bf','#d3c9ae'];
+    var colors = ['#dcd4bf','#c4913d','#6f8062'];
     var paths = '';
     for(var i=0;i<3;i++){
       var r = 60 + i*30 + (seed % 10) * 2;
       paths += '<circle cx="50%" cy="10%" r="' + r + '%" fill="none" stroke="' + colors[i%2] + '" stroke-width="1"/>';
     }
     return '<svg class="contour" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' + paths + '</svg>';
+  }
+
+  function formatTitle(name){
+    return name
+      .replace(/[-_]+/g,' ')
+      .replace(/\b\w/g,function(letter){ return letter.toUpperCase(); });
   }
 
   function fetchRestaurants(){
@@ -376,19 +546,25 @@
 
         folders.forEach(function(folder, i){
           var name = folder.name;
-          var title = name.charAt(0).toUpperCase() + name.slice(1);
+          var title = formatTitle(name);
           var a = document.createElement('a');
           a.href = './' + name + '/';
           a.className = 'card';
+          a.setAttribute('aria-label','Deschide meniul pentru ' + title);
           a.style.animationDelay = (i * 100) + 'ms';
           a.innerHTML =
             contourSVG(i) +
             '<div class="card-top">' +
               '<span class="idx">' + String(i+1).padStart(2,'0') + ' / RESTAURANT</span>' +
-              '<span class="ring">0' + (i+1) + '</span>' +
+              '<span class="ring">' + String(i+1).padStart(2,'0') + '</span>' +
             '</div>' +
+            '<span class="restaurant-type">Local guide</span>' +
             '<h2>' + title + '</h2>' +
-            '<p>Descopera meniul digital ' + title + '.</p>' +
+            '<p>Descoperă meniul digital ' + title + '.</p>' +
+            '<div class="chip-row">' +
+              '<span class="chip">Meniu rapid</span>' +
+              '<span class="chip">Piatra Neamț</span>' +
+            '</div>' +
             '<div class="card-bottom">' +
               '<span class="go">Vezi meniul' +
                 '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
