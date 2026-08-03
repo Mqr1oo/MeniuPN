@@ -1,191 +1,251 @@
 [
   {
     "imageNumber": 1,
-    "name": "Fabada Asturiana",
-    "price": 16.50,
+    "name": "Truffle Wagyu Burger",
+    "price": 22.50,
     "weight": "450 g",
-    "kcal": 620,
-    "description": "Guiso de fabes cocinado a fuego lento, con carnes ahumadas y un toque de pimentón.",
-    "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta", "Azafrán"],
-    "allergens": ["Sulfitos"],
-    "tags": ["principal", "tradicional", "sin gluten"],
+    "kcal": 920,
+    "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
+    "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar", "Caramelized onions", "Truffle mayo"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["principal", "especialidad"],
     "translations": {
-      "en": {
-        "name": "Fabada Asturiana",
-        "description": "A slow-simmered bean stew from the Asturian highlands, with smoky cured meats and a touch of paprika.",
-        "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly", "Saffron"],
-        "allergens": ["Sulphites"]
+      "ro": {
+        "name": "Burger Wagyu cu Trufe",
+        "description": "Chiftea premium din carne de vită Wagyu, cu ceapă caramelizată, cheddar topit și maioneză cu trufe într-o chiflă brioche.",
+        "ingredients": ["Vită Wagyu", "Chiflă brioche", "Cheddar", "Ceapă caramelizată", "Maioneză cu trufe"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
+      },
+      "es": {
+        "name": "Hamburguesa Wagyu Trufada",
+        "description": "Hamburguesa de carne Wagyu premium con cebolla caramelizada, cheddar fundido y mayonesa de trufa en pan brioche.",
+        "ingredients": ["Carne Wagyu", "Pan brioche", "Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
       }
     }
   },
   {
     "imageNumber": 2,
-    "name": "Cachopo de Cabrales",
-    "price": 19.00,
-    "weight": "500 g",
-    "kcal": 890,
-    "description": "Dos filetes de ternera empanados y rellenos de queso Cabrales fundido y jamón serrano, fritos al momento.",
-    "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Pan rallado", "Huevo"],
-    "allergens": ["Gluten", "Lácteos", "Huevo"],
-    "tags": ["principal", "especialidad", "para compartir"],
+    "name": "Authentic Tacos al Pastor",
+    "price": 14.00,
+    "weight": "350 g",
+    "kcal": 540,
+    "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
+    "ingredients": ["Corn tortillas", "Marinated pork", "Pineapple", "Cilantro", "Onions"],
+    "allergens": [],
+    "tags": ["principal", "para compartir", "sin gluten"],
     "translations": {
-      "en": {
-        "name": "Cachopo de Cabrales",
-        "description": "Two breaded veal fillets folded around melted Cabrales blue cheese and serrano ham, fried to order.",
-        "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Breadcrumbs", "Egg"],
-        "allergens": ["Gluten", "Dairy", "Egg"]
+      "ro": {
+        "name": "Tacos al Pastor Autentic",
+        "description": "Trei tortillas de porumb umplute cu carne de porc marinată, bucăți de ananas, coriandru proaspăt și ceapă.",
+        "ingredients": ["Tortillas de porumb", "Carne de porc", "Ananas", "Coriandru", "Ceapă"],
+        "allergens": []
+      },
+      "es": {
+        "name": "Tacos al Pastor",
+        "description": "Tres tortillas de maíz rellenas de cerdo marinado, trozos de piña, cilantro fresco y cebolla picada.",
+        "ingredients": ["Tortillas de maíz", "Cerdo marinado", "Piña", "Cilantro", "Cebolla"],
+        "allergens": []
       }
     }
   },
   {
     "imageNumber": 3,
-    "name": "Oricios al Natural",
-    "price": 14.00,
-    "weight": "150 g",
-    "kcal": 130,
-    "description": "Erizos de mar servidos crudos en su concha, recién llegados de la costa cantábrica, con un toque de limón.",
-    "ingredients": ["Erizo de mar", "Limón"],
-    "allergens": ["Marisco"],
-    "tags": ["entrante", "marisco", "temporada"],
+    "name": "Spicy Tuna Sushi Roll",
+    "price": 16.50,
+    "weight": "250 g",
+    "kcal": 380,
+    "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
+    "ingredients": ["Sushi rice", "Fresh tuna", "Spicy mayo", "Nori seaweed", "Sesame seeds"],
+    "allergens": ["Pescado", "Huevo", "Gluten"],
+    "tags": ["entrante", "especialidad", "marisco"],
     "translations": {
-      "en": {
-        "name": "Sea Urchin, Natural",
-        "description": "Sea urchin served raw in the shell, straight off the Cantabrian coast, with a squeeze of lemon.",
-        "ingredients": ["Sea urchin", "Lemon"],
-        "allergens": ["Shellfish"]
+      "ro": {
+        "name": "Sushi Roll Spicy Tuna",
+        "description": "Ton proaspăt amestecat cu maioneză picantă, învelit în orez pentru sushi și alge nori, presărat cu susan.",
+        "ingredients": ["Orez sushi", "Ton proaspăt", "Maioneză picantă", "Alge nori", "Susan"],
+        "allergens": ["Pescado", "Huevo", "Gluten"]
+      },
+      "es": {
+        "name": "Roll de Atún Picante",
+        "description": "Atún fresco mezclado con mayonesa picante, envuelto en arroz de sushi y alga nori, cubierto con sésamo.",
+        "ingredients": ["Arroz de sushi", "Atún fresco", "Mayonesa picante", "Alga nori", "Sésamo"],
+        "allergens": ["Pescado", "Huevo", "Gluten"]
       }
     }
   },
   {
     "imageNumber": 4,
-    "name": "Tortos de Maíz con Picadillo",
-    "price": 9.50,
-    "weight": "280 g",
-    "kcal": 510,
-    "description": "Tortas de maíz crujientes cubiertas de picadillo de cerdo especiado y huevo frito.",
-    "ingredients": ["Harina de maíz", "Picadillo de cerdo", "Huevo frito", "Pimentón"],
-    "allergens": ["Huevo"],
-    "tags": ["entrante", "tradicional"],
+    "name": "Shrimp Pad Thai",
+    "price": 17.50,
+    "weight": "400 g",
+    "kcal": 610,
+    "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
+    "ingredients": ["Rice noodles", "Shrimp", "Egg", "Peanuts", "Bean sprouts", "Tamarind sauce"],
+    "allergens": ["Marisco", "Huevo"],
+    "tags": ["principal", "especialidad", "sin gluten"],
     "translations": {
-      "en": {
-        "name": "Corn Tortos with Picadillo",
-        "description": "Crisp corn flatbreads topped with spiced minced pork and a fried egg.",
-        "ingredients": ["Corn flour", "Minced pork", "Fried egg", "Paprika"],
-        "allergens": ["Egg"]
+      "ro": {
+        "name": "Pad Thai cu Creveți",
+        "description": "Tăiței de orez thailandezi trași la tigaie cu creveți suculenți, ou, arahide, muguri de fasole și lime.",
+        "ingredients": ["Tăiței de orez", "Creveți", "Ou", "Arahide", "Muguri de fasole", "Sos tamarind"],
+        "allergens": ["Marisco", "Huevo"]
+      },
+      "es": {
+        "name": "Pad Thai de Gambas",
+        "description": "Fideos de arroz tailandeses salteados con gambas jugosas, huevo, cacahuetes, brotes de soja y lima.",
+        "ingredients": ["Fideos de arroz", "Gambas", "Huevo", "Cacahuetes", "Brotes de soja", "Salsa de tamarindo"],
+        "allergens": ["Marisco", "Huevo"]
       }
     }
   },
   {
     "imageNumber": 5,
-    "name": "Merluza a la Sidra",
-    "price": 18.00,
-    "weight": "380 g",
-    "kcal": 410,
-    "description": "Lomo de merluza cocinado en salsa de sidra y perejil, con almejas y patata.",
-    "ingredients": ["Merluza", "Sidra", "Almejas", "Patata", "Perejil", "Ajo"],
-    "allergens": ["Pescado", "Marisco", "Sulfitos"],
-    "tags": ["principal", "marisco", "especialidad"],
+    "name": "Pizza Margherita Verace",
+    "price": 12.00,
+    "weight": "420 g",
+    "kcal": 800,
+    "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
+    "ingredients": ["Pizza dough", "San Marzano tomatoes", "Buffalo mozzarella", "Fresh basil", "Olive oil"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["principal", "tradicional", "para compartir"],
     "translations": {
-      "en": {
-        "name": "Hake in Cider Sauce",
-        "description": "Hake fillet gently cooked in a cider and parsley sauce with clams and potato.",
-        "ingredients": ["Hake", "Cider", "Clams", "Potato", "Parsley", "Garlic"],
-        "allergens": ["Fish", "Shellfish", "Sulphites"]
+      "ro": {
+        "name": "Pizza Margherita Verace",
+        "description": "Pizza napoletană autentică, cu sos de roșii San Marzano, mozzarella di bufala proaspătă și busuioc.",
+        "ingredients": ["Aluat pizza", "Roșii San Marzano", "Mozzarella de bivoliță", "Busuioc proaspăt", "Ulei de măsline"],
+        "allergens": ["Gluten", "Lácteos"]
+      },
+      "es": {
+        "name": "Pizza Margarita Auténtica",
+        "description": "Auténtica pizza napolitana con salsa de tomate San Marzano, mozzarella di bufala fresca y albahaca.",
+        "ingredients": ["Masa de pizza", "Tomates San Marzano", "Mozzarella de búfala", "Albahaca fresca", "Aceite de oliva"],
+        "allergens": ["Gluten", "Lácteos"]
       }
     }
   },
   {
     "imageNumber": 6,
-    "name": "Queso de Cabrales con Miel",
-    "price": 8.00,
-    "weight": "120 g",
-    "kcal": 380,
-    "description": "Queso azul de cueva de los Picos de Europa, con un hilo de miel local y nueces.",
-    "ingredients": ["Queso Cabrales", "Miel", "Nueces"],
-    "allergens": ["Lácteos", "Frutos secos"],
-    "tags": ["entrante", "queso", "sin gluten"],
+    "name": "Classic Caesar Salad",
+    "price": 11.50,
+    "weight": "300 g",
+    "kcal": 450,
+    "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
+    "ingredients": ["Romaine lettuce", "Parmesan cheese", "Croutons", "Caesar dressing", "Anchovies"],
+    "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"],
+    "tags": ["entrante", "tradicional"],
     "translations": {
-      "en": {
-        "name": "Cabrales Cheese with Honey",
-        "description": "Cave-aged blue cheese from the Picos de Europa, drizzled with local honey and walnuts.",
-        "ingredients": ["Cabrales cheese", "Honey", "Walnuts"],
-        "allergens": ["Dairy", "Nuts"]
+      "ro": {
+        "name": "Salată Caesar Clasică",
+        "description": "Salată romaine crocantă amestecată cu dressing Caesar făcut în casă, parmezan ras și crutoane crocante.",
+        "ingredients": ["Salată romaine", "Parmezan", "Crutoane", "Dressing Caesar", "Anșoa"],
+        "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"]
+      },
+      "es": {
+        "name": "Ensalada César Clásica",
+        "description": "Lechuga romana crujiente mezclada con aderezo César casero, queso parmesano y picatostes crujientes.",
+        "ingredients": ["Lechuga romana", "Queso parmesano", "Picatostes", "Aderezo César", "Anchoas"],
+        "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"]
       }
     }
   },
   {
     "imageNumber": 7,
-    "name": "Arroz con Leche Quemado",
-    "price": 6.50,
-    "weight": "220 g",
-    "kcal": 340,
-    "description": "Cremoso arroz con leche asturiano, frío, terminado con una capa de azúcar caramelizada.",
-    "ingredients": ["Arroz", "Leche", "Canela", "Piel de limón", "Azúcar"],
-    "allergens": ["Lácteos"],
-    "tags": ["postre", "tradicional", "sin gluten"],
+    "name": "Italian Classic Tiramisu",
+    "price": 7.50,
+    "weight": "180 g",
+    "kcal": 410,
+    "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
+    "ingredients": ["Mascarpone", "Ladyfingers", "Espresso coffee", "Cocoa powder", "Egg"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["postre", "tradicional"],
     "translations": {
-      "en": {
-        "name": "Burnt Rice Pudding",
-        "description": "Creamy Asturian rice pudding, chilled and finished with a caramelised sugar crust.",
-        "ingredients": ["Rice", "Milk", "Cinnamon", "Lemon zest", "Sugar"],
-        "allergens": ["Dairy"]
+      "ro": {
+        "name": "Tiramisu Clasic Italian",
+        "description": "Desert clasic italian cu pișcoturi înmuiate în espresso, stratificate cu o cremă fină de mascarpone.",
+        "ingredients": ["Mascarpone", "Pișcoturi", "Cafea espresso", "Cacao pudră", "Ou"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
+      },
+      "es": {
+        "name": "Tiramisú Clásico",
+        "description": "Postre italiano clásico elaborado con bizcochos bañados en espresso y capas de crema de mascarpone.",
+        "ingredients": ["Mascarpone", "Bizcochos", "Café espresso", "Cacao en polvo", "Huevo"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
       }
     }
   },
   {
     "imageNumber": 8,
-    "name": "Sidra Natural (Botella)",
-    "price": 7.00,
-    "weight": "700 ml",
-    "kcal": 260,
-    "description": "Sidra natural seca de un llagar local, escanciada desde lo alto al estilo tradicional.",
-    "ingredients": ["Zumo de manzana fermentado"],
+    "name": "Venetian Aperol Spritz",
+    "price": 8.50,
+    "weight": "300 ml",
+    "kcal": 170,
+    "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
+    "ingredients": ["Aperol", "Prosecco", "Club soda", "Orange slice"],
     "allergens": ["Sulfitos"],
-    "tags": ["bebida", "sidra", "tradicional"],
+    "tags": ["coctel", "bebida"],
     "translations": {
-      "en": {
-        "name": "Natural Cider (Bottle)",
-        "description": "Dry natural cider from a local cider house, poured from height in the traditional style.",
-        "ingredients": ["Fermented apple juice"],
-        "allergens": ["Sulphites"]
+      "ro": {
+        "name": "Aperol Spritz",
+        "description": "Aperitivul italian prin excelență: Aperol, Prosecco spumant, puțină apă minerală și o felie de portocală.",
+        "ingredients": ["Aperol", "Prosecco", "Apă minerală", "Felie de portocală"],
+        "allergens": ["Sulfitos"]
+      },
+      "es": {
+        "name": "Aperol Spritz",
+        "description": "El aperitivo italiano por excelencia: Aperol, Prosecco espumoso y un toque de soda con una rodaja de naranja.",
+        "ingredients": ["Aperol", "Prosecco", "Soda", "Rodaja de naranja"],
+        "allergens": ["Sulfitos"]
       }
     }
   },
   {
     "imageNumber": 9,
-    "name": "Pote Asturiano",
-    "price": 15.00,
-    "weight": "420 g",
-    "kcal": 560,
-    "description": "Guiso de montaña con alubias blancas, berza, patata y carnes curadas.",
-    "ingredients": ["Alubias blancas", "Berza", "Patata", "Chorizo", "Costilla de cerdo"],
+    "name": "Classic Margarita",
+    "price": 9.00,
+    "weight": "200 ml",
+    "kcal": 220,
+    "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
+    "ingredients": ["Tequila", "Fresh lime juice", "Cointreau liqueur", "Salt"],
     "allergens": [],
-    "tags": ["principal", "tradicional", "sin gluten"],
+    "tags": ["coctel", "especialidad", "bebida"],
     "translations": {
-      "en": {
-        "name": "Pote Asturiano",
-        "description": "A hearty highland stew of white beans, cabbage, potato and cured pork.",
-        "ingredients": ["White beans", "Cabbage", "Potato", "Chorizo", "Pork rib"],
+      "ro": {
+        "name": "Margarita Clasică",
+        "description": "Un clasic mexican perfect echilibrat, cu tequila premium, suc proaspăt de lime și Cointreau, cu o margine de sare.",
+        "ingredients": ["Tequila", "Suc de lime proaspăt", "Lichior Cointreau", "Sare"],
+        "allergens": []
+      },
+      "es": {
+        "name": "Margarita Clásica",
+        "description": "Un clásico mexicano perfectamente equilibrado con tequila premium, zumo de lima fresco y Cointreau, con borde de sal.",
+        "ingredients": ["Tequila", "Zumo de lima", "Licor Cointreau", "Sal"],
         "allergens": []
       }
     }
   },
   {
     "imageNumber": 10,
-    "name": "Casadielles Fritas",
-    "price": 6.00,
-    "weight": "150 g",
-    "kcal": 480,
-    "description": "Empanadillas rellenas de nuez y anís, fritas y espolvoreadas con azúcar.",
-    "ingredients": ["Harina", "Nueces", "Licor de anís", "Azúcar", "Mantequilla"],
-    "allergens": ["Gluten", "Frutos secos", "Lácteos"],
-    "tags": ["postre", "tradicional"],
+    "name": "Espresso Martini",
+    "price": 9.50,
+    "weight": "150 ml",
+    "kcal": 210,
+    "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
+    "ingredients": ["Vodka", "Coffee liqueur", "Fresh espresso", "Simple syrup"],
+    "allergens": [],
+    "tags": ["coctel", "bebida"],
     "translations": {
-      "en": {
-        "name": "Fried Casadielles",
-        "description": "Pastry parcels filled with walnut and anise, fried and dusted with sugar.",
-        "ingredients": ["Flour", "Walnuts", "Anise liqueur", "Sugar", "Butter"],
-        "allergens": ["Gluten", "Nuts", "Dairy"]
+      "ro": {
+        "name": "Espresso Martini",
+        "description": "Un cocktail sofisticat și energizant care combină vodcă premium, lichior de cafea bogat și espresso proaspăt preparat.",
+        "ingredients": ["Vodcă", "Lichior de cafea", "Espresso proaspăt", "Sirop de zahăr"],
+        "allergens": []
+      },
+      "es": {
+        "name": "Espresso Martini",
+        "description": "Un cóctel sofisticado y energético que mezcla vodka premium, licor de café y espresso recién hecho.",
+        "ingredients": ["Vodka", "Licor de café", "Espresso fresco", "Sirope simple"],
+        "allergens": []
       }
     }
   }
