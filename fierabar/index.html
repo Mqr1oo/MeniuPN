@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ro" id="htmlRoot">
 <head>
@@ -521,24 +520,25 @@
     100% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
   }
 
+  /* Made slightly bigger per request */
   .global-fav-btn {
     top: 20px;
     right: 20px;
-    height: 42px;
+    height: 48px;
     background: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1.5px solid var(--pink-main);
-    padding: 0 16px 0 14px;
-    gap: 8px;
+    padding: 0 18px 0 16px;
+    gap: 9px;
     color: var(--ink);
     font-family: 'Space Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     animation: heartGlow 2s infinite ease-in-out;
   }
-  .global-fav-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
-  .global-fav-btn .fav-count { font-size: 14px; color: var(--pink-bright); }
+  .global-fav-btn svg { width: 23px; height: 23px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
+  .global-fav-btn .fav-count { font-size: 15px; color: var(--pink-bright); }
 
   /* POPUP / MODALS */
   .popup-overlay {
@@ -625,6 +625,85 @@
     transition: all 0.2s;
   }
   .btn-outline:active { transform: scale(0.96); }
+
+  /* ---------- INSTALL BANNER (slides down from top, appears after scroll) ---------- */
+  .install-banner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 300;
+    display: flex;
+    justify-content: center;
+    padding: 14px 14px 0;
+    pointer-events: none;
+  }
+  .install-banner {
+    background: var(--bg-card);
+    border: 1px solid var(--pink-main);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 42, 133, 0.15);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transform: translateY(-140%);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+    pointer-events: auto;
+  }
+  .install-banner-overlay.show .install-banner {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .install-icon-sm {
+    width: 46px; height: 46px;
+    flex-shrink: 0;
+    background: rgba(255, 42, 133, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pink-main);
+  }
+  .install-icon-sm svg { width: 24px; height: 24px; }
+  .install-banner-body { flex: 1; min-width: 0; }
+  .install-banner-body h2 { font-size: 1.05rem; margin-bottom: 4px; }
+  .install-banner-body p { font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; line-height: 1.45; }
+  .install-banner-actions { display: flex; gap: 8px; }
+  .install-banner-actions .btn-submit,
+  .install-banner-actions .btn-outline { padding: 10px; font-size: 13.5px; border-radius: 10px; }
+  .install-banner-close {
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--bg-panel);
+    border: 1px solid var(--paper-dim);
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .ios-steps { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ios-steps li { font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .ios-steps .step-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--pink-main); color: #fff;
+    font-family: 'Space Mono', monospace; font-size: 10.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ios-steps .ios-icon { display: inline-flex; vertical-align: -3px; }
+
+  @media (max-width:480px){
+    .install-banner { flex-direction: column; align-items: center; text-align: center; }
+    .install-banner-body p, .ios-steps { text-align: left; }
+  }
 
   /* FOOTER */
   footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; }
@@ -777,7 +856,7 @@
     .top-actions{ top:14px; left:14px; gap:6px; }
     .lang-toggle{ padding:6px 12px; font-size:12px; min-height:36px; }
     
-    .global-fav-btn { top: 14px; right: 14px; height: 38px; padding: 0 12px 0 10px; }
+    .global-fav-btn { top: 14px; right: 14px; height: 44px; padding: 0 14px 0 12px; }
     
     .hero-inner{ text-align:center; justify-content:center; }
     .hero-meta{ justify-content:center; }
@@ -880,18 +959,23 @@
   </div>
 </div>
 
-<!-- ================= MODAL INSTALARE (PWA) ================= -->
-<div class="popup-overlay" id="installOverlay">
-  <div class="popup-modal">
-    <div class="popup-icon">
+<!-- ================= INSTALL BANNER (slide-down, top) ================= -->
+<div class="install-banner-overlay" id="installOverlay">
+  <div class="install-banner">
+    <button class="install-banner-close" id="btnNotNow" aria-label="Închide">&times;</button>
+    <div class="install-icon-sm">
       <svg viewBox="0 0 24 24"><path d="M17 17h-10v-10h4v-2h-4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4h-2v4zm2.5-12h-2.5v-2.5h-2v2.5h-2.5v2h2.5v2.5h2v-2.5h2.5v-2zM4 17h16v-2h-16v2z" fill="currentColor"/></svg>
     </div>
-    <h2 id="txtInstallTitle">Instalează Aplicația</h2>
-    <p id="txtInstallDesc">Adaugă Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!</p>
-    
-    <div class="popup-actions">
-      <button class="btn-submit" id="btnInstallApp">Instalează</button>
-      <button class="btn-outline" id="btnNotNow">Mai târziu</button>
+    <div class="install-banner-body">
+      <h2 id="txtInstallTitle">Instalează Aplicația</h2>
+      <p id="txtInstallDesc">Adaugă Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!</p>
+
+      <!-- iOS-only step-by-step instructions (shown instead of button when native prompt isn't available) -->
+      <ol class="ios-steps" id="iosSteps" style="display:none;"></ol>
+
+      <div class="install-banner-actions">
+        <button class="btn-submit" id="btnInstallApp">Instalează</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1038,7 +1122,11 @@
       installTitle: 'Instalează Aplicația',
       installDesc: 'Adaugă meniul Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!',
       installBtnTxt: 'Instalează',
-      notNowBtnTxt: 'Mai târziu'
+      notNowBtnTxt: 'Mai târziu',
+      iosStep1: 'Apasă pe iconița',
+      iosStep1After: 'de „Distribuie” din bara de jos',
+      iosStep2: 'Alege „Adaugă pe ecranul principal”',
+      iosStep3: 'Apasă „Adaugă” în colțul din dreapta sus'
     },
     en: {
       eyebrow: 'Digital menu',
@@ -1098,7 +1186,11 @@
       installTitle: 'Install our App',
       installDesc: 'Add Fiera Bar menu to your home screen for quick access, no need to scan the QR again!',
       installBtnTxt: 'Install',
-      notNowBtnTxt: 'Not now'
+      notNowBtnTxt: 'Not now',
+      iosStep1: 'Tap the',
+      iosStep1After: '„Share” icon in the bottom bar',
+      iosStep2: 'Choose „Add to Home Screen”',
+      iosStep3: 'Tap „Add” in the top-right corner'
     }
   };
 
@@ -1110,16 +1202,19 @@
   let favoritesQty = loadFavorites();
   let currentLang = loadLang();
 
-  // ====== PWA INSTALL LOGIC ======
+  // ====== PWA INSTALL LOGIC (Android/Chrome + iOS Safari) ======
   let deferredPrompt;
   let installPromptShown = false;
   let installPromptTriggered = false;
-  let installTimer = null;
+
+  // Detect iOS (Safari doesn't fire beforeinstallprompt, so we show manual steps)
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  // Already installed as standalone app? Then never show the banner.
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
   window.addEventListener('beforeinstallprompt', (e) => {
-    // Împiedică banner-ul automat de jos din a se afișa (la Android)
     e.preventDefault();
-    // Stocăm evenimentul ca să-l putem chema când apasă omul pe buton
     deferredPrompt = e;
   });
   // ===============================
@@ -1231,8 +1326,23 @@
 
     document.getElementById('txtInstallTitle').textContent = t.installTitle;
     document.getElementById('txtInstallDesc').textContent = t.installDesc;
-    document.getElementById('btnInstallApp').textContent = t.installBtnTxt;
-    document.getElementById('btnNotNow').textContent = t.notNowBtnTxt;
+
+    // iOS gets step-by-step instructions instead of a native install button
+    const iosStepsEl = document.getElementById('iosSteps');
+    const installBtn = document.getElementById('btnInstallApp');
+    if(isIOS){
+      iosStepsEl.style.display = 'flex';
+      iosStepsEl.innerHTML = `
+        <li><span class="step-num">1</span> ${t.iosStep1} <span class="ios-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4M4 16v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span> ${t.iosStep1After}</li>
+        <li><span class="step-num">2</span> ${t.iosStep2}</li>
+        <li><span class="step-num">3</span> ${t.iosStep3}</li>
+      `;
+      installBtn.style.display = 'none';
+    } else {
+      iosStepsEl.style.display = 'none';
+      installBtn.style.display = 'block';
+      installBtn.textContent = t.installBtnTxt;
+    }
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === currentLang);
@@ -1567,20 +1677,23 @@
     });
   });
 
-  // LOGICA PENTRU SCROLL ȘI POPUP INSTALARE
+  // LOGICA PENTRU SCROLL ȘI BANNER DE INSTALARE (coboară din partea de sus)
+  const installOverlay = document.getElementById('installOverlay');
+
   window.addEventListener('scroll', () => {
     // 1. Butonul mergi sus
     if (window.scrollY > 300) scrollTopBtn.classList.add('show');
     else scrollTopBtn.classList.remove('show');
 
-    // 2. Apariția inteligentă (la scroll > 500px) a pop-up-ului de instalare
-    if (window.scrollY > 500 && deferredPrompt && !installPromptShown && !installPromptTriggered) {
+    // 2. Apariția inteligentă a banner-ului de instalare, DUPĂ ce omul a scrollat puțin
+    if (window.scrollY > 220 && !installPromptShown && !installPromptTriggered && !isStandalone) {
         // Ne asigurăm că omul a trecut de ecranul de "Bun venit"
         if (sessionStorage.getItem('fieraWelcomed') === 'true') {
-            installPromptTriggered = true; // Să nu se declanșeze de mai multe ori
-            installTimer = setTimeout(() => {
-                document.getElementById('installOverlay').classList.add('show');
-            }, 1500); // Apare natural, la 1.5 secunde după ce omul a scrollat
+            // Pe iOS arătăm mereu instrucțiunile manuale; pe Android/Chrome doar dacă avem promptul nativ
+            if (isIOS || deferredPrompt) {
+                installPromptTriggered = true;
+                installOverlay.classList.add('show');
+            }
         }
     }
   });
@@ -1594,7 +1707,7 @@
   });
 
   document.getElementById('btnNotNow').addEventListener('click', () => {
-      document.getElementById('installOverlay').classList.remove('show');
+      installOverlay.classList.remove('show');
       installPromptShown = true; // Nu-l mai deranjăm cu el
   });
 
@@ -1605,7 +1718,7 @@
           console.log(`Rezultat instalare PWA: ${outcome}`);
           
           deferredPrompt = null;
-          document.getElementById('installOverlay').classList.remove('show');
+          installOverlay.classList.remove('show');
           installPromptShown = true;
       }
   });
