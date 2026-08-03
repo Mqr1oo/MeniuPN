@@ -1,1856 +1,678 @@
 <!DOCTYPE html>
-<html lang="ro" id="htmlRoot">
+<html lang="ro">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Fiera Bar &mdash; Meniu digital</title>
-<meta name="description" content="Menú digital de Fiera Bar. Cócteles, tapas și băuturi internaționale.">
-
-<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Meniuri Digitale &mdash; Piatra Neamț</title>
+<meta name="description" content="Portal de meniuri digitale pentru restaurante din Piatra Neamț.">
+<meta name="theme-color" content="#13231B">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(registration => console.log('App PWA activată cu succes!'))
-        .catch(err => console.log('Eroare activare App: ', err));
-    });
-  }
-</script>
-<!-- ================================== -->
+<link rel="icon" href="icons/icon-192.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-base: #050505; 
-    --bg-card: #121212; 
-    --bg-panel: #1a1a1a;
-    --ink: #ffffff; 
-    --ink-soft: #a1a1aa; 
-    --pink-main: #ff2a85;
-    --pink-bright: #ff529f;
-    --paper-dim: #262626;
-    --coral: #ff4757;
-    
-    --radius: 4px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --max-w: 1180px;
-  }
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
-  *{ box-sizing:border-box; }
-  
-  html, body {
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
+<style>
+  :root {
+    /* Tematică inspirată de Piatra Neamț: Verde Pădure, Piatră & Cupru Cald */
+    --bg-main: #0E1A14;       /* Verde închis profund, elegant */
+    --hero-bg: #13231B;       /* Verde amurg */
+    --card-bg: #182C22;       /* Carduri cu textură de pădure montană */
+    
+    --text-dark: #F4F7F4;     /* Alb curat natural */
+    --text-muted: #A3B3AB;    /* Gri-verde cald secundar */
+    --text-light: #6C8276;    /* Detalii */
+    
+    --accent: #E0823F;        /* Cupru / Terracotta cald (stimulează pofta de mâncare) */
+    --accent-glow: rgba(224, 130, 63, 0.25);
+    --border-color: #243D30;  /* Contur fin inspirat de piatră */
+    
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
   
-  html{ scroll-behavior:smooth; }
-  body{
-    margin:0;
-    background:var(--bg-base);
-    color:var(--ink);
-    font-family:'Work Sans', sans-serif;
-    font-size:16px;
-    line-height:1.5;
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
-  img{ max-width:100%; display:block; }
-  a{ color:inherit; }
 
-  :focus-visible{
-    outline:2px solid var(--pink-main);
-    outline-offset:3px;
-  }
-
-  h1,h2,h3{
-    font-family:'Fraunces', serif;
-    margin:0;
-    font-weight:600;
-  }
-
-  .wrap{
-    max-width:var(--max-w);
-    margin:0 auto;
-    padding:0 20px;
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    background: 
-      radial-gradient(ellipse at 80% 10%, rgba(255, 42, 133, 0.12), transparent 50%),
-      var(--bg-base);
-    color:var(--ink);
-    padding:60px 0 0;
-    overflow:hidden;
-    position:relative;
-    border-bottom: 1px solid var(--paper-dim);
-  }
-  .top-actions{
-    position:absolute;
-    top:20px; right:20px;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .lang-toggle{
-    font-family:'Space Mono', monospace;
-    font-size:12px;
-    letter-spacing:.04em;
-    padding:8px 14px;
-    min-height:40px;
-    border-radius:100px;
-    border:1.5px solid var(--paper-dim);
-    background:rgba(18, 18, 18, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color:var(--ink);
-    cursor:pointer;
-    transition:background .2s, transform .15s, border-color .2s;
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
-  .lang-toggle:hover{ background:var(--bg-panel); border-color: var(--pink-main); }
-  .lang-toggle:active{ transform:scale(0.92); }
-  
-  .hero-inner{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:32px;
-    padding-bottom:50px;
-    padding-top:24px;
-  }
-  .hero-text{ flex:1 1 340px; min-width:260px; }
-  .eyebrow{
-    font-family:'Space Mono', monospace;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    font-size:12px;
-    color:var(--pink-main);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:16px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:22px; height:1px;
-    background:var(--pink-main);
-    display:inline-block;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 8vw, 4.4rem);
-    line-height:0.98;
-    letter-spacing:-0.01em;
-  }
-  .hero h1 em{
-    font-style:italic;
-    color: var(--pink-main);
-    font-weight:500;
-  }
-  .hero p.tag{
-    margin-top:18px;
-    max-width:46ch;
-    color:var(--ink-soft);
-    font-size:1.02rem;
-  }
-  .hero-meta{
-    margin-top:26px;
-    display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-    font-family:'Space Mono', monospace;
-    font-size:12.5px;
-    color:var(--ink);
-  }
-  .hero-meta span{ display:block; color:var(--ink-soft); font-size:11px; letter-spacing:.06em; margin-bottom:3px; }
-
-  .cocktail-wrap{
-    flex:1 1 200px;
-    min-width:180px;
-    max-width:240px;
-    margin:0 auto;
-    display:flex;
-    justify-content:center;
-  }
-  .cocktail-svg{ 
-    width:100%; 
-    height:auto; 
-    filter: drop-shadow(0 15px 30px rgba(255, 42, 133, 0.25)); 
-  }
-
-  /* ---------- CONTROLS ---------- */
-  .controls{
-    padding: 24px 0 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .search-box{
+  /* HEADER & LOGO DIN IMAGINE */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 100;
+    padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
-    background: var(--bg-card);
-    border: 1.5px solid var(--paper-dim);
-    border-radius: var(--radius-md);
-    padding: 0 14px;
-    height: 48px;
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    background: rgba(14, 26, 20, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(36, 61, 48, 0.6);
+    transition: all 0.3s ease;
   }
-  .search-box:focus-within {
-    border-color: var(--pink-main);
-    box-shadow: 0 4px 16px rgba(255, 42, 133, 0.2);
-  }
-  .search-icon{
-    width: 18px; 
-    height: 18px;
-    flex-shrink: 0;
-    margin-right: 10px;
-  }
-  .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  
-  .search-box input{
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 0;
-    height: 100%;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
-    color: var(--ink);
-    outline: none;
-    -webkit-appearance: none;
-    border-radius: 0;
-  }
-  .search-box input::placeholder { color: var(--ink-soft); }
 
-  .tag-filters{
+  .brand {
     display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 2px 12px;
-    scrollbar-width: none;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--text-dark);
+    text-decoration: none;
   }
-  .tag-filters::-webkit-scrollbar { display: none; }
-  
-  .chip{
-    font-family:'Space Mono', monospace;
-    font-size:13px;
-    letter-spacing:.03em;
-    padding: 0 16px;
-    min-height: 42px;
-    display: inline-flex;
+
+  /* Containerul logo-ului încărcat de tine */
+  .logo-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+    display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 100px;
-    border: 1.5px solid var(--paper-dim);
-    background: var(--bg-card);
-    color: var(--ink-soft);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all .2s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    background: #000;
+    flex-shrink: 0;
   }
-  .chip:active{ transform: translateY(0) scale(0.94); }
-  .chip.active{
-    background: var(--pink-main);
-    color: #fff; 
-    border-color: var(--pink-main);
+
+  .logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-text span:first-child {
+    font-size: 1.05rem;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .brand-text span:last-child {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  /* HERO SECTION */
+  .hero {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(180deg, var(--hero-bg) 0%, var(--bg-main) 100%);
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
-  /* ---------- CATEGORY SECTIONS / GRID ---------- */
-  .menu-section{ padding: 10px 0 160px; }
-  .category-section{ margin-top:38px; }
-  .category-section h2{
-    font-size:1.5rem;
-    padding-bottom:8px;
-    border-bottom:2px solid var(--pink-main);
-    display:inline-block;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-    gap:22px;
-    margin-top:22px;
-  }
-
-  @keyframes fadeUpIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  .card{
-    background:var(--bg-card);
-    border-radius:var(--radius-lg);
-    overflow:hidden;
-    box-shadow:0 4px 16px rgba(0,0,0,0.4);
-    border:1px solid var(--paper-dim);
-    display:flex;
-    flex-direction:column;
-    transition:transform .25s ease, box-shadow .25s ease, border-color .25s;
-    opacity: 0;
-    animation: fadeUpIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,0.6); border-color: var(--pink-main);}
-  .card-img-wrap{ position:relative; overflow:hidden; }
-  .card-img{ aspect-ratio:4/3; width:100%; object-fit:cover; background:var(--bg-panel); transition: transform 0.5s ease; }
-  .card:hover .card-img { transform: scale(1.05); }
-
-  .ribbon {
+  /* Elemente decorative subtile de fundal montan */
+  .hero::before {
+    content: '';
     position: absolute;
-    top: 14px;
-    left: -6px;
-    background: var(--pink-main);
-    color: #fff;
-    padding: 6px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 20%, rgba(224, 130, 63, 0.07) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid rgba(224, 130, 63, 0.35);
+    border-radius: 50px;
+    background: rgba(224, 130, 63, 0.08);
+  }
+  
+  /* TITLU ARIAL BLACK, FARA ITALIC, FARA DESCRIERE MICĂ */
+  .hero h1 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6.5vw, 4.8rem);
+    line-height: 1.12;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--text-dark);
+  }
+  
+  .hero h1 span {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  /* MAIN CONTENT */
+  main {
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-head {
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .section-head h2 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .section-head p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  #status {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 0;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .loader {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* GRID & CARDS */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+    transform: translateY(-6px);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(224, 130, 63, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+
+  .card:hover .card-icon {
+    transform: scale(1.1) rotate(-5deg);
+    background: var(--accent);
+    color: #FFFFFF;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--text-dark);
+  }
+  
+  .card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    line-height: 1.5;
+  }
+
+  .card-bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.2rem;
+  }
+
+  .go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    transition: color 0.2s;
+  }
+  
+  .go svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+  }
+  
+  .card:hover .go { color: var(--accent); }
+  .card:hover .go svg { 
+    transform: translateX(5px); 
+    color: var(--accent);
+  }
+  
+  .card .idx {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border-color);
+    background: var(--hero-bg);
+    padding: 3rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .legal-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  
+  .legal-btn:hover { 
+    border-color: var(--accent); 
+    color: var(--accent);
+  }
+
+  /* MODAL LEGAL UNIFICAT */
+  #legalOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 26, 20, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  #legalOverlay.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  #legalOverlay.active .modal-content { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  .close-btn {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .modal-body h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    z-index: 10;
-  }
-  .ribbon::before {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    border-top: 6px solid #b80052;
-    border-left: 6px solid transparent;
-  }
-
-  /* NUTRITIONAL BADGE */
-  .nutrition-badge {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-  }
-  .nutri-pill {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid var(--paper-dim);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-  .nutri-pill span { color: var(--pink-bright); }
-
-  /* QUANTITY CONTROLS */
-  .card-qty-controls {
-    position: absolute;
-    top: 12px; right: 12px;
-    display: flex;
-    align-items: center;
-    background: rgba(18, 18, 18, 0.9);
-    border: 1px solid var(--paper-dim);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 100px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    overflow: hidden;
-    z-index: 10;
-    transition: border-color 0.2s;
-  }
-  .card-qty-controls.has-items {
-    border-color: var(--pink-main);
-  }
-  .c-qty-btn {
-    width: 34px;
-    height: 34px;
-    border: none;
-    background: transparent;
-    color: var(--ink);
-    font-size: 1.25rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s;
-  }
-  .c-qty-btn:active { background: var(--pink-main); color: #fff;}
-  .c-qty-val {
-    width: 26px;
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--pink-bright);
-  }
-
-  .card-body{ padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
-  .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-  .card-top h3{ font-size:1.18rem; line-height:1.2; margin:0;}
-  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.05rem; }
-  .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
-  .ingredients{ font-size:13px; color:var(--ink-soft); margin:0; }
-  .ingredients b{ color:var(--ink); font-weight:600; }
-  
-  .allergens-wrap{ margin-top:auto; padding-top:12px; border-top: 1px dashed var(--paper-dim); }
-  .allergen-label { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-  .allergens{ display:flex; flex-wrap:wrap; gap:6px; }
-  .allergen-pill{
-    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.02em; 
-    padding:4px 10px; border-radius:100px; background:rgba(255, 42, 133, 0.15); color:var(--pink-bright); font-weight: 600;
-  }
-  .no-allergens{ font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); font-weight:600; }
-
-  .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:14px; }
-
-  /* ---------- TOTAL BAR ---------- */
-  .total-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid var(--paper-dim);
-    padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 100;
-    transform: translateY(120%);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
-  }
-  .total-bar.show { transform: translateY(0); }
-  
-  .total-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px dashed var(--paper-dim);
-    padding-bottom: 8px;
-  }
-  .total-label { font-size: 13px; color: var(--ink-soft); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;}
-  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--pink-bright); }
-  
-  .action-buttons { display: flex; gap: 12px; }
-  
-  .btn-action {
-    flex: 1;
-    border: none;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s, opacity 0.2s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn-action:active { transform: scale(0.96); }
-  
-  .btn-whatsapp { background: #25D366; color: white; }
-  .btn-whatsapp svg { width: 18px; height: 18px; fill: currentColor; }
-  
-  .btn-waiter {
-    background: var(--bg-panel);
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-  }
-  .btn-waiter svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
-
-  /* FIXED CORNER BUTTONS */
-  .scroll-top-btn, .global-fav-btn {
-    position: fixed;
-    bottom: 24px;
-    height: 48px;
-    border: none;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 90;
-    transition: opacity 0.3s, transform 0.3s, background 0.2s, bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s;
-    -webkit-tap-highlight-color: transparent;
+    color: var(--text-dark);
+    margin: 1.5rem 0 0.5rem;
   }
   
-  .scroll-top-btn {
-    right: 20px;
-    width: 48px;
-    background: var(--pink-main);
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(255, 42, 133, 0.4);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-  }
-  .scroll-top-btn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-  .scroll-top-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round;}
-
-  @keyframes heartGlow {
-    0% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
-    50% { box-shadow: 0 0 25px rgba(255, 42, 133, 0.8), inset 0 0 10px rgba(255, 42, 133, 0.2); }
-    100% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
-  }
-
-  .global-fav-btn {
-    left: 20px;
-    background: var(--bg-card);
-    border: 2px solid var(--pink-main);
-    padding: 0 16px 0 14px;
-    gap: 8px;
-    color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    font-size: 14px;
-    font-weight: 700;
-    animation: heartGlow 2s infinite ease-in-out;
-  }
-  .global-fav-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
-  .global-fav-btn .fav-count { font-size: 14px; color: var(--pink-bright); }
-
-  .scroll-top-btn.lift, .global-fav-btn.lift { bottom: 160px; }
-
-  /* WELCOME MODAL */
-  .welcome-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-  }
-  .welcome-overlay.show { opacity: 1; pointer-events: auto; }
-  .welcome-modal {
-    background: var(--bg-card);
-    border: 1px solid var(--pink-main);
-    border-radius: var(--radius-lg);
-    padding: 36px 24px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 20px 50px rgba(255, 42, 133, 0.2);
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .welcome-overlay.show .welcome-modal { transform: scale(1) translateY(0); }
-  .welcome-icon {
-    width: 70px; height: 70px;
-    margin: 0 auto 20px;
-    background: rgba(255, 42, 133, 0.15);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--pink-main);
-  }
-  .welcome-icon svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .welcome-modal h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 12px; }
-  .welcome-modal p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
-
-  .welcome-langs { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;}
-  .lang-btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 12px 10px;
-    border: 1.5px solid var(--paper-dim);
-    background: transparent;
-    color: var(--ink-soft);
-    border-radius: var(--radius-md);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .lang-btn.active {
-    border-color: var(--pink-main);
-    background: rgba(255, 42, 133, 0.15);
-    color: #fff;
-  }
-  .flag { font-size: 1.25rem; }
-
-  /* FOOTER */
-  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; }
-  .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
-  footer .brand{ font-family:'Fraunces', serif; color:var(--ink); font-size:1.1rem; }
-  .footer-links{ display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
-  .footer-links button{ background:none; border:none; color:var(--ink-soft); font-family:'Work Sans', sans-serif; font-size:13.5px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0; }
-
-  /* MODALS */
-  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:150; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);}
-  .modal-overlay.open{ display:flex; }
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body p { margin-bottom: 1rem; }
   
-  .modal{ 
-    background:var(--bg-card); 
-    border: 1px solid var(--paper-dim); 
-    max-width:550px; 
-    width:100%; 
-    max-height:85vh; 
-    overflow-y:auto; 
-    border-radius:var(--radius-lg); 
-    padding:30px; 
-    position:relative; 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  }
-  
-  .modal::-webkit-scrollbar { width: 6px; }
-  .modal::-webkit-scrollbar-track { background: transparent; }
-  .modal::-webkit-scrollbar-thumb { background: var(--paper-dim); border-radius: 10px; }
-  
-  .modal-close{ 
-    position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); 
-    border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; 
-    font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s;
-  }
-  .modal-close:hover { background: var(--pink-main); color: #fff; border-color: var(--pink-main); }
-  
-  .legal-content-box { margin-top: 10px; }
-  .legal-content-box h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 24px; line-height: 1.2; border-bottom: 2px solid var(--pink-main); padding-bottom: 12px; display: inline-block;}
-  .legal-content-box h3 { font-size: 1.1rem; color: var(--ink); margin: 24px 0 10px; font-family: 'Work Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;}
-  .legal-content-box p { font-size: 14px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.6; }
-  .legal-content-box ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.6;}
-  .legal-content-box li { margin-bottom: 8px; }
-  .legal-content-box strong { color: var(--ink); font-weight: 600; }
-  
-  .input-table {
-    width: 100%;
-    padding: 14px;
-    font-size: 1.2rem;
-    text-align: center;
-    background: var(--bg-base);
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-    border-radius: var(--radius-md);
-    margin-bottom: 20px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-  }
-  .input-table:focus { outline: none; border-color: var(--pink-main); }
-  
-  .btn-submit {
-    width: 100%;
-    background: var(--pink-main);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 1.1rem;
-    font-family: 'Work Sans', sans-serif;
-    cursor: pointer;
-  }
-  .btn-submit.green { background: #25D366; }
-
-  /* WAITER MODE */
-  .waiter-mode {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-base);
-    color: var(--ink);
-    z-index: 200;
-    display: none;
-    flex-direction: column;
-    padding: 40px 20px 100px;
-    overflow-y: auto;
-  }
-  .waiter-mode.active { display: flex; }
-  .waiter-header {
-    text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--paper-dim);
-    padding-bottom: 20px;
-  }
-  .waiter-header h2 { font-size: 2rem; color: var(--pink-main); }
-  .waiter-list { list-style: none; padding: 0; margin: 0 0 30px; }
-  .waiter-list li {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.4rem;
-    font-weight: 600;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--paper-dim);
-    color: var(--ink);
-  }
-  .waiter-list .qty-badge {
-    background: var(--pink-main);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 8px;
-    margin-right: 12px;
-  }
-  .waiter-total { font-size: 1.8rem; font-weight: 700; text-align: right; color: var(--pink-bright); }
-  
-  .waiter-actions {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--bg-card);
-    border-top: 1px solid var(--paper-dim);
-    padding: 20px;
-    display: flex;
-    gap: 16px;
-  }
-  .btn-waiter-done {
-    flex: 1;
-    background: var(--pink-main);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: 'Work Sans', sans-serif;
-  }
-  .btn-waiter-back {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-family: 'Work Sans', sans-serif;
+  .important-note {
+    background: rgba(224, 130, 63, 0.08);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+    color: var(--text-dark);
+    font-size: 0.9rem;
   }
 
-  @media (max-width:640px){
-    .hero{ padding-top:44px; }
-    .top-actions{ top:14px; right:14px; gap:6px; }
-    .lang-toggle{ padding:6px 12px; font-size:12px; min-height:36px; }
-    .hero-inner{ text-align:center; justify-content:center; }
-    .hero-meta{ justify-content:center; }
-    .tag-filters { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
-    .footer-inner{ flex-direction:column; align-items:flex-start; }
-    .grid{ grid-template-columns:1fr; }
-    .action-buttons { flex-direction: column; }
-    .scroll-top-btn.lift, .global-fav-btn.lift { bottom: 230px; }
+  @media (max-width: 768px) {
+    .navbar { padding: 0.8rem 1rem; }
+    .hero { padding: 8rem 1.2rem 4rem; }
+    .hero h1 { font-size: 2.1rem; }
+    main { padding: 2.5rem 1rem 4rem; }
+    .section-head h2 { font-size: 1.3rem; }
+    .modal-body { padding: 1.5rem 1rem; }
+    .modal-header { padding: 1.2rem 1rem; }
   }
-  @media (min-width:641px){
-    .controls { flex-direction: row; align-items: center; justify-content: space-between; }
-    .search-box { max-width: 340px; }
-    .grid{ grid-template-columns:repeat(2, 1fr); }
-  }
-  @media (min-width:901px){ .grid{ grid-template-columns:repeat(3, 1fr); } }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="top-actions">
-    <button class="lang-toggle" id="langToggle" type="button">🇷🇴 RO</button>
-  </div>
-  <div class="wrap hero-inner">
-    <div class="hero-text">
-      <p class="eyebrow" id="txtEyebrow">Meniu digital</p>
-      <h1 id="txtTitle">Fiera Bar</h1>
-      <p class="tag" id="txtTagline">Cocktailuri internaționale, băuturi rafinate și preparate delicioase.</p>
-      <div class="hero-meta">
-        <div><span id="txtHoursLabel">Program</span><span id="txtHoursValue">18:00 &ndash; 02:00</span></div>
-      </div>
+<header class="navbar" id="navbar">
+  <a href="#" class="brand">
+    <div class="logo-box">
+      <!-- Imaginea de logo încărcată de tine -->
+      <img src="1000076752.jpg" alt="Logo Meniuri Digitale Piatra Neamț" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'44\' height=\'44\'><rect width=\'44\' height=\'44\' fill=\'%23182C22\'/><text x=\'50%దిక\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23E0823F\' font-family=\'sans-serif\' font-size=\'16\' font-weight=\'bold\'>PN</text></svg>'">
     </div>
-    
-    <div class="cocktail-wrap" aria-hidden="true">
-      <svg class="cocktail-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="130" y1="20" x2="85" y2="120" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-        <polygon points="44,80 156,80 100,136" fill="#ff2a85" />
-        <polygon points="25,60 175,60 100,140" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
-        <line x1="100" y1="140" x2="100" y2="185" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-        <line x1="65" y1="185" x2="135" y2="185" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-      </svg>
+    <div class="brand-text">
+      <span>Meniuri Digitale</span>
+      <span>Piatra Neamț</span>
     </div>
-  </div>
+  </a>
 </header>
 
-<main class="wrap menu-section">
-  <div class="controls">
-    <div class="search-box">
-      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm10 17-5.6-5.6"/></svg>
-      <input type="search" id="searchInput" aria-label="Caută" placeholder="Caută un preparat sau o băutură...">
-    </div>
-    <div class="tag-filters" id="tagFilters" role="group" aria-label="Filtrare"></div>
+<div class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">Platformă HoReCa Neamț</span>
+    <h1>Restaurantele din<br><span>Piatra Neamț</span></h1>
   </div>
+</div>
 
-  <div id="categoriesWrap" aria-live="polite"></div>
-  <div class="empty-state" id="emptyState" style="display:none;"></div>
+<main>
+  <div class="section-head">
+    <h2>Restaurante Partenere</h2>
+    <p>Lista actualizată a locațiilor care oferă meniuri digitale interactive.</p>
+  </div>
+  
+  <div id="status">
+    <div class="loader"></div>
+    <span>Se încarcă portofoliul de restaurante...</span>
+  </div>
+  
+  <div class="grid" id="restaurants-container"></div>
 </main>
 
-<div class="total-bar" id="totalBar">
-  <div class="total-header">
-    <span class="total-label" id="txtTotalLabel">Total Selecție:</span>
-    <span class="total-amount" id="totalAmount">0.00 €</span>
-  </div>
-  <div class="action-buttons">
-    <button class="btn-action btn-whatsapp" id="btnOpenWhatsAppModal">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span id="txtBtnWhatsApp">Comandă WhatsApp</span>
-    </button>
-    <button class="btn-action btn-waiter" id="btnOpenWaiterMode">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span id="txtBtnWaiter">Arată Ospătarului</span>
-    </button>
-  </div>
-</div>
-
-<button class="global-fav-btn" id="favShortcut" type="button" aria-label="Selecția mea">
-  <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-  <span class="fav-count" id="favCount">0</span>
-</button>
-
-<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Mergi sus">
-  <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-
-<div class="welcome-overlay" id="welcomeOverlay">
-  <div class="welcome-modal">
-    <div class="welcome-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-    </div>
-    <h2 id="txtWelcomeTitle">Fiera Bar</h2>
-    <p id="txtWelcomeDesc">Vă rugăm să selectați limba:</p>
-
-    <div class="welcome-langs">
-      <button class="lang-btn active" data-lang="ro"><span class="flag">🇷🇴</span> Română</button>
-      <button class="lang-btn" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
-      <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
-    </div>
-
-    <button class="btn-submit" id="btnWelcomeClose">Continuă</button>
-  </div>
-</div>
-
 <footer>
-  <div class="wrap footer-inner">
-    <div class="brand">Fiera Bar</div>
-    <div class="footer-links">
-      <button type="button" id="openLegal"></button>
-      <span id="txtFooterCopy">&copy; 2026 Fiera Bar</span>
-    </div>
-  </div>
+  <div class="footer-text">&copy; 2026 Meniuri Digitale &middot; Piatra Neamț, România</div>
+  <button id="openLegal" class="legal-btn">Termeni & Confidențialitate</button>
 </footer>
 
-<div class="modal-overlay" id="legalOverlay">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
-    <button class="modal-close" id="closeLegal" aria-label="Închide">&times;</button>
-    <div id="legalContent" class="legal-content-box"></div>
-  </div>
-</div>
+<!-- MODAL LEGAL -->
+<div id="legalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Termeni și Condiții / GDPR</h2>
+      <button class="close-btn" id="closeLegal" aria-label="Închide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+      <div class="important-note">
+        <strong>Notă informativă:</strong> Această platformă funcționează ca un catalog digital informativ. <strong>Nu</strong> procesează comenzi online cu plată și <strong>nu</strong> livrează preparate la domiciliu.
+      </div>
 
-<div class="modal-overlay" id="waOverlay">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-close" id="closeWaModal" aria-label="Închide">&times;</button>
-    <h2 id="txtWaModalTitle">Numărul Mesei</h2>
-    <p id="txtWaModalDesc">Te rugăm să introduci numărul mesei pentru a trimite comanda.</p>
-    <input type="number" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
-    <button class="btn-submit green" id="sendWaBtn">Trimite pe WhatsApp</button>
-  </div>
-</div>
+      <h3>Art. 1 - Colectarea Datelor (GDPR)</h3>
+      <p>Respectăm cu strictețe legislația privind protecția datelor (Regulamentul UE 2016/679). Platforma <strong>NU colectează, NU stochează și NU distribuie date cu caracter personal</strong> (nume, adrese de e-mail sau numere de telefon).</p>
+      <p>Nu folosim cookie-uri de urmărire publicitară. Se utilizează exclusiv stocarea locală a browserului (<em>Local Storage</em>) strict pentru preferințe vizuale de navigare.</p>
 
-<div class="waiter-mode" id="waiterScreen">
-  <div class="waiter-header">
-    <h2 id="txtWaiterTitle">Selecția Mesei</h2>
-  </div>
-  <ul class="waiter-list" id="waiterList"></ul>
-  <div class="waiter-total" id="waiterTotalDisplay">Total: 0.00 €</div>
-  
-  <div class="waiter-actions">
-    <button class="btn-waiter-back" id="closeWaiterBtn">Înapoi</button>
-    <button class="btn-waiter-done" id="clearWaiterBtn">Comandă Preluată!</button>
+      <h3>Art. 2 - Responsabilitatea pentru Conținut</h3>
+      <p>Aplicația interoghează un repository public pentru a prelua lista partenerilor. Conținutul meniurilor (preparate, prețuri, imagini) este administrat integral de către reprezentanții fiecărui local.</p>
+      <p>Fotografiile au caracter informativ. <strong>Prețurile finale valabile sunt cele afișate în unitatea fizică a restaurantului</strong> în momentul comenzii.</p>
+
+      <h3>Art. 3 - Informații despre Alergeni</h3>
+      <p>Preparatele pot conține ingrediente cu potențial alergen. <strong>Vă rugăm să contactați personalul restaurantului înainte de plasarea comenzii</strong> pentru lămuriri suplimentare privind compoziția alimentelor.</p>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
-  const categoriesWrap = document.getElementById('categoriesWrap');
-  const emptyState = document.getElementById('emptyState');
-  const searchInput = document.getElementById('searchInput');
-  const tagFiltersEl = document.getElementById('tagFilters');
-  const langToggle = document.getElementById('langToggle');
-  const favShortcut = document.getElementById('favShortcut');
-  const favCountEl = document.getElementById('favCount');
-  const htmlRoot = document.getElementById('htmlRoot');
-  const totalBar = document.getElementById('totalBar');
-  const totalAmount = document.getElementById('totalAmount');
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  
-  let appConfig = { whatsapp_number: "" }; 
+  const USERNAME = 'mqr1oo';
+  const REPO = 'MeniuPN';
 
-  const FALLBACK_DRINKS = [
-    "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1575037614876-c385cb814cff?auto=format&fit=crop&w=480&q=80"
-  ];
-  
-  const FALLBACK_FOOD = [
-    "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1560684352-8497838a2229?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=480&q=80"
-  ];
-
-  // MENIU COMPLET CU BĂUTURI INTERNAȚIONALE, PREPARATE ȘI VALORI NUTRIȚIONALE (KCAL + GRAME)
-  const FALLBACK_MENU = [
-    {
-      "imageNumber": 1,
-      "name": "Fabada Asturiana",
-      "price": 16.50,
-      "weight": "450 g",
-      "kcal": 620,
-      "description": "Guiso de fabes cocinado a fuego lento, con carnes ahumadas y un toque de pimentón.",
-      "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta", "Azafrán"],
-      "allergens": ["Sulfitos"],
-      "tags": ["principal", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Fabada Asturiană",
-          "description": "Tocană tradițională de fasole albă gătită lent la foc mic, cu cărnuri afumate și boia.",
-          "ingredients": ["Fasole albă", "Cârnat chorizo", "Sângerete", "Pancetta", "Șofran"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Fabada Asturiana",
-          "description": "A slow-simmered bean stew from the Asturian highlands, with smoky cured meats and a touch of paprika.",
-          "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly", "Saffron"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 2,
-      "name": "Cachopo de Cabrales",
-      "price": 19.00,
-      "weight": "500 g",
-      "kcal": 890,
-      "description": "Dos filetes de ternera empanados y rellenos de queso Cabrales fundido y jamón serrano.",
-      "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Pan rallado", "Huevo"],
-      "allergens": ["Gluten", "Lácteos", "Huevo"],
-      "tags": ["principal", "especialidad", "para compartir"],
-      "translations": {
-        "ro": {
-          "name": "Cachopo cu brânză Cabrales",
-          "description": "Două fileuri de vită pane umplute cu brânză albastră Cabrales topită și șuncă serrano.",
-          "ingredients": ["Carne de vită", "Șuncă serrano", "Brânză Cabrales", "Pesmet", "Ou"],
-          "allergens": ["Gluten", "Lactate", "Ou"]
-        },
-        "en": {
-          "name": "Cachopo de Cabrales",
-          "description": "Two breaded veal fillets folded around melted Cabrales blue cheese and serrano ham, fried to order.",
-          "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Breadcrumbs", "Egg"],
-          "allergens": ["Gluten", "Dairy", "Egg"]
-        }
-      }
-    },
-    {
-      "imageNumber": 3,
-      "name": "Mojito Cubano Clásico",
-      "price": 8.00,
-      "weight": "350 ml",
-      "kcal": 210,
-      "description": "Cóctel refrescante con ron blanco, lima fresca, hojas de hierbabuena, azúcar de caña y soda.",
-      "ingredients": ["Ron blanco", "Lima", "Menta", "Azúcar", "Soda"],
-      "allergens": [],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Mojito Cubanez Clasic",
-          "description": "Cocktail răcoritor cu rom alb, lime proaspăt, frunze de mentă, zahăr din trestie și apă minerală.",
-          "ingredients": ["Rom alb", "Lime", "Mentă", "Zahăr", "Apă minerală"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Classic Cuban Mojito",
-          "description": "Refreshing cocktail with white rum, fresh lime, mint leaves, cane sugar, and club soda.",
-          "ingredients": ["White rum", "Lime", "Mint", "Sugar", "Soda"],
-          "allergens": []
-        }
-      }
-    },
-    {
-      "imageNumber": 4,
-      "name": "Aperol Spritz",
-      "price": 8.50,
-      "weight": "300 ml",
-      "kcal": 170,
-      "description": "El aperitivo italiano por excelencia: Aperol, Prosecco espumoso y un toque de soda con naranja.",
-      "ingredients": ["Aperol", "Prosecco", "Soda", "Rodaja de naranja"],
-      "allergens": ["Sulfitos"],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Aperol Spritz",
-          "description": "Aperitivul italian prin excelență: Aperol, Prosecco spumant și apă minerală cu felie de portocală.",
-          "ingredients": ["Aperol", "Prosecco", "Apă minerală", "Portocală"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Aperol Spritz",
-          "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of soda with orange.",
-          "ingredients": ["Aperol", "Prosecco", "Soda", "Orange slice"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 5,
-      "name": "Merluza a la Sidra",
-      "price": 18.00,
-      "weight": "380 g",
-      "kcal": 410,
-      "description": "Lomo de merluza cocinado en salsa de sidra y perejil, con almejas y patata.",
-      "ingredients": ["Merluza", "Sidra", "Almejas", "Patata", "Perejil"],
-      "allergens": ["Pescado", "Marisco", "Sulfitos"],
-      "tags": ["principal", "marisco", "especialidad"],
-      "translations": {
-        "ro": {
-          "name": "Merluciu în sos de cidru",
-          "description": "File de merluciu gătit în sos fin de cidru și pătrunjel, cu scoici și cartofi.",
-          "ingredients": ["Merluciu", "Cidru", "Scoici", "Cartof", "Pătrunjel"],
-          "allergens": ["Pește", "Crustacee", "Sulfiți"]
-        },
-        "en": {
-          "name": "Hake in Cider Sauce",
-          "description": "Hake fillet gently cooked in a cider and parsley sauce with clams and potato.",
-          "ingredients": ["Hake", "Cider", "Clams", "Potato", "Parsley"],
-          "allergens": ["Fish", "Shellfish", "Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 6,
-      "name": "Negroni Cocktail",
-      "price": 9.00,
-      "weight": "150 ml",
-      "kcal": 195,
-      "description": "Clásico cóctel italiano robusto a base de ginebra, vermut rojo y Campari.",
-      "ingredients": ["Ginebra", "Vermut rojo", "Campari", "Piel de naranja"],
-      "allergens": ["Sulfitos"],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Cocktail Negroni",
-          "description": "Cocktail italian clasic și robust, preparat din gin, vermut roșu și Campari.",
-          "ingredients": ["Gin", "Vermut roșu", "Campari", "Coajă de portocală"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Negroni Cocktail",
-          "description": "A classic robust Italian cocktail made with gin, sweet red vermouth, and Campari.",
-          "ingredients": ["Gin", "Sweet vermouth", "Campari", "Orange peel"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 7,
-      "name": "Arroz con Leche Quemado",
-      "price": 6.50,
-      "weight": "220 g",
-      "kcal": 340,
-      "description": "Cremoso arroz con leche asturiano, frío, terminado con una capa de azúcar caramelizada.",
-      "ingredients": ["Arroz", "Leche", "Canela", "Limón", "Azúcar"],
-      "allergens": ["Lácteos"],
-      "tags": ["postre", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Orez cu Lapte Ars",
-          "description": "Orez cu lapte cremos asturian, servit rece, finisat cu o crustă crocantă de zahăr caramelizat.",
-          "ingredients": ["Orez", "Lapte", "Scorțișoară", "Lămâie", "Zahăr"],
-          "allergens": ["Lactate"]
-        },
-        "en": {
-          "name": "Burnt Rice Pudding",
-          "description": "Creamy Asturian rice pudding, chilled and finished with a caramelised sugar crust.",
-          "ingredients": ["Rice", "Milk", "Cinnamon", "Lemon zest", "Sugar"],
-          "allergens": ["Dairy"]
-        }
-      }
-    },
-    {
-      "imageNumber": 8,
-      "name": "Sidra Natural (Botella)",
-      "price": 7.00,
-      "weight": "700 ml",
-      "kcal": 260,
-      "description": "Sidra natural seca de un llagar local, escanciada desde lo alto al estilo tradicional.",
-      "ingredients": ["Zumo de manzana fermentado"],
-      "allergens": ["Sulfitos"],
-      "tags": ["bebida", "sidra", "tradicional"],
-      "translations": {
-        "ro": {
-          "name": "Cidru Natural (Sticlă)",
-          "description": "Cidru natural sec dintr-o fabrică locală, turnat de la înălțime în stil tradițional.",
-          "ingredients": ["Suc de mere fermentat"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Natural Cider (Bottle)",
-          "description": "Dry natural cider from a local cider house, poured from height in the traditional style.",
-          "ingredients": ["Fermented apple juice"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 9,
-      "name": "Pote Asturiano",
-      "price": 15.00,
-      "weight": "420 g",
-      "kcal": 560,
-      "description": "Guiso de montaña con alubias blancas, berza, patata y carnes curadas.",
-      "ingredients": ["Alubias blancas", "Berza", "Patata", "Chorizo", "Costilla"],
-      "allergens": [],
-      "tags": ["principal", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Pote Asturian",
-          "description": "Tocană montană consistentă cu fasole albă, varză furajeră, cartofi și cărnuri afumate.",
-          "ingredients": ["Fasole albă", "Varză", "Cartofi", "Chorizo", "Coastă de porc"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Pote Asturiano",
-          "description": "A hearty highland stew of white beans, cabbage, potato and cured pork.",
-          "ingredients": ["White beans", "Cabbage", "Potato", "Chorizo", "Pork rib"],
-          "allergens": []
-        }
-      }
-    },
-    {
-      "imageNumber": 10,
-      "name": "Espresso Martini",
-      "price": 8.50,
-      "weight": "180 ml",
-      "kcal": 210,
-      "description": "Cóctel sofisticado y enérgico con vodka, licor de café, espresso recién hecho y jarabe.",
-      "ingredients": ["Vodka", "Licor de café", "Espresso", "Jarabe de azúcar"],
-      "allergens": [],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Espresso Martini",
-          "description": "Cocktail sofisticat și energizant pe bază de vodcă, lichior de cafea și espresso proaspăt.",
-          "ingredients": ["Vodcă", "Lichior de cafea", "Espresso", "Sirop de zahăr"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Espresso Martini",
-          "description": "A sophisticated and energetic cocktail with vodka, coffee liqueur, fresh espresso, and simple syrup.",
-          "ingredients": ["Vodka", "Coffee liqueur", "Espresso", "Sugar syrup"],
-          "allergens": []
-        }
-      }
-    }
-  ];
-
-  const CATEGORIES = [
-    { key:'entrante', ro:'Aperitive', es:'Entrantes', en:'Starters' },
-    { key:'principal', ro:'Fel Principal', es:'Principales', en:'Mains' },
-    { key:'coctel', ro:'Cocktailuri', es:'Cócteles', en:'Cocktails' },
-    { key:'bebida', ro:'Băuturi', es:'Bebidas', en:'Drinks' },
-    { key:'postre', ro:'Deserturi', es:'Postres', en:'Desserts' }
-  ];
-  const OTHER_LABEL = { ro:'Altele', es:'Otros', en:'Other' };
-
-  const TAG_LABELS = {
-    'tradicional': { ro:'tradițional', es:'tradicional', en:'traditional' },
-    'especialidad': { ro:'specialitate', es:'especialidad', en:'signature' },
-    'para compartir': { ro:'de împărțit', es:'para compartir', en:'to share' },
-    'marisco': { ro:'fructe de mare', es:'marisco', en:'seafood' },
-    'sidra': { ro:'cidru', es:'sidra', en:'cider' },
-    'sin gluten': { ro:'fără gluten', es:'sin gluten', en:'gluten-free' }
-  };
-  
-  const ALLERGEN_LABELS = {
-    'Gluten': { ro:'Gluten', es:'Gluten', en:'Gluten' },
-    'Lácteos': { ro:'Lactate', es:'Lácteos', en:'Dairy' },
-    'Huevo': { ro:'Ou', es:'Huevo', en:'Egg' },
-    'Sulfitos': { ro:'Sulfiți', es:'Sulfitos', en:'Sulphites' },
-    'Pescado': { ro:'Pește', es:'Pescado', en:'Fish' },
-    'Marisco': { ro:'Crustacee', es:'Marisco', en:'Shellfish' }
-  };
-
-  const UI = {
-    ro: {
-      eyebrow: 'Meniu digital',
-      titleEm: 'Fiera Bar',
-      tagline: 'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.',
-      hoursLabel: 'Program',
-      hoursValue: '18:00 – 02:00',
-      searchPlaceholder: 'Caută un preparat sau o băutură...',
-      allChip: 'Toate',
-      ingredientsLabel: 'Ingrediente:',
-      allergensLabel: 'Alergeni:',
-      noAllergens: 'Fără alergeni',
-      emptyState: 'Niciun produs nu corespunde căutării.',
-      loadError: 'Nu s-a putut încărca meniul.',
-      legalLinkText: 'Termeni legali și confidențialitate',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Termeni Legali și Politica de Confidențialitate</h2>
-        <h3>1. Exonerare de Răspundere și Alergeni</h3>
-        <p>Acest meniu digital are scop <strong>strict informativ</strong>.</p>
-        <ul>
-          <li>Prețurile și disponibilitatea produselor pot suferi modificări.</li>
-          <li><strong>Alergii și intoleranțe:</strong> Vă rugăm să informați personalul nostru dacă suferiți de alergii alimentare înainte de plasarea comenzii.</li>
-        </ul>
-        <h3>2. Protecția Datelor (GDPR)</h3>
-        <p>Aplicația utilizează stocarea locală a browserului (localStorage) doar pentru a reține limba și selecția coșului de cumpărături. Nu colectăm date personale pe servere.</p>
-      `,
-      favShortcutLabel: 'Selecția Mea',
-      totalLabel: 'Total Selecție:',
-      btnWhatsApp: 'Comandă WhatsApp',
-      btnWaiter: 'Arată Ospătarului',
-      ribbonSpecial: 'Specialitate',
-      waModalTitle: 'Numărul Mesei',
-      waModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar.',
-      sendWaBtn: 'Trimite Comanda',
-      waiterTitle: 'Selecția Mesei',
-      closeWaiterBtn: 'Înapoi la Meniu',
-      clearWaiterBtn: 'Comandă Preluată!',
-      whatsappIntro: 'Bună! Suntem masa {mesa}. Am dori să comandăm:',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Vă rugăm să selectați limba:',
-      welcomeBtn: 'Continuă'
-    },
-    es: {
-      eyebrow: 'Menú digital',
-      titleEm: 'Fiera Bar',
-      tagline: 'Cócteles internacionales, bebidas refinadas y platos deliciosos.',
-      hoursLabel: 'Horario',
-      hoursValue: '18:00 – 02:00',
-      searchPlaceholder: 'Buscar un plato o bebida...',
-      allChip: 'Todos',
-      ingredientsLabel: 'Ingredientes:',
-      allergensLabel: 'Alérgenos:',
-      noAllergens: 'Sin alérgenos',
-      emptyState: 'Ningún producto coincide con tu búsqueda.',
-      loadError: 'No se pudo cargar el menú.',
-      legalLinkText: 'Aviso legal y privacidad',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Aviso Legal y Política de Privacidad</h2>
-        <h3>1. Exención de Responsabilidad y Alérgenos</h3>
-        <p>Este menú digital tiene una finalidad <strong>estrictamente informativa</strong>.</p>
-        <ul>
-          <li>Los precios y la disponibilidad pueden estar sujetos a cambios.</li>
-          <li><strong>Alergias e intolerancias:</strong> Es obligatorio consultar con nuestro personal antes de realizar cualquier pedido si padece alguna alergia.</li>
-        </ul>
-        <h3>2. Política de Privacidad (RGPD)</h3>
-        <p>Utilizamos el almacenamiento local (localStorage) únicamente para guardar sus preferencias de idioma y selección temporal. No recopilamos datos personales en servidores.</p>
-      `,
-      favShortcutLabel: 'Mi Selección',
-      totalLabel: 'Total Selección:',
-      btnWhatsApp: 'Pedir WhatsApp',
-      btnWaiter: 'Mostrar al Camarero',
-      ribbonSpecial: 'Especialidad',
-      waModalTitle: 'Número de Mesa',
-      waModalDesc: 'Por favor, indica tu número de mesa para enviar el pedido a la barra.',
-      sendWaBtn: 'Enviar Pedido',
-      waiterTitle: 'Selección de la Mesa',
-      closeWaiterBtn: 'Volver al Menú',
-      clearWaiterBtn: '¡Pedido Tomado!',
-      whatsappIntro: '¡Hola! Somos la mesa {mesa}. Nos gustaría pedir:',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Por favor, selecciona tu idioma:',
-      welcomeBtn: 'Continuar'
-    },
-    en: {
-      eyebrow: 'Digital menu',
-      titleEm: 'Fiera Bar',
-      tagline: 'International cocktails, fine drinks and delicious dishes.',
-      hoursLabel: 'Hours',
-      hoursValue: '6:00 pm – 2:00 am',
-      searchPlaceholder: 'Search a dish or drink...',
-      allChip: 'All',
-      ingredientsLabel: 'Ingredients:',
-      allergensLabel: 'Allergens:',
-      noAllergens: 'No allergens',
-      emptyState: 'No products match your search.',
-      loadError: 'Could not load the menu.',
-      legalLinkText: 'Legal notice & privacy',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Legal Notice & Privacy Policy</h2>
-        <h3>1. Disclaimer and Allergen Information</h3>
-        <p>This digital menu is provided for <strong>informational purposes only</strong>.</p>
-        <ul>
-          <li>Prices and product availability are subject to change.</li>
-          <li><strong>Allergies:</strong> Please inform our staff about any food allergies before placing your order.</li>
-        </ul>
-        <h3>2. Privacy Policy (GDPR)</h3>
-        <p>We use browser local storage solely for your language preference and cart session. No personal data is collected on servers.</p>
-      `,
-      favShortcutLabel: 'My Selection',
-      totalLabel: 'Total Selection:',
-      btnWhatsApp: 'WhatsApp Order',
-      btnWaiter: 'Show to Waiter',
-      ribbonSpecial: 'Signature',
-      waModalTitle: 'Table Number',
-      waModalDesc: 'Please enter your table number to send the order to the bar.',
-      sendWaBtn: 'Send Order',
-      waiterTitle: 'Table Selection',
-      closeWaiterBtn: 'Back to Menu',
-      clearWaiterBtn: 'Order Taken!',
-      whatsappIntro: 'Hi! We are table {mesa}. We would like to order:',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Please select your language:',
-      welcomeBtn: 'Continue'
-    }
-  };
-
-  const FAVORITES_KEY = 'fieraBar:favoritesQty';
-  const LANG_KEY = 'fieraBar:lang';
-
-  let allItems = [];
-  let activeFilter = 'all';
-  let favoritesQty = loadFavorites();
-  let currentLang = loadLang();
-
-  function loadFavorites(){
-    try{
-      const raw = window.localStorage.getItem(FAVORITES_KEY);
-      return raw ? JSON.parse(raw) : {};
-    }catch(e){ return {}; }
-  }
-  function saveFavorites(){
-    try{ window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoritesQty)); }
-    catch(e){}
-  }
-  function loadLang(){
-    try{ 
-      const l = window.localStorage.getItem(LANG_KEY);
-      return ['ro', 'es', 'en'].includes(l) ? l : 'ro'; 
-    }
-    catch(e){ return 'ro'; }
-  }
-  function saveLang(){
-    try{ window.localStorage.setItem(LANG_KEY, currentLang); }catch(e){}
-  }
-
-  function getFavCount() {
-    let count = 0;
-    for(let id in favoritesQty) count += favoritesQty[id];
-    return count;
-  }
-
-  function updateFavShortcut(){
-    favCountEl.textContent = getFavCount();
-  }
-
-  function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
-  
-  function updateQty(item, change) {
-    const id = item.imageNumber;
-    let current = favoritesQty[id] || 0;
-    current += change;
-    if(current <= 0) delete favoritesQty[id];
-    else favoritesQty[id] = current;
-    saveFavorites();
-  }
-
-  function itemText(item){
-    if(item.translations && item.translations[currentLang]){
-      const t = item.translations[currentLang];
-      return {
-        name: t.name || item.name, 
-        description: t.description || item.description,
-        ingredients: t.ingredients || item.ingredients, 
-        allergens: t.allergens || item.allergens
-      };
-    }
-    return { name:item.name, description:item.description, ingredients:item.ingredients, allergens:item.allergens };
-  }
-  function allergenLabel(a){ return (ALLERGEN_LABELS[a] && ALLERGEN_LABELS[a][currentLang]) || a; }
-  function categoryOf(item){
-    const found = CATEGORIES.find(c => item.tags.includes(c.key));
-    return found ? found.key : 'otros';
-  }
-  function categoryLabel(key){
-    const found = CATEGORIES.find(c => c.key === key);
-    return found ? found[currentLang] : OTHER_LABEL[currentLang];
-  }
-
-  function localImagePath(imageNumber){ return `images/${imageNumber}.jpg`; }
-  
-  function fallbackImageUrl(item){
-    let seed = 0;
-    if(item.name) { for (let i = 0; i < item.name.length; i++) seed += item.name.charCodeAt(i); }
-    let isDrink = item.tags && (item.tags.includes('coctel') || item.tags.includes('bebida') || item.tags.includes('sidra'));
-    return isDrink ? FALLBACK_DRINKS[seed % FALLBACK_DRINKS.length] : FALLBACK_FOOD[seed % FALLBACK_FOOD.length];
-  }
-
-  function applyStaticText(){
-    const t = UI[currentLang];
-    htmlRoot.lang = currentLang;
-    
-    let nextLangTxt = '🇷🇴 RO';
-    if(currentLang === 'ro') nextLangTxt = '🇪🇸 ES';
-    else if(currentLang === 'es') nextLangTxt = '🇬🇧 EN';
-    else if(currentLang === 'en') nextLangTxt = '🇷🇴 RO';
-    langToggle.innerHTML = nextLangTxt;
-
-    favShortcut.setAttribute('aria-label', t.favShortcutLabel);
-    document.getElementById('txtEyebrow').textContent = t.eyebrow;
-    document.getElementById('txtTitle').textContent = t.titleEm;
-    document.getElementById('txtTagline').textContent = t.tagline;
-    document.getElementById('txtHoursLabel').textContent = t.hoursLabel;
-    document.getElementById('txtHoursValue').textContent = t.hoursValue;
-    searchInput.placeholder = t.searchPlaceholder;
-    searchInput.setAttribute('aria-label', t.searchPlaceholder);
-    emptyState.textContent = t.emptyState;
-    document.getElementById('openLegal').textContent = t.legalLinkText;
-    document.getElementById('txtFooterCopy').textContent = t.footerCopy;
-    document.getElementById('legalContent').innerHTML = t.legalHtml;
-    
-    document.getElementById('txtTotalLabel').textContent = t.totalLabel;
-    document.getElementById('txtBtnWhatsApp').textContent = t.btnWhatsApp;
-    document.getElementById('txtBtnWaiter').textContent = t.btnWaiter;
-    
-    document.getElementById('txtWaModalTitle').textContent = t.waModalTitle;
-    document.getElementById('txtWaModalDesc').textContent = t.waModalDesc;
-    document.getElementById('sendWaBtn').textContent = t.sendWaBtn;
-    
-    document.getElementById('txtWaiterTitle').textContent = t.waiterTitle;
-    document.getElementById('closeWaiterBtn').textContent = t.closeWaiterBtn;
-    document.getElementById('clearWaiterBtn').textContent = t.clearWaiterBtn;
-
-    document.getElementById('txtWelcomeTitle').textContent = t.welcomeTitle;
-    document.getElementById('txtWelcomeDesc').textContent = t.welcomeDesc;
-    document.getElementById('btnWelcomeClose').textContent = t.welcomeBtn;
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === currentLang);
-    });
-  }
-
-  function renderTagFilters(){
-    tagFiltersEl.innerHTML = '';
-    const t = UI[currentLang];
-
-    const allChip = document.createElement('button');
-    allChip.className = 'chip active';
-    allChip.type = 'button';
-    allChip.textContent = t.allChip;
-    allChip.addEventListener('click', () => setActiveFilter('all'));
-    tagFiltersEl.appendChild(allChip);
-
-    CATEGORIES.forEach(cat => {
-      if(!allItems.some(i => categoryOf(i) === cat.key)) return;
-      const chip = document.createElement('button');
-      chip.className = 'chip';
-      chip.type = 'button';
-      chip.textContent = cat[currentLang];
-      chip.dataset.filter = cat.key;
-      chip.addEventListener('click', () => setActiveFilter(cat.key));
-      tagFiltersEl.appendChild(chip);
-    });
-
-    highlightActiveChip();
-    updateFavShortcut();
-  }
-
-  function highlightActiveChip(){
-    Array.from(tagFiltersEl.children).forEach(chip => {
-      const key = chip.dataset.filter || 'all';
-      chip.classList.toggle('active', key === activeFilter);
-    });
-  }
-
-  function setActiveFilter(key){
-    activeFilter = key;
-    highlightActiveChip();
-    render();
-  }
-
-  function matchesSearch(item, query){
-    if(!query) return true;
-    const text = itemText(item);
-    return (text.name + ' ' + text.description + ' ' + text.ingredients.join(' ')).toLowerCase().includes(query);
-  }
-
-  function buildCard(item, index){
-    const t = UI[currentLang];
-    const text = itemText(item);
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.style.animationDelay = `${index * 0.05}s`;
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
-
-    if(item.tags && item.tags.includes('especialidad')){
-      const ribbon = document.createElement('div');
-      ribbon.className = 'ribbon';
-      ribbon.textContent = t.ribbonSpecial;
-      imgWrap.appendChild(ribbon);
-    }
-
-    const img = document.createElement('img');
-    img.className = 'card-img';
-    img.loading = 'lazy';
-    img.alt = text.name;
-    img.src = localImagePath(item.imageNumber);
-    img.addEventListener('error', function onErr(){
-      img.removeEventListener('error', onErr);
-      img.src = fallbackImageUrl(item);
-    });
-    imgWrap.appendChild(img);
-
-    // AFIȘARE VALORI NUTRIȚIONALE PE CARD (KCALE + GRAME)
-    if(item.kcal || item.weight) {
-      const nutriBadge = document.createElement('div');
-      nutriBadge.className = 'nutrition-badge';
-      
-      if(item.weight) {
-        const wPill = document.createElement('div');
-        wPill.className = 'nutri-pill';
-        wPill.innerHTML = `<span>⚖️</span> ${item.weight}`;
-        nutriBadge.appendChild(wPill);
-      }
-      if(item.kcal) {
-        const kPill = document.createElement('div');
-        kPill.className = 'nutri-pill';
-        kPill.innerHTML = `<span>🔥</span> <span>${item.kcal}</span> kcal`;
-        nutriBadge.appendChild(kPill);
-      }
-      imgWrap.appendChild(nutriBadge);
-    }
-
-    const qtyWrap = document.createElement('div');
-    let currentQty = getQty(item);
-    qtyWrap.className = 'card-qty-controls' + (currentQty > 0 ? ' has-items' : '');
-
-    const minusBtn = document.createElement('button');
-    minusBtn.className = 'c-qty-btn';
-    minusBtn.type = 'button';
-    minusBtn.textContent = '−';
-
-    const qtyLabel = document.createElement('span');
-    qtyLabel.className = 'c-qty-val';
-    qtyLabel.textContent = currentQty;
-
-    const plusBtn = document.createElement('button');
-    plusBtn.className = 'c-qty-btn';
-    plusBtn.type = 'button';
-    plusBtn.textContent = '+';
-
-    qtyWrap.appendChild(minusBtn);
-    qtyWrap.appendChild(qtyLabel);
-    qtyWrap.appendChild(plusBtn);
-
-    function refreshCardUI() {
-      let q = getQty(item);
-      qtyLabel.textContent = q;
-      qtyWrap.classList.toggle('has-items', q > 0);
-      updateFavShortcut();
-      if(activeFilter === 'favorites' && q === 0) render();
-      else updateBottomBar();
-    }
-
-    plusBtn.addEventListener('click', () => { updateQty(item, 1); refreshCardUI(); });
-    minusBtn.addEventListener('click', () => { updateQty(item, -1); refreshCardUI(); });
-
-    imgWrap.appendChild(qtyWrap);
-    card.appendChild(imgWrap);
-
-    const body = document.createElement('div');
-    body.className = 'card-body';
-
-    const top = document.createElement('div');
-    top.className = 'card-top';
-    const h3 = document.createElement('h3');
-    h3.textContent = text.name;
-    const price = document.createElement('span');
-    price.className = 'price';
-    price.textContent = `${item.price.toFixed(2)} €`;
-    top.appendChild(h3);
-    top.appendChild(price);
-    body.appendChild(top);
-
-    const desc = document.createElement('p');
-    desc.className = 'desc';
-    desc.textContent = text.description;
-    body.appendChild(desc);
-
-    const ingredients = document.createElement('p');
-    ingredients.className = 'ingredients';
-    ingredients.innerHTML = `<b>${t.ingredientsLabel}</b> ${text.ingredients.join(', ')}`;
-    body.appendChild(ingredients);
-
-    const allergenWrap = document.createElement('div');
-    allergenWrap.className = 'allergens-wrap';
-    const allergenLabelEl = document.createElement('span');
-    allergenLabelEl.className = 'allergen-label';
-    allergenLabelEl.textContent = t.allergensLabel;
-    allergenWrap.appendChild(allergenLabelEl);
-
-    const allergenRow = document.createElement('div');
-    allergenRow.className = 'allergens';
-    if(text.allergens && text.allergens.length){
-      text.allergens.forEach(a => {
-        const pill = document.createElement('span');
-        pill.className = 'allergen-pill';
-        pill.textContent = allergenLabel(a);
-        allergenRow.appendChild(pill);
-      });
-    } else {
-      const none = document.createElement('span');
-      none.className = 'no-allergens';
-      none.textContent = t.noAllergens;
-      allergenRow.appendChild(none);
-    }
-    
-    allergenWrap.appendChild(allergenRow);
-    body.appendChild(allergenWrap);
-
-    card.appendChild(body);
-    return card;
-  }
-
-  function getSelectedItemsAndTotal() {
-      let filtered = allItems.filter(i => getQty(i) > 0);
-      let sum = filtered.reduce((acc, item) => acc + (item.price * getQty(item)), 0);
-      return { items: filtered, total: sum };
-  }
-
-  function updateBottomBar() {
-      const { items, total } = getSelectedItemsAndTotal();
-      if(activeFilter === 'favorites' && items.length > 0) {
-        totalAmount.textContent = `${total.toFixed(2)} €`;
-        totalBar.classList.add('show');
-        scrollTopBtn.classList.add('lift');
-        favShortcut.classList.add('lift');
-      } else {
-        totalBar.classList.remove('show');
-        scrollTopBtn.classList.remove('lift');
-        favShortcut.classList.remove('lift');
-      }
-  }
-
-  function render(){
-    const query = searchInput.value.trim().toLowerCase();
-    let filtered = allItems.filter(item => matchesSearch(item, query));
-
-    if(activeFilter === 'favorites'){
-      filtered = filtered.filter(i => getQty(i) > 0);
-    } else {
-      filtered = filtered.filter(item => activeFilter === 'all' ? true : categoryOf(item) === activeFilter);
-    }
-    
-    updateBottomBar();
-    categoriesWrap.innerHTML = '';
-
-    if(filtered.length === 0){
-      emptyState.textContent = UI[currentLang].emptyState;
-      emptyState.style.display = 'block';
-      return;
-    }
-    emptyState.style.display = 'none';
-
-    const groupOrder = [...CATEGORIES.map(c => c.key), 'otros'];
-    let globalCardIndex = 0;
-
-    groupOrder.forEach(catKey => {
-      const items = filtered.filter(i => categoryOf(i) === catKey);
-      if(items.length === 0) return;
-
-      const section = document.createElement('section');
-      section.className = 'category-section';
-
-      const h2 = document.createElement('h2');
-      h2.textContent = categoryLabel(catKey);
-      section.appendChild(h2);
-
-      const grid = document.createElement('div');
-      grid.className = 'grid';
-      
-      items.forEach((item) => {
-        grid.appendChild(buildCard(item, globalCardIndex));
-        globalCardIndex++;
-      });
-      
-      section.appendChild(grid);
-      categoriesWrap.appendChild(section);
-    });
-  }
-
-  function refreshAll(){
-    applyStaticText();
-    renderTagFilters();
-    render();
-  }
-
-  const waOverlay = document.getElementById('waOverlay');
-  const tableInput = document.getElementById('tableNumberInput');
-  
-  document.getElementById('btnOpenWhatsAppModal').addEventListener('click', () => {
-    waOverlay.classList.add('open');
-    tableInput.focus();
-  });
-  
-  document.getElementById('closeWaModal').addEventListener('click', () => waOverlay.classList.remove('open'));
-  
-  document.getElementById('sendWaBtn').addEventListener('click', () => {
-      const tableNr = tableInput.value.trim() || 'Sin Especificar';
-      const t = UI[currentLang];
-      const { items, total } = getSelectedItemsAndTotal();
-      
-      let msg = t.whatsappIntro.replace('{mesa}', tableNr) + "\n\n";
-      items.forEach(item => {
-          let qty = getQty(item);
-          msg += `▪ ${qty}x ${itemText(item).name} (${(item.price * qty).toFixed(2)} €)\n`;
-      });
-      msg += `\n*Total: ${total.toFixed(2)} €*`;
-      
-      let phone = appConfig.whatsapp_number ? appConfig.whatsapp_number.replace(/\D/g,'') : '';
-      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-      waOverlay.classList.remove('open');
-  });
-
-  const waiterScreen = document.getElementById('waiterScreen');
-  const waiterList = document.getElementById('waiterList');
-  const waiterTotalDisplay = document.getElementById('waiterTotalDisplay');
-
-  document.getElementById('btnOpenWaiterMode').addEventListener('click', () => {
-      const { items, total } = getSelectedItemsAndTotal();
-      waiterList.innerHTML = '';
-      
-      items.forEach(item => {
-          let qty = getQty(item);
-          let li = document.createElement('li');
-          li.innerHTML = `<div><span class="qty-badge">${qty}x</span> ${itemText(item).name}</div> <span>${(item.price * qty).toFixed(2)} €</span>`;
-          waiterList.appendChild(li);
-      });
-      
-      waiterTotalDisplay.textContent = `Total: ${total.toFixed(2)} €`;
-      waiterScreen.classList.add('active');
-  });
-
-  document.getElementById('closeWaiterBtn').addEventListener('click', () => waiterScreen.classList.remove('active'));
-  document.getElementById('clearWaiterBtn').addEventListener('click', () => {
-      favoritesQty = {};
-      saveFavorites();
-      waiterScreen.classList.remove('active');
-      render();
-      updateFavShortcut();
-  });
-
-  searchInput.addEventListener('input', render);
-  
-  langToggle.addEventListener('click', () => { 
-    if(currentLang === 'ro') currentLang = 'es';
-    else if(currentLang === 'es') currentLang = 'en';
-    else currentLang = 'ro';
-    
-    saveLang(); 
-    refreshAll(); 
-  });
-  
-  favShortcut.addEventListener('click', () => { 
-    setActiveFilter('favorites'); 
-    document.getElementById('categoriesWrap').scrollIntoView({ behavior:'smooth', block:'start' }); 
-  });
-
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      currentLang = e.currentTarget.dataset.lang;
-      saveLang();
-      refreshAll();
-    });
-  });
+  const container = document.getElementById('restaurants-container');
+  const status = document.getElementById('status');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) scrollTopBtn.classList.add('show');
-    else scrollTopBtn.classList.remove('show');
-  });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  Promise.all([
-    fetch('menu.json').then(r => r.ok ? r.json() : []).catch(() => []),
-    fetch('config.json').then(r => r.ok ? r.json() : { whatsapp_number: "" }).catch(() => ({ whatsapp_number: "" }))
-  ]).then(([menuData, configData]) => {
-      allItems = (menuData && menuData.length > 0) ? menuData : FALLBACK_MENU;
-      appConfig = configData;
-      
-      applyStaticText();
-      renderTagFilters();
-      render();
-      
-      if(!sessionStorage.getItem('fieraWelcomed')) {
-          const welcomeOverlay = document.getElementById('welcomeOverlay');
-          setTimeout(() => { welcomeOverlay.classList.add('show'); }, 500);
-
-          document.getElementById('btnWelcomeClose').addEventListener('click', () => {
-              welcomeOverlay.classList.remove('show');
-              sessionStorage.setItem('fieraWelcomed', 'true');
-          });
-      }
-  }).catch(err => {
-      console.error(err);
-      allItems = FALLBACK_MENU;
-      applyStaticText();
-      renderTagFilters();
-      render();
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 10) {
+      nav.style.boxShadow = '0 6px 25px rgba(0,0,0,0.5)';
+      nav.style.borderBottom = '1px solid rgba(224, 130, 63, 0.2)';
+    } else {
+      nav.style.boxShadow = 'none';
+      nav.style.borderBottom = '1px solid rgba(36, 61, 48, 0.6)';
+    }
   });
 
+  function formatTitle(name){
+    return name
+      .replace(/[-_]+/g,' ')
+      .replace(/\b\w/g, letter => letter.toUpperCase());
+  }
+
+  function fetchRestaurants(){
+    fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/contents/`)
+      .then(res => {
+        if(!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        const folders = data.filter(item => 
+          item.type === 'dir' && !['.git', 'images', 'icons', 'css', 'js'].includes(item.name)
+        );
+
+        status.style.display = 'none';
+
+        if(folders.length === 0){
+          status.style.display = 'flex';
+          status.innerHTML = '<span>Niciun meniu disponibil momentan.</span>';
+          return;
+        }
+
+        folders.forEach((folder, i) => {
+          const title = formatTitle(folder.name);
+          const a = document.createElement('a');
+          a.href = `./${folder.name}/`;
+          a.className = 'card';
+          a.style.transitionDelay = `${i * 60}ms`;
+          
+          a.innerHTML = `
+            <div class="card-top">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+                  <path d="M7 2v20"></path>
+                  <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+                </svg>
+              </div>
+              <span class="idx">#0${i+1}</span>
+            </div>
+            <h2>${title}</h2>
+            <p>Descoperă meniul digital complet, preparatele și băuturile oferite de locație.</p>
+            <div class="card-bottom">
+              <span class="go">
+                Deschide Meniul
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          `;
+          container.appendChild(a);
+          
+          setTimeout(() => {
+            a.classList.add('visible');
+          }, 50 + (i * 60));
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        status.innerHTML = '<span style="color:var(--accent)">Eroare la încărcarea meniurilor. Verifică conexiunea.</span>';
+      });
+  }
+
+  fetchRestaurants();
+
+  // Logica pentru Modalul Legal
   const overlay = document.getElementById('legalOverlay');
   const openBtn = document.getElementById('openLegal');
   const closeBtn = document.getElementById('closeLegal');
-  openBtn.addEventListener('click', () => overlay.classList.add('open'));
-  closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+
+  function openModal() {
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 10);
+    document.body.style.overflow = 'hidden'; 
+  }
+
+  function closeModal() {
+    overlay.classList.remove('active');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
   
-  window.addEventListener('click', e => { 
-      if(e.target === overlay) overlay.classList.remove('open'); 
-      if(e.target === waOverlay) waOverlay.classList.remove('open');
-  });
-  document.addEventListener('keydown', e => { 
-      if(e.key === 'Escape') {
-          overlay.classList.remove('open');
-          waOverlay.classList.remove('open');
-      }
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeModal();
   });
 
-  applyStaticText();
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(e => {
+        console.warn('SW registration failed', e);
+      });
+    });
+  }
 })();
 </script>
-
 </body>
 </html>
