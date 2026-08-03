@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ro" id="htmlRoot">
 <head>
@@ -93,7 +93,6 @@
     border-bottom: 1px solid var(--paper-dim);
   }
   
-  /* Am mutat butonul de limbă în STÂNGA sus */
   .top-actions{
     position:absolute;
     top:20px; left:20px;
@@ -522,7 +521,6 @@
     100% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
   }
 
-  /* INIMA SALVATĂ ÎN DREAPTA SUS */
   .global-fav-btn {
     top: 20px;
     right: 20px;
@@ -542,8 +540,8 @@
   .global-fav-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
   .global-fav-btn .fav-count { font-size: 14px; color: var(--pink-bright); }
 
-  /* WELCOME MODAL */
-  .welcome-overlay {
+  /* POPUP / MODALS (Shared styles for Welcome and Install prompts) */
+  .popup-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
@@ -558,8 +556,8 @@
     pointer-events: none;
     transition: opacity 0.5s ease;
   }
-  .welcome-overlay.show { opacity: 1; pointer-events: auto; }
-  .welcome-modal {
+  .popup-overlay.show { opacity: 1; pointer-events: auto; }
+  .popup-modal {
     background: var(--bg-card);
     border: 1px solid var(--pink-main);
     border-radius: var(--radius-lg);
@@ -571,8 +569,8 @@
     transform: scale(0.9) translateY(20px);
     transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .welcome-overlay.show .welcome-modal { transform: scale(1) translateY(0); }
-  .welcome-icon {
+  .popup-overlay.show .popup-modal { transform: scale(1) translateY(0); }
+  .popup-icon {
     width: 70px; height: 70px;
     margin: 0 auto 20px;
     background: rgba(255, 42, 133, 0.15);
@@ -582,9 +580,9 @@
     justify-content: center;
     color: var(--pink-main);
   }
-  .welcome-icon svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .welcome-modal h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 12px; }
-  .welcome-modal p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
+  .popup-icon svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .popup-modal h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .popup-modal p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
 
   .welcome-langs { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;}
   .lang-btn {
@@ -612,6 +610,22 @@
   }
   .flag { font-size: 1.25rem; }
 
+  .popup-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .btn-outline {
+    width: 100%;
+    background: var(--bg-panel);
+    color: var(--ink);
+    border: 1px solid var(--paper-dim);
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: 'Work Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:active { transform: scale(0.96); }
+
   /* FOOTER */
   footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; }
   .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
@@ -619,7 +633,7 @@
   .footer-links{ display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
   .footer-links button{ background:none; border:none; color:var(--ink-soft); font-family:'Work Sans', sans-serif; font-size:13.5px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0; }
 
-  /* MODALS */
+  /* MODALS LEGAL & WA */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:150; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);}
   .modal-overlay.open{ display:flex; }
   
@@ -681,7 +695,9 @@
     font-size: 1.1rem;
     font-family: 'Work Sans', sans-serif;
     cursor: pointer;
+    transition: all 0.2s;
   }
+  .btn-submit:active { transform: scale(0.96); }
   .btn-submit.green { background: #25D366; }
 
   /* WAITER MODE */
@@ -755,13 +771,13 @@
     font-family: 'Work Sans', sans-serif;
   }
 
-  /* MEDIA QUERIES (Ajustări pentru telefoane) */
+  /* MEDIA QUERIES */
   @media (max-width:640px){
     .hero{ padding-top:44px; }
-    .top-actions{ top:14px; left:14px; gap:6px; } /* Adaptare limba pe mobil stanga */
+    .top-actions{ top:14px; left:14px; gap:6px; }
     .lang-toggle{ padding:6px 12px; font-size:12px; min-height:36px; }
     
-    .global-fav-btn { top: 14px; right: 14px; height: 38px; padding: 0 12px 0 10px; } /* Inima mobil dreapta */
+    .global-fav-btn { top: 14px; right: 14px; height: 38px; padding: 0 12px 0 10px; }
     
     .hero-inner{ text-align:center; justify-content:center; }
     .hero-meta{ justify-content:center; }
@@ -837,7 +853,6 @@
   </div>
 </div>
 
-<!-- ================= BUTOANE PLUTITOARE FIXE ================= -->
 <button class="global-fav-btn" id="favShortcut" type="button" aria-label="Selecția mea">
   <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
   <span class="fav-count" id="favCount">0</span>
@@ -846,11 +861,11 @@
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Mergi sus">
   <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
-<!-- ========================================================= -->
 
-<div class="welcome-overlay" id="welcomeOverlay">
-  <div class="welcome-modal">
-    <div class="welcome-icon">
+<!-- ================= MODAL WELCOME (LIMBA) ================= -->
+<div class="popup-overlay" id="welcomeOverlay">
+  <div class="popup-modal">
+    <div class="popup-icon">
       <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <h2 id="txtWelcomeTitle">Fiera Bar</h2>
@@ -863,6 +878,22 @@
     </div>
 
     <button class="btn-submit" id="btnWelcomeClose">Continuă</button>
+  </div>
+</div>
+
+<!-- ================= MODAL INSTALARE (PWA) ================= -->
+<div class="popup-overlay" id="installOverlay">
+  <div class="popup-modal">
+    <div class="popup-icon">
+      <svg viewBox="0 0 24 24"><path d="M17 17h-10v-10h4v-2h-4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4h-2v4zm2.5-12h-2.5v-2.5h-2v2.5h-2.5v2h2.5v2.5h2v-2.5h2.5v-2zM4 17h16v-2h-16v2z" fill="currentColor"/></svg>
+    </div>
+    <h2 id="txtInstallTitle">Instalează Aplicația</h2>
+    <p id="txtInstallDesc">Adaugă Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!</p>
+    
+    <div class="popup-actions">
+      <button class="btn-submit" id="btnInstallApp">Instalează</button>
+      <button class="btn-outline" id="btnNotNow">Mai târziu</button>
+    </div>
   </div>
 </div>
 
@@ -922,23 +953,6 @@
   
   let appConfig = { whatsapp_number: "" }; 
 
-  const FALLBACK_DRINKS = [
-    "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1575037614876-c385cb814cff?auto=format&fit=crop&w=480&q=80"
-  ];
-  
-  const FALLBACK_FOOD = [
-    "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1560684352-8497838a2229?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=480&q=80",
-    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=480&q=80"
-  ];
-
   const CATEGORIES = [
     { key:'entrante', ro:'Aperitive', es:'Entrantes', en:'Starters' },
     { key:'principal', ro:'Fel Principal', es:'Principales', en:'Mains' },
@@ -984,14 +998,14 @@
       footerCopy: '© 2026 Fiera Bar',
       legalHtml: `
         <h2>Termeni Legali și Politica de Confidențialitate</h2>
-        <h3>1. Exonerare de Răspundere și Alergeni</h3>
+        <h3>1. Exonerare de Răspundere</h3>
         <p>Acest meniu digital are scop <strong>strict informativ</strong>.</p>
         <ul>
           <li>Prețurile și disponibilitatea produselor pot suferi modificări.</li>
-          <li><strong>Alergii și intoleranțe:</strong> Vă rugăm să informați personalul nostru dacă suferiți de alergii alimentare înainte de plasarea comenzii.</li>
+          <li><strong>Alergii și intoleranțe:</strong> Vă rugăm să informați personalul nostru dacă suferiți de alergii alimentare.</li>
         </ul>
         <h3>2. Protecția Datelor (GDPR)</h3>
-        <p>Aplicația utilizează stocarea locală a browserului (localStorage) doar pentru a reține limba și selecția coșului de cumpărături. Nu colectăm date personale pe servere.</p>
+        <p>Aplicația utilizează stocarea locală a browserului doar pentru a reține limba și selecția coșului de cumpărături. Nu colectăm date personale pe servere.</p>
       `,
       favShortcutLabel: 'Selecția Mea',
       totalLabel: 'Total Selecție:',
@@ -1007,7 +1021,12 @@
       whatsappIntro: 'Bună! Suntem masa {mesa}. Am dori să comandăm:',
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Vă rugăm să selectați limba:',
-      welcomeBtn: 'Continuă'
+      welcomeBtn: 'Continuă',
+      
+      installTitle: 'Instalează Aplicația',
+      installDesc: 'Adaugă meniul Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!',
+      installBtnTxt: 'Instalează',
+      notNowBtnTxt: 'Mai târziu'
     },
     es: {
       eyebrow: 'Menú digital',
@@ -1026,7 +1045,7 @@
       footerCopy: '© 2026 Fiera Bar',
       legalHtml: `
         <h2>Aviso Legal y Política de Privacidad</h2>
-        <h3>1. Exención de Responsabilidad y Alérgenos</h3>
+        <h3>1. Exención de Responsabilidad</h3>
         <p>Este menú digital tiene una finalidad <strong>estrictamente informativa</strong>.</p>
         <ul>
           <li>Los precios y la disponibilidad pueden estar sujetos a cambios.</li>
@@ -1049,7 +1068,12 @@
       whatsappIntro: '¡Hola! Somos la mesa {mesa}. Nos gustaría pedir:',
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Por favor, selecciona tu idioma:',
-      welcomeBtn: 'Continuar'
+      welcomeBtn: 'Continuar',
+      
+      installTitle: 'Instalar la App',
+      installDesc: 'Añade Fiera Bar a tu pantalla de inicio para un acceso rápido en el futuro, sin necesidad de escanear el QR.',
+      installBtnTxt: 'Instalar',
+      notNowBtnTxt: 'Más tarde'
     },
     en: {
       eyebrow: 'Digital menu',
@@ -1068,7 +1092,7 @@
       footerCopy: '© 2026 Fiera Bar',
       legalHtml: `
         <h2>Legal Notice & Privacy Policy</h2>
-        <h3>1. Disclaimer and Allergen Information</h3>
+        <h3>1. Disclaimer</h3>
         <p>This digital menu is provided for <strong>informational purposes only</strong>.</p>
         <ul>
           <li>Prices and product availability are subject to change.</li>
@@ -1091,7 +1115,12 @@
       whatsappIntro: 'Hi! We are table {mesa}. We would like to order:',
       welcomeTitle: 'Fiera Bar',
       welcomeDesc: 'Please select your language:',
-      welcomeBtn: 'Continue'
+      welcomeBtn: 'Continue',
+      
+      installTitle: 'Install our App',
+      installDesc: 'Add Fiera Bar menu to your home screen for quick access, no need to scan the QR again!',
+      installBtnTxt: 'Install',
+      notNowBtnTxt: 'Not now'
     }
   };
 
@@ -1102,6 +1131,18 @@
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
   let currentLang = loadLang();
+
+  // ====== PWA INSTALL LOGIC ======
+  let deferredPrompt;
+  let installPromptShown = false;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Împiedică banner-ul automat de jos din a se afișa (la Android)
+    e.preventDefault();
+    // Stocăm evenimentul ca să-l putem chema când apasă omul pe buton
+    deferredPrompt = e;
+  });
+  // ===============================
 
   function loadFavorites(){
     try{
@@ -1168,13 +1209,6 @@
   }
 
   function localImagePath(imageNumber){ return `images/${imageNumber}.jpg`; }
-  
-  function fallbackImageUrl(item){
-    let seed = 0;
-    if(item.name) { for (let i = 0; i < item.name.length; i++) seed += item.name.charCodeAt(i); }
-    let isDrink = item.tags && (item.tags.includes('coctel') || item.tags.includes('bebida') || item.tags.includes('sidra'));
-    return isDrink ? FALLBACK_DRINKS[seed % FALLBACK_DRINKS.length] : FALLBACK_FOOD[seed % FALLBACK_FOOD.length];
-  }
 
   function applyStaticText(){
     const t = UI[currentLang];
@@ -1214,6 +1248,11 @@
     document.getElementById('txtWelcomeTitle').textContent = t.welcomeTitle;
     document.getElementById('txtWelcomeDesc').textContent = t.welcomeDesc;
     document.getElementById('btnWelcomeClose').textContent = t.welcomeBtn;
+
+    document.getElementById('txtInstallTitle').textContent = t.installTitle;
+    document.getElementById('txtInstallDesc').textContent = t.installDesc;
+    document.getElementById('btnInstallApp').textContent = t.installBtnTxt;
+    document.getElementById('btnNotNow').textContent = t.notNowBtnTxt;
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === currentLang);
@@ -1287,10 +1326,6 @@
     img.loading = 'lazy';
     img.alt = text.name;
     img.src = localImagePath(item.imageNumber);
-    img.addEventListener('error', function onErr(){
-      img.removeEventListener('error', onErr);
-      img.src = fallbackImageUrl(item);
-    });
     imgWrap.appendChild(img);
 
     if(item.kcal || item.weight) {
@@ -1559,6 +1594,39 @@
   });
   scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+  // LOGICA POP-UP-URI:
+  document.getElementById('btnWelcomeClose').addEventListener('click', () => {
+      document.getElementById('welcomeOverlay').classList.remove('show');
+      sessionStorage.setItem('fieraWelcomed', 'true');
+      
+      // Imediat după ce omul alege limba, dacă PWA-ul e disponibil, arătăm pop-up-ul de instalare
+      if (deferredPrompt && !installPromptShown) {
+          setTimeout(() => {
+              document.getElementById('installOverlay').classList.add('show');
+          }, 400); // 400ms delay pentru animația curată
+      }
+  });
+
+  document.getElementById('btnNotNow').addEventListener('click', () => {
+      document.getElementById('installOverlay').classList.remove('show');
+      installPromptShown = true;
+  });
+
+  document.getElementById('btnInstallApp').addEventListener('click', async () => {
+      if (deferredPrompt) {
+          // Afișează fereastra de sistem a telefonului
+          deferredPrompt.prompt();
+          // Așteaptă decizia omului
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`Rezultat instalare PWA: ${outcome}`);
+          
+          deferredPrompt = null;
+          document.getElementById('installOverlay').classList.remove('show');
+          installPromptShown = true;
+      }
+  });
+
+
   Promise.all([
     fetch('menu.json').then(r => {
         if (!r.ok) throw new Error("Meniul nu a putut fi găsit");
@@ -1576,11 +1644,14 @@
       if(!sessionStorage.getItem('fieraWelcomed')) {
           const welcomeOverlay = document.getElementById('welcomeOverlay');
           setTimeout(() => { welcomeOverlay.classList.add('show'); }, 500);
-
-          document.getElementById('btnWelcomeClose').addEventListener('click', () => {
-              welcomeOverlay.classList.remove('show');
-              sessionStorage.setItem('fieraWelcomed', 'true');
-          });
+      } else {
+          // Dacă e deja "binevenit" dintr-o vizită anterioară în aceeași sesiune, 
+          // îi dăm pop-up-ul de instalare după câteva secunde, dacă e cazul
+          if(deferredPrompt && !installPromptShown) {
+             setTimeout(() => {
+                document.getElementById('installOverlay').classList.add('show');
+             }, 2000);
+          }
       }
   }).catch(err => {
       console.error("Eroare la încărcarea menu.json:", err);
@@ -1616,3 +1687,4 @@
 
 </body>
 </html>
+
