@@ -1,11 +1,11 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ro" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Fiera Bar &mdash; Meniu digital</title>
-<meta name="description" content="Menú digital de Fiera Bar. Cócteles, tapas și băuturi internaționale.">
+<meta name="description" content="Meniu digital Fiera Bar. Cocktailuri și preparate delicioase.">
 
 <!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
@@ -540,7 +540,7 @@
   .global-fav-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
   .global-fav-btn .fav-count { font-size: 14px; color: var(--pink-bright); }
 
-  /* POPUP / MODALS (Shared styles for Welcome and Install prompts) */
+  /* POPUP / MODALS */
   .popup-overlay {
     position: fixed;
     inset: 0;
@@ -587,7 +587,7 @@
   .welcome-langs { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;}
   .lang-btn {
     flex: 1;
-    min-width: 100px;
+    min-width: 120px;
     padding: 12px 10px;
     border: 1.5px solid var(--paper-dim);
     background: transparent;
@@ -640,7 +640,7 @@
   .modal{ 
     background:var(--bg-card); 
     border: 1px solid var(--paper-dim); 
-    max-width:550px; 
+    max-width:600px; 
     width:100%; 
     max-height:85vh; 
     overflow-y:auto; 
@@ -662,8 +662,8 @@
   .modal-close:hover { background: var(--pink-main); color: #fff; border-color: var(--pink-main); }
   
   .legal-content-box { margin-top: 10px; }
-  .legal-content-box h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 24px; line-height: 1.2; border-bottom: 2px solid var(--pink-main); padding-bottom: 12px; display: inline-block;}
-  .legal-content-box h3 { font-size: 1.1rem; color: var(--ink); margin: 24px 0 10px; font-family: 'Work Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;}
+  .legal-content-box h2 { font-size: 1.5rem; color: var(--ink); margin-bottom: 24px; line-height: 1.3; border-bottom: 2px solid var(--pink-main); padding-bottom: 12px; display: inline-block;}
+  .legal-content-box h3 { font-size: 1.05rem; color: var(--pink-bright); margin: 26px 0 12px; font-family: 'Work Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;}
   .legal-content-box p { font-size: 14px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.6; }
   .legal-content-box ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.6;}
   .legal-content-box li { margin-bottom: 8px; }
@@ -873,7 +873,6 @@
 
     <div class="welcome-langs">
       <button class="lang-btn active" data-lang="ro"><span class="flag">🇷🇴</span> Română</button>
-      <button class="lang-btn" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
       <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
     </div>
 
@@ -954,30 +953,30 @@
   let appConfig = { whatsapp_number: "" }; 
 
   const CATEGORIES = [
-    { key:'entrante', ro:'Aperitive', es:'Entrantes', en:'Starters' },
-    { key:'principal', ro:'Fel Principal', es:'Principales', en:'Mains' },
-    { key:'coctel', ro:'Cocktailuri', es:'Cócteles', en:'Cocktails' },
-    { key:'bebida', ro:'Băuturi', es:'Bebidas', en:'Drinks' },
-    { key:'postre', ro:'Deserturi', es:'Postres', en:'Desserts' }
+    { key:'entrante', ro:'Aperitive', en:'Starters' },
+    { key:'principal', ro:'Fel Principal', en:'Mains' },
+    { key:'coctel', ro:'Cocktailuri', en:'Cocktails' },
+    { key:'bebida', ro:'Băuturi', en:'Drinks' },
+    { key:'postre', ro:'Deserturi', en:'Desserts' }
   ];
-  const OTHER_LABEL = { ro:'Altele', es:'Otros', en:'Other' };
+  const OTHER_LABEL = { ro:'Altele', en:'Other' };
 
   const TAG_LABELS = {
-    'tradicional': { ro:'tradițional', es:'tradicional', en:'traditional' },
-    'especialidad': { ro:'specialitate', es:'especialidad', en:'signature' },
-    'para compartir': { ro:'de împărțit', es:'para compartir', en:'to share' },
-    'marisco': { ro:'fructe de mare', es:'marisco', en:'seafood' },
-    'sidra': { ro:'cidru', es:'sidra', en:'cider' },
-    'sin gluten': { ro:'fără gluten', es:'sin gluten', en:'gluten-free' }
+    'tradicional': { ro:'tradițional', en:'traditional' },
+    'especialidad': { ro:'specialitate', en:'signature' },
+    'para compartir': { ro:'de împărțit', en:'to share' },
+    'marisco': { ro:'fructe de mare', en:'seafood' },
+    'sidra': { ro:'cidru', en:'cider' },
+    'sin gluten': { ro:'fără gluten', en:'gluten-free' }
   };
   
   const ALLERGEN_LABELS = {
-    'Gluten': { ro:'Gluten', es:'Gluten', en:'Gluten' },
-    'Lácteos': { ro:'Lactate', es:'Lácteos', en:'Dairy' },
-    'Huevo': { ro:'Ou', es:'Huevo', en:'Egg' },
-    'Sulfitos': { ro:'Sulfiți', es:'Sulfitos', en:'Sulphites' },
-    'Pescado': { ro:'Pește', es:'Pescado', en:'Fish' },
-    'Marisco': { ro:'Crustacee', es:'Marisco', en:'Shellfish' }
+    'Gluten': { ro:'Gluten', en:'Gluten' },
+    'Lácteos': { ro:'Lactate', en:'Dairy' },
+    'Huevo': { ro:'Ou', en:'Egg' },
+    'Sulfitos': { ro:'Sulfiți', en:'Sulphites' },
+    'Pescado': { ro:'Pește', en:'Fish' },
+    'Marisco': { ro:'Crustacee', en:'Shellfish' }
   };
 
   const UI = {
@@ -994,18 +993,31 @@
       noAllergens: 'Fără alergeni',
       emptyState: 'Niciun produs nu corespunde căutării.',
       loadError: 'Nu s-a putut încărca meniul.',
-      legalLinkText: 'Termeni legali și confidențialitate',
+      legalLinkText: 'Termeni și Condiții & GDPR',
       footerCopy: '© 2026 Fiera Bar',
       legalHtml: `
-        <h2>Termeni Legali și Politica de Confidențialitate</h2>
-        <h3>1. Exonerare de Răspundere</h3>
-        <p>Acest meniu digital are scop <strong>strict informativ</strong>.</p>
+        <h2>Termeni și Condiții & Politica de Confidențialitate</h2>
+        <p>Prin utilizarea acestui meniu digital, sunteți de acord cu următorii termeni. Vă rugăm să citiți cu atenție.</p>
+
+        <h3>1. Exonerare de Răspundere (Disclaimer)</h3>
         <ul>
-          <li>Prețurile și disponibilitatea produselor pot suferi modificări.</li>
-          <li><strong>Alergii și intoleranțe:</strong> Vă rugăm să informați personalul nostru dacă suferiți de alergii alimentare.</li>
+          <li><strong>Rolul Platformei:</strong> Această aplicație web funcționează exclusiv ca o platformă de afișare informativă. Dezvoltatorul platformei nu este responsabil pentru prepararea, calitatea, descrierea sau livrarea produselor.</li>
+          <li><strong>Alergeni și Riscuri Alimentare:</strong> Informațiile despre ingrediente și alergeni sunt furnizate de personalul locației. <strong>Este responsabilitatea exclusivă a clientului să informeze ospătarul despre orice alergii sau intoleranțe medicale înainte de a plasa o comandă.</strong> Platforma și locația parteneră nu își asumă răspunderea pentru eventualele reacții alergice sau probleme de sănătate.</li>
+          <li><strong>Prețuri și Disponibilitate:</strong> Prețurile, ofertele și disponibilitatea produselor se pot modifica fără notificare prealabilă și pot diferi în sistemul intern al locației. Informația finală, validă din punct de vedere legal, este cea confirmată fizic de ospătar sau regăsită pe bonul fiscal.</li>
         </ul>
-        <h3>2. Protecția Datelor (GDPR)</h3>
-        <p>Aplicația utilizează stocarea locală a browserului doar pentru a reține limba și selecția coșului de cumpărături. Nu colectăm date personale pe servere.</p>
+
+        <h3>2. Politica de Confidențialitate (GDPR)</h3>
+        <p>Respectăm cu strictețe Regulamentul (UE) 2016/679 (GDPR).</p>
+        <ul>
+          <li><strong>Fără Colectare de Date Personale:</strong> Această aplicație <strong>NU</strong> colectează, <strong>NU</strong> procesează și <strong>NU</strong> stochează date cu caracter personal (nume, email, număr de telefon, locație GPS) pe serverele noastre. Nu folosim sisteme de analiză (Analytics) care să vă urmărească comportamentul.</li>
+          <li><strong>Stocare Locală Strict Necesară:</strong> Utilizăm memoria locală a browser-ului dvs. (Local Storage) <em>exclusiv</em> pentru a reține preferința de limbă și produsele adăugate temporar în \"Selecția Mea\". Aceste date nu părăsesc telefonul dvs. Fiind elemente strict necesare pentru funcționarea platformei, acestea sunt exceptate de la obținerea consimțământului conform Directivei ePrivacy.</li>
+        </ul>
+
+        <h3>3. Regimul Comenzilor prin WhatsApp</h3>
+        <ul>
+          <li>Funcția \"Comandă WhatsApp\" facilitează trimiterea unui mesaj predefinit către numărul oficial al locației. Această acțiune <strong>NU</strong> constituie un contract de vânzare-cumpărare cu forță juridică până la momentul confirmării clare a comenzii de către personalul locației.</li>
+          <li>Aplicația nu procesează plăți online. Orice tranzacție financiară se realizează exclusiv în incinta locației, conform legilor fiscale în vigoare.</li>
+        </ul>
       `,
       favShortcutLabel: 'Selecția Mea',
       totalLabel: 'Total Selecție:',
@@ -1028,53 +1040,6 @@
       installBtnTxt: 'Instalează',
       notNowBtnTxt: 'Mai târziu'
     },
-    es: {
-      eyebrow: 'Menú digital',
-      titleEm: 'Fiera Bar',
-      tagline: 'Cócteles internacionales, bebidas refinadas y platos deliciosos.',
-      hoursLabel: 'Horario',
-      hoursValue: '18:00 – 02:00',
-      searchPlaceholder: 'Buscar un plato o bebida...',
-      allChip: 'Todos',
-      ingredientsLabel: 'Ingredientes:',
-      allergensLabel: 'Alérgenos:',
-      noAllergens: 'Sin alérgenos',
-      emptyState: 'Ningún producto coincide con tu búsqueda.',
-      loadError: 'No se pudo cargar el menú.',
-      legalLinkText: 'Aviso legal y privacidad',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Aviso Legal y Política de Privacidad</h2>
-        <h3>1. Exención de Responsabilidad</h3>
-        <p>Este menú digital tiene una finalidad <strong>estrictamente informativa</strong>.</p>
-        <ul>
-          <li>Los precios y la disponibilidad pueden estar sujetos a cambios.</li>
-          <li><strong>Alergias e intolerancias:</strong> Es obligatorio consultar con nuestro personal antes de realizar cualquier pedido si padece alguna alergia.</li>
-        </ul>
-        <h3>2. Política de Privacidad (RGPD)</h3>
-        <p>Utilizamos el almacenamiento local (localStorage) únicamente para guardar sus preferencias de idioma y selección temporal. No recopilamos datos personales en servidores.</p>
-      `,
-      favShortcutLabel: 'Mi Selección',
-      totalLabel: 'Total Selección:',
-      btnWhatsApp: 'Pedir WhatsApp',
-      btnWaiter: 'Mostrar al Camarero',
-      ribbonSpecial: 'Especialidad',
-      waModalTitle: 'Número de Mesa',
-      waModalDesc: 'Por favor, indica tu número de mesa para enviar el pedido a la barra.',
-      sendWaBtn: 'Enviar Pedido',
-      waiterTitle: 'Selección de la Mesa',
-      closeWaiterBtn: 'Volver al Menú',
-      clearWaiterBtn: '¡Pedido Tomado!',
-      whatsappIntro: '¡Hola! Somos la mesa {mesa}. Nos gustaría pedir:',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Por favor, selecciona tu idioma:',
-      welcomeBtn: 'Continuar',
-      
-      installTitle: 'Instalar la App',
-      installDesc: 'Añade Fiera Bar a tu pantalla de inicio para un acceso rápido en el futuro, sin necesidad de escanear el QR.',
-      installBtnTxt: 'Instalar',
-      notNowBtnTxt: 'Más tarde'
-    },
     en: {
       eyebrow: 'Digital menu',
       titleEm: 'Fiera Bar',
@@ -1088,18 +1053,31 @@
       noAllergens: 'No allergens',
       emptyState: 'No products match your search.',
       loadError: 'Could not load the menu.',
-      legalLinkText: 'Legal notice & privacy',
+      legalLinkText: 'Terms & Conditions / GDPR',
       footerCopy: '© 2026 Fiera Bar',
       legalHtml: `
-        <h2>Legal Notice & Privacy Policy</h2>
-        <h3>1. Disclaimer</h3>
-        <p>This digital menu is provided for <strong>informational purposes only</strong>.</p>
+        <h2>Terms & Conditions and Privacy Policy</h2>
+        <p>By using this digital menu, you agree to the following terms. Please read carefully.</p>
+
+        <h3>1. Disclaimer of Liability</h3>
         <ul>
-          <li>Prices and product availability are subject to change.</li>
-          <li><strong>Allergies:</strong> Please inform our staff about any food allergies before placing your order.</li>
+          <li><strong>Platform Role:</strong> This web application acts solely as an informational display platform. The developer of the platform is not responsible for the preparation, quality, description, or delivery of the products.</li>
+          <li><strong>Allergens & Health Risks:</strong> Ingredient and allergen information is provided by the venue's staff. <strong>It is the customer's sole responsibility to inform the waiter of any medical allergies or intolerances before placing an order.</strong> The platform and the partner venue assume no liability for any allergic reactions or health issues.</li>
+          <li><strong>Pricing & Availability:</strong> Prices, offers, and product availability are subject to change without prior notice and may differ in the venue's internal system. The final, legally binding information is that which is physically confirmed by the staff or found on the fiscal receipt.</li>
         </ul>
+
         <h3>2. Privacy Policy (GDPR)</h3>
-        <p>We use browser local storage solely for your language preference and cart session. No personal data is collected on servers.</p>
+        <p>We strictly comply with the General Data Protection Regulation (EU) 2016/679.</p>
+        <ul>
+          <li><strong>No Personal Data Collection:</strong> This application does <strong>NOT</strong> collect, process, or store personal data (name, email, phone number, GPS location) on our servers. We do not use tracking or marketing analytics systems.</li>
+          <li><strong>Strictly Necessary Local Storage:</strong> We use your browser's local memory (Local Storage) <em>exclusively</em> to remember your language preference and the items temporarily added to \"My Selection\". This data never leaves your device. As these are strictly necessary for the platform's functionality, they are exempt from consent requirements under the ePrivacy Directive.</li>
+        </ul>
+
+        <h3>3. WhatsApp Orders</h3>
+        <ul>
+          <li>The \"WhatsApp Order\" function merely facilitates sending a pre-written message to the venue's official number. This action does <strong>NOT</strong> constitute a legally binding sales contract until the order is explicitly confirmed by the venue's staff.</li>
+          <li>The application does not process online payments. All financial transactions take place exclusively on the premises, in accordance with applicable tax laws.</li>
+        </ul>
       `,
       favShortcutLabel: 'My Selection',
       totalLabel: 'Total Selection:',
@@ -1135,6 +1113,8 @@
   // ====== PWA INSTALL LOGIC ======
   let deferredPrompt;
   let installPromptShown = false;
+  let installPromptTriggered = false;
+  let installTimer = null;
 
   window.addEventListener('beforeinstallprompt', (e) => {
     // Împiedică banner-ul automat de jos din a se afișa (la Android)
@@ -1157,7 +1137,7 @@
   function loadLang(){
     try{ 
       const l = window.localStorage.getItem(LANG_KEY);
-      return ['ro', 'es', 'en'].includes(l) ? l : 'ro'; 
+      return ['ro', 'en'].includes(l) ? l : 'ro'; 
     }
     catch(e){ return 'ro'; }
   }
@@ -1214,9 +1194,9 @@
     const t = UI[currentLang];
     htmlRoot.lang = currentLang;
     
+    // Toggle strict RO/EN
     let nextLangTxt = '🇷🇴 RO';
-    if(currentLang === 'ro') nextLangTxt = '🇪🇸 ES';
-    else if(currentLang === 'es') nextLangTxt = '🇬🇧 EN';
+    if(currentLang === 'ro') nextLangTxt = '🇬🇧 EN';
     else if(currentLang === 'en') nextLangTxt = '🇷🇴 RO';
     langToggle.innerHTML = nextLangTxt;
 
@@ -1567,8 +1547,7 @@
   searchInput.addEventListener('input', render);
   
   langToggle.addEventListener('click', () => { 
-    if(currentLang === 'ro') currentLang = 'es';
-    else if(currentLang === 'es') currentLang = 'en';
+    if(currentLang === 'ro') currentLang = 'en';
     else currentLang = 'ro';
     
     saveLang(); 
@@ -1588,35 +1567,40 @@
     });
   });
 
+  // LOGICA PENTRU SCROLL ȘI POPUP INSTALARE
   window.addEventListener('scroll', () => {
+    // 1. Butonul mergi sus
     if (window.scrollY > 300) scrollTopBtn.classList.add('show');
     else scrollTopBtn.classList.remove('show');
+
+    // 2. Apariția inteligentă (la scroll > 500px) a pop-up-ului de instalare
+    if (window.scrollY > 500 && deferredPrompt && !installPromptShown && !installPromptTriggered) {
+        // Ne asigurăm că omul a trecut de ecranul de "Bun venit"
+        if (sessionStorage.getItem('fieraWelcomed') === 'true') {
+            installPromptTriggered = true; // Să nu se declanșeze de mai multe ori
+            installTimer = setTimeout(() => {
+                document.getElementById('installOverlay').classList.add('show');
+            }, 1500); // Apare natural, la 1.5 secunde după ce omul a scrollat
+        }
+    }
   });
+
   scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // LOGICA POP-UP-URI:
+  // Când închide pop-up-ul de limbă
   document.getElementById('btnWelcomeClose').addEventListener('click', () => {
       document.getElementById('welcomeOverlay').classList.remove('show');
       sessionStorage.setItem('fieraWelcomed', 'true');
-      
-      // Imediat după ce omul alege limba, dacă PWA-ul e disponibil, arătăm pop-up-ul de instalare
-      if (deferredPrompt && !installPromptShown) {
-          setTimeout(() => {
-              document.getElementById('installOverlay').classList.add('show');
-          }, 400); // 400ms delay pentru animația curată
-      }
   });
 
   document.getElementById('btnNotNow').addEventListener('click', () => {
       document.getElementById('installOverlay').classList.remove('show');
-      installPromptShown = true;
+      installPromptShown = true; // Nu-l mai deranjăm cu el
   });
 
   document.getElementById('btnInstallApp').addEventListener('click', async () => {
       if (deferredPrompt) {
-          // Afișează fereastra de sistem a telefonului
           deferredPrompt.prompt();
-          // Așteaptă decizia omului
           const { outcome } = await deferredPrompt.userChoice;
           console.log(`Rezultat instalare PWA: ${outcome}`);
           
@@ -1644,14 +1628,6 @@
       if(!sessionStorage.getItem('fieraWelcomed')) {
           const welcomeOverlay = document.getElementById('welcomeOverlay');
           setTimeout(() => { welcomeOverlay.classList.add('show'); }, 500);
-      } else {
-          // Dacă e deja "binevenit" dintr-o vizită anterioară în aceeași sesiune, 
-          // îi dăm pop-up-ul de instalare după câteva secunde, dacă e cazul
-          if(deferredPrompt && !installPromptShown) {
-             setTimeout(() => {
-                document.getElementById('installOverlay').classList.add('show');
-             }, 2000);
-          }
       }
   }).catch(err => {
       console.error("Eroare la încărcarea menu.json:", err);
@@ -1687,4 +1663,3 @@
 
 </body>
 </html>
-
