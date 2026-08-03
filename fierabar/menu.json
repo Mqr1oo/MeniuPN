@@ -2,7 +2,7 @@
   {
     "imageNumber": 1,
     "name": "Truffle Wagyu Burger",
-    "price": 22.50,
+    "price": 69.90,
     "weight": "450 g",
     "kcal": 920,
     "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
@@ -27,7 +27,7 @@
   {
     "imageNumber": 2,
     "name": "Authentic Tacos al Pastor",
-    "price": 14.00,
+    "price": 49.90,
     "weight": "350 g",
     "kcal": 540,
     "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
@@ -52,7 +52,7 @@
   {
     "imageNumber": 3,
     "name": "Spicy Tuna Sushi Roll",
-    "price": 16.50,
+    "price": 69.90,
     "weight": "250 g",
     "kcal": 380,
     "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
@@ -77,7 +77,7 @@
   {
     "imageNumber": 4,
     "name": "Shrimp Pad Thai",
-    "price": 17.50,
+    "price": 55.00,
     "weight": "400 g",
     "kcal": 610,
     "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
@@ -102,7 +102,7 @@
   {
     "imageNumber": 5,
     "name": "Pizza Margherita Verace",
-    "price": 12.00,
+    "price": 35.00,
     "weight": "420 g",
     "kcal": 800,
     "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
@@ -127,7 +127,7 @@
   {
     "imageNumber": 6,
     "name": "Classic Caesar Salad",
-    "price": 11.50,
+    "price": 40.00,
     "weight": "300 g",
     "kcal": 450,
     "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
@@ -152,7 +152,7 @@
   {
     "imageNumber": 7,
     "name": "Italian Classic Tiramisu",
-    "price": 7.50,
+    "price": 25.00,
     "weight": "180 g",
     "kcal": 410,
     "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
@@ -176,8 +176,8 @@
   },
   {
     "imageNumber": 8,
-    "name": "Venetian Aperol Spritz",
-    "price": 8.50,
+    "name": "Venetian Aperol Sprit",
+    "price": 30.00,
     "weight": "300 ml",
     "kcal": 170,
     "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
@@ -202,7 +202,7 @@
   {
     "imageNumber": 9,
     "name": "Classic Margarita",
-    "price": 9.00,
+    "price": 30.00,
     "weight": "200 ml",
     "kcal": 220,
     "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
@@ -227,7 +227,7 @@
   {
     "imageNumber": 10,
     "name": "Espresso Martini",
-    "price": 9.50,
+    "price": 21.00,
     "weight": "150 ml",
     "kcal": 210,
     "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
