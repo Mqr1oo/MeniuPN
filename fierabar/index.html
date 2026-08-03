@@ -1413,6 +1413,10 @@
     img.loading = 'lazy';
     img.alt = text.name;
     img.src = localImagePath(item.imageNumber);
+    img.addEventListener('error', function onImgErr(){
+      img.removeEventListener('error', onImgErr);
+      img.src = `https://picsum.photos/seed/${encodeURIComponent(item.name)}/600/450`;
+    });
     imgWrap.appendChild(img);
 
     if(item.kcal || item.weight) {
