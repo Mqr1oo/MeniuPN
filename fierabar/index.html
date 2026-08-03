@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ro" id="htmlRoot">
 <head>
@@ -91,9 +92,11 @@
     position:relative;
     border-bottom: 1px solid var(--paper-dim);
   }
+  
+  /* Am mutat butonul de limbă în STÂNGA sus */
   .top-actions{
     position:absolute;
-    top:20px; right:20px;
+    top:20px; left:20px;
     z-index:2;
     display:flex;
     align-items:center;
@@ -483,25 +486,25 @@
   }
   .btn-waiter svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
 
-  /* FIXED CORNER BUTTONS */
+  /* FLOATING BUTTONS (FAV & SCROLL) */
   .scroll-top-btn, .global-fav-btn {
     position: fixed;
-    bottom: 24px;
-    height: 48px;
     border: none;
     border-radius: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 90;
-    transition: opacity 0.3s, transform 0.3s, background 0.2s, bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s;
+    z-index: 150;
+    transition: opacity 0.3s, transform 0.3s, background 0.2s, border-color 0.2s, bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     -webkit-tap-highlight-color: transparent;
   }
   
   .scroll-top-btn {
+    bottom: 24px;
     right: 20px;
     width: 48px;
+    height: 48px;
     background: var(--pink-main);
     color: #fff;
     box-shadow: 0 6px 16px rgba(255, 42, 133, 0.4);
@@ -511,6 +514,7 @@
   }
   .scroll-top-btn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
   .scroll-top-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+  .scroll-top-btn.lift { bottom: 160px; }
 
   @keyframes heartGlow {
     0% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
@@ -518,10 +522,15 @@
     100% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
   }
 
+  /* INIMA SALVATĂ ÎN DREAPTA SUS */
   .global-fav-btn {
-    left: 20px;
-    background: var(--bg-card);
-    border: 2px solid var(--pink-main);
+    top: 20px;
+    right: 20px;
+    height: 42px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid var(--pink-main);
     padding: 0 16px 0 14px;
     gap: 8px;
     color: var(--ink);
@@ -530,10 +539,8 @@
     font-weight: 700;
     animation: heartGlow 2s infinite ease-in-out;
   }
-  .global-fav-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
+  .global-fav-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
   .global-fav-btn .fav-count { font-size: 14px; color: var(--pink-bright); }
-
-  .scroll-top-btn.lift, .global-fav-btn.lift { bottom: 160px; }
 
   /* WELCOME MODAL */
   .welcome-overlay {
@@ -748,17 +755,21 @@
     font-family: 'Work Sans', sans-serif;
   }
 
+  /* MEDIA QUERIES (Ajustări pentru telefoane) */
   @media (max-width:640px){
     .hero{ padding-top:44px; }
-    .top-actions{ top:14px; right:14px; gap:6px; }
+    .top-actions{ top:14px; left:14px; gap:6px; } /* Adaptare limba pe mobil stanga */
     .lang-toggle{ padding:6px 12px; font-size:12px; min-height:36px; }
+    
+    .global-fav-btn { top: 14px; right: 14px; height: 38px; padding: 0 12px 0 10px; } /* Inima mobil dreapta */
+    
     .hero-inner{ text-align:center; justify-content:center; }
     .hero-meta{ justify-content:center; }
     .tag-filters { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
     .footer-inner{ flex-direction:column; align-items:flex-start; }
     .grid{ grid-template-columns:1fr; }
     .action-buttons { flex-direction: column; }
-    .scroll-top-btn.lift, .global-fav-btn.lift { bottom: 230px; }
+    .scroll-top-btn.lift { bottom: 230px; }
   }
   @media (min-width:641px){
     .controls { flex-direction: row; align-items: center; justify-content: space-between; }
@@ -826,6 +837,7 @@
   </div>
 </div>
 
+<!-- ================= BUTOANE PLUTITOARE FIXE ================= -->
 <button class="global-fav-btn" id="favShortcut" type="button" aria-label="Selecția mea">
   <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
   <span class="fav-count" id="favCount">0</span>
@@ -834,6 +846,7 @@
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Mergi sus">
   <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
+<!-- ========================================================= -->
 
 <div class="welcome-overlay" id="welcomeOverlay">
   <div class="welcome-modal">
@@ -924,260 +937,6 @@
     "https://images.unsplash.com/photo-1560684352-8497838a2229?auto=format&fit=crop&w=480&q=80",
     "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=480&q=80",
     "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=480&q=80"
-  ];
-
-  // MENIU COMPLET CU BĂUTURI INTERNAȚIONALE, PREPARATE ȘI VALORI NUTRIȚIONALE (KCAL + GRAME)
-  const FALLBACK_MENU = [
-    {
-      "imageNumber": 1,
-      "name": "Fabada Asturiana",
-      "price": 16.50,
-      "weight": "450 g",
-      "kcal": 620,
-      "description": "Guiso de fabes cocinado a fuego lento, con carnes ahumadas y un toque de pimentón.",
-      "ingredients": ["Fabes", "Chorizo", "Morcilla", "Panceta", "Azafrán"],
-      "allergens": ["Sulfitos"],
-      "tags": ["principal", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Fabada Asturiană",
-          "description": "Tocană tradițională de fasole albă gătită lent la foc mic, cu cărnuri afumate și boia.",
-          "ingredients": ["Fasole albă", "Cârnat chorizo", "Sângerete", "Pancetta", "Șofran"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Fabada Asturiana",
-          "description": "A slow-simmered bean stew from the Asturian highlands, with smoky cured meats and a touch of paprika.",
-          "ingredients": ["White beans", "Chorizo", "Blood sausage", "Pork belly", "Saffron"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 2,
-      "name": "Cachopo de Cabrales",
-      "price": 19.00,
-      "weight": "500 g",
-      "kcal": 890,
-      "description": "Dos filetes de ternera empanados y rellenos de queso Cabrales fundido y jamón serrano.",
-      "ingredients": ["Ternera", "Jamón serrano", "Queso Cabrales", "Pan rallado", "Huevo"],
-      "allergens": ["Gluten", "Lácteos", "Huevo"],
-      "tags": ["principal", "especialidad", "para compartir"],
-      "translations": {
-        "ro": {
-          "name": "Cachopo cu brânză Cabrales",
-          "description": "Două fileuri de vită pane umplute cu brânză albastră Cabrales topită și șuncă serrano.",
-          "ingredients": ["Carne de vită", "Șuncă serrano", "Brânză Cabrales", "Pesmet", "Ou"],
-          "allergens": ["Gluten", "Lactate", "Ou"]
-        },
-        "en": {
-          "name": "Cachopo de Cabrales",
-          "description": "Two breaded veal fillets folded around melted Cabrales blue cheese and serrano ham, fried to order.",
-          "ingredients": ["Veal", "Serrano ham", "Cabrales cheese", "Breadcrumbs", "Egg"],
-          "allergens": ["Gluten", "Dairy", "Egg"]
-        }
-      }
-    },
-    {
-      "imageNumber": 3,
-      "name": "Mojito Cubano Clásico",
-      "price": 8.00,
-      "weight": "350 ml",
-      "kcal": 210,
-      "description": "Cóctel refrescante con ron blanco, lima fresca, hojas de hierbabuena, azúcar de caña y soda.",
-      "ingredients": ["Ron blanco", "Lima", "Menta", "Azúcar", "Soda"],
-      "allergens": [],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Mojito Cubanez Clasic",
-          "description": "Cocktail răcoritor cu rom alb, lime proaspăt, frunze de mentă, zahăr din trestie și apă minerală.",
-          "ingredients": ["Rom alb", "Lime", "Mentă", "Zahăr", "Apă minerală"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Classic Cuban Mojito",
-          "description": "Refreshing cocktail with white rum, fresh lime, mint leaves, cane sugar, and club soda.",
-          "ingredients": ["White rum", "Lime", "Mint", "Sugar", "Soda"],
-          "allergens": []
-        }
-      }
-    },
-    {
-      "imageNumber": 4,
-      "name": "Aperol Spritz",
-      "price": 8.50,
-      "weight": "300 ml",
-      "kcal": 170,
-      "description": "El aperitivo italiano por excelencia: Aperol, Prosecco espumoso y un toque de soda con naranja.",
-      "ingredients": ["Aperol", "Prosecco", "Soda", "Rodaja de naranja"],
-      "allergens": ["Sulfitos"],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Aperol Spritz",
-          "description": "Aperitivul italian prin excelență: Aperol, Prosecco spumant și apă minerală cu felie de portocală.",
-          "ingredients": ["Aperol", "Prosecco", "Apă minerală", "Portocală"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Aperol Spritz",
-          "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of soda with orange.",
-          "ingredients": ["Aperol", "Prosecco", "Soda", "Orange slice"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 5,
-      "name": "Merluza a la Sidra",
-      "price": 18.00,
-      "weight": "380 g",
-      "kcal": 410,
-      "description": "Lomo de merluza cocinado en salsa de sidra y perejil, con almejas y patata.",
-      "ingredients": ["Merluza", "Sidra", "Almejas", "Patata", "Perejil"],
-      "allergens": ["Pescado", "Marisco", "Sulfitos"],
-      "tags": ["principal", "marisco", "especialidad"],
-      "translations": {
-        "ro": {
-          "name": "Merluciu în sos de cidru",
-          "description": "File de merluciu gătit în sos fin de cidru și pătrunjel, cu scoici și cartofi.",
-          "ingredients": ["Merluciu", "Cidru", "Scoici", "Cartof", "Pătrunjel"],
-          "allergens": ["Pește", "Crustacee", "Sulfiți"]
-        },
-        "en": {
-          "name": "Hake in Cider Sauce",
-          "description": "Hake fillet gently cooked in a cider and parsley sauce with clams and potato.",
-          "ingredients": ["Hake", "Cider", "Clams", "Potato", "Parsley"],
-          "allergens": ["Fish", "Shellfish", "Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 6,
-      "name": "Negroni Cocktail",
-      "price": 9.00,
-      "weight": "150 ml",
-      "kcal": 195,
-      "description": "Clásico cóctel italiano robusto a base de ginebra, vermut rojo y Campari.",
-      "ingredients": ["Ginebra", "Vermut rojo", "Campari", "Piel de naranja"],
-      "allergens": ["Sulfitos"],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Cocktail Negroni",
-          "description": "Cocktail italian clasic și robust, preparat din gin, vermut roșu și Campari.",
-          "ingredients": ["Gin", "Vermut roșu", "Campari", "Coajă de portocală"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Negroni Cocktail",
-          "description": "A classic robust Italian cocktail made with gin, sweet red vermouth, and Campari.",
-          "ingredients": ["Gin", "Sweet vermouth", "Campari", "Orange peel"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 7,
-      "name": "Arroz con Leche Quemado",
-      "price": 6.50,
-      "weight": "220 g",
-      "kcal": 340,
-      "description": "Cremoso arroz con leche asturiano, frío, terminado con una capa de azúcar caramelizada.",
-      "ingredients": ["Arroz", "Leche", "Canela", "Limón", "Azúcar"],
-      "allergens": ["Lácteos"],
-      "tags": ["postre", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Orez cu Lapte Ars",
-          "description": "Orez cu lapte cremos asturian, servit rece, finisat cu o crustă crocantă de zahăr caramelizat.",
-          "ingredients": ["Orez", "Lapte", "Scorțișoară", "Lămâie", "Zahăr"],
-          "allergens": ["Lactate"]
-        },
-        "en": {
-          "name": "Burnt Rice Pudding",
-          "description": "Creamy Asturian rice pudding, chilled and finished with a caramelised sugar crust.",
-          "ingredients": ["Rice", "Milk", "Cinnamon", "Lemon zest", "Sugar"],
-          "allergens": ["Dairy"]
-        }
-      }
-    },
-    {
-      "imageNumber": 8,
-      "name": "Sidra Natural (Botella)",
-      "price": 7.00,
-      "weight": "700 ml",
-      "kcal": 260,
-      "description": "Sidra natural seca de un llagar local, escanciada desde lo alto al estilo tradicional.",
-      "ingredients": ["Zumo de manzana fermentado"],
-      "allergens": ["Sulfitos"],
-      "tags": ["bebida", "sidra", "tradicional"],
-      "translations": {
-        "ro": {
-          "name": "Cidru Natural (Sticlă)",
-          "description": "Cidru natural sec dintr-o fabrică locală, turnat de la înălțime în stil tradițional.",
-          "ingredients": ["Suc de mere fermentat"],
-          "allergens": ["Sulfiți"]
-        },
-        "en": {
-          "name": "Natural Cider (Bottle)",
-          "description": "Dry natural cider from a local cider house, poured from height in the traditional style.",
-          "ingredients": ["Fermented apple juice"],
-          "allergens": ["Sulphites"]
-        }
-      }
-    },
-    {
-      "imageNumber": 9,
-      "name": "Pote Asturiano",
-      "price": 15.00,
-      "weight": "420 g",
-      "kcal": 560,
-      "description": "Guiso de montaña con alubias blancas, berza, patata y carnes curadas.",
-      "ingredients": ["Alubias blancas", "Berza", "Patata", "Chorizo", "Costilla"],
-      "allergens": [],
-      "tags": ["principal", "tradicional", "sin gluten"],
-      "translations": {
-        "ro": {
-          "name": "Pote Asturian",
-          "description": "Tocană montană consistentă cu fasole albă, varză furajeră, cartofi și cărnuri afumate.",
-          "ingredients": ["Fasole albă", "Varză", "Cartofi", "Chorizo", "Coastă de porc"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Pote Asturiano",
-          "description": "A hearty highland stew of white beans, cabbage, potato and cured pork.",
-          "ingredients": ["White beans", "Cabbage", "Potato", "Chorizo", "Pork rib"],
-          "allergens": []
-        }
-      }
-    },
-    {
-      "imageNumber": 10,
-      "name": "Espresso Martini",
-      "price": 8.50,
-      "weight": "180 ml",
-      "kcal": 210,
-      "description": "Cóctel sofisticado y enérgico con vodka, licor de café, espresso recién hecho y jarabe.",
-      "ingredients": ["Vodka", "Licor de café", "Espresso", "Jarabe de azúcar"],
-      "allergens": [],
-      "tags": ["coctel", "bebida"],
-      "translations": {
-        "ro": {
-          "name": "Espresso Martini",
-          "description": "Cocktail sofisticat și energizant pe bază de vodcă, lichior de cafea și espresso proaspăt.",
-          "ingredients": ["Vodcă", "Lichior de cafea", "Espresso", "Sirop de zahăr"],
-          "allergens": []
-        },
-        "en": {
-          "name": "Espresso Martini",
-          "description": "A sophisticated and energetic cocktail with vodka, coffee liqueur, fresh espresso, and simple syrup.",
-          "ingredients": ["Vodka", "Coffee liqueur", "Espresso", "Sugar syrup"],
-          "allergens": []
-        }
-      }
-    }
   ];
 
   const CATEGORIES = [
@@ -1534,7 +1293,6 @@
     });
     imgWrap.appendChild(img);
 
-    // AFIȘARE VALORI NUTRIȚIONALE PE CARD (KCALE + GRAME)
     if(item.kcal || item.weight) {
       const nutriBadge = document.createElement('div');
       nutriBadge.className = 'nutrition-badge';
@@ -1657,11 +1415,9 @@
         totalAmount.textContent = `${total.toFixed(2)} €`;
         totalBar.classList.add('show');
         scrollTopBtn.classList.add('lift');
-        favShortcut.classList.add('lift');
       } else {
         totalBar.classList.remove('show');
         scrollTopBtn.classList.remove('lift');
-        favShortcut.classList.remove('lift');
       }
   }
 
@@ -1804,10 +1560,13 @@
   scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   Promise.all([
-    fetch('menu.json').then(r => r.ok ? r.json() : []).catch(() => []),
+    fetch('menu.json').then(r => {
+        if (!r.ok) throw new Error("Meniul nu a putut fi găsit");
+        return r.json();
+    }),
     fetch('config.json').then(r => r.ok ? r.json() : { whatsapp_number: "" }).catch(() => ({ whatsapp_number: "" }))
   ]).then(([menuData, configData]) => {
-      allItems = (menuData && menuData.length > 0) ? menuData : FALLBACK_MENU;
+      allItems = menuData || [];
       appConfig = configData;
       
       applyStaticText();
@@ -1824,11 +1583,14 @@
           });
       }
   }).catch(err => {
-      console.error(err);
-      allItems = FALLBACK_MENU;
+      console.error("Eroare la încărcarea menu.json:", err);
+      allItems = [];
       applyStaticText();
       renderTagFilters();
-      render();
+      
+      categoriesWrap.innerHTML = '';
+      emptyState.textContent = UI[currentLang].loadError;
+      emptyState.style.display = 'block';
   });
 
   const overlay = document.getElementById('legalOverlay');
