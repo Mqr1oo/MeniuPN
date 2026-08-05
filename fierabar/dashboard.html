@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiera Bar &mdash; Dashboard Securizat</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- ===== SUPABASE SDK ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-base: #050505; 
+    --bg-card: #121212; 
+    --bg-panel: #1a1a1a;
+    --ink: #ffffff; 
+    --ink-soft: #a1a1aa; 
+    --pink-main: #ff2a85;
+    --pink-bright: #ff529f;
+    --paper-dim: #262626;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-base);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- LOGIN OVERLAY SECURIAT --- */
+  .auth-overlay {
+    position: fixed; inset: 0; background: var(--bg-base); z-index: 1000;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .auth-card {
+    background: var(--bg-card); border: 1.5px solid var(--paper-dim);
+    border-radius: var(--radius-lg); padding: 36px 28px; width: 100%; max-width: 380px;
+    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  }
+  .auth-card h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 8px; color: var(--ink); }
+  .auth-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; }
+  .auth-field { margin-bottom: 16px; text-align: left; }
+  .auth-field label { display: block; font-size: 12px; font-family: 'Space Mono', monospace; color: var(--ink-soft); margin-bottom: 6px; }
+  .auth-input {
+    width: 100%; padding: 12px; background: var(--bg-base); border: 1px solid var(--paper-dim);
+    border-radius: 10px; color: #fff; font-size: 15px; font-family: 'Work Sans', sans-serif; outline: none;
+  }
+  .auth-input:focus { border-color: var(--pink-main); }
+  .btn-auth {
+    width: 100%; background: var(--pink-main); color: #fff; border: none; padding: 14px;
+    border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px;
+  }
+  .auth-error { color: #ff4757; font-size: 13px; margin-top: 12px; display: none; }
+
+  /* --- HEADER & DASHBOARD UI --- */
+  header {
+    background: var(--bg-card); border-bottom: 1px solid var(--paper-dim);
+    padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--pink-main); }
+  .header-actions { display: flex; gap: 12px; align-items: center; }
+  .btn-logout {
+    background: transparent; border: 1px solid var(--paper-dim); color: var(--ink-soft);
+    padding: 6px 14px; border-radius: 100px; font-size: 12px; cursor: pointer; font-family: 'Space Mono', monospace;
+  }
+  
+  .tabs-bar {
+    background: var(--bg-panel); padding: 12px 24px; display: flex; gap: 10px; border-bottom: 1px solid var(--paper-dim);
+  }
+  .tab-btn {
+    background: transparent; border: 1px solid var(--paper-dim); color: var(--ink-soft);
+    padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 13px; cursor: pointer;
+  }
+  .tab-btn.active { background: var(--pink-main); border-color: var(--pink-main); color: #fff; font-weight: 700; }
+
+  main {
+    padding: 24px; flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start;
+  }
+  .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--ink-soft); }
+
+  /* --- CARD COMANDĂ --- */
+  .order-card {
+    background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: slideUp 0.35s ease-out forwards;
+  }
+  .order-card.is-new { border-color: var(--pink-main); box-shadow: 0 0 20px rgba(255, 42, 133, 0.4); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .card-header {
+    background: var(--bg-panel); padding: 14px 20px; border-bottom: 1px solid var(--paper-dim);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .table-badge { background: var(--pink-main); color: #fff; font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; padding: 4px 12px; border-radius: 6px; }
+  .time-stamp { font-size: 12px; color: var(--ink-soft); font-family: 'Space Mono', monospace; }
+
+  .card-body { padding: 18px; }
+  .items-list { list-style: none; }
+  .items-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--paper-dim); }
+  .item-qty { color: var(--pink-bright); font-weight: 700; margin-right: 10px; font-family: 'Space Mono', monospace; }
+
+  .card-footer {
+    padding: 14px 20px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--paper-dim);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .total-price { font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; }
+  .btn-done {
+    background: var(--success); border: none; color: #fff; padding: 10px 16px; border-radius: 8px;
+    font-weight: 700; cursor: pointer; font-family: 'Work Sans', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <h2>Fiera Bar</h2>
+    <p>Autentificare personal bar</p>
+    <form id="loginForm">
+      <div class="auth-field">
+        <label>EMAIL</label>
+        <input type="email" id="emailInput" class="auth-input" placeholder="bar@fierabar.com" required>
+      </div>
+      <div class="auth-field">
+        <label>PAROLĂ</label>
+        <input type="password" id="passwordInput" class="auth-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-auth">Conectare</button>
+      <div class="auth-error" id="authError">Email sau parolă incorectă.</div>
+    </form>
+  </div>
+</div>
+
+<header>
+  <div class="brand">Fiera Bar &mdash; Dashboard</div>
+  <div class="header-actions">
+    <button class="btn-logout" id="btnLogout">Deconectare</button>
+  </div>
+</header>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tabActive">Comenzi Active (<span id="activeCount">0</span>)</button>
+  <button class="tab-btn" id="tabHistory">Istoric</button>
+</div>
+
+<main id="ordersContainer">
+  <div class="empty-state" id="emptyState">
+    <h2>Fără comenzi active</h2>
+    <p>Comenzile noilor clienți vor apărea aici automat.</p>
+  </div>
+</main>
+
+<script>
+(function(){
+  const SUPABASE_URL = 'https://wnwllyyhtkufcejzjeay.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
+  const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const authOverlay = document.getElementById('authOverlay');
+  const loginForm = document.getElementById('loginForm');
+  const authError = document.getElementById('authError');
+  const ordersContainer = document.getElementById('ordersContainer');
+  const emptyState = document.getElementById('emptyState');
+  const activeCountEl = document.getElementById('activeCount');
+
+  let currentTab = 'active';
+  let currentOrders = [];
+
+  // Sintetizator audio pentru clopoțel
+  function playChimeSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const playNote = (freq, time, dur) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + time);
+        gain.gain.setValueAtTime(0, ctx.currentTime + time);
+        gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + time + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + time + dur);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + time); osc.stop(ctx.currentTime + time + dur);
+      };
+      playNote(880, 0, 1.2);
+      playNote(1318.51, 0.15, 1.5);
+    } catch(e){}
+  }
+
+  // Verificare sesiune Supabase la încărcare
+  async function checkSession() {
+    const { data: { session } } = await _supabase.auth.getSession();
+    if (session) {
+      authOverlay.style.display = 'none';
+      initDashboard();
+    } else {
+      authOverlay.style.display = 'flex';
+    }
+  }
+
+  // Event Autentificare
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authError.style.display = 'none';
+    const email = document.getElementById('emailInput').value;
+    const password = document.getElementById('passwordInput').value;
+
+    const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      authError.style.display = 'block';
+    } else {
+      authOverlay.style.display = 'none';
+      playChimeSound();
+      initDashboard();
+    }
+  });
+
+  document.getElementById('btnLogout').addEventListener('click', async () => {
+    await _supabase.auth.signOut();
+    location.reload();
+  });
+
+  document.getElementById('tabActive').addEventListener('click', () => {
+    currentTab = 'active';
+    document.getElementById('tabActive').classList.add('active');
+    document.getElementById('tabHistory').classList.remove('active');
+    loadOrders();
+  });
+
+  document.getElementById('tabHistory').addEventListener('click', () => {
+    currentTab = 'history';
+    document.getElementById('tabHistory').classList.add('active');
+    document.getElementById('tabActive').classList.remove('active');
+    loadOrders();
+  });
+
+  function createCardHTML(order, isNew = false) {
+    const card = document.createElement('article');
+    card.className = `order-card ${isNew ? 'is-new' : ''}`;
+    card.id = `order-${order.id}`;
+
+    let itemsHtml = '';
+    if (Array.isArray(order.produse)) {
+      order.produse.forEach(item => {
+        itemsHtml += `<li><span><span class="item-qty">${item.cantitate}x</span>${item.nume}</span></li>`;
+      });
+    }
+
+    const isDone = order.status === 'finalizata';
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="table-badge">Masa ${order.mesa}</div>
+        <div class="time-stamp">${new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}</div>
+      </div>
+      <div class="card-body">
+        <ul class="items-list">${itemsHtml}</ul>
+      </div>
+      <div class="card-footer">
+        <div class="total-price">${Number(order.total).toFixed(2)} RON</div>
+        ${!isDone ? `<button class="btn-done" onclick="markOrderDone(${order.id})">Finalizat</button>` : `<span style="color:var(--ink-soft); font-size:12px;">Finalizată</span>`}
+      </div>
+    `;
+    return card;
+  }
+
+  function renderOrders(orders, highlightId = null) {
+    Array.from(ordersContainer.children).forEach(child => {
+      if (child.id !== 'emptyState') child.remove();
+    });
+
+    if (orders.length === 0) {
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+      orders.forEach(order => {
+        ordersContainer.appendChild(createCardHTML(order, order.id === highlightId));
+      });
+    }
+  }
+
+  async function loadOrders() {
+    let query = _supabase.from('comenzi').select('*');
+    if (currentTab === 'active') {
+      query = query.eq('status', 'noua').order('created_at', { ascending: false });
+    } else {
+      query = query.eq('status', 'finalizata').order('created_at', { ascending: false }).limit(30);
+    }
+
+    const { data, error } = await query;
+    if (!error && data) {
+      currentOrders = data;
+      if (currentTab === 'active') activeCountEl.textContent = currentOrders.length;
+      renderOrders(currentOrders);
+    }
+  }
+
+  window.markOrderDone = async function(orderId) {
+    const { error } = await _supabase.from('comenzi').update({ status: 'finalizata' }).eq('id', orderId);
+    if (!error) {
+      currentOrders = currentOrders.filter(o => o.id !== orderId);
+      activeCountEl.textContent = currentOrders.length;
+      renderOrders(currentOrders);
+    }
+  };
+
+  function initDashboard() {
+    loadOrders();
+    _supabase.channel('public:comenzi')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, payload => {
+        if (payload.new.status === 'noua') {
+          playChimeSound();
+          if (currentTab === 'active') {
+            currentOrders.unshift(payload.new);
+            activeCountEl.textContent = currentOrders.length;
+            renderOrders(currentOrders, payload.new.id);
+          }
+        }
+      })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, payload => {
+        if (payload.new.status === 'finalizata' && currentTab === 'active') {
+          currentOrders = currentOrders.filter(o => o.id !== payload.new.id);
+          activeCountEl.textContent = currentOrders.length;
+          renderOrders(currentOrders);
+        }
+      })
+      .subscribe();
+  }
+
+  checkSession();
+})();
+</script>
+
+</body>
+</html>
