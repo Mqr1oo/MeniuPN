@@ -308,11 +308,20 @@
     transition:transform .25s ease, box-shadow .25s ease, border-color .25s;
     opacity: 0;
     animation: fadeUpIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    position: relative;
   }
   .card:hover{ transform:translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,0.6); border-color: var(--pink-main);}
+  
+  /* OUT OF STOCK STYLES */
+  .card.out-of-stock .card-img { filter: grayscale(100%) opacity(0.5); }
+  .card.out-of-stock .price { text-decoration: line-through; color: var(--ink-soft); }
+  .card.out-of-stock .card-qty-controls { display: none !important; }
+  .badge-epuizat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 15; pointer-events: none; }
+  .badge-epuizat span { background: var(--coral); color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+  
   .card-img-wrap{ position:relative; overflow:hidden; }
   .card-img{ aspect-ratio:4/3; width:100%; object-fit:cover; background:var(--bg-panel); transition: transform 0.5s ease; }
-  .card:hover .card-img { transform: scale(1.05); }
+  .card:hover:not(.out-of-stock) .card-img { transform: scale(1.05); }
 
   .ribbon {
     position: absolute;
@@ -926,7 +935,7 @@
   <div class="action-buttons">
     <button class="btn-action btn-order-bar" id="btnOpenOrderModal">
       <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-      <span id="txtBtnOrderBar">Comandă la Bar</span>
+      <span id="txtBtnOrderBar">Trimite Comanda</span>
     </button>
     <button class="btn-action btn-waiter" id="btnOpenWaiterMode">
       <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -1049,15 +1058,6 @@
   ];
   const OTHER_LABEL = { ro:'Altele', en:'Other' };
 
-  const TAG_LABELS = {
-    'tradicional': { ro:'tradițional', en:'traditional' },
-    'especialidad': { ro:'specialitate', en:'signature' },
-    'para compartir': { ro:'de împărțit', en:'to share' },
-    'marisco': { ro:'fructe de mare', en:'seafood' },
-    'sidra': { ro:'cidru', en:'cider' },
-    'sin gluten': { ro:'fără gluten', en:'gluten-free' }
-  };
-  
   const ALLERGEN_LABELS = {
     'Gluten': { ro:'Gluten', en:'Gluten' },
     'Lácteos': { ro:'Lactate', en:'Dairy' },
@@ -1096,13 +1096,13 @@
       `,
       favShortcutLabel: 'Selecția Mea',
       totalLabel: 'Total Selecție:',
-      btnOrderBar: 'Comandă la Bar',
+      btnOrderBar: 'Trimite Comanda',
       btnWaiter: 'Arată Ospătarului',
       ribbonSpecial: 'Specialitate',
       orderModalTitle: 'Numărul Mesei',
-      orderModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar.',
+      orderModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.',
       sendOrderBtn: 'Trimite Comanda',
-      orderSuccessText: 'Comanda a fost trimisă cu succes la bar!',
+      orderSuccessText: 'Comanda a fost trimisă cu succes!',
       orderErrorText: 'A apărut o eroare. Vă rugăm să încercați din nou.',
       orderSendingBtnText: 'Se trimite...',
       waiterTitle: 'Selecția Mesei',
@@ -1148,13 +1148,13 @@
       `,
       favShortcutLabel: 'My Selection',
       totalLabel: 'Total Selection:',
-      btnOrderBar: 'Send to Bar',
+      btnOrderBar: 'Send Order',
       btnWaiter: 'Show to Waiter',
       ribbonSpecial: 'Signature',
       orderModalTitle: 'Table Number',
-      orderModalDesc: 'Please enter your table number to send the order to the bar.',
+      orderModalDesc: 'Please enter your table number to send the order to the bar and kitchen.',
       sendOrderBtn: 'Send Order',
-      orderSuccessText: 'Order successfully sent to the bar!',
+      orderSuccessText: 'Order successfully sent!',
       orderErrorText: 'An error occurred. Please try again.',
       orderSendingBtnText: 'Sending...',
       waiterTitle: 'Table Selection',
@@ -1178,6 +1178,7 @@
   const LANG_KEY = 'fieraBar:lang';
 
   let allItems = [];
+  let outOfStockIds = new Set(); // Gestioneaza produsele epuizate
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
   let currentLang = loadLang();
@@ -1229,6 +1230,7 @@
   function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
   
   function updateQty(item, change) {
+    if (outOfStockIds.has(item.imageNumber.toString())) return; // Securitate
     const id = item.imageNumber;
     let current = favoritesQty[id] || 0;
     current += change;
@@ -1371,12 +1373,28 @@
   function buildCard(item, index){
     const t = UI[currentLang];
     const text = itemText(item);
+    
+    const isEpuizat = outOfStockIds.has(item.imageNumber.toString());
+    
+    // Stergem din cos daca a devenit epuizat
+    if (isEpuizat && getQty(item) > 0) {
+        delete favoritesQty[item.imageNumber];
+        saveFavorites();
+    }
+
     const card = document.createElement('article');
-    card.className = 'card';
+    card.className = `card ${isEpuizat ? 'out-of-stock' : ''}`;
     card.style.animationDelay = `${index * 0.05}s`;
 
     const imgWrap = document.createElement('div');
     imgWrap.className = 'card-img-wrap';
+
+    if(isEpuizat) {
+        const badge = document.createElement('div');
+        badge.className = 'badge-epuizat';
+        badge.innerHTML = '<span>Epuizat</span>';
+        imgWrap.appendChild(badge);
+    }
 
     if(item.tags && item.tags.includes('especialidad')){
       const ribbon = document.createElement('div');
@@ -1585,7 +1603,7 @@
     render();
   }
 
-  // ===== 2. LOGICA DE TRIMITERE COMANDĂ SUPABASE =====
+  // ===== 2. LOGICA DE TRIMITERE COMANDĂ IMPARTITA =====
   const orderOverlay = document.getElementById('orderOverlay');
   const tableInput = document.getElementById('tableNumberInput');
   const sendOrderBtn = document.getElementById('sendOrderBtn');
@@ -1602,28 +1620,36 @@
       const t = UI[currentLang];
       const { items, total } = getSelectedItemsAndTotal();
       
-      // Pregătirea datelor tip JSONB pentru Supabase
-      const produseComandate = items.map(item => ({
-        nume: itemText(item).name,
-        cantitate: getQty(item),
-        pret_unitar: item.price
-      }));
-      
-      // Starea de "Se încarcă" a butonului
       const originalBtnText = sendOrderBtn.textContent;
       sendOrderBtn.textContent = t.orderSendingBtnText;
       sendOrderBtn.disabled = true;
 
-      // Apelul către baza de date Supabase
-      const { data, error } = await _supabase
-        .from('comenzi')
-        .insert([{ 
-          mesa: tableNr, 
-          produse: produseComandate, 
-          total: total 
-        }]);
+      // Impartim cosul in Bucatarie si Bar pe baza campului sectiune din JSON
+      const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
+      const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
+      
+      let payloads = [];
+      
+      if(barItems.length > 0) {
+        payloads.push({
+          mesa: tableNr,
+          sectiune: 'bar',
+          total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
+          produse: barItems.map(i => ({ nume: itemText(i).name, cantitate: getQty(i), pret_unitar: i.price }))
+        });
+      }
 
-      // Resetăm butonul
+      if(kitchenItems.length > 0) {
+        payloads.push({
+          mesa: tableNr,
+          sectiune: 'bucatarie',
+          total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
+          produse: kitchenItems.map(i => ({ nume: itemText(i).name, cantitate: getQty(i), pret_unitar: i.price }))
+        });
+      }
+
+      const { data, error } = await _supabase.from('comenzi').insert(payloads);
+
       sendOrderBtn.textContent = originalBtnText;
       sendOrderBtn.disabled = false;
 
@@ -1633,7 +1659,6 @@
       } else {
         alert(t.orderSuccessText);
         
-        // Închidem modalul și golim coșul
         orderOverlay.classList.remove('open');
         favoritesQty = {};
         saveFavorites();
@@ -1741,10 +1766,22 @@
         return r.json();
     }),
     fetch('config.json').then(r => r.ok ? r.json() : { whatsapp_number: "" }).catch(() => ({ whatsapp_number: "" }))
-  ]).then(([menuData, configData]) => {
+  ]).then(async ([menuData, configData]) => {
       allItems = menuData || [];
       appConfig = configData;
       
+      // PRELUARE STOCURI INITIALE
+      const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
+      if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
+
+      // CONEXIUNE LIVE STOCURI
+      _supabase.channel('stoc_live')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, payload => {
+          if(payload.new.epuizat) outOfStockIds.add(payload.new.id_produs);
+          else outOfStockIds.delete(payload.new.id_produs);
+          render(); 
+        }).subscribe();
+
       applyStaticText();
       renderTagFilters();
       render();
@@ -1787,3 +1824,5 @@
 
 </body>
 </html>
+
+
