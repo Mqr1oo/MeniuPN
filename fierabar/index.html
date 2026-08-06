@@ -13,9 +13,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(registration => console.log('App PWA activată cu succes!'))
-        .catch(err => console.log('Eroare activare App: ', err));
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('Eroare SW: ', err));
     });
   }
 </script>
@@ -30,850 +28,136 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-base: #050505; 
-    --bg-card: #121212; 
-    --bg-panel: #1a1a1a;
-    --ink: #ffffff; 
-    --ink-soft: #a1a1aa; 
-    --pink-main: #ff2a85;
-    --pink-bright: #ff529f;
-    --paper-dim: #262626;
-    --coral: #ff4757;
-    
-    --radius: 4px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
+    --bg-base: #050505; --bg-card: #121212; --bg-panel: #1a1a1a;
+    --ink: #ffffff; --ink-soft: #a1a1aa; 
+    --pink-main: #ff2a85; --pink-bright: #ff529f;
+    --paper-dim: #262626; --coral: #ff4757;
+    --radius: 4px; --radius-md: 14px; --radius-lg: 20px;
     --max-w: 1180px;
   }
-
   *{ box-sizing:border-box; }
-  
-  html, body {
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
-  }
-  
+  html, body { overflow-x: hidden; width: 100%; position: relative; }
   html{ scroll-behavior:smooth; }
-  body{
-    margin:0;
-    background:var(--bg-base);
-    color:var(--ink);
-    font-family:'Work Sans', sans-serif;
-    font-size:16px;
-    line-height:1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; }
   img{ max-width:100%; display:block; }
-  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
-  :focus-visible{
-    outline:2px solid var(--pink-main);
-    outline-offset:3px;
-  }
-
-  h1,h2,h3{
-    font-family:'Fraunces', serif;
-    margin:0;
-    font-weight:600;
-  }
-
-  .wrap{
-    max-width:var(--max-w);
-    margin:0 auto;
-    padding:0 20px;
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    background: 
-      radial-gradient(ellipse at 80% 10%, rgba(255, 42, 133, 0.12), transparent 50%),
-      var(--bg-base);
-    color:var(--ink);
-    padding:60px 0 0;
-    overflow:hidden;
-    position:relative;
-    border-bottom: 1px solid var(--paper-dim);
-  }
-  
-  .top-actions{
-    position:absolute;
-    top:20px; left:20px;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .lang-toggle{
-    font-family:'Space Mono', monospace;
-    font-size:12px;
-    letter-spacing:.04em;
-    padding:8px 14px;
-    min-height:40px;
-    border-radius:100px;
-    border:1.5px solid var(--paper-dim);
-    background:rgba(18, 18, 18, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color:var(--ink);
-    cursor:pointer;
-    transition:background .2s, transform .15s, border-color .2s;
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
-  .lang-toggle:hover{ background:var(--bg-panel); border-color: var(--pink-main); }
+  /* HERO */
+  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(255, 42, 133, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
+  .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
+  .lang-toggle{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; }
   .lang-toggle:active{ transform:scale(0.92); }
   
-  .hero-inner{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:32px;
-    padding-bottom:50px;
-    padding-top:24px;
-  }
+  .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:24px; }
   .hero-text{ flex:1 1 340px; min-width:260px; }
-  .eyebrow{
-    font-family:'Space Mono', monospace;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    font-size:12px;
-    color:var(--pink-main);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:16px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:22px; height:1px;
-    background:var(--pink-main);
-    display:inline-block;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 8vw, 4.4rem);
-    line-height:0.98;
-    letter-spacing:-0.01em;
-  }
-  .hero h1 em{
-    font-style:italic;
-    color: var(--pink-main);
-    font-weight:500;
-  }
-  .hero p.tag{
-    margin-top:18px;
-    max-width:46ch;
-    color:var(--ink-soft);
-    font-size:1.02rem;
-  }
-  .hero-meta{
-    margin-top:26px;
-    display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-    font-family:'Space Mono', monospace;
-    font-size:12.5px;
-    color:var(--ink);
-  }
-  .hero-meta span{ display:block; color:var(--ink-soft); font-size:11px; letter-spacing:.06em; margin-bottom:3px; }
-
-  .cocktail-wrap{
-    flex:1 1 200px;
-    min-width:180px;
-    max-width:240px;
-    margin:0 auto;
-    display:flex;
-    justify-content:center;
-  }
-  .cocktail-svg{ 
-    width:100%; 
-    height:auto; 
-    filter: drop-shadow(0 15px 30px rgba(255, 42, 133, 0.25)); 
-  }
-
-  /* ---------- CONTROLS ---------- */
-  .controls{
-    padding: 24px 0 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .search-box{
-    display: flex;
-    align-items: center;
-    background: var(--bg-card);
-    border: 1.5px solid var(--paper-dim);
-    border-radius: var(--radius-md);
-    padding: 0 14px;
-    height: 48px;
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .search-box:focus-within {
-    border-color: var(--pink-main);
-    box-shadow: 0 4px 16px rgba(255, 42, 133, 0.2);
-  }
-  .search-icon{
-    width: 18px; 
-    height: 18px;
-    flex-shrink: 0;
-    margin-right: 10px;
-  }
-  .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .eyebrow{ font-family:'Space Mono', monospace; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--pink-main); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--pink-main); display:inline-block; }
+  .hero h1{ font-size:clamp(2.4rem, 8vw, 4.4rem); line-height:0.98; letter-spacing:-0.01em; }
+  .hero h1 em{ font-style:italic; color: var(--pink-main); font-weight:500; }
+  .hero p.tag{ margin-top:18px; max-width:46ch; color:var(--ink-soft); font-size:1.02rem; }
   
-  .search-box input{
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 0;
-    height: 100%;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 16px;
-    color: var(--ink);
-    outline: none;
-    -webkit-appearance: none;
-    border-radius: 0;
-  }
+  .cocktail-wrap{ flex:1 1 200px; min-width:180px; max-width:240px; margin:0 auto; display:flex; justify-content:center; }
+  .cocktail-svg{ width:100%; height:auto; filter: drop-shadow(0 15px 30px rgba(255, 42, 133, 0.25)); }
+
+  /* CONTROLS & CHIPS */
+  .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
+  .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 48px; width: 100%; transition: all 0.3s; }
+  .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(255, 42, 133, 0.2); }
+  .search-icon{ width: 18px; height: 18px; flex-shrink: 0; margin-right: 10px; }
+  .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .search-box input{ flex: 1; border: none; background: transparent; padding: 0; height: 100%; font-family: 'Work Sans', sans-serif; font-size: 16px; color: var(--ink); outline: none; -webkit-appearance: none; border-radius: 0; }
   .search-box input::placeholder { color: var(--ink-soft); }
 
-  .tag-filters{
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 2px 12px;
-    scrollbar-width: none;
-  }
+  .tag-filters{ display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 2px 12px; scrollbar-width: none; }
   .tag-filters::-webkit-scrollbar { display: none; }
-  
-  .chip{
-    font-family:'Space Mono', monospace;
-    font-size:13px;
-    letter-spacing:.03em;
-    padding: 0 16px;
-    min-height: 42px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100px;
-    border: 1.5px solid var(--paper-dim);
-    background: var(--bg-card);
-    color: var(--ink-soft);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all .2s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .chip{ font-family:'Space Mono', monospace; font-size:13px; letter-spacing:.03em; padding: 0 16px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; border: 1.5px solid var(--paper-dim); background: var(--bg-card); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: all .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
   .chip:active{ transform: translateY(0) scale(0.94); }
-  .chip.active{
-    background: var(--pink-main);
-    color: #fff; 
-    border-color: var(--pink-main);
-    font-weight: 700;
-    box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35);
-  }
+  .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35); }
   
-  /* ---------- CATEGORY SECTIONS / GRID ---------- */
+  /* GRID & CARDS */
   .menu-section{ padding: 10px 0 160px; }
   .category-section{ margin-top:38px; }
-  .category-section h2{
-    font-size:1.5rem;
-    padding-bottom:8px;
-    border-bottom:2px solid var(--pink-main);
-    display:inline-block;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-    gap:22px;
-    margin-top:22px;
-  }
+  .category-section h2{ font-size:1.5rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:22px; margin-top:22px; }
 
-  @keyframes fadeUpIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUpIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
-  .card{
-    background:var(--bg-card);
-    border-radius:var(--radius-lg);
-    overflow:hidden;
-    box-shadow:0 4px 16px rgba(0,0,0,0.4);
-    border:1px solid var(--paper-dim);
-    display:flex;
-    flex-direction:column;
-    transition:transform .25s ease, box-shadow .25s ease, border-color .25s;
-    opacity: 0;
-    animation: fadeUpIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    position: relative;
-  }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 12px 28px rgba(0,0,0,0.6); border-color: var(--pink-main);}
-  
-  /* OUT OF STOCK STYLES */
+  .card{ background:var(--bg-card); border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.4); border:1px solid var(--paper-dim); display:flex; flex-direction:column; transition:all .25s ease; opacity: 0; animation: fadeUpIn 0.5s forwards; position: relative; }
+  .card:hover{ transform:translateY(-6px); border-color: var(--pink-main);}
   .card.out-of-stock .card-img { filter: grayscale(100%) opacity(0.5); }
   .card.out-of-stock .price { text-decoration: line-through; color: var(--ink-soft); }
   .card.out-of-stock .card-qty-controls { display: none !important; }
   .badge-epuizat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 15; pointer-events: none; }
-  .badge-epuizat span { background: var(--coral); color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+  .badge-epuizat span { background: var(--coral); color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
   
   .card-img-wrap{ position:relative; overflow:hidden; }
   .card-img{ aspect-ratio:4/3; width:100%; object-fit:cover; background:var(--bg-panel); transition: transform 0.5s ease; }
-  .card:hover:not(.out-of-stock) .card-img { transform: scale(1.05); }
+  
+  .ribbon { position: absolute; top: 14px; left: -6px; background: var(--pink-main); color: #fff; padding: 6px 12px; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 0 4px 4px 0; z-index: 10; }
+  .ribbon::before { content: ""; position: absolute; bottom: -6px; left: 0; border-top: 6px solid #b80052; border-left: 6px solid transparent; }
 
-  .ribbon {
-    position: absolute;
-    top: 14px;
-    left: -6px;
-    background: var(--pink-main);
-    color: #fff;
-    padding: 6px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    z-index: 10;
-  }
-  .ribbon::before {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    border-top: 6px solid #b80052;
-    border-left: 6px solid transparent;
-  }
-
-  /* NUTRITIONAL BADGE */
-  .nutrition-badge {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-  }
-  .nutri-pill {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid var(--paper-dim);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-  .nutri-pill span { color: var(--pink-bright); }
-
-  /* QUANTITY CONTROLS */
-  .card-qty-controls {
-    position: absolute;
-    top: 12px; right: 12px;
-    display: flex;
-    align-items: center;
-    background: rgba(18, 18, 18, 0.9);
-    border: 1px solid var(--paper-dim);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 100px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    overflow: hidden;
-    z-index: 10;
-    transition: border-color 0.2s;
-  }
-  .card-qty-controls.has-items {
-    border-color: var(--pink-main);
-  }
-  .c-qty-btn {
-    width: 34px;
-    height: 34px;
-    border: none;
-    background: transparent;
-    color: var(--ink);
-    font-size: 1.25rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s;
-  }
+  /* QTY CONTROLS */
+  .card-qty-controls { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; background: rgba(18, 18, 18, 0.9); border: 1px solid var(--paper-dim); backdrop-filter: blur(6px); border-radius: 100px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); overflow: hidden; z-index: 10; transition: border-color 0.2s; }
+  .card-qty-controls.has-items { border-color: var(--pink-main); }
+  .c-qty-btn { width: 34px; height: 34px; border: none; background: transparent; color: var(--ink); font-size: 1.25rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .c-qty-btn:active { background: var(--pink-main); color: #fff;}
-  .c-qty-val {
-    width: 26px;
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--pink-bright);
-  }
+  .c-qty-val { width: 26px; text-align: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.95rem; color: var(--pink-bright); }
 
   .card-body{ padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
   .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
   .card-top h3{ font-size:1.18rem; line-height:1.2; margin:0;}
   .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.05rem; }
   .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
-  .ingredients{ font-size:13px; color:var(--ink-soft); margin:0; }
-  .ingredients b{ color:var(--ink); font-weight:600; }
-  
-  .allergens-wrap{ margin-top:auto; padding-top:12px; border-top: 1px dashed var(--paper-dim); }
-  .allergen-label { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-  .allergens{ display:flex; flex-wrap:wrap; gap:6px; }
-  .allergen-pill{
-    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.02em; 
-    padding:4px 10px; border-radius:100px; background:rgba(255, 42, 133, 0.15); color:var(--pink-bright); font-weight: 600;
-  }
-  .no-allergens{ font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); font-weight:600; }
+  .allergens-wrap{ margin-top:auto; padding-top:12px; border-top: 1px dashed var(--paper-dim); font-size:11px; }
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:14px; }
 
-  /* ---------- TOTAL BAR ---------- */
-  .total-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid var(--paper-dim);
-    padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 100;
-    transform: translateY(120%);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
-  }
+  /* TOTAL BAR */
+  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(16px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 30px rgba(0,0,0,0.6); }
   .total-bar.show { transform: translateY(0); }
-  
-  .total-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px dashed var(--paper-dim);
-    padding-bottom: 8px;
-  }
-  .total-label { font-size: 13px; color: var(--ink-soft); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;}
+  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 8px; }
   .total-amount { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--pink-bright); }
   
   .action-buttons { display: flex; gap: 12px; }
-  
-  .btn-action {
-    flex: 1;
-    border: none;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s, opacity 0.2s;
-    -webkit-tap-highlight-color: transparent;
-  }
+  .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
-  
   .btn-order-bar { background: var(--pink-main); color: white; }
-  .btn-order-bar svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  
-  .btn-waiter {
-    background: var(--bg-panel);
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-  }
-  .btn-waiter svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+  .btn-waiter { background: var(--bg-panel); color: var(--ink); border: 1px solid var(--paper-dim); }
 
-  /* FLOATING BUTTONS (FAV & SCROLL) */
-  .scroll-top-btn, .global-fav-btn {
-    position: fixed;
-    border: none;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 150;
-    transition: opacity 0.3s, transform 0.3s, background 0.2s, border-color 0.2s, bottom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  .scroll-top-btn {
-    bottom: 24px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    background: var(--pink-main);
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(255, 42, 133, 0.4);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-  }
+  /* FLOATING BUTTONS */
+  .scroll-top-btn, .global-fav-btn { position: fixed; border: none; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; }
+  .scroll-top-btn { bottom: 24px; right: 20px; width: 48px; height: 48px; background: var(--pink-main); color: #fff; box-shadow: 0 6px 16px rgba(255, 42, 133, 0.4); opacity: 0; pointer-events: none; transform: translateY(20px); }
   .scroll-top-btn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-  .scroll-top-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round;}
   .scroll-top-btn.lift { bottom: 160px; }
-
-  @keyframes heartGlow {
-    0% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
-    50% { box-shadow: 0 0 25px rgba(255, 42, 133, 0.8), inset 0 0 10px rgba(255, 42, 133, 0.2); }
-    100% { box-shadow: 0 0 5px rgba(255, 42, 133, 0.3), inset 0 0 0 transparent; }
-  }
-
-  .global-fav-btn {
-    top: 20px;
-    right: 20px;
-    height: 48px;
-    background: rgba(18, 18, 18, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1.5px solid var(--pink-main);
-    padding: 0 18px 0 16px;
-    gap: 9px;
-    color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
-    animation: heartGlow 2s infinite ease-in-out;
-  }
-  .global-fav-btn svg { width: 23px; height: 23px; fill: none; stroke: var(--pink-main); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;}
-  .global-fav-btn .fav-count { font-size: 15px; color: var(--pink-bright); }
-
-  /* POPUP / MODALS */
-  .popup-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-  }
-  .popup-overlay.show { opacity: 1; pointer-events: auto; }
-  .popup-modal {
-    background: var(--bg-card);
-    border: 1px solid var(--pink-main);
-    border-radius: var(--radius-lg);
-    padding: 36px 24px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 20px 50px rgba(255, 42, 133, 0.2);
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .popup-overlay.show .popup-modal { transform: scale(1) translateY(0); }
-  .popup-icon {
-    width: 70px; height: 70px;
-    margin: 0 auto 20px;
-    background: rgba(255, 42, 133, 0.15);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--pink-main);
-  }
-  .popup-icon svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .popup-modal h2 { font-size: 1.6rem; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
-  .popup-modal p { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.5; }
-
-  .welcome-langs { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;}
-  .lang-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px 10px;
-    border: 1.5px solid var(--paper-dim);
-    background: transparent;
-    color: var(--ink-soft);
-    border-radius: var(--radius-md);
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .lang-btn.active {
-    border-color: var(--pink-main);
-    background: rgba(255, 42, 133, 0.15);
-    color: #fff;
-  }
-  .flag { font-size: 1.25rem; }
-
-  .popup-actions { display: flex; gap: 10px; margin-top: 20px; }
-  .btn-outline {
-    width: 100%;
-    background: var(--bg-panel);
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-    padding: 14px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 1rem;
-    font-family: 'Work Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-outline:active { transform: scale(0.96); }
-
-  /* ---------- INSTALL BANNER ---------- */
-  .install-banner-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 300;
-    display: flex;
-    justify-content: center;
-    padding: 14px 14px 0;
-    pointer-events: none;
-  }
-  .install-banner {
-    background: var(--bg-card);
-    border: 1px solid var(--pink-main);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    max-width: 440px;
-    width: 100%;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 42, 133, 0.15);
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    transform: translateY(-140%);
-    opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
-    pointer-events: auto;
-  }
-  .install-banner-overlay.show .install-banner {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .install-icon-sm {
-    width: 46px; height: 46px;
-    flex-shrink: 0;
-    background: rgba(255, 42, 133, 0.15);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--pink-main);
-  }
-  .install-icon-sm svg { width: 24px; height: 24px; }
-  .install-banner-body { flex: 1; min-width: 0; }
-  .install-banner-body h2 { font-size: 1.05rem; margin-bottom: 4px; }
-  .install-banner-body p { font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; line-height: 1.45; }
-  .install-banner-actions { display: flex; gap: 8px; }
-  .install-banner-actions .btn-submit,
-  .install-banner-actions .btn-outline { padding: 10px; font-size: 13.5px; border-radius: 10px; }
-  .install-banner-close {
-    position: absolute;
-    top: -10px; right: -10px;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    background: var(--bg-panel);
-    border: 1px solid var(--paper-dim);
-    color: var(--ink-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 15px;
-    line-height: 1;
-  }
-  .ios-steps { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-  .ios-steps li { font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
-  .ios-steps .step-num {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--pink-main); color: #fff;
-    font-family: 'Space Mono', monospace; font-size: 10.5px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .ios-steps .ios-icon { display: inline-flex; vertical-align: -3px; }
-
-  @media (max-width:480px){
-    .install-banner { flex-direction: column; align-items: center; text-align: center; }
-    .install-banner-body p, .ios-steps { text-align: left; }
-  }
-
-  /* FOOTER */
-  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; }
-  .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
-  footer .brand{ font-family:'Fraunces', serif; color:var(--ink); font-size:1.1rem; }
-  .footer-links{ display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
-  .footer-links button{ background:none; border:none; color:var(--ink-soft); font-family:'Work Sans', sans-serif; font-size:13.5px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0; }
-
-  /* MODALS LEGAL & ORDER */
-  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:150; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);}
-  .modal-overlay.open{ display:flex; }
+  .global-fav-btn { top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px 0 16px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; }
   
-  .modal{ 
-    background:var(--bg-card); 
-    border: 1px solid var(--paper-dim); 
-    max-width:600px; 
-    width:100%; 
-    max-height:85vh; 
-    overflow-y:auto; 
-    border-radius:var(--radius-lg); 
-    padding:30px; 
-    position:relative; 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  }
+  /* MODALS */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(6px); opacity:0; transition: opacity 0.3s;}
+  .modal-overlay.open{ display:flex; opacity:1;}
   
-  .modal::-webkit-scrollbar { width: 6px; }
-  .modal::-webkit-scrollbar-track { background: transparent; }
-  .modal::-webkit-scrollbar-thumb { background: var(--paper-dim); border-radius: 10px; }
+  .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:400px; width:100%; border-radius:var(--radius-lg); padding:30px; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center;}
+  .modal h2 { margin-bottom: 15px; font-size: 1.5rem; }
+  .modal p { color: var(--ink-soft); margin-bottom: 20px; font-size: 14px;}
+  .modal-close{ position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s; }
   
-  .modal-close{ 
-    position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); 
-    border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; 
-    font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s;
-  }
-  .modal-close:hover { background: var(--pink-main); color: #fff; border-color: var(--pink-main); }
-  
-  .legal-content-box { margin-top: 10px; }
-  .legal-content-box h2 { font-size: 1.5rem; color: var(--ink); margin-bottom: 24px; line-height: 1.3; border-bottom: 2px solid var(--pink-main); padding-bottom: 12px; display: inline-block;}
-  .legal-content-box h3 { font-size: 1.05rem; color: var(--pink-bright); margin: 26px 0 12px; font-family: 'Work Sans', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;}
-  .legal-content-box p { font-size: 14px; color: var(--ink-soft); margin: 0 0 14px; line-height: 1.6; }
-  .legal-content-box ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.6;}
-  .legal-content-box li { margin-bottom: 8px; }
-  .legal-content-box strong { color: var(--ink); font-weight: 600; }
-  
-  .input-table {
-    width: 100%;
-    padding: 14px;
-    font-size: 1.2rem;
-    text-align: center;
-    background: var(--bg-base);
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-    border-radius: var(--radius-md);
-    margin-bottom: 20px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-  }
+  .input-table { width: 100%; padding: 14px; font-size: 1.2rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; }
   .input-table:focus { outline: none; border-color: var(--pink-main); }
   
-  .btn-submit {
-    width: 100%;
-    background: var(--pink-main);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 1.1rem;
-    font-family: 'Work Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;}
   .btn-submit:active { transform: scale(0.96); }
-  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  /* WAITER MODE */
-  .waiter-mode {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-base);
-    color: var(--ink);
-    z-index: 200;
-    display: none;
-    flex-direction: column;
-    padding: 40px 20px 100px;
-    overflow-y: auto;
-  }
-  .waiter-mode.active { display: flex; }
-  .waiter-header {
-    text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--paper-dim);
-    padding-bottom: 20px;
-  }
-  .waiter-header h2 { font-size: 2rem; color: var(--pink-main); }
-  .waiter-list { list-style: none; padding: 0; margin: 0 0 30px; }
-  .waiter-list li {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.4rem;
-    font-weight: 600;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--paper-dim);
-    color: var(--ink);
-  }
-  .waiter-list .qty-badge {
-    background: var(--pink-main);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 8px;
-    margin-right: 12px;
-  }
-  .waiter-total { font-size: 1.8rem; font-weight: 700; text-align: right; color: var(--pink-bright); }
   
-  .waiter-actions {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--bg-card);
-    border-top: 1px solid var(--paper-dim);
-    padding: 20px;
-    display: flex;
-    gap: 16px;
-  }
-  .btn-waiter-done {
-    flex: 1;
-    background: var(--pink-main);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: 'Work Sans', sans-serif;
-  }
-  .btn-waiter-back {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--paper-dim);
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-family: 'Work Sans', sans-serif;
-  }
+  .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 1px solid var(--paper-dim); padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
+  .btn-waiter-option:active { transform: scale(0.96); border-color: var(--pink-main); }
 
-  /* MEDIA QUERIES */
+  /* FOOTER */
+  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; margin-top: 40px;}
+  .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
+  
   @media (max-width:640px){
     .hero{ padding-top:44px; }
-    .top-actions{ top:14px; left:14px; gap:6px; }
-    .lang-toggle{ padding:6px 12px; font-size:12px; min-height:36px; }
-    
-    .global-fav-btn { top: 14px; right: 14px; height: 44px; padding: 0 14px 0 12px; }
-    
-    .hero-inner{ text-align:center; justify-content:center; }
-    .hero-meta{ justify-content:center; }
-    .tag-filters { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
-    .footer-inner{ flex-direction:column; align-items:flex-start; }
+    .search-box { width: 100%; }
     .grid{ grid-template-columns:1fr; }
     .action-buttons { flex-direction: column; }
     .scroll-top-btn.lift { bottom: 230px; }
@@ -883,7 +167,6 @@
     .search-box { max-width: 340px; }
     .grid{ grid-template-columns:repeat(2, 1fr); }
   }
-  @media (min-width:901px){ .grid{ grid-template-columns:repeat(3, 1fr); } }
 </style>
 </head>
 <body>
@@ -897,19 +180,6 @@
       <p class="eyebrow" id="txtEyebrow">Meniu digital</p>
       <h1 id="txtTitle">Fiera Bar</h1>
       <p class="tag" id="txtTagline">Cocktailuri internaționale, băuturi rafinate și preparate delicioase.</p>
-      <div class="hero-meta">
-        <div><span id="txtHoursLabel">Program</span><span id="txtHoursValue">18:00 &ndash; 02:00</span></div>
-      </div>
-    </div>
-    
-    <div class="cocktail-wrap" aria-hidden="true">
-      <svg class="cocktail-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="130" y1="20" x2="85" y2="120" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-        <polygon points="44,80 156,80 100,136" fill="#ff2a85" />
-        <polygon points="25,60 175,60 100,140" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
-        <line x1="100" y1="140" x2="100" y2="185" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-        <line x1="65" y1="185" x2="135" y2="185" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-      </svg>
     </div>
   </div>
 </header>
@@ -917,911 +187,300 @@
 <main class="wrap menu-section">
   <div class="controls">
     <div class="search-box">
-      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm10 17-5.6-5.6"/></svg>
-      <input type="search" id="searchInput" aria-label="Caută" placeholder="Caută un preparat sau o băutură...">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm10 17-5.6-5.6"/></svg>
+      <input type="search" id="searchInput" aria-label="Caută" placeholder="Caută...">
     </div>
-    <div class="tag-filters" id="tagFilters" role="group" aria-label="Filtrare"></div>
+    <div class="tag-filters" id="tagFilters"></div>
   </div>
-
-  <div id="categoriesWrap" aria-live="polite"></div>
+  <div id="categoriesWrap"></div>
   <div class="empty-state" id="emptyState" style="display:none;"></div>
 </main>
 
 <div class="total-bar" id="totalBar">
   <div class="total-header">
-    <span class="total-label" id="txtTotalLabel">Total Selecție:</span>
+    <span class="total-label" id="txtTotalLabel">Total:</span>
     <span class="total-amount" id="totalAmount">0.00 RON</span>
   </div>
   <div class="action-buttons">
-    <button class="btn-action btn-order-bar" id="btnOpenOrderModal">
-      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-      <span id="txtBtnOrderBar">Trimite Comanda</span>
-    </button>
-    <button class="btn-action btn-waiter" id="btnOpenWaiterMode">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span id="txtBtnWaiter">Arată Ospătarului</span>
-    </button>
+    <button class="btn-action btn-order-bar" id="btnOpenOrderModal">Trimite Comanda</button>
+    <button class="btn-action btn-waiter" id="btnOpenCallWaiter">🔔 Cheamă Ospătar</button>
   </div>
 </div>
 
-<button class="global-fav-btn" id="favShortcut" type="button" aria-label="Selecția mea">
+<button class="global-fav-btn" id="favShortcut">
   <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
   <span class="fav-count" id="favCount">0</span>
 </button>
 
-<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Mergi sus">
-  <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
+<button class="scroll-top-btn" id="scrollTopBtn"><svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg></button>
 
-<!-- ================= MODAL WELCOME (LIMBA) ================= -->
-<div class="popup-overlay" id="welcomeOverlay">
-  <div class="popup-modal">
-    <div class="popup-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-    </div>
-    <h2 id="txtWelcomeTitle">Fiera Bar</h2>
-    <p id="txtWelcomeDesc">Vă rugăm să selectați limba:</p>
-
-    <div class="welcome-langs">
-      <button class="lang-btn active" data-lang="ro"><span class="flag">🇷🇴</span> Română</button>
-      <button class="lang-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
-    </div>
-
-    <button class="btn-submit" id="btnWelcomeClose">Continuă</button>
+<!-- MODAL COMANDĂ -->
+<div class="modal-overlay" id="orderOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeOrderModal">&times;</button>
+    <h2>Numărul Mesei</h2>
+    <p>Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.</p>
+    <input type="text" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
+    <button class="btn-submit" id="sendOrderBtn">Trimite Comanda</button>
   </div>
 </div>
 
-<!-- ================= INSTALL BANNER ================= -->
-<div class="install-banner-overlay" id="installOverlay">
-  <div class="install-banner">
-    <button class="install-banner-close" id="btnNotNow" aria-label="Închide">&times;</button>
-    <div class="install-banner-body">
-      <h2 id="txtInstallTitle">Instalează Aplicația</h2>
-      <p id="txtInstallDesc">Adaugă Fiera Bar pe ecranul principal pentru acces rapid, fără să mai scanezi codul QR!</p>
-      <ol class="ios-steps" id="iosSteps" style="display:none;"></ol>
-      <div class="install-banner-actions">
-        <button class="btn-submit" id="btnInstallApp">Instalează</button>
-      </div>
-    </div>
+<!-- MODAL CHEAMĂ OSPĂTAR -->
+<div class="modal-overlay" id="callWaiterOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeCallWaiter">&times;</button>
+    <h2>Ai nevoie de noi?</h2>
+    <p>Selectează motivul pentru care chemi ospătarul la masă.</p>
+    <button class="btn-waiter-option" onclick="sendSpecialAlert('Nota (Cash)')">💵 Vreau să achit (Cash)</button>
+    <button class="btn-waiter-option" onclick="sendSpecialAlert('Nota (Card)')">💳 Vreau să achit (Card)</button>
+    <button class="btn-waiter-option" onclick="sendSpecialAlert('Ajutor / Altceva')">🙋‍♂️ Am nevoie de ajutor</button>
   </div>
 </div>
 
 <footer>
   <div class="wrap footer-inner">
     <div class="brand">Fiera Bar</div>
-    <div class="footer-links">
-      <button type="button" id="openLegal"></button>
-      <span id="txtFooterCopy">&copy; 2026 Fiera Bar</span>
-    </div>
+    <span id="txtFooterCopy">&copy; 2026 Fiera Bar</span>
   </div>
 </footer>
 
-<div class="modal-overlay" id="legalOverlay">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
-    <button class="modal-close" id="closeLegal" aria-label="Închide">&times;</button>
-    <div id="legalContent" class="legal-content-box"></div>
-  </div>
-</div>
-
-<!-- ================= MODAL TRIMITERE COMANDĂ ================= -->
-<div class="modal-overlay" id="orderOverlay">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-close" id="closeOrderModal" aria-label="Închide">&times;</button>
-    <h2 id="txtOrderModalTitle">Numărul Mesei</h2>
-    <p id="txtOrderModalDesc">Te rugăm să introduci numărul mesei pentru a trimite comanda la bar.</p>
-    <input type="number" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
-    <button class="btn-submit" id="sendOrderBtn">Trimite Comanda</button>
-  </div>
-</div>
-
-<div class="waiter-mode" id="waiterScreen">
-  <div class="waiter-header">
-    <h2 id="txtWaiterTitle">Selecția Mesei</h2>
-  </div>
-  <ul class="waiter-list" id="waiterList"></ul>
-  <div class="waiter-total" id="waiterTotalDisplay">Total: 0.00 RON</div>
-  
-  <div class="waiter-actions">
-    <button class="btn-waiter-back" id="closeWaiterBtn">Înapoi</button>
-    <button class="btn-waiter-done" id="clearWaiterBtn">Comandă Preluată!</button>
-  </div>
-</div>
-
 <script>
 (function(){
-  // ===== 1. INIȚIALIZARE SUPABASE =====
   const SUPABASE_URL = 'https://wnwllyyhtkufcejzjeay.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  // ====================================
-
-  const categoriesWrap = document.getElementById('categoriesWrap');
-  const emptyState = document.getElementById('emptyState');
-  const searchInput = document.getElementById('searchInput');
-  const tagFiltersEl = document.getElementById('tagFilters');
-  const langToggle = document.getElementById('langToggle');
-  const favShortcut = document.getElementById('favShortcut');
-  const favCountEl = document.getElementById('favCount');
-  const htmlRoot = document.getElementById('htmlRoot');
-  const totalBar = document.getElementById('totalBar');
-  const totalAmount = document.getElementById('totalAmount');
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-  
-  let appConfig = { whatsapp_number: "" }; 
-
-  const CATEGORIES = [
-    { key:'entrante', ro:'Aperitive', en:'Starters' },
-    { key:'principal', ro:'Fel Principal', en:'Mains' },
-    { key:'coctel', ro:'Cocktailuri', en:'Cocktails' },
-    { key:'bebida', ro:'Băuturi', en:'Drinks' },
-    { key:'postre', ro:'Deserturi', en:'Desserts' }
-  ];
-  const OTHER_LABEL = { ro:'Altele', en:'Other' };
-
-  const ALLERGEN_LABELS = {
-    'Gluten': { ro:'Gluten', en:'Gluten' },
-    'Lácteos': { ro:'Lactate', en:'Dairy' },
-    'Huevo': { ro:'Ou', en:'Egg' },
-    'Sulfitos': { ro:'Sulfiți', en:'Sulphites' },
-    'Pescado': { ro:'Pește', en:'Fish' },
-    'Marisco': { ro:'Crustacee', en:'Shellfish' }
-  };
-
-  const UI = {
-    ro: {
-      eyebrow: 'Meniu digital',
-      titleEm: 'Fiera Bar',
-      tagline: 'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.',
-      hoursLabel: 'Program',
-      hoursValue: '18:00 – 02:00',
-      searchPlaceholder: 'Caută un preparat sau o băutură...',
-      allChip: 'Toate',
-      ingredientsLabel: 'Ingrediente:',
-      allergensLabel: 'Alergeni:',
-      noAllergens: 'Fără alergeni',
-      emptyState: 'Niciun produs nu corespunde căutării.',
-      loadError: 'Nu s-a putut încărca meniul.',
-      legalLinkText: 'Termeni și Condiții & GDPR',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Termeni și Condiții & Politica de Confidențialitate</h2>
-        <p>Prin utilizarea acestui meniu digital, sunteți de acord cu următorii termeni. Vă rugăm să citiți cu atenție.</p>
-        <h3>1. Exonerare de Răspundere (Disclaimer)</h3>
-        <ul>
-          <li><strong>Alergeni și Riscuri Alimentare:</strong> Este responsabilitatea exclusivă a clientului să informeze ospătarul despre orice alergii sau intoleranțe.</li>
-          <li><strong>Prețuri și Disponibilitate:</strong> Prețurile se pot modifica fără notificare prealabilă.</li>
-        </ul>
-        <h3>2. Politica de Confidențialitate (GDPR)</h3>
-        <p>Aplicația salvează date strict necesare doar local în browserul dvs.</p>
-      `,
-      favShortcutLabel: 'Selecția Mea',
-      totalLabel: 'Total Selecție:',
-      btnOrderBar: 'Trimite Comanda',
-      btnWaiter: 'Arată Ospătarului',
-      ribbonSpecial: 'Specialitate',
-      orderModalTitle: 'Numărul Mesei',
-      orderModalDesc: 'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.',
-      sendOrderBtn: 'Trimite Comanda',
-      orderSuccessText: 'Comanda a fost trimisă cu succes!',
-      orderErrorText: 'A apărut o eroare. Vă rugăm să încercați din nou.',
-      orderSendingBtnText: 'Se trimite...',
-      waiterTitle: 'Selecția Mesei',
-      closeWaiterBtn: 'Înapoi la Meniu',
-      clearWaiterBtn: 'Comandă Preluată!',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Vă rugăm să selectați limba:',
-      welcomeBtn: 'Continuă',
-      installTitle: 'Instalează Aplicația',
-      installDesc: 'Adaugă meniul Fiera Bar pe ecranul principal pentru acces rapid!',
-      installBtnTxt: 'Instalează',
-      notNowBtnTxt: 'Mai târziu',
-      iosStep1: 'Apasă pe iconița',
-      iosStep1After: 'de „Distribuie” din bara de jos',
-      iosStep2: 'Alege „Adaugă pe ecranul principal”',
-      iosStep3: 'Apasă „Adaugă” în colțul din dreapta sus'
-    },
-    en: {
-      eyebrow: 'Digital menu',
-      titleEm: 'Fiera Bar',
-      tagline: 'International cocktails, fine drinks and delicious dishes.',
-      hoursLabel: 'Hours',
-      hoursValue: '6:00 pm – 2:00 am',
-      searchPlaceholder: 'Search a dish or drink...',
-      allChip: 'All',
-      ingredientsLabel: 'Ingredients:',
-      allergensLabel: 'Allergens:',
-      noAllergens: 'No allergens',
-      emptyState: 'No products match your search.',
-      loadError: 'Could not load the menu.',
-      legalLinkText: 'Terms & Conditions / GDPR',
-      footerCopy: '© 2026 Fiera Bar',
-      legalHtml: `
-        <h2>Terms & Conditions and Privacy Policy</h2>
-        <p>By using this digital menu, you agree to the following terms.</p>
-        <h3>1. Disclaimer of Liability</h3>
-        <ul>
-          <li><strong>Allergens & Health Risks:</strong> It is the customer's sole responsibility to inform the waiter of any medical allergies.</li>
-          <li><strong>Pricing & Availability:</strong> Prices are subject to change without prior notice.</li>
-        </ul>
-        <h3>2. Privacy Policy (GDPR)</h3>
-        <p>This app uses strictly necessary local storage only.</p>
-      `,
-      favShortcutLabel: 'My Selection',
-      totalLabel: 'Total Selection:',
-      btnOrderBar: 'Send Order',
-      btnWaiter: 'Show to Waiter',
-      ribbonSpecial: 'Signature',
-      orderModalTitle: 'Table Number',
-      orderModalDesc: 'Please enter your table number to send the order to the bar and kitchen.',
-      sendOrderBtn: 'Send Order',
-      orderSuccessText: 'Order successfully sent!',
-      orderErrorText: 'An error occurred. Please try again.',
-      orderSendingBtnText: 'Sending...',
-      waiterTitle: 'Table Selection',
-      closeWaiterBtn: 'Back to Menu',
-      clearWaiterBtn: 'Order Taken!',
-      welcomeTitle: 'Fiera Bar',
-      welcomeDesc: 'Please select your language:',
-      welcomeBtn: 'Continue',
-      installTitle: 'Install our App',
-      installDesc: 'Add Fiera Bar menu to your home screen for quick access!',
-      installBtnTxt: 'Install',
-      notNowBtnTxt: 'Not now',
-      iosStep1: 'Tap the',
-      iosStep1After: '„Share” icon in the bottom bar',
-      iosStep2: 'Choose „Add to Home Screen”',
-      iosStep3: 'Tap „Add” in the top-right corner'
-    }
-  };
-
-  const FAVORITES_KEY = 'fieraBar:favoritesQty';
-  const LANG_KEY = 'fieraBar:lang';
 
   let allItems = [];
-  let outOfStockIds = new Set(); // Gestioneaza produsele epuizate
+  let outOfStockIds = new Set();
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
-  let currentLang = loadLang();
+  let currentLang = 'ro';
 
-  let deferredPrompt;
-  let installPromptShown = false;
-  let installPromptTriggered = false;
-
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-
-  function loadFavorites(){
-    try{
-      const raw = window.localStorage.getItem(FAVORITES_KEY);
-      return raw ? JSON.parse(raw) : {};
-    }catch(e){ return {}; }
-  }
-  function saveFavorites(){
-    try{ window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoritesQty)); }
-    catch(e){}
-  }
-  function loadLang(){
-    try{ 
-      const l = window.localStorage.getItem(LANG_KEY);
-      return ['ro', 'en'].includes(l) ? l : 'ro'; 
-    }
-    catch(e){ return 'ro'; }
-  }
-  function saveLang(){
-    try{ window.localStorage.setItem(LANG_KEY, currentLang); }catch(e){}
+  // --- AUTO DETECTARE MASA DIN QR (URL PARAM) ---
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.has('mesa')) {
+      sessionStorage.setItem('fieraMesa', urlParams.get('mesa'));
   }
 
-  function getFavCount() {
-    let count = 0;
-    for(let id in favoritesQty) count += favoritesQty[id];
-    return count;
-  }
-
-  function updateFavShortcut(){
-    favCountEl.textContent = getFavCount();
-  }
-
-  function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
+  function loadFavorites(){ try{ const r = localStorage.getItem('fieraBar:favs'); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
+  function saveFavorites(){ try{ localStorage.setItem('fieraBar:favs', JSON.stringify(favoritesQty)); }catch(e){} }
   
+  function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
   function updateQty(item, change) {
-    if (outOfStockIds.has(item.imageNumber.toString())) return; // Securitate
+    if (outOfStockIds.has(item.imageNumber.toString())) return;
     const id = item.imageNumber;
     let current = favoritesQty[id] || 0;
     current += change;
-    if(current <= 0) delete favoritesQty[id];
-    else favoritesQty[id] = current;
+    if(current <= 0) delete favoritesQty[id]; else favoritesQty[id] = current;
     saveFavorites();
   }
 
-  function itemText(item){
-    if(item.translations && item.translations[currentLang]){
-      const t = item.translations[currentLang];
-      return {
-        name: t.name || item.name, 
-        description: t.description || item.description,
-        ingredients: t.ingredients || item.ingredients, 
-        allergens: t.allergens || item.allergens
-      };
-    }
-    return { name:item.name, description:item.description, ingredients:item.ingredients, allergens:item.allergens };
-  }
-  function allergenLabel(a){ return (ALLERGEN_LABELS[a] && ALLERGEN_LABELS[a][currentLang]) || a; }
-  function categoryOf(item){
-    const found = CATEGORIES.find(c => item.tags.includes(c.key));
-    return found ? found.key : 'otros';
-  }
-  function categoryLabel(key){
-    const found = CATEGORIES.find(c => c.key === key);
-    return found ? found[currentLang] : OTHER_LABEL[currentLang];
-  }
-
-  function localImagePath(imageNumber){ return `images/${imageNumber}.jpg`; }
-
-  function applyStaticText(){
-    const t = UI[currentLang];
-    htmlRoot.lang = currentLang;
-    
-    let nextLangTxt = '🇷🇴 RO';
-    if(currentLang === 'ro') nextLangTxt = '🇬🇧 EN';
-    else if(currentLang === 'en') nextLangTxt = '🇷🇴 RO';
-    langToggle.innerHTML = nextLangTxt;
-
-    favShortcut.setAttribute('aria-label', t.favShortcutLabel);
-    document.getElementById('txtEyebrow').textContent = t.eyebrow;
-    document.getElementById('txtTitle').textContent = t.titleEm;
-    document.getElementById('txtTagline').textContent = t.tagline;
-    document.getElementById('txtHoursLabel').textContent = t.hoursLabel;
-    document.getElementById('txtHoursValue').textContent = t.hoursValue;
-    searchInput.placeholder = t.searchPlaceholder;
-    searchInput.setAttribute('aria-label', t.searchPlaceholder);
-    emptyState.textContent = t.emptyState;
-    document.getElementById('openLegal').textContent = t.legalLinkText;
-    document.getElementById('txtFooterCopy').textContent = t.footerCopy;
-    document.getElementById('legalContent').innerHTML = t.legalHtml;
-    
-    document.getElementById('txtTotalLabel').textContent = t.totalLabel;
-    document.getElementById('txtBtnOrderBar').textContent = t.btnOrderBar;
-    document.getElementById('txtBtnWaiter').textContent = t.btnWaiter;
-    
-    document.getElementById('txtOrderModalTitle').textContent = t.orderModalTitle;
-    document.getElementById('txtOrderModalDesc').textContent = t.orderModalDesc;
-    document.getElementById('sendOrderBtn').textContent = t.sendOrderBtn;
-    
-    document.getElementById('txtWaiterTitle').textContent = t.waiterTitle;
-    document.getElementById('closeWaiterBtn').textContent = t.closeWaiterBtn;
-    document.getElementById('clearWaiterBtn').textContent = t.clearWaiterBtn;
-
-    document.getElementById('txtWelcomeTitle').textContent = t.welcomeTitle;
-    document.getElementById('txtWelcomeDesc').textContent = t.welcomeDesc;
-    document.getElementById('btnWelcomeClose').textContent = t.welcomeBtn;
-
-    document.getElementById('txtInstallTitle').textContent = t.installTitle;
-    document.getElementById('txtInstallDesc').textContent = t.installDesc;
-
-    const iosStepsEl = document.getElementById('iosSteps');
-    const installBtn = document.getElementById('btnInstallApp');
-    if(isIOS){
-      iosStepsEl.style.display = 'flex';
-      iosStepsEl.innerHTML = `
-        <li><span class="step-num">1</span> ${t.iosStep1} <span class="ios-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4M4 16v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span> ${t.iosStep1After}</li>
-        <li><span class="step-num">2</span> ${t.iosStep2}</li>
-        <li><span class="step-num">3</span> ${t.iosStep3}</li>
-      `;
-      installBtn.style.display = 'none';
-    } else {
-      iosStepsEl.style.display = 'none';
-      installBtn.style.display = 'block';
-      installBtn.textContent = t.installBtnTxt;
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === currentLang);
-    });
-  }
+  const UI = {
+    ro: { allChip: 'Toate', searchPlaceholder: 'Caută...', emptyState: 'Niciun produs găsit.', btnOrderBar: 'Trimite Comanda', btnWaiter: '🔔 Cheamă Ospătar' }
+  };
+  const CATEGORIES = [
+    { key:'entrante', ro:'Aperitive' }, { key:'principal', ro:'Fel Principal' },
+    { key:'coctel', ro:'Cocktailuri' }, { key:'bebida', ro:'Băuturi' }, { key:'postre', ro:'Deserturi' }
+  ];
 
   function renderTagFilters(){
-    tagFiltersEl.innerHTML = '';
     const t = UI[currentLang];
-
-    const allChip = document.createElement('button');
-    allChip.className = 'chip active';
-    allChip.type = 'button';
-    allChip.textContent = t.allChip;
-    allChip.addEventListener('click', () => setActiveFilter('all'));
-    tagFiltersEl.appendChild(allChip);
-
+    const tagsEl = document.getElementById('tagFilters');
+    tagsEl.innerHTML = `<button class="chip active" data-filter="all">${t.allChip}</button>`;
+    
     CATEGORIES.forEach(cat => {
-      if(!allItems.some(i => categoryOf(i) === cat.key)) return;
-      const chip = document.createElement('button');
-      chip.className = 'chip';
-      chip.type = 'button';
-      chip.textContent = cat[currentLang];
-      chip.dataset.filter = cat.key;
-      chip.addEventListener('click', () => setActiveFilter(cat.key));
-      tagFiltersEl.appendChild(chip);
-    });
-
-    highlightActiveChip();
-    updateFavShortcut();
-  }
-
-  function highlightActiveChip(){
-    Array.from(tagFiltersEl.children).forEach(chip => {
-      const key = chip.dataset.filter || 'all';
-      chip.classList.toggle('active', key === activeFilter);
-    });
-  }
-
-  function setActiveFilter(key){
-    activeFilter = key;
-    highlightActiveChip();
-    render();
-  }
-
-  function matchesSearch(item, query){
-    if(!query) return true;
-    const text = itemText(item);
-    return (text.name + ' ' + text.description + ' ' + text.ingredients.join(' ')).toLowerCase().includes(query);
-  }
-
-  function buildCard(item, index){
-    const t = UI[currentLang];
-    const text = itemText(item);
-    
-    const isEpuizat = outOfStockIds.has(item.imageNumber.toString());
-    
-    // Stergem din cos daca a devenit epuizat
-    if (isEpuizat && getQty(item) > 0) {
-        delete favoritesQty[item.imageNumber];
-        saveFavorites();
-    }
-
-    const card = document.createElement('article');
-    card.className = `card ${isEpuizat ? 'out-of-stock' : ''}`;
-    card.style.animationDelay = `${index * 0.05}s`;
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
-
-    if(isEpuizat) {
-        const badge = document.createElement('div');
-        badge.className = 'badge-epuizat';
-        badge.innerHTML = '<span>Epuizat</span>';
-        imgWrap.appendChild(badge);
-    }
-
-    if(item.tags && item.tags.includes('especialidad')){
-      const ribbon = document.createElement('div');
-      ribbon.className = 'ribbon';
-      ribbon.textContent = t.ribbonSpecial;
-      imgWrap.appendChild(ribbon);
-    }
-
-    const img = document.createElement('img');
-    img.className = 'card-img';
-    img.loading = 'lazy';
-    img.alt = text.name;
-    img.src = localImagePath(item.imageNumber);
-    img.addEventListener('error', function onImgErr(){
-      img.removeEventListener('error', onImgErr);
-      fetch('https://foodish-api.com/api/')
-        .then(r => r.json())
-        .then(d => { if(d && d.image) img.src = d.image; })
-        .catch(() => {
-          let hash = 0;
-          const name = item.name || 'food';
-          for(let i = 0; i < name.length; i++){ hash = (hash * 31 + name.charCodeAt(i)) >>> 0; }
-          img.src = `https://loremflickr.com/600/450/food,drink?lock=${hash}`;
-        });
-    });
-    imgWrap.appendChild(img);
-
-    if(item.kcal || item.weight) {
-      const nutriBadge = document.createElement('div');
-      nutriBadge.className = 'nutrition-badge';
-      
-      if(item.weight) {
-        const wPill = document.createElement('div');
-        wPill.className = 'nutri-pill';
-        wPill.innerHTML = `<span>⚖️</span> ${item.weight}`;
-        nutriBadge.appendChild(wPill);
+      if(allItems.some(i => (i.tags || []).includes(cat.key))) {
+        tagsEl.innerHTML += `<button class="chip" data-filter="${cat.key}">${cat[currentLang]}</button>`;
       }
-      if(item.kcal) {
-        const kPill = document.createElement('div');
-        kPill.className = 'nutri-pill';
-        kPill.innerHTML = `<span>🔥</span> <span>${item.kcal}</span> kcal`;
-        nutriBadge.appendChild(kPill);
-      }
-      imgWrap.appendChild(nutriBadge);
-    }
+    });
 
-    const qtyWrap = document.createElement('div');
-    let currentQty = getQty(item);
-    qtyWrap.className = 'card-qty-controls' + (currentQty > 0 ? ' has-items' : '');
-
-    const minusBtn = document.createElement('button');
-    minusBtn.className = 'c-qty-btn';
-    minusBtn.type = 'button';
-    minusBtn.textContent = '−';
-
-    const qtyLabel = document.createElement('span');
-    qtyLabel.className = 'c-qty-val';
-    qtyLabel.textContent = currentQty;
-
-    const plusBtn = document.createElement('button');
-    plusBtn.className = 'c-qty-btn';
-    plusBtn.type = 'button';
-    plusBtn.textContent = '+';
-
-    qtyWrap.appendChild(minusBtn);
-    qtyWrap.appendChild(qtyLabel);
-    qtyWrap.appendChild(plusBtn);
-
-    function refreshCardUI() {
-      let q = getQty(item);
-      qtyLabel.textContent = q;
-      qtyWrap.classList.toggle('has-items', q > 0);
-      updateFavShortcut();
-      if(activeFilter === 'favorites' && q === 0) render();
-      else updateBottomBar();
-    }
-
-    plusBtn.addEventListener('click', () => { updateQty(item, 1); refreshCardUI(); });
-    minusBtn.addEventListener('click', () => { updateQty(item, -1); refreshCardUI(); });
-
-    imgWrap.appendChild(qtyWrap);
-    card.appendChild(imgWrap);
-
-    const body = document.createElement('div');
-    body.className = 'card-body';
-
-    const top = document.createElement('div');
-    top.className = 'card-top';
-    const h3 = document.createElement('h3');
-    h3.textContent = text.name;
-    const price = document.createElement('span');
-    price.className = 'price';
-    price.textContent = `${item.price.toFixed(2)} RON`;
-    top.appendChild(h3);
-    top.appendChild(price);
-    body.appendChild(top);
-
-    const desc = document.createElement('p');
-    desc.className = 'desc';
-    desc.textContent = text.description;
-    body.appendChild(desc);
-
-    const ingredients = document.createElement('p');
-    ingredients.className = 'ingredients';
-    ingredients.innerHTML = `<b>${t.ingredientsLabel}</b> ${text.ingredients.join(', ')}`;
-    body.appendChild(ingredients);
-
-    const allergenWrap = document.createElement('div');
-    allergenWrap.className = 'allergens-wrap';
-    const allergenLabelEl = document.createElement('span');
-    allergenLabelEl.className = 'allergen-label';
-    allergenLabelEl.textContent = t.allergensLabel;
-    allergenWrap.appendChild(allergenLabelEl);
-
-    const allergenRow = document.createElement('div');
-    allergenRow.className = 'allergens';
-    if(text.allergens && text.allergens.length){
-      text.allergens.forEach(a => {
-        const pill = document.createElement('span');
-        pill.className = 'allergen-pill';
-        pill.textContent = allergenLabel(a);
-        allergenRow.appendChild(pill);
+    tagsEl.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        activeFilter = e.target.dataset.filter;
+        tagsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+        render();
       });
-    } else {
-      const none = document.createElement('span');
-      none.className = 'no-allergens';
-      none.textContent = t.noAllergens;
-      allergenRow.appendChild(none);
-    }
-    
-    allergenWrap.appendChild(allergenRow);
-    body.appendChild(allergenWrap);
-
-    card.appendChild(body);
-    return card;
-  }
-
-  function getSelectedItemsAndTotal() {
-      let filtered = allItems.filter(i => getQty(i) > 0);
-      let sum = filtered.reduce((acc, item) => acc + (item.price * getQty(item)), 0);
-      return { items: filtered, total: sum };
-  }
-
-  function updateBottomBar() {
-      const { items, total } = getSelectedItemsAndTotal();
-      if(activeFilter === 'favorites' && items.length > 0) {
-        totalAmount.textContent = `${total.toFixed(2)} RON`;
-        totalBar.classList.add('show');
-        scrollTopBtn.classList.add('lift');
-      } else {
-        totalBar.classList.remove('show');
-        scrollTopBtn.classList.remove('lift');
-      }
+    });
+    document.getElementById('favCount').textContent = Object.values(favoritesQty).reduce((a,b)=>a+b,0);
   }
 
   function render(){
-    const query = searchInput.value.trim().toLowerCase();
-    let filtered = allItems.filter(item => matchesSearch(item, query));
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    let filtered = allItems.filter(i => {
+        let txt = (i.name + ' ' + (i.description||'')).toLowerCase();
+        return txt.includes(query);
+    });
 
-    if(activeFilter === 'favorites'){
-      filtered = filtered.filter(i => getQty(i) > 0);
-    } else {
-      filtered = filtered.filter(item => activeFilter === 'all' ? true : categoryOf(item) === activeFilter);
-    }
+    if(activeFilter === 'favorites') filtered = filtered.filter(i => getQty(i) > 0);
+    else if(activeFilter !== 'all') filtered = filtered.filter(i => (i.tags || []).includes(activeFilter));
     
     updateBottomBar();
-    categoriesWrap.innerHTML = '';
+    const wrap = document.getElementById('categoriesWrap');
+    wrap.innerHTML = '';
 
     if(filtered.length === 0){
-      emptyState.textContent = UI[currentLang].emptyState;
-      emptyState.style.display = 'block';
+      document.getElementById('emptyState').style.display = 'block';
       return;
     }
-    emptyState.style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
 
-    const groupOrder = [...CATEGORIES.map(c => c.key), 'otros'];
-    let globalCardIndex = 0;
-
-    groupOrder.forEach(catKey => {
-      const items = filtered.filter(i => categoryOf(i) === catKey);
+    [...CATEGORIES.map(c=>c.key), 'otros'].forEach(catKey => {
+      const items = filtered.filter(i => {
+          const mainCat = CATEGORIES.find(c => (i.tags||[]).includes(c.key));
+          return (mainCat ? mainCat.key : 'otros') === catKey;
+      });
       if(items.length === 0) return;
 
-      const section = document.createElement('section');
-      section.className = 'category-section';
-
-      const h2 = document.createElement('h2');
-      h2.textContent = categoryLabel(catKey);
-      section.appendChild(h2);
-
-      const grid = document.createElement('div');
-      grid.className = 'grid';
+      const catName = CATEGORIES.find(c => c.key === catKey)?.[currentLang] || 'Altele';
+      let html = `<section class="category-section"><h2>${catName}</h2><div class="grid">`;
       
-      items.forEach((item) => {
-        grid.appendChild(buildCard(item, globalCardIndex));
-        globalCardIndex++;
+      items.forEach(item => {
+        const isEpuizat = outOfStockIds.has(item.imageNumber.toString());
+        if(isEpuizat && getQty(item) > 0) { delete favoritesQty[item.imageNumber]; saveFavorites(); }
+        
+        const q = getQty(item);
+        html += `
+          <article class="card ${isEpuizat ? 'out-of-stock' : ''}">
+            <div class="card-img-wrap">
+              ${isEpuizat ? '<div class="badge-epuizat"><span>Epuizat</span></div>' : ''}
+              ${(item.tags||[]).includes('especialidad') ? '<div class="ribbon">Specialitate</div>' : ''}
+              <img src="images/${item.imageNumber}.jpg" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
+              <div class="card-qty-controls ${q>0?'has-items':''}">
+                <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
+                <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
+                <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, 1)">+</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-top"><h3>${item.name}</h3><span class="price">${item.price.toFixed(2)} RON</span></div>
+              <p class="desc">${item.description || ''}</p>
+            </div>
+          </article>
+        `;
       });
-      
-      section.appendChild(grid);
-      categoriesWrap.appendChild(section);
+      wrap.innerHTML += html + `</div></section>`;
     });
   }
 
-  function refreshAll(){
-    applyStaticText();
-    renderTagFilters();
-    render();
+  window.appUpdateQty = function(id, change) {
+      const item = allItems.find(i => i.imageNumber === id);
+      if(item) { updateQty(item, change); render(); }
+  };
+
+  function updateBottomBar() {
+      const items = allItems.filter(i => getQty(i) > 0);
+      const total = items.reduce((acc, i) => acc + (i.price * getQty(i)), 0);
+      document.getElementById('totalAmount').textContent = `${total.toFixed(2)} RON`;
+      
+      const bar = document.getElementById('totalBar');
+      const stBtn = document.getElementById('scrollTopBtn');
+      if(activeFilter === 'favorites' && items.length > 0) {
+        bar.classList.add('show'); stBtn.classList.add('lift');
+      } else {
+        bar.classList.remove('show'); stBtn.classList.remove('lift');
+      }
+      document.getElementById('favCount').textContent = Object.values(favoritesQty).reduce((a,b)=>a+b,0);
   }
 
-  // ===== 2. LOGICA DE TRIMITERE COMANDĂ IMPARTITA =====
-  const orderOverlay = document.getElementById('orderOverlay');
-  const tableInput = document.getElementById('tableNumberInput');
-  const sendOrderBtn = document.getElementById('sendOrderBtn');
+  // MODALS LOGIC
+  const orderModal = document.getElementById('orderOverlay');
+  const callModal = document.getElementById('callWaiterOverlay');
   
   document.getElementById('btnOpenOrderModal').addEventListener('click', () => {
-    orderOverlay.classList.add('open');
-    tableInput.focus();
+    // Daca am detectat masa in URL, o pre-completam
+    const savedMesa = sessionStorage.getItem('fieraMesa');
+    if(savedMesa) document.getElementById('tableNumberInput').value = savedMesa;
+    
+    orderModal.classList.add('open');
   });
   
-  document.getElementById('closeOrderModal').addEventListener('click', () => orderOverlay.classList.remove('open'));
+  document.getElementById('btnOpenCallWaiter').addEventListener('click', () => callModal.classList.add('open'));
   
-  sendOrderBtn.addEventListener('click', async () => {
-      const tableNr = tableInput.value.trim() || 'Fără Număr';
-      const t = UI[currentLang];
-      const { items, total } = getSelectedItemsAndTotal();
-      
-      const originalBtnText = sendOrderBtn.textContent;
-      sendOrderBtn.textContent = t.orderSendingBtnText;
-      sendOrderBtn.disabled = true;
+  document.getElementById('closeOrderModal').addEventListener('click', () => orderModal.classList.remove('open'));
+  document.getElementById('closeCallWaiter').addEventListener('click', () => callModal.classList.remove('open'));
+  
+  window.addEventListener('click', e => { 
+      if(e.target === orderModal) orderModal.classList.remove('open'); 
+      if(e.target === callModal) callModal.classList.remove('open'); 
+  });
 
-      // Impartim cosul in Bucatarie si Bar pe baza campului sectiune din JSON
+  // SEND ORDER
+  document.getElementById('sendOrderBtn').addEventListener('click', async () => {
+      const tableInput = document.getElementById('tableNumberInput');
+      const tableNr = tableInput.value.trim() || 'Fără Număr';
+      // Salvam masa si pentru viitor (daca a tastat-o manual)
+      sessionStorage.setItem('fieraMesa', tableNr);
+
+      const items = allItems.filter(i => getQty(i) > 0);
+      const btn = document.getElementById('sendOrderBtn');
+      btn.textContent = 'Se trimite...'; btn.disabled = true;
+
       const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
       const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
       
       let payloads = [];
-      
       if(barItems.length > 0) {
-        payloads.push({
-          mesa: tableNr,
-          sectiune: 'bar',
-          total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
-          produse: barItems.map(i => ({ nume: itemText(i).name, cantitate: getQty(i), pret_unitar: i.price }))
-        });
+        payloads.push({ mesa: tableNr, sectiune: 'bar', total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
       }
-
       if(kitchenItems.length > 0) {
-        payloads.push({
-          mesa: tableNr,
-          sectiune: 'bucatarie',
-          total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
-          produse: kitchenItems.map(i => ({ nume: itemText(i).name, cantitate: getQty(i), pret_unitar: i.price }))
-        });
+        payloads.push({ mesa: tableNr, sectiune: 'bucatarie', total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
       }
 
-      const { data, error } = await _supabase.from('comenzi').insert(payloads);
+      const { error } = await _supabase.from('comenzi').insert(payloads);
+      btn.textContent = 'Trimite Comanda'; btn.disabled = false;
 
-      sendOrderBtn.textContent = originalBtnText;
-      sendOrderBtn.disabled = false;
-
-      if (error) {
-        console.error('Eroare Supabase:', error);
-        alert(t.orderErrorText);
-      } else {
-        alert(t.orderSuccessText);
-        
-        orderOverlay.classList.remove('open');
-        favoritesQty = {};
-        saveFavorites();
-        render();
-        updateFavShortcut();
+      if (error) alert("Eroare la trimitere.");
+      else {
+        alert("Comanda a fost trimisă cu succes!");
+        orderModal.classList.remove('open');
+        favoritesQty = {}; saveFavorites(); render();
       }
   });
-  // ====================================================
 
-  const waiterScreen = document.getElementById('waiterScreen');
-  const waiterList = document.getElementById('waiterList');
-  const waiterTotalDisplay = document.getElementById('waiterTotalDisplay');
-
-  document.getElementById('btnOpenWaiterMode').addEventListener('click', () => {
-      const { items, total } = getSelectedItemsAndTotal();
-      waiterList.innerHTML = '';
+  // CALL WAITER
+  window.sendSpecialAlert = async function(tip) {
+      let mesa = sessionStorage.getItem('fieraMesa');
+      if(!mesa) {
+          mesa = prompt("Ce număr are masa ta?");
+          if(!mesa) return;
+          sessionStorage.setItem('fieraMesa', mesa);
+      }
       
-      items.forEach(item => {
-          let qty = getQty(item);
-          let li = document.createElement('li');
-          li.innerHTML = `<div><span class="qty-badge">${qty}x</span> ${itemText(item).name}</div> <span>${(item.price * qty).toFixed(2)} RON</span>`;
-          waiterList.appendChild(li);
-      });
+      await _supabase.from('comenzi').insert([{
+          mesa: mesa, sectiune: 'bar', total: 0,
+          produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + tip, cantitate: 1, pret_unitar: 0}]
+      }]);
       
-      waiterTotalDisplay.textContent = `Total: ${total.toFixed(2)} RON`;
-      waiterScreen.classList.add('active');
-  });
+      alert("Ospătarul a fost chemat la masa " + mesa + "!");
+      callModal.classList.remove('open');
+  };
 
-  document.getElementById('closeWaiterBtn').addEventListener('click', () => waiterScreen.classList.remove('active'));
-  document.getElementById('clearWaiterBtn').addEventListener('click', () => {
-      favoritesQty = {};
-      saveFavorites();
-      waiterScreen.classList.remove('active');
-      render();
-      updateFavShortcut();
-  });
-
-  searchInput.addEventListener('input', render);
-  
-  langToggle.addEventListener('click', () => { 
-    if(currentLang === 'ro') currentLang = 'en';
-    else currentLang = 'ro';
-    
-    saveLang(); 
-    refreshAll(); 
-  });
-  
-  favShortcut.addEventListener('click', () => { 
-    setActiveFilter('favorites'); 
-    document.getElementById('categoriesWrap').scrollIntoView({ behavior:'smooth', block:'start' }); 
-  });
-
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      currentLang = e.currentTarget.dataset.lang;
-      saveLang();
-      refreshAll();
-    });
-  });
-
-  const installOverlay = document.getElementById('installOverlay');
+  document.getElementById('searchInput').addEventListener('input', render);
+  document.getElementById('favShortcut').addEventListener('click', () => { activeFilter = 'favorites'; render(); });
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) scrollTopBtn.classList.add('show');
-    else scrollTopBtn.classList.remove('show');
-
-    if (window.scrollY > 220 && !installPromptShown && !installPromptTriggered && !isStandalone) {
-        if (sessionStorage.getItem('fieraWelcomed') === 'true') {
-            if (isIOS || deferredPrompt) {
-                installPromptTriggered = true;
-                installOverlay.classList.add('show');
-            }
-        }
-    }
+    const stBtn = document.getElementById('scrollTopBtn');
+    if (window.scrollY > 300) stBtn.classList.add('show'); else stBtn.classList.remove('show');
   });
+  document.getElementById('scrollTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  document.getElementById('btnWelcomeClose').addEventListener('click', () => {
-      document.getElementById('welcomeOverlay').classList.remove('show');
-      sessionStorage.setItem('fieraWelcomed', 'true');
-  });
-
-  document.getElementById('btnNotNow').addEventListener('click', () => {
-      installOverlay.classList.remove('show');
-      installPromptShown = true; 
-  });
-
-  document.getElementById('btnInstallApp').addEventListener('click', async () => {
-      if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          console.log(`Rezultat instalare PWA: ${outcome}`);
-          
-          deferredPrompt = null;
-          installOverlay.classList.remove('show');
-          installPromptShown = true;
-      }
-  });
-
-
-  Promise.all([
-    fetch('menu.json').then(r => {
-        if (!r.ok) throw new Error("Meniul nu a putut fi găsit");
-        return r.json();
-    }),
-    fetch('config.json').then(r => r.ok ? r.json() : { whatsapp_number: "" }).catch(() => ({ whatsapp_number: "" }))
-  ]).then(async ([menuData, configData]) => {
+  // INIT
+  fetch('menu.json').then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
-      appConfig = configData;
-      
-      // PRELUARE STOCURI INITIALE
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
       if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
 
-      // CONEXIUNE LIVE STOCURI
-      _supabase.channel('stoc_live')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, payload => {
-          if(payload.new.epuizat) outOfStockIds.add(payload.new.id_produs);
-          else outOfStockIds.delete(payload.new.id_produs);
+      _supabase.channel('stoc_live').on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, p => {
+          if(p.new.epuizat) outOfStockIds.add(p.new.id_produs); else outOfStockIds.delete(p.new.id_produs);
           render(); 
-        }).subscribe();
+      }).subscribe();
 
-      applyStaticText();
-      renderTagFilters();
-      render();
-      
-      if(!sessionStorage.getItem('fieraWelcomed')) {
-          const welcomeOverlay = document.getElementById('welcomeOverlay');
-          setTimeout(() => { welcomeOverlay.classList.add('show'); }, 500);
-      }
-  }).catch(err => {
-      console.error("Eroare la încărcarea menu.json:", err);
-      allItems = [];
-      applyStaticText();
-      renderTagFilters();
-      
-      categoriesWrap.innerHTML = '';
-      emptyState.textContent = UI[currentLang].loadError;
-      emptyState.style.display = 'block';
-  });
+      renderTagFilters(); render();
+  }).catch(() => document.getElementById('emptyState').style.display = 'block');
 
-  const overlay = document.getElementById('legalOverlay');
-  const openBtn = document.getElementById('openLegal');
-  const closeBtn = document.getElementById('closeLegal');
-  openBtn.addEventListener('click', () => overlay.classList.add('open'));
-  closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
-  
-  window.addEventListener('click', e => { 
-      if(e.target === overlay) overlay.classList.remove('open'); 
-      if(e.target === orderOverlay) orderOverlay.classList.remove('open');
-  });
-  document.addEventListener('keydown', e => { 
-      if(e.key === 'Escape') {
-          overlay.classList.remove('open');
-          orderOverlay.classList.remove('open');
-      }
-  });
-
-  applyStaticText();
 })();
 </script>
-
 </body>
 </html>
 
