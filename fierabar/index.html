@@ -38,7 +38,7 @@
   *{ box-sizing:border-box; }
   html, body { overflow-x: hidden; width: 100%; position: relative; }
   html{ scroll-behavior:smooth; }
-  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; }
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 80px;} /* padding for bottom bars */
   img{ max-width:100%; display:block; }
   :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
@@ -75,7 +75,7 @@
   .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35); }
   
   /* GRID & CARDS */
-  .menu-section{ padding: 10px 0 160px; }
+  .menu-section{ padding: 10px 0 100px; }
   .category-section{ margin-top:38px; }
   .category-section h2{ font-size:1.5rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
   .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:22px; margin-top:22px; }
@@ -121,16 +121,21 @@
   .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
   .btn-order-bar { background: var(--pink-main); color: white; }
+  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 50px; font-size: 18px; } /* Buton Split the Bill */
+
+  /* LIVE ORDER TRACKER WIDGET */
+  .tracker-widget { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-150%); width: 90%; max-width: 400px; background: rgba(18,18,18,0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 10px 30px rgba(255, 42, 133, 0.2); z-index: 110; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .tracker-widget.show { transform: translateX(-50%) translateY(0); }
+  .t-head { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; font-weight: 600; }
+  .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; }
+  @keyframes pulseText { 0% {opacity: 1;} 50% {opacity: 0.6;} 100% {opacity: 1;} }
+  .t-bar-bg { width: 100%; height: 6px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
+  .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
   /* FLOATING BUTTON (SMART CART / WAITER) */
   .global-fav-btn { position: fixed; top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.2); }
   .global-fav-btn:active { transform: scale(0.95); }
   .global-fav-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-  /* TOAST TUTORIAL */
-  .tutorial-toast { position: fixed; top: 80px; right: 20px; background: var(--pink-main); color: white; padding: 16px 20px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; box-shadow: 0 10px 25px rgba(255, 42, 133, 0.4); z-index: 200; transform: translateX(120%); opacity: 0; transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); max-width: 280px; line-height: 1.4; pointer-events: none;}
-  .tutorial-toast.show { transform: translateX(0); opacity: 1; pointer-events: auto;}
-  .tutorial-toast::after { content: ''; position: absolute; top: -8px; right: 24px; border-width: 0 8px 8px 8px; border-style: solid; border-color: transparent transparent var(--pink-main) transparent; }
 
   /* MODALS */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(6px); opacity:0; transition: opacity 0.3s;}
@@ -152,6 +157,12 @@
   .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 1px solid var(--paper-dim); padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
   .btn-waiter-option:active { transform: scale(0.96); border-color: var(--pink-main); }
 
+  /* SPLIT BILL SELECTOR */
+  .split-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-family: 'Space Mono', monospace; font-size: 14px;}
+  .split-ctrl { display: flex; align-items: center; gap: 10px; }
+  .split-btn { width: 30px; height: 30px; background: var(--bg-panel); color: white; border: 1px solid var(--paper-dim); border-radius: 8px; font-weight: 700; cursor: pointer; }
+  .split-total { font-size: 24px; font-weight: 700; color: var(--pink-bright); margin: 20px 0; }
+  
   /* ONBOARDING MODAL */
   #onboardingOverlay .modal{ max-width: 380px; }
   .lang-pick-row{ display:flex; gap:10px; margin-bottom:6px; }
@@ -166,7 +177,6 @@
     .hero{ padding-top:44px; }
     .search-box { width: 100%; }
     .grid{ grid-template-columns:1fr; }
-    .action-buttons { flex-direction: column; }
   }
   @media (min-width:641px){
     .controls { flex-direction: row; align-items: center; justify-content: space-between; }
@@ -190,6 +200,17 @@
   </div>
 </header>
 
+<!-- TRACKER WIDGET -->
+<div class="tracker-widget" id="liveTracker">
+  <div class="t-head">
+      <span>Comanda ta</span>
+      <span class="t-status" id="trackerStatusText">Se trimite...</span>
+  </div>
+  <div class="t-bar-bg">
+      <div class="t-bar-fill" id="trackerProgress"></div>
+  </div>
+</div>
+
 <main class="wrap menu-section">
   <div class="controls">
     <div class="search-box">
@@ -208,21 +229,14 @@
     <span class="total-amount" id="totalAmount">0.00 RON</span>
   </div>
   <div class="action-buttons">
+    <button class="btn-action btn-split-bill" id="btnOpenSplitBill" title="Împarte Nota (Split Bill)">➗</button>
     <button class="btn-action btn-order-bar" id="btnOpenOrderModal">Trimite Comanda</button>
   </div>
 </div>
 
-<!-- BUTONUL PLUTITOR INTELIGENT -->
-<button class="global-fav-btn" id="smartActionBtn">
-  <!-- Conținutul se schimbă din JS (Coș vs Clopoțel) -->
-</button>
+<button class="global-fav-btn" id="smartActionBtn"></button>
 
-<!-- TOAST TUTORIAL OSPĂTAR -->
-<div class="tutorial-toast" id="tutorialToast">
-  🍽️ Comanda a fost trimisă cu succes!<br><br>Acum poți folosi butonul <b>🔔 Ospătar</b> de sus pentru a cere nota de plată sau ajutor la masă.
-</div>
-
-<!-- MODAL ONBOARDING (limbă + masă / la pachet) -->
+<!-- MODAL ONBOARDING -->
 <div class="modal-overlay" id="onboardingOverlay">
   <div class="modal">
     <p class="eyebrow centered">Fiera Bar</p>
@@ -252,6 +266,38 @@
     <p id="orderModalDesc">Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.</p>
     <input type="text" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
     <button class="btn-submit" id="sendOrderBtn">Trimite Comanda</button>
+  </div>
+</div>
+
+<!-- MODAL SPLIT BILL -->
+<div class="modal-overlay" id="splitBillOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeSplitBill">&times;</button>
+    <h2>Împarte Nota (Split Bill)</h2>
+    <p style="color:var(--text-muted); font-size: 13px;">Calculează rapid cât are de plătit fiecare persoană, inclusiv bacșișul.</p>
+    
+    <div class="split-row">
+        <span>Total Coș:</span>
+        <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 RON</span>
+    </div>
+    <div class="split-row">
+        <span>Număr persoane:</span>
+        <div class="split-ctrl">
+            <button class="split-btn" onclick="adjSplitPersons(-1)">-</button>
+            <span id="sbPersons" style="color:white; width: 20px; text-align:center;">2</span>
+            <button class="split-btn" onclick="adjSplitPersons(1)">+</button>
+        </div>
+    </div>
+    <div class="split-row">
+        <span>Bacșiș (Tip %):</span>
+        <div class="split-ctrl">
+            <button class="split-btn" onclick="adjSplitTip(-5)">-</button>
+            <span id="sbTip" style="color:white; width: 35px; text-align:center;">10%</span>
+            <button class="split-btn" onclick="adjSplitTip(5)">+</button>
+        </div>
+    </div>
+    
+    <div class="split-total" id="sbPerPerson">0.00 RON / pers.</div>
   </div>
 </div>
 
@@ -285,6 +331,7 @@
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
   let currentLang = localStorage.getItem('fieraBar:lang') || 'ro';
+  let cartTotalValue = 0; // for split bill
 
   const urlParams = new URLSearchParams(window.location.search);
   if(urlParams.has('mesa')) {
@@ -422,14 +469,13 @@
       if(item) { updateQty(item, change); render(); }
   };
 
-  // --- LOGICA BUTON INTELIGENT (COȘ VS OSPĂTAR) ---
   function updateBottomBar() {
       const t = I18N[currentLang];
       const items = allItems.filter(i => getQty(i) > 0);
       const totalItems = Object.values(favoritesQty).reduce((a,b)=>a+b,0);
-      const total = items.reduce((acc, i) => acc + (i.price * getQty(i)), 0);
+      cartTotalValue = items.reduce((acc, i) => acc + (i.price * getQty(i)), 0);
       
-      document.getElementById('totalAmount').textContent = `${total.toFixed(2)} RON`;
+      document.getElementById('totalAmount').textContent = `${cartTotalValue.toFixed(2)} RON`;
       
       const bar = document.getElementById('totalBar');
       const smartBtn = document.getElementById('smartActionBtn');
@@ -441,14 +487,12 @@
       }
 
       if(totalItems > 0) {
-          // Arată Coșul
           smartBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
                                 <span style="margin-left: 6px;">${t.smartCart} (${totalItems})</span>`;
           smartBtn.onclick = () => { activeFilter = 'favorites'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); render(); window.scrollTo(0,0); };
           smartBtn.style.background = 'var(--pink-main)';
           smartBtn.style.color = 'white';
       } else {
-          // Arată Clopoțel Ospătar
           smartBtn.innerHTML = `🔔 <span style="margin-left: 6px;">${t.smartWaiter}</span>`;
           smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
           smartBtn.style.background = 'rgba(18, 18, 18, 0.85)';
@@ -456,7 +500,29 @@
       }
   }
 
-  // --- ONBOARDING: LIMBĂ + LA MASĂ / LA PACHET ---
+  // --- SPLIT THE BILL LOGIC ---
+  const splitModal = document.getElementById('splitBillOverlay');
+  let sbPersons = 2; let sbTip = 10;
+  
+  document.getElementById('btnOpenSplitBill').addEventListener('click', () => {
+      document.getElementById('sbTotalCos').textContent = `${cartTotalValue.toFixed(2)} RON`;
+      updateSplitUI();
+      splitModal.classList.add('open');
+  });
+  document.getElementById('closeSplitBill').addEventListener('click', () => splitModal.classList.remove('open'));
+  
+  window.adjSplitPersons = function(val) { sbPersons = Math.max(1, sbPersons + val); updateSplitUI(); }
+  window.adjSplitTip = function(val) { sbTip = Math.max(0, Math.min(100, sbTip + val)); updateSplitUI(); }
+  
+  function updateSplitUI() {
+      document.getElementById('sbPersons').textContent = sbPersons;
+      document.getElementById('sbTip').textContent = sbTip + '%';
+      const totalWithTip = cartTotalValue * (1 + (sbTip / 100));
+      const perPerson = totalWithTip / sbPersons;
+      document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} RON / pers.`;
+  }
+
+  // --- ONBOARDING & MODALS ---
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const obLangStep = document.getElementById('obLangStep');
   const obModeStep = document.getElementById('obModeStep');
@@ -478,7 +544,6 @@
   document.getElementById('btnDineIn').addEventListener('click', () => { sessionStorage.setItem('fieraMode', 'masa'); sessionStorage.setItem('fieraMesa', 'stabilita'); onboardingOverlay.classList.remove('open'); });
   document.getElementById('btnTakeaway').addEventListener('click', () => { const t = I18N[currentLang]; sessionStorage.setItem('fieraMode', 'takeaway'); sessionStorage.setItem('fieraMesa', t.takeawayLabel); onboardingOverlay.classList.remove('open'); });
 
-  // MODALS LOGIC
   const orderModal = document.getElementById('orderOverlay');
   const callModal = document.getElementById('callWaiterOverlay');
   
@@ -492,9 +557,45 @@
   
   document.getElementById('closeOrderModal').addEventListener('click', () => orderModal.classList.remove('open'));
   document.getElementById('closeCallWaiter').addEventListener('click', () => callModal.classList.remove('open'));
-  window.addEventListener('click', e => { if(e.target === orderModal) orderModal.classList.remove('open'); if(e.target === callModal) callModal.classList.remove('open'); });
+  window.addEventListener('click', e => { 
+      if(e.target === orderModal) orderModal.classList.remove('open'); 
+      if(e.target === callModal) callModal.classList.remove('open'); 
+      if(e.target === splitModal) splitModal.classList.remove('open'); 
+  });
 
-  // SEND ORDER
+  // --- ORDER TRACKER LOGIC ---
+  let trackingOrderId = null;
+  function startTrackingOrder(id) {
+      trackingOrderId = id;
+      const tracker = document.getElementById('liveTracker');
+      const statText = document.getElementById('trackerStatusText');
+      const progress = document.getElementById('trackerProgress');
+      
+      tracker.classList.add('show');
+      statText.textContent = '👨‍🍳 Preluată de staff';
+      progress.style.width = '35%';
+
+      _supabase.channel(`order_tracker_${id}`)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi', filter: `id=eq.${id}` }, p => {
+          const s = p.new.status;
+          if (s === 'gata' || s === 'in_lucru') {
+              statText.textContent = '🔥 În preparare / Gata de servire';
+              progress.style.width = '70%';
+          } else if (s === 'finalizata') {
+              statText.textContent = '✅ Servită / Finalizată';
+              progress.style.width = '100%';
+              setTimeout(() => { tracker.classList.remove('show'); }, 8000); // Dispare dupa 8s
+          } else if (s === 'anulata') {
+              statText.textContent = '❌ Comandă Anulată';
+              statText.style.color = 'var(--danger)';
+              progress.style.width = '100%';
+              progress.style.background = 'var(--danger)';
+              setTimeout(() => { tracker.classList.remove('show'); }, 8000);
+          }
+      }).subscribe();
+  }
+
+  // --- SEND ORDER ---
   document.getElementById('sendOrderBtn').addEventListener('click', async () => {
       const t = I18N[currentLang];
       const tableInput = document.getElementById('tableNumberInput');
@@ -512,7 +613,7 @@
       if(barItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bar', total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
       if(kitchenItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bucatarie', total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
 
-      const { error } = await _supabase.from('comenzi').insert(payloads);
+      const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
       btn.textContent = t.sendOrderBtnText; btn.disabled = false;
 
       if (error) alert(t.orderError);
@@ -522,10 +623,8 @@
         activeFilter = 'all'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); document.querySelector('.chip[data-filter="all"]').classList.add('active');
         render(); window.scrollTo(0,0);
         
-        // Arată toast tutorial
-        const toast = document.getElementById('tutorialToast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 6000);
+        // PORNIM TRACKERUL pentru prima comanda inserata
+        if (data && data.length > 0) startTrackingOrder(data[0].id);
       }
   });
 
