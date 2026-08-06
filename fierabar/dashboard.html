@@ -142,7 +142,7 @@
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Încasări</div><div class="stat-val" id="statRevenue">0 RON</div></div>
+        <div class="stat-card"><div class="stat-label">Total Încasări (Cu Bon)</div><div class="stat-val" id="statRevenue">0 RON</div></div>
         <div class="stat-card"><div class="stat-label">Comenzi Servite</div><div class="stat-val" id="statCount">0</div></div>
         <div class="stat-card"><div class="stat-label">⚠️ Fără Bon Scos</div><div class="stat-val alert" id="statPendingBon">0</div></div>
         <div class="stat-card"><div class="stat-label">Din Bucătărie / Bar</div><div class="stat-val" id="statKitchen">0 RON</div></div>
@@ -272,7 +272,7 @@
 
     let viewOrders = allOrders.filter(o => {
         if(userRole === 'director') return true;
-        if(userRole === 'bar' && currentTab === 'history') return true; // Barul vede tot istoricul ca sa scoata bonuri
+        if(userRole === 'bar' && currentTab === 'history') return true; 
         
         const isAlert = o.produse.some(p => p.nume.includes('ALERTĂ'));
         if(userRole === 'ospatar') return isAlert || o.status === 'gata';
@@ -291,7 +291,7 @@
 
     if(currentTab === 'active' && !filterText) document.getElementById('countActive').textContent = viewOrders.length;
     if(viewOrders.length === 0) return container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">Nu există comenzi aici.</div>`;
-
+    
     viewOrders.forEach(order => {
       const isAlert = order.produse.some(p => p.nume.includes('ALERTĂ OSPĂTAR'));
       
@@ -326,7 +326,8 @@
           let statusColor = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
           let statusText = `<span style="color:${statusColor}; font-weight: 700; font-size: 15px;">${order.status.toUpperCase()}</span>`;
           
-          if(userRole === 'bar' || userRole === 'director') {
+          // Alertele de ospătar NU necesită bon fiscal și nu au chitanță
+          if((userRole === 'bar' || userRole === 'director') && !isAlert) {
               let isChecked = order.bon_scos ? 'checked' : '';
               let checkedClass = order.bon_scos ? 'checked' : '';
               footerHtml = `
@@ -383,7 +384,6 @@
       }
   };
 
-  // Barmanul bifeaza MANUAL bonul scos pe comanda respectiva
   window.toggleBon = async function(id, isChecked) {
       const { error } = await _supabase.from('comenzi').update({ bon_scos: isChecked }).eq('id', id);
       if(!error) {
@@ -393,7 +393,6 @@
       }
   };
 
-  // --- STATISTICI ADMIN (AZI vs LUNA ASTA + ALERTA BONURI FARA SCCOS) ---
   document.getElementById('btnStatsToday').addEventListener('click', (e) => {
       document.getElementById('btnStatsMonth').classList.remove('active');
       e.target.classList.add('active'); statsMode = 'today'; calculateDirectorStats();
@@ -404,7 +403,8 @@
   });
 
   function calculateDirectorStats() {
-      const istoric = allOrders.filter(o => o.status === 'finalizata');
+      // Excludem alertele de ospătar și luăm doar comenzi finalizate
+      const istoric = allOrders.filter(o => o.status === 'finalizata' && !o.produse.some(p => p.nume.includes('ALERTĂ')));
       let total = 0, kitchenTotal = 0, pendingBonCount = 0, productCounts = {};
 
       const now = new Date();
@@ -417,15 +417,16 @@
           const orderTime = new Date(order.created_at).getTime();
           if (orderTime >= cutoff) {
               const val = Number(order.total);
-              total += val;
-              kitchenTotal += val;
               
-              // Verificam cate comenzi finalizate NU au bonul scos de barman
-              if(!order.bon_scos) {
-                  pendingBonCount++;
+              // BANI SE ADAUGA LA INCASEARI DOAR DACĂ ESTE CONFIRMAT BONUL FISCAL!
+              if (order.bon_scos) {
+                  total += val;
+                  kitchenTotal += val;
+              } else {
+                  pendingBonCount++; // Comanda finalizata dar fără bon fiscal confirmat
               }
 
-              order.produse.forEach(p => { if(!p.nume.includes('ALERTĂ')) { productCounts[p.nume] = (productCounts[p.nume]||0) + p.cantitate; }});
+              order.produse.forEach(p => { productCounts[p.nume] = (productCounts[p.nume]||0) + p.cantitate; });
           }
       });
 
