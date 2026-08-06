@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "gijon",
+  "name": "MeniuPN",
   "main": "_worker.js",
   "compatibility_date": "2026-08-06",
   "observability": {
