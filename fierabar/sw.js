@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fierabar-cache-v2';
+const CACHE_NAME = 'álibretto-cache-v2';
 
 const urlsToCache = [
   './',
