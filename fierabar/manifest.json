@@ -1,7 +1,7 @@
 {
-"name": "Fiera Bar - Menú Digital",
-"short_name": "Fiera Bar",
-"description": "Menú digital y pedidos para Fiera Bar.",
+"name": "Álibretto - Menú Digital",
+"short_name": "Álibretto",
+"description": "Menú digital y pedidos para Álibretto.",
 "start_url": "./",
 "scope": "./",
 "display": "standalone",
