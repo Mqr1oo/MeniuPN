@@ -1,13 +1,19 @@
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
-    const base64Image = body.image.includes(',') ? body.image.split(',')[1] : body.image;
+    
+    if (!body || !body.image) {
+      return new Response(JSON.stringify({ error: "Lipsește imaginea în format base64." }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
-    // Citim cheia direct din setările secrete ale Cloudflare
+    const base64Image = body.image.includes(',') ? body.image.split(',')[1] : body.image;
     const geminiApiKey = context.env.GEMINI_API_KEY;
 
     if (!geminiApiKey) {
-      throw new Error("Lipsește cheia API în setările Cloudflare.");
+      throw new Error("Lipsește cheia API în setările Cloudflare (GEMINI_API_KEY).");
     }
 
     const payload = {
@@ -32,17 +38,36 @@ export async function onRequestPost(context) {
 
     const data = await response.json();
 
-    if (data.error) {
-      throw new Error(data.error.message);
+    if (!response.ok || data.error) {
+      throw new Error(data.error?.message || `Eroare Google API (Status: ${response.status})`);
     }
 
     let rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!rawText) {
-      throw new Error("Răspuns gol de la Gemini");
+      throw new Error("Răspuns gol sau blocat de la Gemini");
     }
 
+    // Curățare avansată markdown
     rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-    const parsedJson = JSON.parse(rawText);
+    
+    // Extragere sigură a array-ului JSON în cazul în care modelul include text adițional
+    const firstBracket = rawText.indexOf('[');
+    const lastBracket = rawText.lastIndexOf(']');
+    
+    if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
+      rawText = rawText.substring(firstBracket, lastBracket + 1);
+    }
+
+    let parsedJson;
+    try {
+      parsedJson = JSON.parse(rawText);
+    } catch (jsonErr) {
+      throw new Error("Eroare de structură JSON primită de la AI.");
+    }
+
+    if (!Array.isArray(parsedJson)) {
+      throw new Error("Răspunsul AI nu respectă formatul de tabel așteptat.");
+    }
 
     return new Response(JSON.stringify(parsedJson), {
       headers: { 'Content-Type': 'application/json' }
