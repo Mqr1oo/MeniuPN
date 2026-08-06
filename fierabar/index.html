@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Fiera Bar &mdash; Meniu digital</title>
-<meta name="description" content="Meniu digital Fiera Bar. Cocktailuri și preparate delicioase.">
+<title>Á Libretto &mdash; Meniu digital</title>
+<meta name="description" content="Meniu digital Á Libretto. Cocktailuri și preparate delicioase.">
 
 <!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
@@ -30,7 +30,7 @@
   :root{
     --bg-base: #050505; --bg-card: #121212; --bg-panel: #1a1a1a;
     --ink: #ffffff; --ink-soft: #a1a1aa; 
-    --pink-main: #ff2a85; --pink-bright: #ff529f;
+    --pink-main: #16844e; --pink-bright: #22a866;
     --paper-dim: #262626; --coral: #ff4757;
     --radius: 4px; --radius-md: 14px; --radius-lg: 20px;
     --max-w: 1180px;
@@ -45,7 +45,7 @@
   .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
   /* HERO */
-  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(255, 42, 133, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
+  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
   .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
   .lang-toggle{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; }
   .lang-toggle:active{ transform:scale(0.92); }
@@ -62,7 +62,7 @@
   /* CONTROLS & CHIPS */
   .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
   .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 48px; width: 100%; transition: all 0.3s; }
-  .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(255, 42, 133, 0.2); }
+  .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(22, 132, 78, 0.2); }
   .search-icon{ width: 18px; height: 18px; flex-shrink: 0; margin-right: 10px; }
   .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .search-box input{ flex: 1; border: none; background: transparent; padding: 0; height: 100%; font-family: 'Work Sans', sans-serif; font-size: 16px; color: var(--ink); outline: none; -webkit-appearance: none; border-radius: 0; }
@@ -72,7 +72,7 @@
   .tag-filters::-webkit-scrollbar { display: none; }
   .chip{ font-family:'Space Mono', monospace; font-size:13px; letter-spacing:.03em; padding: 0 16px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; border: 1.5px solid var(--paper-dim); background: var(--bg-card); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: all .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
   .chip:active{ transform: translateY(0) scale(0.94); }
-  .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35); }
+  .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.35); }
   
   /* GRID & CARDS */
   .menu-section{ padding: 10px 0 100px; }
@@ -124,8 +124,8 @@
   .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 50px; font-size: 18px; }
 
   /* LIVE ORDER TRACKER WIDGET */
-  .tracker-widget { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-150%); width: 90%; max-width: 400px; background: rgba(18,18,18,0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 10px 30px rgba(255, 42, 133, 0.2); z-index: 110; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .tracker-widget.show { transform: translateX(-50%) translateY(0); }
+  .tracker-widget { position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-20px); width: 90%; max-width: 400px; background: rgba(18,18,18,0.97); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 10px 30px rgba(22, 132, 78, 0.25); z-index: 110; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+  .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
   .t-head { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; font-weight: 600; }
   .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; }
   @keyframes pulseText { 0% {opacity: 1;} 50% {opacity: 0.6;} 100% {opacity: 1;} }
@@ -133,7 +133,7 @@
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
   /* FLOATING BUTTON (SMART CART / WAITER) */
-  .global-fav-btn { position: fixed; top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.2); }
+  .global-fav-btn { position: fixed; top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.2); }
   .global-fav-btn:active { transform: scale(0.95); }
   .global-fav-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
@@ -194,7 +194,7 @@
   <div class="wrap hero-inner">
     <div class="hero-text">
       <p class="eyebrow" id="txtEyebrow">Meniu digital</p>
-      <h1 id="txtTitle">Fiera Bar</h1>
+      <h1 id="txtTitle">Á Libretto</h1>
       <p class="tag" id="txtTagline">Cocktailuri internaționale, băuturi rafinate și preparate delicioase.</p>
     </div>
   </div>
@@ -239,7 +239,7 @@
 <!-- MODAL ONBOARDING -->
 <div class="modal-overlay" id="onboardingOverlay">
   <div class="modal">
-    <p class="eyebrow centered">Fiera Bar</p>
+    <p class="eyebrow centered">Á Libretto</p>
     <div id="obLangStep">
       <h2 id="obLangTitle">Bun venit!</h2>
       <p id="obLangSubtitle">Alege limba meniului</p>
@@ -324,8 +324,8 @@
 
 <footer>
   <div class="wrap footer-inner">
-    <div class="brand">Fiera Bar</div>
-    <span id="txtFooterCopy">&copy; 2026 Fiera Bar</span>
+    <div class="brand">Á Libretto</div>
+    <span id="txtFooterCopy">&copy; 2026 Á Libretto</span>
   </div>
 </footer>
 
@@ -339,7 +339,7 @@
   let outOfStockIds = new Set();
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
-  let currentLang = localStorage.getItem('fieraBar:lang') || 'ro';
+  let currentLang = localStorage.getItem('aLibretto:lang') || 'ro';
   let cartTotalValue = 0;
 
   // Funcție personalizată în loc de alert() pentru conformitate
@@ -355,8 +355,8 @@
       sessionStorage.setItem('fieraMode', 'masa');
   }
 
-  function loadFavorites(){ try{ const r = localStorage.getItem('fieraBar:favs'); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
-  function saveFavorites(){ try{ localStorage.setItem('fieraBar:favs', JSON.stringify(favoritesQty)); }catch(e){} }
+  function loadFavorites(){ try{ const r = localStorage.getItem('aLibretto:favs'); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
+  function saveFavorites(){ try{ localStorage.setItem('aLibretto:favs', JSON.stringify(favoritesQty)); }catch(e){} }
   
   function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
   function updateQty(item, change) {
@@ -369,15 +369,15 @@
   }
 
   const I18N = {
-    ro: { flag:'🇷🇴', code:'RO', eyebrow:'Meniu digital', title:'Fiera Bar', tagline:'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.', allChip:'Toate', searchPlaceholder:'Caută...', emptyState:'Niciun produs găsit.', totalLabel:'Total:', btnOrderBar:'Trimite Comanda', obLangTitle:'Bun venit!', obLangSubtitle:'Alege limba meniului', obModeTitle:'Cum dorești să comanzi?', obModeSubtitle:'Alege una din opțiuni pentru a continua.', dineIn:'🍽️ Stau la masă', takeaway:'🥡 La pachet (Takeaway)', takeawayLabel:'La pachet', orderModalTitle:'Numărul Mesei', orderModalDesc:'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.', tablePlaceholder:'Ex: 4', sendOrderBtnText:'Trimite Comanda', sendingText:'Se trimite...', callWaiterTitle:'Ai nevoie de noi?', callWaiterDesc:'Selectează motivul pentru care chemi ospătarul la masă.', callCash:'💵 Vreau să achit (Cash)', callCard:'💳 Vreau să achit (Card)', callHelp:'🙋‍♂️ Am nevoie de ajutor', alertSent:(m)=>`Ospătarul a fost chemat la masa ${m}!`, orderError:'Eroare la trimitere.', askTable:'Ce număr are masa ta?', catNames:{ entrante:'Aperitive', principal:'Fel Principal', coctel:'Cocktailuri', bebida:'Băuturi', postre:'Deserturi', otros:'Altele' }, smartWaiter: 'Ospătar', smartCart: 'Coșul Meu' },
-    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Fiera Bar', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
-    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Fiera Bar', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
+    ro: { flag:'🇷🇴', code:'RO', eyebrow:'Meniu digital', title:'Á Libretto', tagline:'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.', allChip:'Toate', searchPlaceholder:'Caută...', emptyState:'Niciun produs găsit.', totalLabel:'Total:', btnOrderBar:'Trimite Comanda', obLangTitle:'Bun venit!', obLangSubtitle:'Alege limba meniului', obModeTitle:'Cum dorești să comanzi?', obModeSubtitle:'Alege una din opțiuni pentru a continua.', dineIn:'🍽️ Stau la masă', takeaway:'🥡 La pachet (Takeaway)', takeawayLabel:'La pachet', orderModalTitle:'Numărul Mesei', orderModalDesc:'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.', tablePlaceholder:'Ex: 4', sendOrderBtnText:'Trimite Comanda', sendingText:'Se trimite...', callWaiterTitle:'Ai nevoie de noi?', callWaiterDesc:'Selectează motivul pentru care chemi ospătarul la masă.', callCash:'💵 Vreau să achit (Cash)', callCard:'💳 Vreau să achit (Card)', callHelp:'🙋‍♂️ Am nevoie de ajutor', alertSent:(m)=>`Ospătarul a fost chemat la masa ${m}!`, orderError:'Eroare la trimitere.', askTable:'Ce număr are masa ta?', catNames:{ entrante:'Aperitive', principal:'Fel Principal', coctel:'Cocktailuri', bebida:'Băuturi', postre:'Deserturi', otros:'Altele' }, smartWaiter: 'Ospătar', smartCart: 'Coșul Meu' },
+    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
+    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
   function applyLanguage(lang){
     currentLang = lang;
-    localStorage.setItem('fieraBar:lang', lang);
+    localStorage.setItem('aLibretto:lang', lang);
     const t = I18N[lang];
 
     document.getElementById('langToggle').textContent = `${t.flag} ${t.code}`;
@@ -482,7 +482,23 @@
 
   window.appUpdateQty = function(id, change) {
       const item = allItems.find(i => i.imageNumber === id);
-      if(item) { updateQty(item, change); render(); }
+      if(!item) return;
+      updateQty(item, change);
+
+      // Dacă suntem pe filtrul "Coșul Meu", articolul poate dispărea din listă
+      // la 0 bucăți, deci acolo tot trebuie randare completă.
+      if(activeFilter === 'favorites') { render(); return; }
+
+      // Altfel actualizăm DOAR cardul respectiv + bara de jos, fără să
+      // reconstruim tot grid-ul (asta cauza flicker-ul și reîncărcarea imaginilor).
+      const q = getQty(item);
+      const qtyEl = document.getElementById('qty-' + id);
+      if(qtyEl){
+        qtyEl.textContent = q;
+        const controls = qtyEl.closest('.card-qty-controls');
+        if(controls) controls.classList.toggle('has-items', q > 0);
+      }
+      updateBottomBar();
   };
 
   function updateBottomBar() {
@@ -543,7 +559,7 @@
   const obLangStep = document.getElementById('obLangStep');
   const obModeStep = document.getElementById('obModeStep');
 
-  function needsLang(){ return !localStorage.getItem('fieraBar:lang'); }
+  function needsLang(){ return !localStorage.getItem('aLibretto:lang'); }
   function needsMode(){ return !sessionStorage.getItem('fieraMesa'); }
 
   function showModeStepOrClose(){
