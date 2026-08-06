@@ -70,7 +70,7 @@
   .stat-label { color: var(--text-muted); font-size: 14px; text-transform: uppercase; font-weight: 600; }
   .stat-val { font-size: 32px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 15px; }
   
-  .dashboard-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .dashboard-columns { display: grid; grid-template-columns: 1fr; gap: 30px; }
   .dash-panel { background: rgba(20,20,20,0.5); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 30px;}
   .dash-panel h3 { font-size: 20px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;}
   
@@ -79,7 +79,7 @@
   .top-name { font-size: 16px; font-weight: 500; }
   .top-count { font-family: 'Space Mono', monospace; color: var(--accent); font-weight: 700; background: rgba(255,42,133,0.1); padding: 4px 10px; border-radius: 100px;}
 
-  .stock-list { overflow-y: auto; max-height: 500px; padding-right: 10px;}
+  .stock-list { overflow-y: auto; max-height: 600px; padding-right: 10px;}
   .stock-list::-webkit-scrollbar { width: 6px; }
   .stock-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
   .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
@@ -92,21 +92,13 @@
   input:checked + .slider { background-color: var(--danger); border-color: var(--danger);}
   input:checked + .slider:before { transform: translateX(26px); background-color: white; }
 
-  .ai-upload-box { border: 2px dashed var(--border); padding: 40px 20px; border-radius: 16px; text-align: center; background: rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; }
-  .ai-upload-box:hover { border-color: var(--accent); background: rgba(255,42,133,0.05); }
-  .ai-results-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-  .ai-results-table th, .ai-results-table td { padding: 12px 10px; border-bottom: 1px solid var(--border); text-align: left; }
-  .ai-results-table th { color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
-
   .danger-zone { margin-top: 40px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; background: rgba(239, 68, 68, 0.05); }
   .btn-nuke { background: var(--danger); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 15px;}
   .btn-export { background: var(--blue); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
 
-  /* CUSTOM TOAST / NOTIFICATION */
   .custom-toast { position: fixed; bottom: 30px; right: 30px; background: var(--panel); border: 1px solid var(--border); color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 10000; transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); font-weight: 600; display: flex; align-items: center; gap: 10px; }
   .custom-toast.show { transform: translateY(0); opacity: 1; }
 
-  @media (max-width: 1024px) { .dashboard-columns { grid-template-columns: 1fr; } }
   @media (max-width: 768px) {
       body { flex-direction: column; overflow-y: auto;}
       aside { width: 100%; border-bottom: 1px solid var(--border); padding: 20px; flex-direction: row; flex-wrap: wrap; align-items: center;}
@@ -136,7 +128,7 @@
   <div class="brand">🔥 Fiera OS</div>
   <div class="nav-item active" id="navActive">Comenzi Noi <span class="badge-count" id="countActive">0</span></div>
   <div class="nav-item" id="navHistory">Istoric</div>
-  <div class="nav-item" id="navStock">📦 Stoc & Facturi AI</div>
+  <div class="nav-item" id="navStock">📦 Gestiune Stoc</div>
   <div class="nav-item" id="navAdmin" style="display: none;">Panou Șef</div>
   
   <div class="user-info">
@@ -155,7 +147,7 @@
     <!-- VIEW: COMENZI (ACTIVE/ISTORIC) -->
     <div id="ordersView" class="grid-comenzi"></div>
     
-    <!-- VIEW: STOC & AI (Pentru Bucatarie & Bar) -->
+    <!-- VIEW: STOC (Pentru Bucatarie & Bar) -->
     <div id="stockView" style="display: none;">
       <div class="dashboard-columns">
         
@@ -164,31 +156,6 @@
           <h3>🛑 Oprire Produse (Fără Stoc)</h3>
           <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">De aici scoți manual din meniu produsele care nu se mai pot prepara. (Bucătăria vede doar mâncarea, Barul doar băuturile).</p>
           <div class="stock-list" id="stockListContainer">Încărcare...</div>
-        </div>
-
-        <!-- SCANARE FACTURA AI -->
-        <div class="dash-panel">
-          <h3>📸 Adaugă Marfă din Factură (AI)</h3>
-          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Fă o poză la factura primită. AI-ul va citi automat ingredientele și cantitățile primite.</p>
-          
-          <div class="ai-upload-box" onclick="document.getElementById('invoiceFileInput').click()">
-              <span style="font-size: 34px; display: block; margin-bottom: 12px;">📄</span>
-              <span style="font-weight: 600; color: var(--text); font-size: 18px;">Apasă aici pentru a face o poză facturii</span>
-              <input type="file" id="invoiceFileInput" accept="image/*" style="display: none;" onchange="handleInvoiceUpload(event)">
-          </div>
-
-          <div id="aiLoading" style="display: none; text-align: center; color: var(--accent); font-weight: 600; padding: 30px;">
-              ⏳ AI-ul citește factura... Vă rugăm așteptați.
-          </div>
-
-          <div id="aiResultsContainer" style="display: none; margin-top: 20px;">
-              <h4 style="margin-bottom: 10px; color: var(--success);">Marfă citită cu succes de AI:</h4>
-              <table class="ai-results-table">
-                  <thead><tr><th>Produs / Ingredient</th><th>Cantitate</th><th>Preț</th></tr></thead>
-                  <tbody id="aiTableBody"></tbody>
-              </table>
-              <button class="btn-primary" style="margin-top: 20px; background: var(--success);" onclick="saveScannedStock()">💾 Confirmă Recepția Mărfii</button>
-          </div>
         </div>
 
       </div>
@@ -323,7 +290,7 @@
         renderOrders();
     } else if(tab === 'stock') {
         document.getElementById('navStock').classList.add('active');
-        document.getElementById('pageTitle').textContent = '📦 Stoc & Facturi AI';
+        document.getElementById('pageTitle').textContent = '📦 Gestiune Stoc';
         document.getElementById('stockView').style.display = 'block'; 
         loadFullMenuForStock();
     } else if(tab === 'admin') {
@@ -418,7 +385,6 @@
       }
   };
 
-  // --- STOC MANUAL ---
   async function loadFullMenuForStock() {
       try { 
           if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); 
@@ -455,60 +421,6 @@
       loadFullMenuForStock(); 
   };
 
-  // --- AI SCANNER (PRIN /scan) CU AFISAREA ERORILOR DETALIATE ---
-  window.handleInvoiceUpload = async function(event) {
-      const file = event.target.files[0];
-      if(!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-          const base64Data = e.target.result.split(',')[1];
-          document.getElementById('aiLoading').style.display = 'block';
-          document.getElementById('aiResultsContainer').style.display = 'none';
-
-          try {
-              const response = await fetch('/scan', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ image: base64Data })
-              });
-
-              const textResponse = await response.text();
-              let scannedItems;
-              try {
-                  scannedItems = JSON.parse(textResponse);
-              } catch (parseErr) {
-                  throw new Error("Răspuns invalid de la server (Status " + response.status + "): " + textResponse.substring(0, 100));
-              }
-
-              if(response.ok && Array.isArray(scannedItems)) {
-                  const tbody = document.getElementById('aiTableBody');
-                  tbody.innerHTML = '';
-                  
-                  scannedItems.forEach(item => {
-                      tbody.innerHTML += `<tr><td><b>${item.nume}</b></td><td>${item.cantitate}</td><td>${item.pret || '-'}</td></tr>`;
-                  });
-
-                  document.getElementById('aiLoading').style.display = 'none';
-                  document.getElementById('aiResultsContainer').style.display = 'block';
-              } else {
-                  throw new Error(scannedItems.error || "Serverul a returnat o eroare necunoscută.");
-              }
-          } catch(err) {
-              console.error(err);
-              document.getElementById('aiLoading').style.display = 'none';
-              showToast("Eroare: " + err.message);
-          }
-      };
-      reader.readAsDataURL(file);
-  };
-
-  window.saveScannedStock = function() {
-      showToast("Recepție finalizată! Marfa a fost salvată în gestiune.");
-      document.getElementById('aiResultsContainer').style.display = 'none';
-  };
-
-  // --- STATISTICI DIRECTOR ---
   function calculateDirectorStats() {
       const istoric = allOrders.filter(o => o.status === 'finalizata');
       let total = 0, barTotal = 0, kitchenTotal = 0, productCounts = {};
@@ -572,4 +484,3 @@
 </script>
 </body>
 </html>
-
