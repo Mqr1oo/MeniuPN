@@ -38,7 +38,7 @@
   *{ box-sizing:border-box; }
   html, body { overflow-x: hidden; width: 100%; position: relative; }
   html{ scroll-behavior:smooth; }
-  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 80px;} /* padding for bottom bars */
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 80px;}
   img{ max-width:100%; display:block; }
   :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
@@ -121,7 +121,7 @@
   .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
   .btn-order-bar { background: var(--pink-main); color: white; }
-  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 50px; font-size: 18px; } /* Buton Split the Bill */
+  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 50px; font-size: 18px; }
 
   /* LIVE ORDER TRACKER WIDGET */
   .tracker-widget { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-150%); width: 90%; max-width: 400px; background: rgba(18,18,18,0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 10px 30px rgba(255, 42, 133, 0.2); z-index: 110; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -313,6 +313,15 @@
   </div>
 </div>
 
+<!-- MODAL NOTIFICĂRI CUSTOM (Înlocuiește alert()) -->
+<div class="modal-overlay" id="customAlertOverlay">
+  <div class="modal" style="max-width:340px;">
+    <h3 id="customAlertTitle" style="margin-bottom:12px;">Notificare</h3>
+    <p id="customAlertText" style="margin-bottom:20px;">Mesaj...</p>
+    <button class="btn-submit" onclick="document.getElementById('customAlertOverlay').classList.remove('open')">OK</button>
+  </div>
+</div>
+
 <footer>
   <div class="wrap footer-inner">
     <div class="brand">Fiera Bar</div>
@@ -331,7 +340,14 @@
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
   let currentLang = localStorage.getItem('fieraBar:lang') || 'ro';
-  let cartTotalValue = 0; // for split bill
+  let cartTotalValue = 0;
+
+  // Funcție personalizată în loc de alert() pentru conformitate
+  function showCustomAlert(title, text) {
+    document.getElementById('customAlertTitle').textContent = title;
+    document.getElementById('customAlertText').textContent = text;
+    document.getElementById('customAlertOverlay').classList.add('open');
+  }
 
   const urlParams = new URLSearchParams(window.location.search);
   if(urlParams.has('mesa')) {
@@ -561,6 +577,7 @@
       if(e.target === orderModal) orderModal.classList.remove('open'); 
       if(e.target === callModal) callModal.classList.remove('open'); 
       if(e.target === splitModal) splitModal.classList.remove('open'); 
+      if(e.target === document.getElementById('customAlertOverlay')) document.getElementById('customAlertOverlay').classList.remove('open');
   });
 
   // --- ORDER TRACKER LOGIC ---
@@ -584,7 +601,7 @@
           } else if (s === 'finalizata') {
               statText.textContent = '✅ Servită / Finalizată';
               progress.style.width = '100%';
-              setTimeout(() => { tracker.classList.remove('show'); }, 8000); // Dispare dupa 8s
+              setTimeout(() => { tracker.classList.remove('show'); }, 8000);
           } else if (s === 'anulata') {
               statText.textContent = '❌ Comandă Anulată';
               statText.style.color = 'var(--danger)';
@@ -616,14 +633,14 @@
       const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
       btn.textContent = t.sendOrderBtnText; btn.disabled = false;
 
-      if (error) alert("Eroare Supabase: " + error.message);
-      else {
+      if (error) {
+          showCustomAlert("Eroare", "Eroare Supabase: " + error.message);
+      } else {
         orderModal.classList.remove('open');
         favoritesQty = {}; saveFavorites(); 
         activeFilter = 'all'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); document.querySelector('.chip[data-filter="all"]').classList.add('active');
         render(); window.scrollTo(0,0);
         
-        // PORNIM TRACKERUL pentru prima comanda inserata
         if (data && data.length > 0) startTrackingOrder(data[0].id);
       }
   });
@@ -635,7 +652,8 @@
       if(!mesa || mesa === 'stabilita') { mesa = prompt(t.askTable); if(!mesa) return; sessionStorage.setItem('fieraMesa', mesa); }
       
       await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + tip, cantitate: 1, pret_unitar: 0}] }]);
-      alert(t.alertSent(mesa)); callModal.classList.remove('open');
+      showCustomAlert("Succes", t.alertSent(mesa));
+      callModal.classList.remove('open');
   };
 
   document.getElementById('searchInput').addEventListener('input', render);
