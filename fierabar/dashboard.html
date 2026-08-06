@@ -195,9 +195,9 @@
       }
       if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
           const itemNames = order.produse.map(p => `${p.cantitate} ${p.nume}`).join(', ');
-          const text = `Comandă nouă, masa ${order.mesa}. ${itemNames}`;
+          const text = `Nuevo pedido, mesa ${order.mesa}. ${itemNames}`;
           const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'ro-RO'; utterance.rate = 1.0;
+          utterance.lang = 'es-ES'; utterance.rate = 1.0;
           window.speechSynthesis.speak(utterance);
       }
       if (userRole !== 'ospatar') {
