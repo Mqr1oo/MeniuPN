@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Fiera OS &mdash; POS System</title>
 <meta name="robots" content="noindex, nofollow">
 
@@ -32,6 +32,7 @@
     display: flex; 
     overflow: hidden; 
     background-image: radial-gradient(circle at 50% -20%, #2a0a18, var(--bg) 60%); 
+    -webkit-tap-highlight-color: transparent;
   }
   
   /* OVERLAY LOGIN GLASSMORPHISM */
@@ -45,37 +46,38 @@
     padding: 40px; border-radius: 24px; text-align: center; width: 100%; max-width: 400px; 
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); 
   }
-  .auth-card h2 { font-size: 24px; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.5px; }
+  .auth-card h2 { font-size: 28px; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.5px; }
   .auth-input { 
-    width: 100%; padding: 14px; background: rgba(0,0,0,0.5); 
+    width: 100%; padding: 16px; background: rgba(0,0,0,0.5); 
     border: 1px solid var(--border); border-radius: 12px; color: white; 
-    margin-bottom: 16px; font-size: 15px; outline: none; transition: border 0.3s; 
+    margin-bottom: 16px; font-size: 16px; outline: none; transition: border 0.3s; 
   }
   .auth-input:focus { border-color: var(--accent); }
   .btn-primary { 
     width: 100%; background: var(--accent); color: white; border: none; 
-    padding: 14px; border-radius: 12px; font-weight: 600; font-size: 16px; 
+    padding: 16px; border-radius: 12px; font-weight: 600; font-size: 18px; 
     cursor: pointer; box-shadow: 0 0 20px var(--accent-glow); transition: transform 0.2s; 
   }
   .btn-primary:active { transform: scale(0.96); }
 
   /* SIDEBAR */
   aside { 
-    width: 260px; background: var(--panel); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    width: 280px; background: var(--panel); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px; z-index: 100;
   }
-  .brand { font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+  .brand { font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
   .nav-item { 
-    padding: 12px 16px; border-radius: 12px; color: var(--text-muted); 
-    cursor: pointer; font-weight: 500; margin-bottom: 8px; transition: all 0.2s; 
+    padding: 16px 16px; border-radius: 12px; color: var(--text-muted); 
+    cursor: pointer; font-weight: 600; font-size: 16px; margin-bottom: 8px; transition: all 0.2s; 
     display: flex; justify-content: space-between; align-items: center; 
   }
   .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
   .nav-item.active { background: var(--accent); color: white; box-shadow: 0 4px 15px var(--accent-glow); }
-  .badge-count { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 100px; font-size: 12px; font-family: 'Space Mono', monospace; }
+  .badge-count { background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 100px; font-size: 14px; font-family: 'Space Mono', monospace; }
   
-  .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+  .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
   .user-info b { color: white; display: block; margin-bottom: 10px; }
+  .logout-btn { color: var(--danger); text-decoration: none; cursor: pointer; padding: 10px 0; display: block; font-weight: 600;}
 
   /* MAIN CONTENT */
   main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -87,19 +89,19 @@
   }
   
   .table-filter { 
-    background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 10px 20px; 
-    border-radius: 100px; color: white; outline: none; width: 250px; 
+    background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 12px 24px; 
+    border-radius: 100px; color: white; outline: none; width: 300px; font-size: 16px;
     font-family: 'Space Mono', monospace; transition: border 0.3s; 
   }
   .table-filter:focus { border-color: var(--accent); }
   
-  .content-area { padding: 40px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; }
+  .content-area { padding: 30px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; }
   
-  /* CARDS GRID */
-  .grid-comenzi { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; align-items: start; }
+  /* CARDS GRID (PENTRU TABLETE) */
+  .grid-comenzi { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; align-items: start; }
   .order-card { 
     background: rgba(25,25,25,0.6); border: 1px solid var(--border); border-radius: 20px; 
-    padding: 20px; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    padding: 24px; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
   }
   
@@ -107,60 +109,101 @@
   
   .order-card.new-pulse { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
   
-  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
-  .table-nr { font-size: 24px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; display: flex; align-items: center;}
-  .o-time { font-size: 12px; color: var(--text-muted); font-family: 'Space Mono', monospace;}
-  .sectiune-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); margin-left: 10px; color: white; font-family: 'Inter', sans-serif;}
+  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
+  .table-nr { font-size: 28px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; display: flex; align-items: center;}
+  .o-time { font-size: 14px; color: var(--text-muted); font-family: 'Space Mono', monospace;}
+  .sectiune-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.1); margin-left: 12px; color: white; font-family: 'Inter', sans-serif;}
   
-  .o-items { list-style: none; margin-bottom: 20px; }
-  .o-items li { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; }
-  .qty { color: var(--accent); font-weight: 700; font-family: 'Space Mono', monospace; margin-right: 12px; }
+  .o-items { list-style: none; margin-bottom: 24px; }
+  .o-items li { display: flex; justify-content: space-between; padding: 10px 0; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .qty { color: var(--accent); font-weight: 700; font-family: 'Space Mono', monospace; margin-right: 12px; font-size: 18px;}
   
   .o-foot { display: flex; justify-content: space-between; align-items: center; }
-  .btn-done { background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
-  .btn-cancel { background: transparent; color: var(--danger); border: 1px solid var(--danger); padding: 10px 15px; border-radius: 10px; font-size: 13px; cursor: pointer; display: none; }
   
-  /* ROLE-BASED VISIBILITY */
-  .role-admin .btn-cancel { display: block; } /* Doar adminul poate anula usor */
+  /* BUTOANE MARI PENTRU TOUCH */
+  .btn-action { 
+      border: none; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 16px; 
+      cursor: pointer; transition: transform 0.2s; 
+  }
+  .btn-action:active { transform: scale(0.95); }
+  
+  .btn-done { background: var(--success); color: white; display: none; flex: 1; margin-right: 10px;}
+  .btn-cancel { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); display: none; }
+  
+  /* LOGICA DE AFISARE BUTOANE: 
+     Bar/Bucatarie vad butoanele cand e comanda "Noua". 
+     Directorul doar supravegheaza (nu le vede) */
+  .role-bar .btn-done-bar, .role-bar .btn-cancel-bar { display: block; }
+  .role-bucatarie .btn-done-kitchen, .role-bucatarie .btn-cancel-kitchen { display: block; }
 
-  /* ADMIN STATS & STOCK */
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
-  .stat-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.8)); border: 1px solid var(--border); padding: 24px; border-radius: 20px; }
-  .stat-val { font-size: 32px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 10px; }
+  /* ================= DIRECTOR DASHBOARD ================= */
+  .director-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+  .stat-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.8)); border: 1px solid var(--border); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+  .stat-label { color: var(--text-muted); font-size: 14px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+  .stat-val { font-size: 38px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 15px; }
   
-  .stock-list { background: rgba(20,20,20,0.5); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
-  .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+  .dashboard-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  
+  .dash-panel { background: rgba(20,20,20,0.5); border: 1px solid var(--border); border-radius: 20px; padding: 25px; }
+  .dash-panel h3 { font-size: 20px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;}
+  
+  /* TOP PRODUSE */
+  .top-list { list-style: none; }
+  .top-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
+  .top-item:last-child { border-bottom: none; }
+  .top-name { font-size: 16px; font-weight: 500; }
+  .top-count { font-family: 'Space Mono', monospace; color: var(--accent); font-weight: 700; background: rgba(255,42,133,0.1); padding: 4px 10px; border-radius: 100px;}
+
+  /* STOCK LIST */
+  .stock-list { overflow-y: auto; max-height: 400px; padding-right: 10px;}
+  .stock-list::-webkit-scrollbar { width: 6px; }
+  .stock-list::-webkit-scrollbar-track { background: transparent; }
+  .stock-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
   
   /* TOGGLE SWITCH */
-  .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+  .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
   .switch input { opacity: 0; width: 0; height: 0; }
-  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; }
-  .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: var(--text-muted); transition: .4s; border-radius: 50%; }
-  input:checked + .slider { background-color: var(--danger); }
-  input:checked + .slider:before { transform: translateX(24px); background-color: white; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; border: 1px solid var(--border);}
+  .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 3px; background-color: var(--text-muted); transition: .4s; border-radius: 50%; }
+  input:checked + .slider { background-color: var(--danger); border-color: var(--danger);}
+  input:checked + .slider:before { transform: translateX(26px); background-color: white; }
 
+  /* DANGER ZONE */
+  .danger-zone { margin-top: 40px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; background: rgba(239, 68, 68, 0.05); }
+  .btn-nuke { background: var(--danger); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 15px;}
+
+  /* MEDIA QUERIES (TABLETE & TELEFOANE) */
+  @media (max-width: 1024px) {
+      .dashboard-columns { grid-template-columns: 1fr; }
+  }
+  
   @media (max-width: 768px) {
       body { flex-direction: column; overflow-y: auto;}
-      aside { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 15px; }
-      .brand { margin-bottom: 15px; }
-      header { padding: 0 20px; flex-direction: column; height: auto; padding: 15px 20px; gap: 15px;}
+      aside { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 20px; flex-direction: row; flex-wrap: wrap; align-items: center;}
+      .brand { margin-bottom: 0; width: 100%; margin-bottom: 20px; justify-content: center;}
+      .nav-item { flex: 1; min-width: 120px; justify-content: center; gap: 10px; margin: 4px;}
+      .user-info { width: 100%; text-align: center; border-top: none; padding-top: 10px;}
+      
+      header { padding: 20px; flex-direction: column; height: auto; gap: 15px; }
       .table-filter { width: 100%; }
-      .content-area { padding: 20px; }
-      .stats-grid { grid-template-columns: 1fr; }
+      .content-area { padding: 15px; }
+      .grid-comenzi { grid-template-columns: 1fr; }
   }
 </style>
 </head>
-<body class="role-bar"> <!-- Default fallback class -->
+<body class="role-bar">
 
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
     <h2>Fiera OS</h2>
-    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 14px;">Autentificare Personal</p>
+    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 15px;">Autentificare Personal</p>
     <form id="loginForm">
       <input type="email" id="emailInput" class="auth-input" placeholder="bar@fierabar.com" required>
       <input type="password" id="passwordInput" class="auth-input" placeholder="Parolă" required>
       <button type="submit" class="btn-primary">Conectare</button>
-      <div id="authError" style="color: var(--danger); font-size: 13px; margin-top: 15px; display: none;">Date incorecte.</div>
+      <div id="authError" style="color: var(--danger); font-size: 14px; margin-top: 15px; display: none;">Date incorecte.</div>
     </form>
   </div>
 </div>
@@ -168,63 +211,94 @@
 <aside>
   <div class="brand">🔥 Fiera OS</div>
   <div class="nav-item active" id="navActive">Comenzi Noi <span class="badge-count" id="countActive">0</span></div>
-  <div class="nav-item" id="navHistory">Istoric (Azi)</div>
-  <div class="nav-item" id="navAdmin" style="display: none;">Statistici & Stoc</div>
+  <div class="nav-item" id="navHistory">Istoric</div>
+  <div class="nav-item" id="navAdmin" style="display: none;">Panou Șef</div>
   
   <div class="user-info">
     Logat ca: <b id="userEmailDisplay">...</b>
-    <a href="#" id="btnLogout" style="color: var(--danger); text-decoration: none;">Deconectare</a>
+    <div class="logout-btn" id="btnLogout">Deconectare</div>
   </div>
 </aside>
 
 <main>
   <header>
-    <h2 id="pageTitle" style="font-size: 18px; font-weight: 500;">Comenzi Active</h2>
-    <input type="text" id="tableFilterInput" class="table-filter" placeholder="🔍 Caută Masa (ex: 4)...">
+    <h2 id="pageTitle" style="font-size: 22px; font-weight: 600;">Comenzi Active</h2>
+    <input type="number" id="tableFilterInput" class="table-filter" placeholder="🔍 Caută Masa (ex: 4)...">
   </header>
   
   <div class="content-area">
-    <!-- View Comenzi -->
+    <!-- View Comenzi (Bar / Bucatarie) -->
     <div id="ordersView" class="grid-comenzi"></div>
     
-    <!-- View Admin (Statistici si Stoc) -->
+    <!-- View Director -->
     <div id="adminView" style="display: none;">
+      
+      <div class="director-header">
+          <div>
+              <h2 style="font-size: 28px; font-weight: 700;">Sumar Activitate</h2>
+              <p style="color: var(--text-muted); margin-top: 5px;">Statisticile sunt calculate din istoricul păstrat în baza de date.</p>
+          </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-card">
-          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Încasări Azi</div>
+          <div class="stat-label">Total Încasări</div>
           <div class="stat-val" id="statRevenue">0 RON</div>
         </div>
         <div class="stat-card">
-          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Comenzi Finalizate</div>
+          <div class="stat-label">Comenzi Servite</div>
           <div class="stat-val" id="statCount">0</div>
         </div>
         <div class="stat-card">
-          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Bon Mediu</div>
-          <div class="stat-val" id="statAvg">0 RON</div>
+          <div class="stat-label">Din Bar</div>
+          <div class="stat-val" id="statBar">0 RON</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Din Bucătărie</div>
+          <div class="stat-val" id="statKitchen">0 RON</div>
         </div>
       </div>
       
-      <h3 style="margin-bottom: 15px; font-weight: 500;">Gestionare Stoc (Out of Stock)</h3>
-      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Bifează cu roșu produsele care nu mai sunt pe stoc. Vor fi blocate instant în meniul clienților.</p>
-      <div class="stock-list" id="stockListContainer">Încărcare meniu...</div>
+      <div class="dashboard-columns">
+          <!-- TOP PRODUSE -->
+          <div class="dash-panel">
+              <h3>🏆 Top 5 Cele mai vândute</h3>
+              <ul class="top-list" id="topProductsList">
+                  <li style="color: var(--text-muted); padding: 20px 0;">Se calculează...</li>
+              </ul>
+          </div>
+
+          <!-- GESTIONARE STOC -->
+          <div class="dash-panel">
+              <h3>🛑 Gestionare Stoc (Live)</h3>
+              <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Bifează produsele cu roșu pentru a le marca ca "Epuizat" pe telefoanele clienților.</p>
+              <div class="stock-list" id="stockListContainer">Încărcare meniu...</div>
+          </div>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div class="danger-zone">
+          <h3 style="color: var(--danger); font-size: 20px; margin-bottom: 10px;">Curățare Sistem</h3>
+          <p style="color: var(--text-muted); font-size: 14px; max-width: 600px;">Șterge definitiv toate comenzile finalizate sau anulate din baza de date. Recomandat la final de lună pentru a reseta statisticile și a elibera spațiu. (Comenzile "Noi" nu vor fi șterse).</p>
+          <button class="btn-nuke" id="btnNukeHistory">⚠️ Șterge Istoricul Acum</button>
+      </div>
+
     </div>
   </div>
 </main>
 
 <script>
 (function(){
-  // ===== 1. INIȚIALIZARE SUPABASE =====
   const SUPABASE_URL = 'https://wnwllyyhtkufcejzjeay.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  // ====================================
 
-  let userRole = 'bar'; // Roluri: 'bar', 'bucatarie' sau 'admin'
-  let currentTab = 'active'; // Tab-uri: 'active', 'history', 'admin'
+  let userRole = 'bar'; 
+  let currentTab = 'active'; 
   let allOrders = [];
   let fullMenu = [];
 
-  // Audio Context pentru notificare clară și profesională
+  // Sunet alertă
   function playAlert() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -238,7 +312,6 @@
     } catch(e){}
   }
 
-  // Verifică sesiunea curentă (ținem minte logarea)
   async function checkAuth() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
@@ -247,62 +320,57 @@
     }
   }
 
-  // Funcția de logare
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('emailInput').value;
     const pwd = document.getElementById('passwordInput').value;
     
     const { data, error } = await _supabase.auth.signInWithPassword({ email, password: pwd });
-    
     if (error) {
         document.getElementById('authError').style.display = 'block';
     } else {
         document.getElementById('authOverlay').style.display = 'none';
-        
-        // Un prim sunet pentru a debloca AudioContext pe acest device
-        playAlert();
-        
+        playAlert(); // deblocare audio
         setupUserEnvironment(data.user.email);
     }
   });
 
-  // Funcția de Deconectare
   document.getElementById('btnLogout').addEventListener('click', async () => {
     await _supabase.auth.signOut();
     location.reload();
   });
 
-  // Configurează interfața în funcție de email-ul logat
   function setupUserEnvironment(email) {
     document.getElementById('userEmailDisplay').textContent = email;
     
-    // Stabilim rolul:
-    if(email.startsWith('admin')) userRole = 'admin';
-    else if(email.startsWith('bucatarie')) userRole = 'bucatarie';
-    else userRole = 'bar'; // default pt restul
+    // Stabilim Rolul
+    const emailLower = email.toLowerCase();
+    if(emailLower.includes('director') || emailLower.includes('admin') || emailLower.includes('sef')) {
+        userRole = 'director';
+    } else if(emailLower.includes('bucatarie') || emailLower.includes('bucatar')) {
+        userRole = 'bucatarie';
+    } else {
+        userRole = 'bar'; 
+    }
 
     document.body.className = `role-${userRole}`;
     
-    // Dacă e admin, arătăm tab-ul ascuns de Stoc și Statistici
-    if(userRole === 'admin') {
+    if(userRole === 'director') {
         document.getElementById('navAdmin').style.display = 'flex';
-        loadFullMenuForStock(); // Preluăm meniul JSON pentru toggle-uri
+        loadFullMenuForStock();
     }
 
     loadOrders();
     subscribeRealtime();
   }
 
-  // --- LOGICA DE NAVIGARE INTRE TAB-URI ---
+  // Navigare Tabs
   document.getElementById('navActive').addEventListener('click', () => switchTab('active'));
   document.getElementById('navHistory').addEventListener('click', () => switchTab('history'));
   document.getElementById('navAdmin').addEventListener('click', () => switchTab('admin'));
 
   function switchTab(tab) {
     currentTab = tab;
-    
-    // Resetăm clasele "active" de pe butoanele din meniu
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     
     if(tab === 'active') {
@@ -313,32 +381,30 @@
         document.getElementById('tableFilterInput').style.display = 'block';
     } else if(tab === 'history') {
         document.getElementById('navHistory').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Istoric (Azi)';
+        document.getElementById('pageTitle').textContent = 'Istoric General';
         document.getElementById('ordersView').style.display = 'grid';
         document.getElementById('adminView').style.display = 'none';
         document.getElementById('tableFilterInput').style.display = 'block';
     } else if(tab === 'admin') {
         document.getElementById('navAdmin').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Panou Control Admin';
+        document.getElementById('pageTitle').textContent = 'Panou Control Șef';
         document.getElementById('ordersView').style.display = 'none';
         document.getElementById('adminView').style.display = 'block';
         document.getElementById('tableFilterInput').style.display = 'none';
-        calculateAdminStats();
+        calculateDirectorStats(); // Calculam statisticile cand intra aici
     }
-    
     renderOrders();
   }
 
   document.getElementById('tableFilterInput').addEventListener('input', renderOrders);
 
-  // --- PRELUARE ȘI AFIȘARE COMENZI ---
+  // Incarcare Comenzi (Limita mai mare pentru ca directorul vrea sa vada istoric mai lung)
   async function loadOrders() {
-    // Preluăm cele mai noi 150 de comenzi
     const { data, error } = await _supabase
         .from('comenzi')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(150);
+        .limit(1000); // Tragem mai multe pentru statistici
         
     if(data) {
         allOrders = data;
@@ -351,31 +417,30 @@
 
     const container = document.getElementById('ordersView');
     container.innerHTML = '';
-    const filterText = document.getElementById('tableFilterInput').value.toLowerCase();
+    const filterText = document.getElementById('tableFilterInput').value; // Numar
 
-    // 1. Filtrăm în funcție de Rol (Admin vede absolut tot, restul doar secțiunea lor)
-    let viewOrders = allOrders.filter(o => userRole === 'admin' || o.sectiune === userRole);
+    // 1. Rol: Directorul vede tot. Barul vede doar 'bar', etc.
+    let viewOrders = allOrders.filter(o => userRole === 'director' || o.sectiune === userRole);
     
-    // 2. Filtrăm după Status în funcție de Tab
+    // 2. Status
     if(currentTab === 'active') {
         viewOrders = viewOrders.filter(o => o.status === 'noua');
     } else {
-        // Tab-ul istoric (arată finalizate/anulate)
         viewOrders = viewOrders.filter(o => o.status === 'finalizata' || o.status === 'anulata');
     }
 
-    // 3. Filtrăm după numărul mesei dacă s-a scris în search
+    // 3. Cautare Masa
     if(filterText) {
-        viewOrders = viewOrders.filter(o => o.mesa.toLowerCase().includes(filterText));
+        viewOrders = viewOrders.filter(o => o.mesa === filterText);
     }
 
-    // Update Badge Counter (pentru comenzile Active din sidebar)
+    // 4. Update Contor
     if(currentTab === 'active' && !filterText) {
         document.getElementById('countActive').textContent = viewOrders.length;
     }
 
     if(viewOrders.length === 0) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">Nu există comenzi pentru această selecție.</div>`;
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px; font-size: 18px;">Nu există comenzi.</div>`;
         return;
     }
 
@@ -387,13 +452,16 @@
       let timeStr = new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
 
       let footerHtml = '';
-      if(order.status === 'noua') {
+      if(order.status === 'noua' && userRole !== 'director') {
+          // Doar Staff-ul poate finaliza/anula (Nu si Directorul)
           footerHtml = `
-            <button class="btn-done" onclick="updateOrderStatus(${order.id}, 'finalizata')">✓ Gata</button>
-            <button class="btn-cancel" onclick="updateOrderStatus(${order.id}, 'anulata')">Anulează</button>
+            <button class="btn-action btn-done btn-done-${userRole}" onclick="updateOrderStatus(${order.id}, 'finalizata')">✓ Gata</button>
+            <button class="btn-action btn-cancel btn-cancel-${userRole}" onclick="updateOrderStatus(${order.id}, 'anulata')">✕</button>
           `;
       } else {
-          footerHtml = `<span style="color:var(--text-muted); font-size:13px;">Status: ${order.status.toUpperCase()}</span>`;
+          // Status pentru istoric sau pentru vizualizarea directorului
+          let color = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
+          footerHtml = `<span style="color:${color}; font-size:14px; font-weight: 600;">Status: ${order.status.toUpperCase()}</span>`;
       }
 
       card.innerHTML = `
@@ -408,38 +476,69 @@
     });
   }
 
-  // Funcție apelată de butoanele ✓ Gata și Anulează
+  // Functie schimbare status
   window.updateOrderStatus = async function(id, status) {
       const { error } = await _supabase.from('comenzi').update({ status }).eq('id', id);
       if(!error) {
-          // Modificăm local pentru a nu face reload
           const index = allOrders.findIndex(o => o.id === id);
           if(index !== -1) allOrders[index].status = status;
           renderOrders();
       }
   };
 
-  // --- FUNCȚII PANOU ADMIN (STATISTICI) ---
-  function calculateAdminStats() {
-      // Obținem doar data de azi (ex: "2026-08-06")
-      const today = new Date().toISOString().split('T')[0];
+  // --- STATISTICI DIRECTOR ---
+  function calculateDirectorStats() {
+      // Analizăm TOATE comenzile finalizate din memorie (indiferent de zi)
+      const istoric = allOrders.filter(o => o.status === 'finalizata');
       
-      // Filtrăm comenzile de azi (indiferent de secțiune) care au statusul 'finalizata'
-      const aziFinalizate = allOrders.filter(o => o.status === 'finalizata' && o.created_at.startsWith(today));
+      let total = 0;
+      let barTotal = 0;
+      let kitchenTotal = 0;
       
-      const totalRev = aziFinalizate.reduce((acc, o) => acc + Number(o.total), 0);
-      const count = aziFinalizate.length;
-      const avg = count > 0 ? (totalRev / count) : 0;
+      let productCounts = {}; // Pentru TOP Produse
 
-      document.getElementById('statRevenue').textContent = `${totalRev.toFixed(2)} RON`;
-      document.getElementById('statCount').textContent = count;
-      document.getElementById('statAvg').textContent = `${avg.toFixed(2)} RON`;
+      istoric.forEach(order => {
+          const val = Number(order.total);
+          total += val;
+          
+          if(order.sectiune === 'bar') barTotal += val;
+          if(order.sectiune === 'bucatarie') kitchenTotal += val;
+
+          // Numărăm produsele
+          order.produse.forEach(prod => {
+              if(!productCounts[prod.nume]) productCounts[prod.nume] = 0;
+              productCounts[prod.nume] += prod.cantitate;
+          });
+      });
+
+      document.getElementById('statRevenue').textContent = `${total.toFixed(2)} RON`;
+      document.getElementById('statCount').textContent = istoric.length;
+      document.getElementById('statBar').textContent = `${barTotal.toFixed(2)} RON`;
+      document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} RON`;
+
+      // Randare TOP Produse
+      const sortedProducts = Object.entries(productCounts).sort((a, b) => b[1] - a[1]).slice(0, 5); // Top 5
+      
+      const listEl = document.getElementById('topProductsList');
+      listEl.innerHTML = '';
+      
+      if(sortedProducts.length === 0) {
+          listEl.innerHTML = '<li style="color: var(--text-muted); padding: 15px 0;">Nu există date suficiente.</li>';
+      } else {
+          sortedProducts.forEach(([name, count]) => {
+              listEl.innerHTML += `
+                <li class="top-item">
+                    <span class="top-name">${name}</span>
+                    <span class="top-count">${count} buc</span>
+                </li>
+              `;
+          });
+      }
   }
 
-  // --- FUNCȚII PANOU ADMIN (STOC / OUT OF STOCK) ---
+  // --- STOC DIRECTOR ---
   async function loadFullMenuForStock() {
       try {
-          // Luăm fișierul JSON public
           const res = await fetch('menu.json');
           if(!res.ok) throw new Error();
           fullMenu = await res.json();
@@ -448,29 +547,22 @@
           return;
       }
 
-      // Luăm starea curentă din DB (ce e marcat Epuizat)
       const { data: stocDB } = await _supabase.from('stoc_produse').select('*');
-      
-      // Creăm un Set rapid cu ID-urile care au epuizat = true
-      const epuizateSet = new Set(
-          (stocDB || []).filter(s => s.epuizat).map(s => s.id_produs)
-      );
+      const epuizateSet = new Set((stocDB || []).filter(s => s.epuizat).map(s => s.id_produs));
 
       const container = document.getElementById('stockListContainer');
       container.innerHTML = '';
 
       fullMenu.forEach(item => {
           const isOff = epuizateSet.has(item.imageNumber.toString());
-          
           const row = document.createElement('div');
           row.className = 'stock-item';
           row.innerHTML = `
             <div>
-              <div style="font-weight: 600;">${item.name}</div>
-              <div style="font-size: 12px; color: var(--text-muted);">${item.price} RON • ID: ${item.imageNumber} • ${item.sectiune || 'bar'}</div>
+              <div style="font-weight: 600; font-size: 16px;">${item.name}</div>
+              <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${item.price} RON • Secțiune: ${item.sectiune || 'bar'}</div>
             </div>
             <label class="switch">
-              <!-- Când butonul e apăsat, apelăm toggleStock cu ID-ul și noua valoare (bifat/nebifat) -->
               <input type="checkbox" onchange="toggleStock('${item.imageNumber}', this.checked)" ${isOff ? 'checked' : ''}>
               <span class="slider"></span>
             </label>
@@ -480,21 +572,45 @@
   }
 
   window.toggleStock = async function(id_produs, isEpuizat) {
-      // Upsert: dacă nu există linia în BD, o creează. Dacă există, o updatează.
       await _supabase.from('stoc_produse').upsert({ id_produs: id_produs.toString(), epuizat: isEpuizat });
   };
 
-  // --- CONEXIUNEA REALTIME (WEB-SOCKETS) ---
+  // --- STERGERE ISTORIC (NUKE) ---
+  document.getElementById('btnNukeHistory').addEventListener('click', async () => {
+      const isConfirmed = confirm("EȘTI SIGUR? Această acțiune va șterge definitiv toate comenzile finalizate și anulate din baza de date. Statisticile se vor reseta la 0. Comenzile Noi în așteptare vor fi păstrate.");
+      
+      if(isConfirmed) {
+          const btn = document.getElementById('btnNukeHistory');
+          btn.textContent = "Se șterge...";
+          btn.disabled = true;
+
+          // Ștergem din BD tot ce NU este status 'noua'
+          const { error } = await _supabase.from('comenzi').delete().neq('status', 'noua');
+          
+          btn.textContent = "⚠️ Șterge Istoricul Acum";
+          btn.disabled = false;
+
+          if(!error) {
+              alert("Istoricul a fost curățat cu succes!");
+              // Filtrăm din array-ul local doar comenzile noi
+              allOrders = allOrders.filter(o => o.status === 'noua');
+              calculateDirectorStats();
+          } else {
+              alert("A apărut o eroare la ștergere.");
+          }
+      }
+  });
+
+  // --- REALTIME ---
   function subscribeRealtime() {
       _supabase.channel('public:comenzi')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, payload => {
           allOrders.unshift(payload.new);
-          
-          // Sunăm alerta doar dacă comanda este pentru secțiunea celui logat (sau dacă e admin)
-          if(userRole === 'admin' || payload.new.sectiune === userRole) {
+          // Alerta sonora
+          if(userRole === 'director' || payload.new.sectiune === userRole) {
               if(payload.new.status === 'noua') {
                   playAlert();
-                  renderOrders(payload.new.id); // Transmitem ID-ul pentru acel efect de glow
+                  renderOrders(payload.new.id);
               }
           }
       })
@@ -503,7 +619,7 @@
           if(idx > -1) {
               allOrders[idx] = payload.new;
               renderOrders();
-              if(currentTab === 'admin') calculateAdminStats(); // Update la stats dacă e cazul
+              if(currentTab === 'admin') calculateDirectorStats();
           }
       })
       .subscribe();
