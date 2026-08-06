@@ -3,162 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fiera Bar &mdash; Dashboard Securizat</title>
+<title>Fiera OS &mdash; POS System</title>
 <meta name="robots" content="noindex, nofollow">
-
-<!-- ===== SUPABASE SDK ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-base: #050505; 
-    --bg-card: #121212; 
-    --bg-panel: #1a1a1a;
-    --ink: #ffffff; 
-    --ink-soft: #a1a1aa; 
-    --pink-main: #ff2a85;
-    --pink-bright: #ff529f;
-    --paper-dim: #262626;
-    --success: #2ecc71;
-    --warning: #f1c40f;
-    --radius-lg: 20px;
+    --bg: #0a0a0a; --panel: rgba(20, 20, 20, 0.7); --border: rgba(255,255,255,0.08);
+    --accent: #ff2a85; --accent-glow: rgba(255, 42, 133, 0.4);
+    --text: #f3f4f6; --text-muted: #9ca3af;
+    --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg-base);
-    color: var(--ink);
-    font-family: 'Work Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* --- LOGIN OVERLAY SECURIAT --- */
-  .auth-overlay {
-    position: fixed; inset: 0; background: var(--bg-base); z-index: 1000;
-    display: flex; align-items: center; justify-content: center; padding: 20px;
-  }
-  .auth-card {
-    background: var(--bg-card); border: 1.5px solid var(--paper-dim);
-    border-radius: var(--radius-lg); padding: 36px 28px; width: 100%; max-width: 380px;
-    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-  }
-  .auth-card h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 8px; color: var(--ink); }
-  .auth-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; }
-  .auth-field { margin-bottom: 16px; text-align: left; }
-  .auth-field label { display: block; font-size: 12px; font-family: 'Space Mono', monospace; color: var(--ink-soft); margin-bottom: 6px; }
-  .auth-input {
-    width: 100%; padding: 12px; background: var(--bg-base); border: 1px solid var(--paper-dim);
-    border-radius: 10px; color: #fff; font-size: 15px; font-family: 'Work Sans', sans-serif; outline: none;
-  }
-  .auth-input:focus { border-color: var(--pink-main); }
-  .btn-auth {
-    width: 100%; background: var(--pink-main); color: #fff; border: none; padding: 14px;
-    border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px;
-  }
-  .auth-error { color: #ff4757; font-size: 13px; margin-top: 12px; display: none; }
-
-  /* --- HEADER & DASHBOARD UI --- */
-  header {
-    background: var(--bg-card); border-bottom: 1px solid var(--paper-dim);
-    padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .brand { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--pink-main); }
-  .header-actions { display: flex; gap: 12px; align-items: center; }
-  .btn-logout {
-    background: transparent; border: 1px solid var(--paper-dim); color: var(--ink-soft);
-    padding: 6px 14px; border-radius: 100px; font-size: 12px; cursor: pointer; font-family: 'Space Mono', monospace;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+  body { background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; background-image: radial-gradient(circle at 50% -20%, #2a0a18, var(--bg) 60%); }
   
-  .tabs-bar {
-    background: var(--bg-panel); padding: 12px 24px; display: flex; gap: 10px; border-bottom: 1px solid var(--paper-dim);
-  }
-  .tab-btn {
-    background: transparent; border: 1px solid var(--paper-dim); color: var(--ink-soft);
-    padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 13px; cursor: pointer;
-  }
-  .tab-btn.active { background: var(--pink-main); border-color: var(--pink-main); color: #fff; font-weight: 700; }
+  /* OVERLAY LOGIN GLASSMORPHISM */
+  .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+  .auth-card { background: rgba(20,20,20,0.6); border: 1px solid var(--border); padding: 40px; border-radius: 24px; text-align: center; width: 100%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+  .auth-card h2 { font-size: 24px; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.5px; }
+  .auth-input { width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 16px; font-size: 15px; outline: none; transition: border 0.3s; }
+  .auth-input:focus { border-color: var(--accent); }
+  .btn-primary { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 16px; cursor: pointer; box-shadow: 0 0 20px var(--accent-glow); transition: transform 0.2s; }
+  .btn-primary:active { transform: scale(0.96); }
 
-  main {
-    padding: 24px; flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start;
-  }
-  .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--ink-soft); }
+  /* SIDEBAR */
+  aside { width: 260px; background: var(--panel); backdrop-filter: blur(20px); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px; }
+  .brand { font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+  .nav-item { padding: 12px 16px; border-radius: 12px; color: var(--text-muted); cursor: pointer; font-weight: 500; margin-bottom: 8px; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+  .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+  .nav-item.active { background: var(--accent); color: white; box-shadow: 0 4px 15px var(--accent-glow); }
+  .badge-count { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 100px; font-size: 12px; font-family: 'Space Mono', monospace; }
+  .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); }
+  .user-info b { color: white; display: block; margin-bottom: 10px; }
 
-  /* --- CARD COMANDĂ --- */
-  .order-card {
-    background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-lg);
-    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: slideUp 0.35s ease-out forwards;
-  }
-  .order-card.is-new { border-color: var(--pink-main); box-shadow: 0 0 20px rgba(255, 42, 133, 0.4); }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  /* MAIN CONTENT */
+  main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  header { height: 80px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(10,10,10,0.5); backdrop-filter: blur(10px); }
+  .table-filter { background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px; color: white; outline: none; width: 250px; font-family: 'Space Mono', monospace; transition: border 0.3s; }
+  .table-filter:focus { border-color: var(--accent); }
+  
+  .content-area { padding: 40px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; }
+  
+  /* CARDS GRID */
+  .grid-comenzi { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; align-items: start; }
+  .order-card { background: rgba(25,25,25,0.6); border: 1px solid var(--border); border-radius: 20px; padding: 20px; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .order-card.new-pulse { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+  
+  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+  .table-nr { font-size: 24px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; }
+  .o-time { font-size: 12px; color: var(--text-muted); font-family: 'Space Mono', monospace;}
+  .sectiune-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); margin-left: 10px;}
+  
+  .o-items { list-style: none; margin-bottom: 20px; }
+  .o-items li { display: flex; justify-content: space-between; padding: 8px 0; font-size: 15px; }
+  .qty { color: var(--accent); font-weight: 700; font-family: 'Space Mono', monospace; margin-right: 12px; }
+  
+  .o-foot { display: flex; justify-content: space-between; align-items: center; }
+  .btn-done { background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+  .btn-cancel { background: transparent; color: var(--danger); border: 1px solid var(--danger); padding: 10px 15px; border-radius: 10px; font-size: 13px; cursor: pointer; display: none; }
+  .role-admin .btn-cancel { display: block; } /* Doar adminul poate anula */
 
-  .card-header {
-    background: var(--bg-panel); padding: 14px 20px; border-bottom: 1px solid var(--paper-dim);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .table-badge { background: var(--pink-main); color: #fff; font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; padding: 4px 12px; border-radius: 6px; }
-  .time-stamp { font-size: 12px; color: var(--ink-soft); font-family: 'Space Mono', monospace; }
-
-  .card-body { padding: 18px; }
-  .items-list { list-style: none; }
-  .items-list li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--paper-dim); }
-  .item-qty { color: var(--pink-bright); font-weight: 700; margin-right: 10px; font-family: 'Space Mono', monospace; }
-
-  .card-footer {
-    padding: 14px 20px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--paper-dim);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .total-price { font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; }
-  .btn-done {
-    background: var(--success); border: none; color: #fff; padding: 10px 16px; border-radius: 8px;
-    font-weight: 700; cursor: pointer; font-family: 'Work Sans', sans-serif;
-  }
+  /* ADMIN STATS & STOCK */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+  .stat-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.8)); border: 1px solid var(--border); padding: 24px; border-radius: 20px; }
+  .stat-val { font-size: 32px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 10px; }
+  
+  .stock-list { background: rgba(20,20,20,0.5); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+  
+  /* TOGGLE SWITCH */
+  .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; }
+  .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: var(--text-muted); transition: .4s; border-radius: 50%; }
+  input:checked + .slider { background-color: var(--danger); }
+  input:checked + .slider:before { transform: translateX(24px); background-color: white; }
 </style>
 </head>
-<body>
+<body class="role-bar"> <!-- Default fallback -->
 
-<!-- AUTH OVERLAY -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
-    <h2>Fiera Bar</h2>
-    <p>Autentificare personal bar</p>
+    <h2>Fiera OS</h2>
+    <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 14px;">Autentificare Personal</p>
     <form id="loginForm">
-      <div class="auth-field">
-        <label>EMAIL</label>
-        <input type="email" id="emailInput" class="auth-input" placeholder="bar@fierabar.com" required>
-      </div>
-      <div class="auth-field">
-        <label>PAROLĂ</label>
-        <input type="password" id="passwordInput" class="auth-input" placeholder="••••••••" required>
-      </div>
-      <button type="submit" class="btn-auth">Conectare</button>
-      <div class="auth-error" id="authError">Email sau parolă incorectă.</div>
+      <input type="email" id="emailInput" class="auth-input" placeholder="email@fierabar.com" required>
+      <input type="password" id="passwordInput" class="auth-input" placeholder="Parolă" required>
+      <button type="submit" class="btn-primary">Conectare</button>
+      <div id="authError" style="color: var(--danger); font-size: 13px; margin-top: 15px; display: none;">Date incorecte.</div>
     </form>
   </div>
 </div>
 
-<header>
-  <div class="brand">Fiera Bar &mdash; Dashboard</div>
-  <div class="header-actions">
-    <button class="btn-logout" id="btnLogout">Deconectare</button>
+<aside>
+  <div class="brand">🔥 Fiera OS</div>
+  <div class="nav-item active" id="navActive">Comenzi Noi <span class="badge-count" id="countActive">0</span></div>
+  <div class="nav-item" id="navHistory">Istoric (Azi)</div>
+  <div class="nav-item" id="navAdmin" style="display: none;">Statistici & Stoc</div>
+  
+  <div class="user-info">
+    Logat ca: <b id="userEmailDisplay">...</b>
+    <a href="#" id="btnLogout" style="color: var(--danger); text-decoration: none;">Deconectare</a>
   </div>
-</header>
+</aside>
 
-<div class="tabs-bar">
-  <button class="tab-btn active" id="tabActive">Comenzi Active (<span id="activeCount">0</span>)</button>
-  <button class="tab-btn" id="tabHistory">Istoric</button>
-</div>
-
-<main id="ordersContainer">
-  <div class="empty-state" id="emptyState">
-    <h2>Fără comenzi active</h2>
-    <p>Comenzile noilor clienți vor apărea aici automat.</p>
+<main>
+  <header>
+    <h2 id="pageTitle" style="font-size: 18px; font-weight: 500;">Comenzi Active</h2>
+    <input type="text" id="tableFilterInput" class="table-filter" placeholder="🔍 Caută Masa (ex: 4)...">
+  </header>
+  
+  <div class="content-area">
+    <!-- View Comenzi -->
+    <div id="ordersView" class="grid-comenzi"></div>
+    
+    <!-- View Admin (Statistici si Stoc) -->
+    <div id="adminView" style="display: none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Încasări Azi</div>
+          <div class="stat-val" id="statRevenue">0 RON</div>
+        </div>
+        <div class="stat-card">
+          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Comenzi Finalizate</div>
+          <div class="stat-val" id="statCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div style="color: var(--text-muted); font-size: 14px; text-transform: uppercase;">Bon Mediu</div>
+          <div class="stat-val" id="statAvg">0 RON</div>
+        </div>
+      </div>
+      
+      <h3 style="margin-bottom: 15px; font-weight: 500;">Gestionare Stoc (Out of Stock)</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Bifează cu roșu produsele care nu mai sunt pe stoc. Vor fi blocate instant în meniul clienților.</p>
+      <div class="stock-list" id="stockListContainer">Încărcare meniu...</div>
+    </div>
   </div>
 </main>
 
@@ -168,60 +148,42 @@
   const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const authOverlay = document.getElementById('authOverlay');
-  const loginForm = document.getElementById('loginForm');
-  const authError = document.getElementById('authError');
-  const ordersContainer = document.getElementById('ordersContainer');
-  const emptyState = document.getElementById('emptyState');
-  const activeCountEl = document.getElementById('activeCount');
+  let userRole = 'bar'; // Poate fi 'bar', 'bucatarie' sau 'admin'
+  let currentTab = 'active'; // active, history, admin
+  let allOrders = [];
+  let fullMenu = [];
 
-  let currentTab = 'active';
-  let currentOrders = [];
-
-  // Sintetizator audio pentru clopoțel
-  function playChimeSound() {
+  // Audio Context pentru sunet profesional
+  function playAlert() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const playNote = (freq, time, dur) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + time);
-        gain.gain.setValueAtTime(0, ctx.currentTime + time);
-        gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + time + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + time + dur);
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(ctx.currentTime + time); osc.stop(ctx.currentTime + time + dur);
-      };
-      playNote(880, 0, 1.2);
-      playNote(1318.51, 0.15, 1.5);
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine'; osc.frequency.setValueAtTime(987.77, ctx.currentTime);
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1);
     } catch(e){}
   }
 
-  // Verificare sesiune Supabase la încărcare
-  async function checkSession() {
+  async function checkAuth() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
-      authOverlay.style.display = 'none';
-      initDashboard();
-    } else {
-      authOverlay.style.display = 'flex';
+      document.getElementById('authOverlay').style.display = 'none';
+      setupUserEnvironment(session.user.email);
     }
   }
 
-  // Event Autentificare
-  loginForm.addEventListener('submit', async (e) => {
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    authError.style.display = 'none';
     const email = document.getElementById('emailInput').value;
-    const password = document.getElementById('passwordInput').value;
-
-    const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      authError.style.display = 'block';
-    } else {
-      authOverlay.style.display = 'none';
-      playChimeSound();
-      initDashboard();
+    const pwd = document.getElementById('passwordInput').value;
+    const { data, error } = await _supabase.auth.signInWithPassword({ email, password: pwd });
+    if (error) document.getElementById('authError').style.display = 'block';
+    else {
+      document.getElementById('authOverlay').style.display = 'none';
+      setupUserEnvironment(data.user.email);
     }
   });
 
@@ -230,115 +192,218 @@
     location.reload();
   });
 
-  document.getElementById('tabActive').addEventListener('click', () => {
-    currentTab = 'active';
-    document.getElementById('tabActive').classList.add('active');
-    document.getElementById('tabHistory').classList.remove('active');
-    loadOrders();
-  });
+  function setupUserEnvironment(email) {
+    document.getElementById('userEmailDisplay').textContent = email;
+    
+    if(email.startsWith('admin')) userRole = 'admin';
+    else if(email.startsWith('bucatarie')) userRole = 'bucatarie';
+    else userRole = 'bar'; // Default pt bar@...
 
-  document.getElementById('tabHistory').addEventListener('click', () => {
-    currentTab = 'history';
-    document.getElementById('tabHistory').classList.add('active');
-    document.getElementById('tabActive').classList.remove('active');
-    loadOrders();
-  });
-
-  function createCardHTML(order, isNew = false) {
-    const card = document.createElement('article');
-    card.className = `order-card ${isNew ? 'is-new' : ''}`;
-    card.id = `order-${order.id}`;
-
-    let itemsHtml = '';
-    if (Array.isArray(order.produse)) {
-      order.produse.forEach(item => {
-        itemsHtml += `<li><span><span class="item-qty">${item.cantitate}x</span>${item.nume}</span></li>`;
-      });
+    document.body.className = `role-${userRole}`;
+    
+    if(userRole === 'admin') {
+        document.getElementById('navAdmin').style.display = 'flex';
+        loadFullMenuForStock();
     }
 
-    const isDone = order.status === 'finalizata';
-    card.innerHTML = `
-      <div class="card-header">
-        <div class="table-badge">Masa ${order.mesa}</div>
-        <div class="time-stamp">${new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'})}</div>
-      </div>
-      <div class="card-body">
-        <ul class="items-list">${itemsHtml}</ul>
-      </div>
-      <div class="card-footer">
-        <div class="total-price">${Number(order.total).toFixed(2)} RON</div>
-        ${!isDone ? `<button class="btn-done" onclick="markOrderDone(${order.id})">Finalizat</button>` : `<span style="color:var(--ink-soft); font-size:12px;">Finalizată</span>`}
-      </div>
-    `;
-    return card;
+    loadOrders();
+    subscribeRealtime();
   }
 
-  function renderOrders(orders, highlightId = null) {
-    Array.from(ordersContainer.children).forEach(child => {
-      if (child.id !== 'emptyState') child.remove();
-    });
+  // --- LOGICA INTERFETEI (TABS & RENDER) ---
+  document.getElementById('navActive').addEventListener('click', () => switchTab('active'));
+  document.getElementById('navHistory').addEventListener('click', () => switchTab('history'));
+  document.getElementById('navAdmin').addEventListener('click', () => switchTab('admin'));
 
-    if (orders.length === 0) {
-      emptyState.style.display = 'block';
-    } else {
-      emptyState.style.display = 'none';
-      orders.forEach(order => {
-        ordersContainer.appendChild(createCardHTML(order, order.id === highlightId));
-      });
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    
+    if(tab === 'active') {
+        document.getElementById('navActive').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'Comenzi Active';
+        document.getElementById('ordersView').style.display = 'grid';
+        document.getElementById('adminView').style.display = 'none';
+        document.getElementById('tableFilterInput').style.display = 'block';
+    } else if(tab === 'history') {
+        document.getElementById('navHistory').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'Istoric (Ultimele 50 finalizate)';
+        document.getElementById('ordersView').style.display = 'grid';
+        document.getElementById('adminView').style.display = 'none';
+        document.getElementById('tableFilterInput').style.display = 'block';
+    } else if(tab === 'admin') {
+        document.getElementById('navAdmin').classList.add('active');
+        document.getElementById('pageTitle').textContent = 'Panou Control Admin';
+        document.getElementById('ordersView').style.display = 'none';
+        document.getElementById('adminView').style.display = 'block';
+        document.getElementById('tableFilterInput').style.display = 'none';
+        calculateAdminStats();
     }
+    renderOrders();
   }
 
+  document.getElementById('tableFilterInput').addEventListener('input', renderOrders);
+
+  // --- PRELUARE SI RANDARE COMENZI ---
   async function loadOrders() {
-    let query = _supabase.from('comenzi').select('*');
-    if (currentTab === 'active') {
-      query = query.eq('status', 'noua').order('created_at', { ascending: false });
-    } else {
-      query = query.eq('status', 'finalizata').order('created_at', { ascending: false }).limit(30);
-    }
-
-    const { data, error } = await query;
-    if (!error && data) {
-      currentOrders = data;
-      if (currentTab === 'active') activeCountEl.textContent = currentOrders.length;
-      renderOrders(currentOrders);
+    // Luam toate comenzile din ziua curenta nefinalizate (sau ultimele 100 istoric)
+    const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(200);
+    if(data) {
+        allOrders = data;
+        renderOrders();
     }
   }
 
-  window.markOrderDone = async function(orderId) {
-    const { error } = await _supabase.from('comenzi').update({ status: 'finalizata' }).eq('id', orderId);
-    if (!error) {
-      currentOrders = currentOrders.filter(o => o.id !== orderId);
-      activeCountEl.textContent = currentOrders.length;
-      renderOrders(currentOrders);
+  function renderOrders(highlightId = null) {
+    if(currentTab === 'admin') return;
+
+    const container = document.getElementById('ordersView');
+    container.innerHTML = '';
+    const filterText = document.getElementById('tableFilterInput').value.toLowerCase();
+
+    // Filtram in functie de Rol (Admin vede tot, restul doar sectiunea lor)
+    let viewOrders = allOrders.filter(o => userRole === 'admin' || o.sectiune === userRole);
+    
+    // Filtram dupa status in functie de Tab
+    if(currentTab === 'active') viewOrders = viewOrders.filter(o => o.status === 'noua');
+    else viewOrders = viewOrders.filter(o => o.status === 'finalizata' || o.status === 'anulata');
+
+    // Filtram dupa Masa
+    if(filterText) viewOrders = viewOrders.filter(o => o.mesa.toLowerCase().includes(filterText));
+
+    // Update Badge Counter
+    if(currentTab === 'active' && !filterText) document.getElementById('countActive').textContent = viewOrders.length;
+
+    if(viewOrders.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">Nu există comenzi.</div>`;
+        return;
     }
+
+    viewOrders.forEach(order => {
+      const card = document.createElement('div');
+      card.className = `order-card ${order.id === highlightId ? 'new-pulse' : ''}`;
+      
+      let itemsHtml = order.produse.map(p => `<li><span class="qty">${p.cantitate}x</span> ${p.nume}</li>`).join('');
+      let timeStr = new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
+
+      let footerHtml = '';
+      if(order.status === 'noua') {
+          footerHtml = `
+            <button class="btn-done" onclick="updateOrderStatus(${order.id}, 'finalizata')">✓ Gata</button>
+            <button class="btn-cancel" onclick="updateOrderStatus(${order.id}, 'anulata')">Anulează</button>
+          `;
+      } else {
+          footerHtml = `<span style="color:var(--text-muted); font-size:13px;">Status: ${order.status.toUpperCase()}</span>`;
+      }
+
+      card.innerHTML = `
+        <div class="o-head">
+          <div class="table-nr">#${order.mesa} <span class="sectiune-tag">${order.sectiune}</span></div>
+          <div class="o-time">${timeStr}</div>
+        </div>
+        <ul class="o-items">${itemsHtml}</ul>
+        <div class="o-foot">${footerHtml}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  window.updateOrderStatus = async function(id, status) {
+      const { error } = await _supabase.from('comenzi').update({ status }).eq('id', id);
+      if(!error) {
+          const index = allOrders.findIndex(o => o.id === id);
+          if(index !== -1) allOrders[index].status = status;
+          renderOrders();
+      }
   };
 
-  function initDashboard() {
-    loadOrders();
-    _supabase.channel('public:comenzi')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, payload => {
-        if (payload.new.status === 'noua') {
-          playChimeSound();
-          if (currentTab === 'active') {
-            currentOrders.unshift(payload.new);
-            activeCountEl.textContent = currentOrders.length;
-            renderOrders(currentOrders, payload.new.id);
+  // --- STATISTICI ADMIN ---
+  function calculateAdminStats() {
+      const today = new Date().toISOString().split('T')[0]; // "2026-08-06"
+      
+      // Filtram comenzile de azi finalizate (din toate sectiunile)
+      const aziFinalizate = allOrders.filter(o => o.status === 'finalizata' && o.created_at.startsWith(today));
+      
+      const totalRev = aziFinalizate.reduce((acc, o) => acc + Number(o.total), 0);
+      const count = aziFinalizate.length;
+      const avg = count > 0 ? (totalRev / count) : 0;
+
+      document.getElementById('statRevenue').textContent = `${totalRev.toFixed(2)} RON`;
+      document.getElementById('statCount').textContent = count;
+      document.getElementById('statAvg').textContent = `${avg.toFixed(2)} RON`;
+  }
+
+  // --- STOC ADMIN ---
+  async function loadFullMenuForStock() {
+      try {
+          const res = await fetch('../menu.json'); // Asumand ca dashboard e in acelasi repo
+          if(!res.ok) throw new Error();
+          fullMenu = await res.json();
+      } catch(e) {
+          try {
+             // Fallback direct din radacina
+             const res2 = await fetch('menu.json'); 
+             fullMenu = await res2.json();
+          } catch(e2) {
+             document.getElementById('stockListContainer').innerHTML = "Eroare la citirea menu.json";
+             return;
           }
-        }
+      }
+
+      // Luam starea curenta din DB
+      const { data: stocDB } = await _supabase.from('stoc_produse').select('*');
+      const epuizateSet = new Set(stocDB.filter(s => s.epuizat).map(s => s.id_produs));
+
+      const container = document.getElementById('stockListContainer');
+      container.innerHTML = '';
+
+      fullMenu.forEach(item => {
+          const isOff = epuizateSet.has(item.imageNumber.toString());
+          
+          const row = document.createElement('div');
+          row.className = 'stock-item';
+          row.innerHTML = `
+            <div>
+              <div style="font-weight: 600;">${item.name}</div>
+              <div style="font-size: 12px; color: var(--text-muted);">${item.price} RON • ID: ${item.imageNumber}</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" onchange="toggleStock('${item.imageNumber}', this.checked)" ${isOff ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          `;
+          container.appendChild(row);
+      });
+  }
+
+  window.toggleStock = async function(id_produs, isEpuizat) {
+      // UPSERT record in Supabase
+      await _supabase.from('stoc_produse').upsert({ id_produs: id_produs.toString(), epuizat: isEpuizat });
+  };
+
+  // --- REALTIME ---
+  function subscribeRealtime() {
+      _supabase.channel('public:comenzi')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, payload => {
+          allOrders.unshift(payload.new);
+          // Alerta doar daca e pt sectiunea noastra
+          if(userRole === 'admin' || payload.new.sectiune === userRole) {
+              if(payload.new.status === 'noua') {
+                  playAlert();
+                  renderOrders(payload.new.id); // Trimit id-ul pt glow effect
+              }
+          }
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, payload => {
-        if (payload.new.status === 'finalizata' && currentTab === 'active') {
-          currentOrders = currentOrders.filter(o => o.id !== payload.new.id);
-          activeCountEl.textContent = currentOrders.length;
-          renderOrders(currentOrders);
-        }
+          const idx = allOrders.findIndex(o => o.id === payload.new.id);
+          if(idx > -1) allOrders[idx] = payload.new;
+          renderOrders();
       })
       .subscribe();
   }
 
-  checkSession();
+  checkAuth();
 })();
 </script>
-
 </body>
 </html>
