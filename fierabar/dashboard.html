@@ -332,7 +332,12 @@
       card.dataset.time = order.created_at;
       card.dataset.status = order.status;
       
-      let itemsHtml = order.produse.map(p => `<li><span class="qty">${p.cantitate > 0 ? p.cantitate+'x' : ''}</span> ${p.nume}</li>`).join('');
+      let itemsHtml = order.produse.map(p => {
+        const isNote = p.cantitate === 0 && p.nume.startsWith('📝');
+        return isNote
+          ? `<li style="color: var(--warning); font-weight: 700; font-style: italic;">${p.nume}</li>`
+          : `<li><span class="qty">${p.cantitate > 0 ? p.cantitate+'x' : ''}</span> ${p.nume}</li>`;
+      }).join('');
       let timeStr = new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
 
       let footerHtml = '';
