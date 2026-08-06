@@ -1,228 +1,278 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Fiera OS &mdash; POS System & Gestiune</title>
-<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Fiera Bar &mdash; Meniu digital</title>
+<meta name="description" content="Meniu digital Fiera Bar. Cocktailuri și preparate delicioase.">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0a; --panel: rgba(20, 20, 20, 0.7); --border: rgba(255,255,255,0.08);
-    --accent: #ff2a85; --accent-glow: rgba(255, 42, 133, 0.4);
-    --text: #f3f4f6; --text-muted: #9ca3af;
-    --success: #10b981; --danger: #ef4444; --warning: #f59e0b; --blue: #3b82f6;
+<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('Eroare SW: ', err));
+    });
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-  body { background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; background-image: radial-gradient(circle at 50% -20%, #2a0a18, var(--bg) 60%); -webkit-tap-highlight-color: transparent;}
-  
-  .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;}
-  .auth-card { background: rgba(20,20,20,0.6); border: 1px solid var(--border); padding: 40px; border-radius: 24px; text-align: center; width: 100%; max-width: 400px; }
-  .auth-card h2 { font-size: 28px; margin-bottom: 8px; font-weight: 700; }
-  .auth-input { width: 100%; padding: 16px; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 12px; color: white; margin-bottom: 16px; font-size: 16px; outline: none; }
-  .btn-primary { width: 100%; background: var(--accent); color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.2s;}
-  .btn-primary:active { transform: scale(0.98); }
-  
-  aside { width: 280px; background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px; z-index: 100; }
-  .brand { font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 40px; }
-  .nav-item { padding: 16px; border-radius: 12px; color: var(--text-muted); cursor: pointer; font-weight: 600; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-item.active { background: var(--accent); color: white; }
-  .badge-count { background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 100px; font-size: 14px; font-family: 'Space Mono', monospace; }
-  
-  .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
-  .logout-btn { color: var(--danger); cursor: pointer; padding: 10px 0; font-weight: 600;}
+</script>
+<!-- ================================== -->
 
-  main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-  header { height: 80px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(10,10,10,0.5); }
-  .table-filter { background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 12px 24px; border-radius: 100px; color: white; outline: none; width: 300px; font-family: 'Space Mono', monospace; }
-  
-  .content-area { padding: 30px; overflow-y: auto; flex: 1; }
-  
-  .grid-comenzi { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; align-items: start; }
-  .order-card { background: rgba(25,25,25,0.6); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden;}
-  
-  .order-card.warning { border-color: var(--warning); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
-  .order-card.danger { border-color: var(--danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); animation: pulseRed 2s infinite; }
-  @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+<!-- ===== SUPABASE SDK ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ======================== -->
 
-  .order-card.alert-waiter { border-color: var(--blue); background: rgba(59, 130, 246, 0.1); }
-  .order-card.alert-waiter .table-nr { color: var(--blue); }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base: #050505; --bg-card: #121212; --bg-panel: #1a1a1a;
+    --ink: #ffffff; --ink-soft: #a1a1aa; 
+    --pink-main: #ff2a85; --pink-bright: #ff529f;
+    --paper-dim: #262626; --coral: #ff4757;
+    --radius: 4px; --radius-md: 14px; --radius-lg: 20px;
+    --max-w: 1180px;
+  }
+  *{ box-sizing:border-box; }
+  html, body { overflow-x: hidden; width: 100%; position: relative; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; }
+  img{ max-width:100%; display:block; }
+  :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
-  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
-  .table-nr { font-size: 28px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
-  .o-time { font-size: 14px; color: var(--text-muted); font-family: 'Space Mono', monospace; display: flex; flex-direction: column; align-items: flex-end;}
-  .time-elapsed { font-weight: 700; font-size: 16px; color: var(--text); background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px; margin-bottom: 4px;}
+  /* HERO */
+  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(255, 42, 133, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
+  .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
+  .lang-toggle{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; }
+  .lang-toggle:active{ transform:scale(0.92); }
   
-  .o-items { list-style: none; margin-bottom: 24px; }
-  .o-items li { display: flex; justify-content: space-between; padding: 10px 0; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-  .qty { color: var(--accent); font-weight: 700; font-family: 'Space Mono', monospace; margin-right: 12px; font-size: 18px;}
+  .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:24px; }
+  .hero-text{ flex:1 1 340px; min-width:260px; }
+  .eyebrow{ font-family:'Space Mono', monospace; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--pink-main); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--pink-main); display:inline-block; }
+  .eyebrow.centered{ justify-content:center; }
+  .hero h1{ font-size:clamp(2.4rem, 8vw, 4.4rem); line-height:0.98; letter-spacing:-0.01em; }
+  .hero h1 em{ font-style:italic; color: var(--pink-main); font-weight:500; }
+  .hero p.tag{ margin-top:18px; max-width:46ch; color:var(--ink-soft); font-size:1.02rem; }
+
+  /* CONTROLS & CHIPS */
+  .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
+  .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 48px; width: 100%; transition: all 0.3s; }
+  .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(255, 42, 133, 0.2); }
+  .search-icon{ width: 18px; height: 18px; flex-shrink: 0; margin-right: 10px; }
+  .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .search-box input{ flex: 1; border: none; background: transparent; padding: 0; height: 100%; font-family: 'Work Sans', sans-serif; font-size: 16px; color: var(--ink); outline: none; -webkit-appearance: none; border-radius: 0; }
+  .search-box input::placeholder { color: var(--ink-soft); }
+
+  .tag-filters{ display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 2px 12px; scrollbar-width: none; }
+  .tag-filters::-webkit-scrollbar { display: none; }
+  .chip{ font-family:'Space Mono', monospace; font-size:13px; letter-spacing:.03em; padding: 0 16px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; border: 1.5px solid var(--paper-dim); background: var(--bg-card); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: all .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .chip:active{ transform: translateY(0) scale(0.94); }
+  .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.35); }
   
-  .o-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-  .btn-action { border: none; padding: 16px 20px; border-radius: 12px; font-weight: 700; font-size: 17px; cursor: pointer; transition: 0.2s;}
-  .btn-action:active { transform: scale(0.95); }
-  .btn-done { background: var(--success); color: white; flex: 1; }
-  .btn-cancel { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 2px solid var(--danger); width: 64px; }
+  /* GRID & CARDS */
+  .menu-section{ padding: 10px 0 160px; }
+  .category-section{ margin-top:38px; }
+  .category-section h2{ font-size:1.5rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:22px; margin-top:22px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-  .stat-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.8)); border: 1px solid var(--border); padding: 30px; border-radius: 20px; }
-  .stat-label { color: var(--text-muted); font-size: 14px; text-transform: uppercase; font-weight: 600; }
-  .stat-val { font-size: 32px; font-weight: 700; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 15px; }
+  @keyframes fadeUpIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+
+  .card{ background:var(--bg-card); border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.4); border:1px solid var(--paper-dim); display:flex; flex-direction:column; transition:all .25s ease; opacity: 0; animation: fadeUpIn 0.5s forwards; position: relative; }
+  .card:hover{ transform:translateY(-6px); border-color: var(--pink-main);}
+  .card.out-of-stock .card-img { filter: grayscale(100%) opacity(0.5); }
+  .card.out-of-stock .price { text-decoration: line-through; color: var(--ink-soft); }
+  .card.out-of-stock .card-qty-controls { display: none !important; }
+  .badge-epuizat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 15; pointer-events: none; }
+  .badge-epuizat span { background: var(--coral); color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
   
-  .dashboard-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-  .dash-panel { background: rgba(20,20,20,0.5); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 30px;}
-  .dash-panel h3 { font-size: 20px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;}
+  .card-img-wrap{ position:relative; overflow:hidden; }
+  .card-img{ aspect-ratio:4/3; width:100%; object-fit:cover; background:var(--bg-panel); transition: transform 0.5s ease; }
   
-  .top-list { list-style: none; }
-  .top-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
-  .top-name { font-size: 16px; font-weight: 500; }
-  .top-count { font-family: 'Space Mono', monospace; color: var(--accent); font-weight: 700; background: rgba(255,42,133,0.1); padding: 4px 10px; border-radius: 100px;}
+  .ribbon { position: absolute; top: 14px; left: -6px; background: var(--pink-main); color: #fff; padding: 6px 12px; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 0 4px 4px 0; z-index: 10; }
+  .ribbon::before { content: ""; position: absolute; bottom: -6px; left: 0; border-top: 6px solid #b80052; border-left: 6px solid transparent; }
 
-  .stock-list { overflow-y: auto; max-height: 500px; padding-right: 10px;}
-  .stock-list::-webkit-scrollbar { width: 6px; }
-  .stock-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-  .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border); }
-  .stock-item.epuizat .s-name { color: var(--danger); text-decoration: line-through;}
+  /* QTY CONTROLS */
+  .card-qty-controls { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; background: rgba(18, 18, 18, 0.9); border: 1px solid var(--paper-dim); backdrop-filter: blur(6px); border-radius: 100px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); overflow: hidden; z-index: 10; transition: border-color 0.2s; }
+  .card-qty-controls.has-items { border-color: var(--pink-main); }
+  .c-qty-btn { width: 34px; height: 34px; border: none; background: transparent; color: var(--ink); font-size: 1.25rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .c-qty-btn:active { background: var(--pink-main); color: #fff;}
+  .c-qty-val { width: 26px; text-align: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.95rem; color: var(--pink-bright); }
+
+  .card-body{ padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .card-top h3{ font-size:1.18rem; line-height:1.2; margin:0;}
+  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.05rem; }
+  .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
+
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:14px; }
+
+  /* TOTAL BAR */
+  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(16px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 30px rgba(0,0,0,0.6); }
+  .total-bar.show { transform: translateY(0); }
+  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 8px; }
+  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--pink-bright); }
   
-  .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
-  .switch input { opacity: 0; width: 0; height: 0; }
-  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px; border: 1px solid var(--border);}
-  .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 3px; background-color: var(--text-muted); transition: .4s; border-radius: 50%; }
-  input:checked + .slider { background-color: var(--danger); border-color: var(--danger);}
-  input:checked + .slider:before { transform: translateX(26px); background-color: white; }
+  .action-buttons { display: flex; gap: 12px; }
+  .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
+  .btn-action:active { transform: scale(0.96); }
+  .btn-order-bar { background: var(--pink-main); color: white; }
 
-  .ai-upload-box { border: 2px dashed var(--border); padding: 40px 20px; border-radius: 16px; text-align: center; background: rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; }
-  .ai-upload-box:hover { border-color: var(--accent); background: rgba(255,42,133,0.05); }
-  .ai-results-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-  .ai-results-table th, .ai-results-table td { padding: 12px 10px; border-bottom: 1px solid var(--border); text-align: left; }
-  .ai-results-table th { color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+  /* FLOATING BUTTON (SMART CART / WAITER) */
+  .global-fav-btn { position: fixed; top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; box-shadow: 0 4px 12px rgba(255, 42, 133, 0.2); }
+  .global-fav-btn:active { transform: scale(0.95); }
+  .global-fav-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-  .danger-zone { margin-top: 40px; padding: 25px; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; background: rgba(239, 68, 68, 0.05); }
-  .btn-nuke { background: var(--danger); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 15px;}
-  .btn-export { background: var(--blue); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
+  /* TOAST TUTORIAL */
+  .tutorial-toast { position: fixed; top: 80px; right: 20px; background: var(--pink-main); color: white; padding: 16px 20px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; box-shadow: 0 10px 25px rgba(255, 42, 133, 0.4); z-index: 200; transform: translateX(120%); opacity: 0; transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); max-width: 280px; line-height: 1.4; pointer-events: none;}
+  .tutorial-toast.show { transform: translateX(0); opacity: 1; pointer-events: auto;}
+  .tutorial-toast::after { content: ''; position: absolute; top: -8px; right: 24px; border-width: 0 8px 8px 8px; border-style: solid; border-color: transparent transparent var(--pink-main) transparent; }
 
-  /* CUSTOM TOAST / NOTIFICATION */
-  .custom-toast { position: fixed; bottom: 30px; right: 30px; background: var(--panel); border: 1px solid var(--border); color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 10000; transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); font-weight: 600; display: flex; align-items: center; gap: 10px; }
-  .custom-toast.show { transform: translateY(0); opacity: 1; }
+  /* MODALS */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(6px); opacity:0; transition: opacity 0.3s;}
+  .modal-overlay.open{ display:flex; opacity:1;}
+  
+  .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:400px; width:100%; border-radius:var(--radius-lg); padding:30px; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center;}
+  .modal h2 { margin-bottom: 15px; font-size: 1.5rem; }
+  .modal p { color: var(--ink-soft); margin-bottom: 20px; font-size: 14px;}
+  .modal-close{ position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s; }
+  
+  .input-table { width: 100%; padding: 14px; font-size: 1.2rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; }
+  .input-table:focus { outline: none; border-color: var(--pink-main); }
+  .input-table:disabled { opacity: 0.6; }
+  
+  .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;}
+  .btn-submit:active { transform: scale(0.96); }
+  .btn-submit:disabled { opacity: 0.7; }
+  
+  .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 1px solid var(--paper-dim); padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
+  .btn-waiter-option:active { transform: scale(0.96); border-color: var(--pink-main); }
 
-  @media (max-width: 1024px) { .dashboard-columns { grid-template-columns: 1fr; } }
-  @media (max-width: 768px) {
-      body { flex-direction: column; overflow-y: auto;}
-      aside { width: 100%; border-bottom: 1px solid var(--border); padding: 20px; flex-direction: row; flex-wrap: wrap; align-items: center;}
-      .brand { width: 100%; margin-bottom: 20px; justify-content: center;}
-      .nav-item { flex: 1; min-width: 120px; justify-content: center; margin: 4px;}
-      header { padding: 20px; flex-direction: column; height: auto; gap: 15px; }
-      .table-filter { width: 100%; }
-      .grid-comenzi { grid-template-columns: 1fr; }
+  /* ONBOARDING MODAL */
+  #onboardingOverlay .modal{ max-width: 380px; }
+  .lang-pick-row{ display:flex; gap:10px; margin-bottom:6px; }
+  .lang-pick-btn{ flex:1; font-family:'Space Mono', monospace; font-size:13px; font-weight:700; letter-spacing:.03em; padding:16px 6px; border-radius: var(--radius-md); border: 1.5px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .lang-pick-btn .flag{ font-size:1.7rem; line-height:1; }
+  .lang-pick-btn:active{ transform: scale(0.94); border-color: var(--pink-main); }
+
+  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; margin-top: 40px;}
+  .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
+  
+  @media (max-width:640px){
+    .hero{ padding-top:44px; }
+    .search-box { width: 100%; }
+    .grid{ grid-template-columns:1fr; }
+    .action-buttons { flex-direction: column; }
+  }
+  @media (min-width:641px){
+    .controls { flex-direction: row; align-items: center; justify-content: space-between; }
+    .search-box { max-width: 340px; }
+    .grid{ grid-template-columns:repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 
-<div class="auth-overlay" id="authOverlay">
-  <div class="auth-card">
-    <h2>Fiera OS</h2>
-    <p style="color: var(--text-muted); margin-bottom: 30px;">Autentificare Personal</p>
-    <form id="loginForm">
-      <input type="email" id="emailInput" class="auth-input" placeholder="Email" required>
-      <input type="password" id="passwordInput" class="auth-input" placeholder="Parolă" required>
-      <button type="submit" class="btn-primary">Conectare</button>
-    </form>
+<header class="hero">
+  <div class="top-actions">
+    <button class="lang-toggle" id="langToggle" type="button">🇷🇴 RO</button>
+  </div>
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow" id="txtEyebrow">Meniu digital</p>
+      <h1 id="txtTitle">Fiera Bar</h1>
+      <p class="tag" id="txtTagline">Cocktailuri internaționale, băuturi rafinate și preparate delicioase.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap menu-section">
+  <div class="controls">
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm10 17-5.6-5.6"/></svg>
+      <input type="search" id="searchInput" aria-label="Caută" placeholder="Caută...">
+    </div>
+    <div class="tag-filters" id="tagFilters"></div>
+  </div>
+  <div id="categoriesWrap"></div>
+  <div class="empty-state" id="emptyState" style="display:none;"></div>
+</main>
+
+<div class="total-bar" id="totalBar">
+  <div class="total-header">
+    <span class="total-label" id="txtTotalLabel">Total:</span>
+    <span class="total-amount" id="totalAmount">0.00 RON</span>
+  </div>
+  <div class="action-buttons">
+    <button class="btn-action btn-order-bar" id="btnOpenOrderModal">Trimite Comanda</button>
   </div>
 </div>
 
-<aside>
-  <div class="brand">🔥 Fiera OS</div>
-  <div class="nav-item active" id="navActive">Comenzi Noi <span class="badge-count" id="countActive">0</span></div>
-  <div class="nav-item" id="navHistory">Istoric</div>
-  <div class="nav-item" id="navStock">📦 Stoc & Facturi AI</div>
-  <div class="nav-item" id="navAdmin" style="display: none;">Panou Șef</div>
-  
-  <div class="user-info">
-    Logat ca: <b id="userEmailDisplay">...</b>
-    <div class="logout-btn" id="btnLogout">Deconectare</div>
-  </div>
-</aside>
+<!-- BUTONUL PLUTITOR INTELIGENT -->
+<button class="global-fav-btn" id="smartActionBtn">
+  <!-- Conținutul se schimbă din JS (Coș vs Clopoțel) -->
+</button>
 
-<main>
-  <header>
-    <h2 id="pageTitle" style="font-size: 22px;">Comenzi Active</h2>
-    <input type="text" id="tableFilterInput" class="table-filter" placeholder="🔍 Caută Masa (ex: 4)...">
-  </header>
-  
-  <div class="content-area">
-    <!-- VIEW: COMENZI (ACTIVE/ISTORIC) -->
-    <div id="ordersView" class="grid-comenzi"></div>
-    
-    <!-- VIEW: STOC & AI (Pentru Bucatarie & Bar) -->
-    <div id="stockView" style="display: none;">
-      <div class="dashboard-columns">
-        
-        <!-- OPRIRE STOC MANUAL -->
-        <div class="dash-panel">
-          <h3>🛑 Oprire Produse (Fără Stoc)</h3>
-          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">De aici scoți manual din meniu produsele care nu se mai pot prepara. (Bucătăria vede doar mâncarea, Barul doar băuturile).</p>
-          <div class="stock-list" id="stockListContainer">Încărcare...</div>
-        </div>
+<!-- TOAST TUTORIAL OSPĂTAR -->
+<div class="tutorial-toast" id="tutorialToast">
+  🍽️ Comanda a fost trimisă cu succes!<br><br>Acum poți folosi butonul <b>🔔 Ospătar</b> de sus pentru a cere nota de plată sau ajutor la masă.
+</div>
 
-        <!-- SCANARE FACTURA AI -->
-        <div class="dash-panel">
-          <h3>📸 Adaugă Marfă din Factură (AI)</h3>
-          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Fă o poză la factura primită. AI-ul va citi automat ingredientele și cantitățile primite.</p>
-          
-          <div class="ai-upload-box" onclick="document.getElementById('invoiceFileInput').click()">
-              <span style="font-size: 34px; display: block; margin-bottom: 12px;">📄</span>
-              <span style="font-weight: 600; color: var(--text); font-size: 18px;">Apasă aici pentru a face o poză facturii</span>
-              <input type="file" id="invoiceFileInput" accept="image/*" style="display: none;" onchange="handleInvoiceUpload(event)">
-          </div>
-
-          <div id="aiLoading" style="display: none; text-align: center; color: var(--accent); font-weight: 600; padding: 30px;">
-              ⏳ AI-ul citește factura... Vă rugăm așteptați.
-          </div>
-
-          <div id="aiResultsContainer" style="display: none; margin-top: 20px;">
-              <h4 style="margin-bottom: 10px; color: var(--success);">Marfă citită cu succes de AI:</h4>
-              <table class="ai-results-table">
-                  <thead><tr><th>Produs / Ingredient</th><th>Cantitate</th><th>Preț</th></tr></thead>
-                  <tbody id="aiTableBody"></tbody>
-              </table>
-              <button class="btn-primary" style="margin-top: 20px; background: var(--success);" onclick="saveScannedStock()">💾 Confirmă Recepția Mărfii</button>
-          </div>
-        </div>
-
+<!-- MODAL ONBOARDING (limbă + masă / la pachet) -->
+<div class="modal-overlay" id="onboardingOverlay">
+  <div class="modal">
+    <p class="eyebrow centered">Fiera Bar</p>
+    <div id="obLangStep">
+      <h2 id="obLangTitle">Bun venit!</h2>
+      <p id="obLangSubtitle">Alege limba meniului</p>
+      <div class="lang-pick-row">
+        <button class="lang-pick-btn" data-lang="ro"><span class="flag">🇷🇴</span>RO</button>
+        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>EN</button>
+        <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span>ES</button>
       </div>
     </div>
-
-    <!-- VIEW: PANOU SEF (Statistici) -->
-    <div id="adminView" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-          <div><h2 style="font-size: 28px; font-weight: 700;">Sumar Activitate</h2></div>
-          <button class="btn-export" id="btnExportCsv">⬇️ Descarcă Raport Excel (CSV)</button>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Încasări</div><div class="stat-val" id="statRevenue">0 RON</div></div>
-        <div class="stat-card"><div class="stat-label">Comenzi Servite</div><div class="stat-val" id="statCount">0</div></div>
-        <div class="stat-card"><div class="stat-label">Din Bar</div><div class="stat-val" id="statBar">0 RON</div></div>
-        <div class="stat-card"><div class="stat-label">Din Bucătărie</div><div class="stat-val" id="statKitchen">0 RON</div></div>
-      </div>
-      
-      <div class="dash-panel">
-          <h3>🏆 Top 5 Cele mai vândute</h3>
-          <ul class="top-list" id="topProductsList"></ul>
-      </div>
-
-      <div class="danger-zone">
-          <h3 style="color: var(--danger);">Curățare Sistem</h3>
-          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">Șterge definitiv toate comenzile finalizate sau anulate. Recomandat la final de lună.</p>
-          <button class="btn-nuke" id="btnNukeHistory">⚠️ Șterge Istoricul Acum</button>
-      </div>
+    <div id="obModeStep" style="display:none;">
+      <h2 id="obModeTitle">Cum dorești să comanzi?</h2>
+      <p id="obModeSubtitle">Alege una din opțiuni pentru a continua.</p>
+      <button class="btn-waiter-option" id="btnDineIn">🍽️ Stau la masă</button>
+      <button class="btn-waiter-option" id="btnTakeaway">🥡 La pachet (Takeaway)</button>
     </div>
   </div>
-</main>
+</div>
 
-<div class="custom-toast" id="customToast">Mesaj notificare</div>
+<!-- MODAL COMANDĂ -->
+<div class="modal-overlay" id="orderOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeOrderModal">&times;</button>
+    <h2 id="orderModalTitle">Numărul Mesei</h2>
+    <p id="orderModalDesc">Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.</p>
+    <input type="text" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
+    <button class="btn-submit" id="sendOrderBtn">Trimite Comanda</button>
+  </div>
+</div>
+
+<!-- MODAL CHEAMĂ OSPĂTAR -->
+<div class="modal-overlay" id="callWaiterOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeCallWaiter">&times;</button>
+    <h2 id="callWaiterTitle">Ai nevoie de noi?</h2>
+    <p id="callWaiterDesc">Selectează motivul pentru care chemi ospătarul la masă.</p>
+    <button class="btn-waiter-option" id="btnCallCash" onclick="sendSpecialAlert('Nota (Cash)')">💵 Vreau să achit (Cash)</button>
+    <button class="btn-waiter-option" id="btnCallCard" onclick="sendSpecialAlert('Nota (Card)')">💳 Vreau să achit (Card)</button>
+    <button class="btn-waiter-option" id="btnCallHelp" onclick="sendSpecialAlert('Ajutor / Altceva')">🙋‍♂️ Am nevoie de ajutor</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="brand">Fiera Bar</div>
+    <span id="txtFooterCopy">&copy; 2026 Fiera Bar</span>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -230,337 +280,282 @@
   const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let userRole = 'bar'; 
-  let currentTab = 'active'; 
-  let allOrders = [];
-  let fullMenu = [];
+  let allItems = [];
+  let outOfStockIds = new Set();
+  let activeFilter = 'all';
+  let favoritesQty = loadFavorites();
+  let currentLang = localStorage.getItem('fieraBar:lang') || 'ro';
 
-  function showToast(msg) {
-    const toast = document.getElementById('customToast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.has('mesa')) {
+      sessionStorage.setItem('fieraMesa', urlParams.get('mesa'));
+      sessionStorage.setItem('fieraMode', 'masa');
   }
 
-  function playAlert() {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator(); const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      
-      if(userRole === 'bucatarie') {
-          osc.type = 'square'; osc.frequency.setValueAtTime(1200, ctx.currentTime);
-          gain.gain.setValueAtTime(0.5, ctx.currentTime);
-          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.4);
-      } else {
-          osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-          gain.gain.setValueAtTime(0, ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1.5);
-      }
-    } catch(e){}
+  function loadFavorites(){ try{ const r = localStorage.getItem('fieraBar:favs'); return r ? JSON.parse(r) : {}; }catch(e){ return {}; } }
+  function saveFavorites(){ try{ localStorage.setItem('fieraBar:favs', JSON.stringify(favoritesQty)); }catch(e){} }
+  
+  function getQty(item) { return favoritesQty[item.imageNumber] || 0; }
+  function updateQty(item, change) {
+    if (outOfStockIds.has(item.imageNumber.toString())) return;
+    const id = item.imageNumber;
+    let current = favoritesQty[id] || 0;
+    current += change;
+    if(current <= 0) delete favoritesQty[id]; else favoritesQty[id] = current;
+    saveFavorites();
   }
 
-  async function checkAuth() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    if (session) { document.getElementById('authOverlay').style.display = 'none'; setupUserEnvironment(session.user.email); }
+  const I18N = {
+    ro: { flag:'🇷🇴', code:'RO', eyebrow:'Meniu digital', title:'Fiera Bar', tagline:'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.', allChip:'Toate', searchPlaceholder:'Caută...', emptyState:'Niciun produs găsit.', totalLabel:'Total:', btnOrderBar:'Trimite Comanda', obLangTitle:'Bun venit!', obLangSubtitle:'Alege limba meniului', obModeTitle:'Cum dorești să comanzi?', obModeSubtitle:'Alege una din opțiuni pentru a continua.', dineIn:'🍽️ Stau la masă', takeaway:'🥡 La pachet (Takeaway)', takeawayLabel:'La pachet', orderModalTitle:'Numărul Mesei', orderModalDesc:'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.', tablePlaceholder:'Ex: 4', sendOrderBtnText:'Trimite Comanda', sendingText:'Se trimite...', callWaiterTitle:'Ai nevoie de noi?', callWaiterDesc:'Selectează motivul pentru care chemi ospătarul la masă.', callCash:'💵 Vreau să achit (Cash)', callCard:'💳 Vreau să achit (Card)', callHelp:'🙋‍♂️ Am nevoie de ajutor', alertSent:(m)=>`Ospătarul a fost chemat la masa ${m}!`, orderError:'Eroare la trimitere.', askTable:'Ce număr are masa ta?', catNames:{ entrante:'Aperitive', principal:'Fel Principal', coctel:'Cocktailuri', bebida:'Băuturi', postre:'Deserturi', otros:'Altele' }, smartWaiter: 'Ospătar', smartCart: 'Coșul Meu' },
+    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Fiera Bar', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
+    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Fiera Bar', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
+  };
+  const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
+
+  function applyLanguage(lang){
+    currentLang = lang;
+    localStorage.setItem('fieraBar:lang', lang);
+    const t = I18N[lang];
+
+    document.getElementById('langToggle').textContent = `${t.flag} ${t.code}`;
+    document.getElementById('txtEyebrow').textContent = t.eyebrow;
+    document.getElementById('txtTitle').textContent = t.title;
+    document.getElementById('txtTagline').textContent = t.tagline;
+    document.getElementById('txtTotalLabel').textContent = t.totalLabel;
+    document.getElementById('btnOpenOrderModal').textContent = t.btnOrderBar;
+    document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+
+    document.getElementById('obLangTitle').textContent = t.obLangTitle;
+    document.getElementById('obLangSubtitle').textContent = t.obLangSubtitle;
+    document.getElementById('obModeTitle').textContent = t.obModeTitle;
+    document.getElementById('obModeSubtitle').textContent = t.obModeSubtitle;
+    document.getElementById('btnDineIn').textContent = t.dineIn;
+    document.getElementById('btnTakeaway').textContent = t.takeaway;
+
+    document.getElementById('orderModalTitle').textContent = t.orderModalTitle;
+    document.getElementById('orderModalDesc').textContent = t.orderModalDesc;
+    document.getElementById('tableNumberInput').placeholder = t.tablePlaceholder;
+    document.getElementById('sendOrderBtn').textContent = t.sendOrderBtnText;
+
+    document.getElementById('callWaiterTitle').textContent = t.callWaiterTitle;
+    document.getElementById('callWaiterDesc').textContent = t.callWaiterDesc;
+    document.getElementById('btnCallCash').textContent = t.callCash;
+    document.getElementById('btnCallCard').textContent = t.callCard;
+    document.getElementById('btnCallHelp').textContent = t.callHelp;
+
+    renderTagFilters(); render();
   }
 
-  document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const { data, error } = await _supabase.auth.signInWithPassword({ 
-        email: document.getElementById('emailInput').value, 
-        password: document.getElementById('passwordInput').value 
-    });
-    if (!error) {
-        document.getElementById('authOverlay').style.display = 'none';
-        playAlert();
-        setupUserEnvironment(data.user.email);
-    }
+  document.getElementById('langToggle').addEventListener('click', () => {
+    const order = ['ro', 'en', 'es'];
+    const next = order[(order.indexOf(currentLang) + 1) % order.length];
+    applyLanguage(next);
   });
 
-  document.getElementById('btnLogout').addEventListener('click', async () => { await _supabase.auth.signOut(); location.reload(); });
-
-  function setupUserEnvironment(email) {
-    document.getElementById('userEmailDisplay').textContent = email;
-    const emailLower = email.toLowerCase();
-    
-    if(emailLower.includes('director') || emailLower.includes('admin')) userRole = 'director';
-    else if(emailLower.includes('bucatarie')) userRole = 'bucatarie';
-    else userRole = 'bar'; 
-
-    if(userRole === 'director') document.getElementById('navAdmin').style.display = 'flex'; 
-
-    loadFullMenuForStock();
-    loadOrders(); subscribeRealtime();
-    setInterval(updateTimersUI, 30000);
-  }
-
-  document.getElementById('navActive').addEventListener('click', () => switchTab('active'));
-  document.getElementById('navHistory').addEventListener('click', () => switchTab('history'));
-  document.getElementById('navStock').addEventListener('click', () => switchTab('stock'));
-  document.getElementById('navAdmin').addEventListener('click', () => switchTab('admin'));
-
-  function switchTab(tab) {
-    currentTab = tab;
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    document.getElementById('tableFilterInput').style.display = (tab === 'active' || tab === 'history') ? 'block' : 'none';
-    
-    document.getElementById('ordersView').style.display = 'none'; 
-    document.getElementById('adminView').style.display = 'none';
-    document.getElementById('stockView').style.display = 'none';
-
-    if(tab === 'active') {
-        document.getElementById('navActive').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Comenzi Active';
-        document.getElementById('ordersView').style.display = 'grid'; 
-        renderOrders();
-    } else if(tab === 'history') {
-        document.getElementById('navHistory').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Istoric General';
-        document.getElementById('ordersView').style.display = 'grid'; 
-        renderOrders();
-    } else if(tab === 'stock') {
-        document.getElementById('navStock').classList.add('active');
-        document.getElementById('pageTitle').textContent = '📦 Stoc & Facturi AI';
-        document.getElementById('stockView').style.display = 'block'; 
-        loadFullMenuForStock();
-    } else if(tab === 'admin') {
-        document.getElementById('navAdmin').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Panou Control Șef';
-        document.getElementById('adminView').style.display = 'block';
-        calculateDirectorStats();
-    }
-  }
-
-  document.getElementById('tableFilterInput').addEventListener('input', renderOrders);
-
-  async function loadOrders() {
-    const { data } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(1000);
-    if(data) { allOrders = data; renderOrders(); }
-  }
-
-  function renderOrders() {
-    if(currentTab !== 'active' && currentTab !== 'history') return;
-    const container = document.getElementById('ordersView'); container.innerHTML = '';
-    const filterText = document.getElementById('tableFilterInput').value.toLowerCase();
-
-    let viewOrders = allOrders.filter(o => userRole === 'director' || o.sectiune === userRole);
-    if(currentTab === 'active') viewOrders = viewOrders.filter(o => o.status === 'noua');
-    else viewOrders = viewOrders.filter(o => o.status === 'finalizata' || o.status === 'anulata');
-    if(filterText) viewOrders = viewOrders.filter(o => o.mesa.toLowerCase().includes(filterText));
-
-    if(currentTab === 'active' && !filterText) document.getElementById('countActive').textContent = viewOrders.length;
-    if(viewOrders.length === 0) return container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">Nu există comenzi aici.</div>`;
-
-    viewOrders.forEach(order => {
-      const isCallWaiter = order.produse.some(p => p.nume.includes('ALERTĂ OSPĂTAR'));
-      
-      const card = document.createElement('div');
-      card.className = `order-card ${isCallWaiter ? 'alert-waiter' : ''}`;
-      card.dataset.time = order.created_at;
-      card.dataset.status = order.status;
-      
-      let itemsHtml = order.produse.map(p => `<li><span class="qty">${p.cantitate}x</span> ${p.nume}</li>`).join('');
-      let timeStr = new Date(order.created_at).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
-
-      let footerHtml = '';
-      if(order.status === 'noua' && userRole !== 'director') {
-          footerHtml = `
-            <button class="btn-action btn-done" onclick="updateOrderStatus(${order.id}, 'finalizata')">✓ Gata</button>
-            <button class="btn-action btn-cancel" onclick="updateOrderStatus(${order.id}, 'anulata')">✕</button>
-          `;
-      } else {
-          let color = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
-          footerHtml = `<span style="color:${color}; font-weight: 700; font-size: 18px;">${order.status.toUpperCase()}</span>`;
-      }
-
-      card.innerHTML = `
-        <div class="o-head">
-          <div class="table-nr">#${order.mesa}</div>
-          <div class="o-time">
-              ${order.status === 'noua' ? `<span class="time-elapsed">0 min</span>` : ''}
-              <span>${timeStr}</span>
-          </div>
-        </div>
-        <ul class="o-items">${itemsHtml}</ul>
-        <div class="o-foot">${footerHtml}</div>
-      `;
-      container.appendChild(card);
-    });
-
-    updateTimersUI();
-  }
-
-  function updateTimersUI() {
-      if(currentTab !== 'active') return;
-      document.querySelectorAll('.order-card').forEach(card => {
-          if(card.dataset.status !== 'noua') return;
-          const startTime = new Date(card.dataset.time).getTime();
-          const diffMin = Math.floor((Date.now() - startTime) / 60000);
-          
-          const timeBadge = card.querySelector('.time-elapsed');
-          if(timeBadge) timeBadge.textContent = diffMin + ' min';
-
-          card.classList.remove('warning', 'danger');
-          if(diffMin >= 10) card.classList.add('danger');
-          else if(diffMin >= 5) card.classList.add('warning');
+  function renderTagFilters(){
+    const t = I18N[currentLang];
+    const tagsEl = document.getElementById('tagFilters');
+    tagsEl.innerHTML = `<button class="chip active" data-filter="all">${t.allChip}</button>`;
+    CATEGORY_KEYS.forEach(key => { if(allItems.some(i => (i.tags || []).includes(key))) tagsEl.innerHTML += `<button class="chip" data-filter="${key}">${t.catNames[key]}</button>`; });
+    tagsEl.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        activeFilter = e.target.dataset.filter;
+        tagsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active'); render();
       });
+    });
   }
 
-  window.updateOrderStatus = async function(id, status) {
-      const { error } = await _supabase.from('comenzi').update({ status }).eq('id', id);
-      if(!error) {
-          const index = allOrders.findIndex(o => o.id === id);
-          if(index !== -1) allOrders[index].status = status;
-          renderOrders();
-      }
-  };
+  function render(){
+    const t = I18N[currentLang];
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    let filtered = allItems.filter(i => { let txt = (i.name + ' ' + (i.description||'')).toLowerCase(); return txt.includes(query); });
 
-  // --- STOC MANUAL ---
-  async function loadFullMenuForStock() {
-      try { 
-          if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); 
-      } catch(e) { return; }
+    if(activeFilter === 'favorites') filtered = filtered.filter(i => getQty(i) > 0);
+    else if(activeFilter !== 'all') filtered = filtered.filter(i => (i.tags || []).includes(activeFilter));
+    
+    updateBottomBar();
+    const wrap = document.getElementById('categoriesWrap'); wrap.innerHTML = '';
+
+    if(filtered.length === 0){
+      document.getElementById('emptyState').textContent = t.emptyState;
+      document.getElementById('emptyState').style.display = 'block'; return;
+    }
+    document.getElementById('emptyState').style.display = 'none';
+
+    [...CATEGORY_KEYS, 'otros'].forEach(catKey => {
+      const items = filtered.filter(i => { const mainCat = CATEGORY_KEYS.find(key => (i.tags||[]).includes(key)); return (mainCat || 'otros') === catKey; });
+      if(items.length === 0) return;
+
+      const catName = t.catNames[catKey] || t.catNames.otros;
+      let html = `<section class="category-section"><h2>${catName}</h2><div class="grid">`;
       
-      const { data: stocDB } = await _supabase.from('stoc_produse').select('*');
-      const epuizateSet = new Set((stocDB || []).filter(s => s.epuizat).map(s => s.id_produs));
-      
-      const container = document.getElementById('stockListContainer'); 
-      if(!container) return;
-      container.innerHTML = '';
-
-      let viewMenu = fullMenu;
-      if(userRole === 'bucatarie') viewMenu = fullMenu.filter(m => m.sectiune === 'bucatarie');
-      if(userRole === 'bar') viewMenu = fullMenu.filter(m => (m.sectiune || 'bar') === 'bar');
-
-      viewMenu.forEach(item => {
-          const isOff = epuizateSet.has(item.imageNumber.toString());
-          container.innerHTML += `
-            <div class="stock-item ${isOff ? 'epuizat' : ''}">
-              <div>
-                 <div class="s-name" style="font-weight: 600; font-size: 16px;">${item.name}</div>
-                 <div style="font-size: 13px; color: ${isOff ? 'var(--danger)' : 'var(--success)'}; font-weight: 600;">
-                    ${isOff ? '🔴 INDISPONIBIL PENTRU CLIENȚI' : '🟢 ACTIV ÎN MENIU'}
-                 </div>
+      items.forEach(item => {
+        const isEpuizat = outOfStockIds.has(item.imageNumber.toString());
+        if(isEpuizat && getQty(item) > 0) { delete favoritesQty[item.imageNumber]; saveFavorites(); }
+        const q = getQty(item);
+        html += `
+          <article class="card ${isEpuizat ? 'out-of-stock' : ''}">
+            <div class="card-img-wrap">
+              ${isEpuizat ? '<div class="badge-epuizat"><span>Epuizat</span></div>' : ''}
+              ${(item.tags||[]).includes('especialidad') ? '<div class="ribbon">Specialitate</div>' : ''}
+              <img src="images/${item.imageNumber}.jpg" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
+              <div class="card-qty-controls ${q>0?'has-items':''}">
+                <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
+                <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
+                <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, 1)">+</button>
               </div>
-              <label class="switch"><input type="checkbox" onchange="toggleStock('${item.imageNumber}', this.checked)" ${isOff ? 'checked' : ''}><span class="slider"></span></label>
-            </div>`;
+            </div>
+            <div class="card-body">
+              <div class="card-top"><h3>${item.name}</h3><span class="price">${item.price.toFixed(2)} RON</span></div>
+              <p class="desc">${item.description || ''}</p>
+            </div>
+          </article>
+        `;
       });
+      wrap.innerHTML += html + `</div></section>`;
+    });
   }
 
-  window.toggleStock = async function(id, isEpuizat) { 
-      await _supabase.from('stoc_produse').upsert({ id_produs: id.toString(), epuizat: isEpuizat });
-      loadFullMenuForStock(); 
+  window.appUpdateQty = function(id, change) {
+      const item = allItems.find(i => i.imageNumber === id);
+      if(item) { updateQty(item, change); render(); }
   };
 
-  // --- AI SCANNER (PRIN /scan) ---
-  window.handleInvoiceUpload = async function(event) {
-      const file = event.target.files[0];
-      if(!file) return;
+  // --- LOGICA BUTON INTELIGENT (COȘ VS OSPĂTAR) ---
+  function updateBottomBar() {
+      const t = I18N[currentLang];
+      const items = allItems.filter(i => getQty(i) > 0);
+      const totalItems = Object.values(favoritesQty).reduce((a,b)=>a+b,0);
+      const total = items.reduce((acc, i) => acc + (i.price * getQty(i)), 0);
+      
+      document.getElementById('totalAmount').textContent = `${total.toFixed(2)} RON`;
+      
+      const bar = document.getElementById('totalBar');
+      const smartBtn = document.getElementById('smartActionBtn');
+      
+      if(activeFilter === 'favorites' && items.length > 0) {
+        bar.classList.add('show');
+      } else {
+        bar.classList.remove('show');
+      }
 
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-          const base64Data = e.target.result.split(',')[1];
-          document.getElementById('aiLoading').style.display = 'block';
-          document.getElementById('aiResultsContainer').style.display = 'none';
-
-          try {
-              const response = await fetch('/scan', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ image: base64Data })
-              });
-
-              const scannedItems = await response.json();
-              
-              if(response.ok && Array.isArray(scannedItems)) {
-                  const tbody = document.getElementById('aiTableBody');
-                  tbody.innerHTML = '';
-                  
-                  scannedItems.forEach(item => {
-                      tbody.innerHTML += `<tr><td><b>${item.nume}</b></td><td>${item.cantitate}</td><td>${item.pret || '-'}</td></tr>`;
-                  });
-
-                  document.getElementById('aiLoading').style.display = 'none';
-                  document.getElementById('aiResultsContainer').style.display = 'block';
-              } else {
-                  throw new Error(scannedItems.error || "Eroare la citirea facturii");
-              }
-          } catch(err) {
-              document.getElementById('aiLoading').style.display = 'none';
-              showToast("Eroare la citirea facturii. Asigură-te că poza este clară.");
-          }
-      };
-      reader.readAsDataURL(file);
-  };
-
-  window.saveScannedStock = function() {
-      showToast("Recepție finalizată! Marfa a fost salvată în gestiune.");
-      document.getElementById('aiResultsContainer').style.display = 'none';
-  };
-
-  // --- STATISTICI DIRECTOR ---
-  function calculateDirectorStats() {
-      const istoric = allOrders.filter(o => o.status === 'finalizata');
-      let total = 0, barTotal = 0, kitchenTotal = 0, productCounts = {};
-
-      istoric.forEach(order => {
-          const val = Number(order.total);
-          total += val;
-          if(order.sectiune === 'bar') barTotal += val;
-          if(order.sectiune === 'bucatarie') kitchenTotal += val;
-          order.produse.forEach(p => { if(!p.nume.includes('ALERTĂ')) { productCounts[p.nume] = (productCounts[p.nume]||0) + p.cantitate; }});
-      });
-
-      document.getElementById('statRevenue').textContent = `${total.toFixed(2)} RON`;
-      document.getElementById('statCount').textContent = istoric.length;
-      document.getElementById('statBar').textContent = `${barTotal.toFixed(2)} RON`;
-      document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} RON`;
-
-      const listEl = document.getElementById('topProductsList'); listEl.innerHTML = '';
-      const sorted = Object.entries(productCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      sorted.forEach(([n, c]) => listEl.innerHTML += `<li class="top-item"><span class="top-name">${n}</span><span class="top-count">${c} buc</span></li>`);
+      if(totalItems > 0) {
+          // Arată Coșul
+          smartBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                <span style="margin-left: 6px;">${t.smartCart} (${totalItems})</span>`;
+          smartBtn.onclick = () => { activeFilter = 'favorites'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); render(); window.scrollTo(0,0); };
+          smartBtn.style.background = 'var(--pink-main)';
+          smartBtn.style.color = 'white';
+      } else {
+          // Arată Clopoțel Ospătar
+          smartBtn.innerHTML = `🔔 <span style="margin-left: 6px;">${t.smartWaiter}</span>`;
+          smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
+          smartBtn.style.background = 'rgba(18, 18, 18, 0.85)';
+          smartBtn.style.color = 'var(--ink)';
+      }
   }
 
-  document.getElementById('btnExportCsv').addEventListener('click', () => {
-      const istoric = allOrders.filter(o => o.status === 'finalizata');
-      let csv = 'ID,Data,Ora,Masa,Sectiune,Total(RON),Produse\n';
-      istoric.forEach(o => {
-          const d = new Date(o.created_at);
-          const produse = o.produse.map(p => `${p.cantitate}x ${p.nume}`).join('; ');
-          csv += `${o.id},${d.toLocaleDateString('ro-RO')},${d.toLocaleTimeString('ro-RO')},${o.mesa},${o.sectiune},${o.total},"${produse}"\n`;
-      });
-      const blob = new Blob(["\uFEFF"+csv], {type: 'text/csv;charset=utf-8;'}); 
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `Raport_FieraBar_${new Date().toLocaleDateString('ro-RO')}.csv`;
-      link.click();
+  // --- ONBOARDING: LIMBĂ + LA MASĂ / LA PACHET ---
+  const onboardingOverlay = document.getElementById('onboardingOverlay');
+  const obLangStep = document.getElementById('obLangStep');
+  const obModeStep = document.getElementById('obModeStep');
+
+  function needsLang(){ return !localStorage.getItem('fieraBar:lang'); }
+  function needsMode(){ return !sessionStorage.getItem('fieraMesa'); }
+
+  function showModeStepOrClose(){
+    if(needsMode()){ obLangStep.style.display = 'none'; obModeStep.style.display = 'block'; } 
+    else { onboardingOverlay.classList.remove('open'); }
+  }
+
+  if(needsLang() || needsMode()){ onboardingOverlay.classList.add('open'); if(!needsLang()) showModeStepOrClose(); }
+
+  document.querySelectorAll('.lang-pick-btn').forEach(btn => {
+    btn.addEventListener('click', () => { applyLanguage(btn.dataset.lang); showModeStepOrClose(); });
   });
 
-  document.getElementById('btnNukeHistory').addEventListener('click', async () => {
-      if(window.confirm("Ștergi DEFINITIV istoricul?")) {
-          await _supabase.from('comenzi').delete().neq('status', 'noua');
-          allOrders = allOrders.filter(o => o.status === 'noua');
-          calculateDirectorStats(); renderOrders(); 
-          showToast("Istoric șters cu succes.");
+  document.getElementById('btnDineIn').addEventListener('click', () => { sessionStorage.setItem('fieraMode', 'masa'); sessionStorage.setItem('fieraMesa', 'stabilita'); onboardingOverlay.classList.remove('open'); });
+  document.getElementById('btnTakeaway').addEventListener('click', () => { const t = I18N[currentLang]; sessionStorage.setItem('fieraMode', 'takeaway'); sessionStorage.setItem('fieraMesa', t.takeawayLabel); onboardingOverlay.classList.remove('open'); });
+
+  // MODALS LOGIC
+  const orderModal = document.getElementById('orderOverlay');
+  const callModal = document.getElementById('callWaiterOverlay');
+  
+  document.getElementById('btnOpenOrderModal').addEventListener('click', () => {
+    const savedMode = sessionStorage.getItem('fieraMode');
+    const tableInput = document.getElementById('tableNumberInput');
+    if(savedMode === 'takeaway') { tableInput.value = I18N[currentLang].takeawayLabel; tableInput.disabled = true; } 
+    else { tableInput.disabled = false; const savedMesa = sessionStorage.getItem('fieraMesa'); tableInput.value = (savedMesa && savedMesa !== 'stabilita') ? savedMesa : ''; }
+    orderModal.classList.add('open');
+  });
+  
+  document.getElementById('closeOrderModal').addEventListener('click', () => orderModal.classList.remove('open'));
+  document.getElementById('closeCallWaiter').addEventListener('click', () => callModal.classList.remove('open'));
+  window.addEventListener('click', e => { if(e.target === orderModal) orderModal.classList.remove('open'); if(e.target === callModal) callModal.classList.remove('open'); });
+
+  // SEND ORDER
+  document.getElementById('sendOrderBtn').addEventListener('click', async () => {
+      const t = I18N[currentLang];
+      const tableInput = document.getElementById('tableNumberInput');
+      const tableNr = tableInput.value.trim() || 'Fără Număr';
+      sessionStorage.setItem('fieraMesa', tableNr);
+
+      const items = allItems.filter(i => getQty(i) > 0);
+      const btn = document.getElementById('sendOrderBtn');
+      btn.textContent = t.sendingText; btn.disabled = true;
+
+      const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
+      const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
+      
+      let payloads = [];
+      if(barItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bar', total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
+      if(kitchenItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bucatarie', total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
+
+      const { error } = await _supabase.from('comenzi').insert(payloads);
+      btn.textContent = t.sendOrderBtnText; btn.disabled = false;
+
+      if (error) alert(t.orderError);
+      else {
+        orderModal.classList.remove('open');
+        favoritesQty = {}; saveFavorites(); 
+        activeFilter = 'all'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); document.querySelector('.chip[data-filter="all"]').classList.add('active');
+        render(); window.scrollTo(0,0);
+        
+        // Arată toast tutorial
+        const toast = document.getElementById('tutorialToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 6000);
       }
   });
 
-  function subscribeRealtime() {
-      _supabase.channel('public:comenzi')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
-          allOrders.unshift(p.new);
-          if(userRole === 'director' || p.new.sectiune === userRole) { if(p.new.status === 'noua') { playAlert(); renderOrders(); } }
-      })
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
-          const idx = allOrders.findIndex(o => o.id === p.new.id);
-          if(idx > -1) { allOrders[idx] = p.new; renderOrders(); if(currentTab === 'admin') calculateDirectorStats(); }
-      }).subscribe();
-  }
+  // CALL WAITER
+  window.sendSpecialAlert = async function(tip) {
+      const t = I18N[currentLang];
+      let mesa = sessionStorage.getItem('fieraMesa');
+      if(!mesa || mesa === 'stabilita') { mesa = prompt(t.askTable); if(!mesa) return; sessionStorage.setItem('fieraMesa', mesa); }
+      
+      await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + tip, cantitate: 1, pret_unitar: 0}] }]);
+      alert(t.alertSent(mesa)); callModal.classList.remove('open');
+  };
 
-  checkAuth();
+  document.getElementById('searchInput').addEventListener('input', render);
+
+  // INIT
+  applyLanguage(currentLang);
+  fetch('menu.json').then(r => r.json()).then(async menuData => {
+      allItems = menuData || [];
+      const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
+      if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
+
+      _supabase.channel('stoc_live').on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, p => {
+          if(p.new.epuizat) outOfStockIds.add(p.new.id_produs); else outOfStockIds.delete(p.new.id_produs);
+          render(); 
+      }).subscribe();
+
+      renderTagFilters(); render();
+  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang].emptyState; document.getElementById('emptyState').style.display = 'block'; });
+
 })();
 </script>
 </body>
