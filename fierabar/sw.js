@@ -2,7 +2,7 @@ const CACHE_NAME = 'fierabar-cache-v2';
 
 const urlsToCache = [
   './',
-  './index.html',
+  './dashboard.html',
   './menu.json',
   './config.json',
   './manifest.json'
