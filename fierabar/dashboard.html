@@ -477,8 +477,14 @@
                   generationConfig: { responseMimeType: "application/json" }
               };
 
-              const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-              const result = await response.json();
+              const response = await fetch('/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Data }) // Asigură-te că 'base64Data' este variabila în care ții poza convertită
+              });
+
+                const result = await response.json();
+                console.log(result); // Aici vei avea produsele extrase din tabel/factură
               const textResp = result.candidates?.[0]?.content?.parts?.[0]?.text;
               
               if(textResp) {
