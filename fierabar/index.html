@@ -38,7 +38,7 @@
   *{ box-sizing:border-box; }
   html, body { overflow-x: hidden; width: 100%; position: relative; }
   html{ scroll-behavior:smooth; }
-  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 80px;}
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 120px;}
   img{ max-width:100%; display:block; }
   :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
@@ -61,120 +61,122 @@
 
   /* CONTROLS & CHIPS */
   .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
-  .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 48px; width: 100%; transition: all 0.3s; }
+  .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 54px; width: 100%; transition: all 0.3s; }
   .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(22, 132, 78, 0.2); }
-  .search-icon{ width: 18px; height: 18px; flex-shrink: 0; margin-right: 10px; }
+  .search-icon{ width: 22px; height: 22px; flex-shrink: 0; margin-right: 12px; }
   .search-icon path{ fill: none; stroke: var(--ink-soft); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .search-box input{ flex: 1; border: none; background: transparent; padding: 0; height: 100%; font-family: 'Work Sans', sans-serif; font-size: 16px; color: var(--ink); outline: none; -webkit-appearance: none; border-radius: 0; }
+  .search-box input{ flex: 1; border: none; background: transparent; padding: 0; height: 100%; font-family: 'Work Sans', sans-serif; font-size: 17px; color: var(--ink); outline: none; -webkit-appearance: none; border-radius: 0; }
   .search-box input::placeholder { color: var(--ink-soft); }
 
-  .tag-filters{ display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 2px 12px; scrollbar-width: none; }
+  .tag-filters{ display: flex; gap: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 2px 12px; scrollbar-width: none; }
   .tag-filters::-webkit-scrollbar { display: none; }
-  .chip{ font-family:'Space Mono', monospace; font-size:13px; letter-spacing:.03em; padding: 0 16px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; border: 1.5px solid var(--paper-dim); background: var(--bg-card); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: all .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .chip{ font-family:'Space Mono', monospace; font-size:14px; letter-spacing:.03em; padding: 0 20px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; border: 1.5px solid var(--paper-dim); background: var(--bg-card); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: all .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
   .chip:active{ transform: translateY(0) scale(0.94); }
   .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.35); }
   
   /* GRID & CARDS */
   .menu-section{ padding: 10px 0 100px; }
   .category-section{ margin-top:38px; }
-  .category-section h2{ font-size:1.5rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
-  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:22px; margin-top:22px; }
+  .category-section h2{ font-size:1.6rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:24px; margin-top:24px; }
 
   @keyframes fadeUpIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
   .card{ background:var(--bg-card); border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.4); border:1px solid var(--paper-dim); display:flex; flex-direction:column; transition:all .25s ease; opacity: 0; animation: fadeUpIn 0.5s forwards; position: relative; }
-  .card:hover{ transform:translateY(-6px); border-color: var(--pink-main);}
+  .card:hover{ border-color: var(--pink-main);}
   .card.out-of-stock .card-img { filter: grayscale(100%) opacity(0.5); }
   .card.out-of-stock .price { text-decoration: line-through; color: var(--ink-soft); }
   .card.out-of-stock .card-qty-controls { display: none !important; }
   .badge-epuizat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 15; pointer-events: none; }
-  .badge-epuizat span { background: var(--coral); color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; text-transform: uppercase; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+  .badge-epuizat span { background: var(--coral); color: white; padding: 10px 20px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 18px; text-transform: uppercase; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
   
   .card-img-wrap{ position:relative; overflow:hidden; }
   .card-img{ aspect-ratio:4/3; width:100%; object-fit:cover; background:var(--bg-panel); transition: transform 0.5s ease; }
   
-  .ribbon { position: absolute; top: 14px; left: -6px; background: var(--pink-main); color: #fff; padding: 6px 12px; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 0 4px 4px 0; z-index: 10; }
-  .ribbon::before { content: ""; position: absolute; bottom: -6px; left: 0; border-top: 6px solid #b80052; border-left: 6px solid transparent; }
+  .ribbon { position: absolute; top: 16px; left: -6px; background: var(--pink-main); color: #fff; padding: 8px 14px; font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; border-radius: 0 4px 4px 0; z-index: 10; }
+  .ribbon::before { content: ""; position: absolute; bottom: -6px; left: 0; border-top: 6px solid #11683d; border-left: 6px solid transparent; }
 
-  /* QTY CONTROLS */
-  .card-qty-controls { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; background: rgba(18, 18, 18, 0.9); border: 1px solid var(--paper-dim); backdrop-filter: blur(6px); border-radius: 100px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); overflow: hidden; z-index: 10; transition: border-color 0.2s; }
+  /* QTY CONTROLS (Marime mai mare pentru telefoane) */
+  .card-qty-controls { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; background: rgba(18, 18, 18, 0.95); border: 1.5px solid var(--paper-dim); backdrop-filter: blur(6px); border-radius: 100px; box-shadow: 0 4px 16px rgba(0,0,0,0.6); overflow: hidden; z-index: 10; transition: border-color 0.2s; }
   .card-qty-controls.has-items { border-color: var(--pink-main); }
-  .c-qty-btn { width: 34px; height: 34px; border: none; background: transparent; color: var(--ink); font-size: 1.25rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .c-qty-btn { width: 44px; height: 44px; border: none; background: transparent; color: var(--ink); font-size: 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .c-qty-btn:active { background: var(--pink-main); color: #fff;}
-  .c-qty-val { width: 26px; text-align: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.95rem; color: var(--pink-bright); }
+  .c-qty-val { width: 30px; text-align: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1.1rem; color: var(--pink-bright); }
 
-  .card-body{ padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-body{ padding:20px; display:flex; flex-direction:column; gap:12px; flex:1; }
   .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-  .card-top h3{ font-size:1.18rem; line-height:1.2; margin:0;}
-  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.05rem; }
-  .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.45;}
+  .card-top h3{ font-size:1.25rem; line-height:1.2; margin:0;}
+  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.15rem; }
+  .desc{ font-size:15px; color:var(--ink-soft); margin:0; line-height: 1.5;}
 
-  .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:14px; }
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
   /* TOTAL BAR */
-  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(16px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 12px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 30px rgba(0,0,0,0.6); }
+  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
   .total-bar.show { transform: translateY(0); }
-  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 8px; }
-  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--pink-bright); }
+  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 10px; }
+  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--pink-bright); }
   
   .action-buttons { display: flex; gap: 12px; }
-  .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
+  .btn-action { flex: 1; border: none; padding: 16px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
-  .btn-order-bar { background: var(--pink-main); color: white; }
-  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 50px; font-size: 18px; }
+  .btn-order-bar { background: var(--pink-main); color: white; font-size: 18px; }
+  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 55px; font-size: 20px; }
 
-  /* LIVE ORDER TRACKER WIDGET */
-  .tracker-widget { position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-20px); width: 90%; max-width: 400px; background: rgba(18,18,18,0.97); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 16px; box-shadow: 0 10px 30px rgba(22, 132, 78, 0.25); z-index: 110; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+  /* LIVE ORDER TRACKER WIDGET (Afișat Sus) */
+  .tracker-widget { position: fixed; top: calc(15px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 92%; max-width: 450px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 2px solid var(--pink-main); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 10px 40px rgba(22, 132, 78, 0.3); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
   .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
-  .t-head { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; font-weight: 600; }
+  .t-head { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; font-weight: 700; }
   .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; }
   @keyframes pulseText { 0% {opacity: 1;} 50% {opacity: 0.6;} 100% {opacity: 1;} }
-  .t-bar-bg { width: 100%; height: 6px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
+  .t-bar-bg { width: 100%; height: 8px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
-  /* FLOATING BUTTON (SMART CART / WAITER) */
-  .global-fav-btn { position: fixed; top: 20px; right: 20px; height: 48px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(8px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 9px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; transition: all 0.3s; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.2); }
-  .global-fav-btn:active { transform: scale(0.95); }
-  .global-fav-btn svg { width: 20px; height: 20px; fill: currentColor; }
+  /* FLOATING BUTTON (SMART CART / WAITER) - MUTAT JOS DREAPTA */
+  .global-fav-btn { position: fixed; bottom: calc(25px + env(safe-area-inset-bottom)); right: 20px; height: 56px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--pink-main); padding: 0 24px; gap: 10px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 8px 25px rgba(22, 132, 78, 0.3); }
+  .global-fav-btn:active { transform: scale(0.92); }
+  .global-fav-btn svg { width: 24px; height: 24px; fill: currentColor; }
+  
+  /* Dacă bara de checkout e vizibilă, butonul plutitor se mută mai sus ca să nu se suprapună */
+  body.has-cart-bar .global-fav-btn { transform: translateY(-130px); }
 
   /* MODALS */
-  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(6px); opacity:0; transition: opacity 0.3s;}
+  .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
   
-  .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:400px; width:100%; border-radius:var(--radius-lg); padding:30px; position:relative; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center;}
-  .modal h2 { margin-bottom: 15px; font-size: 1.5rem; }
-  .modal p { color: var(--ink-soft); margin-bottom: 20px; font-size: 14px;}
-  .modal-close{ position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); border-radius: 50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s; }
+  .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:420px; width:100%; border-radius:var(--radius-lg); padding:32px; position:relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: center;}
+  .modal h2 { margin-bottom: 16px; font-size: 1.6rem; }
+  .modal p { color: var(--ink-soft); margin-bottom: 24px; font-size: 15px; line-height: 1.4;}
+  .modal-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.05); border:1px solid var(--paper-dim); border-radius: 50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:22px; cursor:pointer; color:var(--ink-soft); transition: all 0.2s; }
   
-  .input-table { width: 100%; padding: 14px; font-size: 1.2rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; }
+  .input-table { width: 100%; padding: 18px; font-size: 1.4rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; transition: border-color 0.3s;}
   .input-table:focus { outline: none; border-color: var(--pink-main); }
-  .input-table:disabled { opacity: 0.6; }
-
-  .input-note { width: 100%; padding: 12px 14px; font-size: 0.95rem; text-align: left; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Work Sans', sans-serif; resize: none; }
+  
+  .input-note { width: 100%; padding: 16px; font-size: 1rem; text-align: left; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 24px; font-family: 'Work Sans', sans-serif; resize: none; transition: border-color 0.3s;}
   .input-note:focus { outline: none; border-color: var(--pink-main); }
   .input-note::placeholder { color: var(--ink-soft); }
   
-  .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;}
+  .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 18px; border-radius: var(--radius-md); font-weight: 700; font-size: 1.2rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; box-shadow: 0 8px 20px rgba(22, 132, 78, 0.3);}
   .btn-submit:active { transform: scale(0.96); }
   .btn-submit:disabled { opacity: 0.7; }
   
-  .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 1px solid var(--paper-dim); padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
+  .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 2px solid var(--paper-dim); padding: 18px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; cursor: pointer; margin-bottom: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;}
   .btn-waiter-option:active { transform: scale(0.96); border-color: var(--pink-main); }
 
   /* SPLIT BILL SELECTOR */
-  .split-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-family: 'Space Mono', monospace; font-size: 14px;}
-  .split-ctrl { display: flex; align-items: center; gap: 10px; }
-  .split-btn { width: 30px; height: 30px; background: var(--bg-panel); color: white; border: 1px solid var(--paper-dim); border-radius: 8px; font-weight: 700; cursor: pointer; }
-  .split-total { font-size: 24px; font-weight: 700; color: var(--pink-bright); margin: 20px 0; }
+  .split-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-size: 15px;}
+  .split-ctrl { display: flex; align-items: center; gap: 12px; }
+  .split-btn { width: 36px; height: 36px; background: var(--bg-panel); color: white; border: 1.5px solid var(--paper-dim); border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 18px;}
+  .split-total { font-size: 26px; font-weight: 700; color: var(--pink-bright); margin: 24px 0; }
   
   /* ONBOARDING MODAL */
-  #onboardingOverlay .modal{ max-width: 380px; }
-  .lang-pick-row{ display:flex; gap:10px; margin-bottom:6px; }
-  .lang-pick-btn{ flex:1; font-family:'Space Mono', monospace; font-size:13px; font-weight:700; letter-spacing:.03em; padding:16px 6px; border-radius: var(--radius-md); border: 1.5px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:8px; }
-  .lang-pick-btn .flag{ font-size:1.7rem; line-height:1; }
+  #onboardingOverlay .modal{ max-width: 400px; }
+  .lang-pick-row{ display:flex; gap:12px; margin-bottom:10px; }
+  .lang-pick-btn{ flex:1; font-family:'Space Mono', monospace; font-size:15px; font-weight:700; letter-spacing:.03em; padding:20px 10px; border-radius: var(--radius-md); border: 2px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .lang-pick-btn .flag{ font-size:2.2rem; line-height:1; }
   .lang-pick-btn:active{ transform: scale(0.94); border-color: var(--pink-main); }
 
-  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:13.5px; margin-top: 40px;}
+  footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:14px; margin-top: 40px;}
   .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
   
   @media (max-width:640px){
@@ -184,7 +186,7 @@
   }
   @media (min-width:641px){
     .controls { flex-direction: row; align-items: center; justify-content: space-between; }
-    .search-box { max-width: 340px; }
+    .search-box { max-width: 360px; }
     .grid{ grid-template-columns:repeat(2, 1fr); }
   }
 </style>
@@ -238,6 +240,7 @@
   </div>
 </div>
 
+<!-- BUTON PLUTITOR: MUTAT JOS DREAPTA PENTRU A NU SE SUPRAPUNE -->
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
 <!-- MODAL ONBOARDING -->
@@ -261,13 +264,16 @@
   </div>
 </div>
 
-<!-- MODAL COMANDĂ -->
+<!-- MODAL COMANDĂ (Intelligent Takeaway Hide) -->
 <div class="modal-overlay" id="orderOverlay">
   <div class="modal">
     <button class="modal-close" id="closeOrderModal">&times;</button>
     <h2 id="orderModalTitle">Numărul Mesei</h2>
     <p id="orderModalDesc">Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.</p>
+    
+    <!-- Acest input se ascunde automat dacă modul e Takeaway -->
     <input type="text" id="tableNumberInput" class="input-table" placeholder="Ej: 4">
+    
     <textarea id="orderNoteInput" class="input-note" placeholder="Nota para tu pedido (opcional). Ej: sin cebolla" rows="2"></textarea>
     <button class="btn-submit" id="sendOrderBtn">Enviar Pedido</button>
   </div>
@@ -278,7 +284,7 @@
   <div class="modal">
     <button class="modal-close" id="closeSplitBill">&times;</button>
     <h2>Împarte Nota (Split Bill)</h2>
-    <p style="color:var(--text-muted); font-size: 13px;">Calculează rapid cât are de plătit fiecare persoană, inclusiv bacșișul.</p>
+    <p style="color:var(--text-muted); font-size: 14px;">Calculează rapid cât are de plătit fiecare persoană, inclusiv bacșișul.</p>
     
     <div class="split-row">
         <span>Total Coș:</span>
@@ -296,7 +302,7 @@
         <span>Bacșiș (Tip %):</span>
         <div class="split-ctrl">
             <button class="split-btn" onclick="adjSplitTip(-5)">-</button>
-            <span id="sbTip" style="color:white; width: 35px; text-align:center;">10%</span>
+            <span id="sbTip" style="color:white; width: 40px; text-align:center;">10%</span>
             <button class="split-btn" onclick="adjSplitTip(5)">+</button>
         </div>
     </div>
@@ -317,11 +323,11 @@
   </div>
 </div>
 
-<!-- MODAL NOTIFICĂRI CUSTOM (Înlocuiește alert()) -->
+<!-- MODAL NOTIFICĂRI CUSTOM -->
 <div class="modal-overlay" id="customAlertOverlay">
   <div class="modal" style="max-width:340px;">
-    <h3 id="customAlertTitle" style="margin-bottom:12px;">Notificare</h3>
-    <p id="customAlertText" style="margin-bottom:20px;">Mesaj...</p>
+    <h3 id="customAlertTitle" style="margin-bottom:12px; font-size: 1.4rem;">Notificare</h3>
+    <p id="customAlertText" style="margin-bottom:24px; font-size: 15px;">Mesaj...</p>
     <button class="btn-submit" onclick="document.getElementById('customAlertOverlay').classList.remove('open')">OK</button>
   </div>
 </div>
@@ -347,7 +353,6 @@
   if(currentLang !== 'es' && currentLang !== 'en') currentLang = 'es';
   let cartTotalValue = 0;
 
-  // Funcție personalizată în loc de alert() pentru conformitate
   function showCustomAlert(title, text) {
     document.getElementById('customAlertTitle').textContent = title;
     document.getElementById('customAlertText').textContent = text;
@@ -374,8 +379,40 @@
   }
 
   const I18N = {
-    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional). Ej: sin cebolla', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
-    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional). E.g: no onion', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
+    es: { 
+      flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
+      allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', 
+      totalLabel:'Total:', btnOrderBar:'Enviar Pedido', 
+      obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', 
+      obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', 
+      dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', 
+      orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', 
+      takeawayTitle:'Pedido para llevar', takeawayDesc:'Añade una nota si es necesario y envía el pedido.',
+      tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional). Ej: sin cebolla', 
+      sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', 
+      callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', 
+      callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
+      alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', 
+      catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, 
+      smartWaiter: 'Camarero', smartCart: 'Mi Pedido' 
+    },
+    en: { 
+      flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
+      allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', 
+      totalLabel:'Total:', btnOrderBar:'Send Order', 
+      obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', 
+      obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', 
+      dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', 
+      orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', 
+      takeawayTitle:'Takeaway Order', takeawayDesc:'Add a note if needed and send the order.',
+      tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional). E.g: no onion', 
+      sendOrderBtnText:'Send Order', sendingText:'Sending...', 
+      callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', 
+      callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
+      alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', 
+      catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, 
+      smartWaiter: 'Waiter', smartCart: 'My Order' 
+    }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
@@ -399,8 +436,10 @@
     document.getElementById('btnDineIn').textContent = t.dineIn;
     document.getElementById('btnTakeaway').textContent = t.takeaway;
 
+    // Setările implicite (pot fi suprascrise dacă se deschide în mod Takeaway)
     document.getElementById('orderModalTitle').textContent = t.orderModalTitle;
     document.getElementById('orderModalDesc').textContent = t.orderModalDesc;
+    
     document.getElementById('tableNumberInput').placeholder = t.tablePlaceholder;
     document.getElementById('orderNoteInput').placeholder = t.orderNotePlaceholder;
     document.getElementById('sendOrderBtn').textContent = t.sendOrderBtnText;
@@ -490,12 +529,8 @@
       if(!item) return;
       updateQty(item, change);
 
-      // Dacă suntem pe filtrul "Coșul Meu", articolul poate dispărea din listă
-      // la 0 bucăți, deci acolo tot trebuie randare completă.
       if(activeFilter === 'favorites') { render(); return; }
 
-      // Altfel actualizăm DOAR cardul respectiv + bara de jos, fără să
-      // reconstruim tot grid-ul (asta cauza flicker-ul și reîncărcarea imaginilor).
       const q = getQty(item);
       const qtyEl = document.getElementById('qty-' + id);
       if(qtyEl){
@@ -519,8 +554,10 @@
       
       if(activeFilter === 'favorites' && items.length > 0) {
         bar.classList.add('show');
+        document.body.classList.add('has-cart-bar'); // Adăugăm clasă pt a ridica butonul Waiter
       } else {
         bar.classList.remove('show');
+        document.body.classList.remove('has-cart-bar');
       }
 
       if(totalItems > 0) {
@@ -532,7 +569,7 @@
       } else {
           smartBtn.innerHTML = `🔔 <span style="margin-left: 6px;">${t.smartWaiter}</span>`;
           smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
-          smartBtn.style.background = 'rgba(18, 18, 18, 0.85)';
+          smartBtn.style.background = 'rgba(18, 18, 18, 0.95)';
           smartBtn.style.color = 'var(--ink)';
       }
   }
@@ -587,8 +624,26 @@
   document.getElementById('btnOpenOrderModal').addEventListener('click', () => {
     const savedMode = sessionStorage.getItem('fieraMode');
     const tableInput = document.getElementById('tableNumberInput');
-    if(savedMode === 'takeaway') { tableInput.value = I18N[currentLang].takeawayLabel; tableInput.disabled = true; } 
-    else { tableInput.disabled = false; const savedMesa = sessionStorage.getItem('fieraMesa'); tableInput.value = (savedMesa && savedMesa !== 'stabilita') ? savedMesa : ''; }
+    const titleEl = document.getElementById('orderModalTitle');
+    const descEl = document.getElementById('orderModalDesc');
+    const t = I18N[currentLang];
+
+    if(savedMode === 'takeaway') { 
+        // MODUL TAKEAWAY: Nu cerem masa absolut deloc
+        tableInput.style.display = 'none';
+        tableInput.value = t.takeawayLabel; 
+        titleEl.textContent = t.takeawayTitle;
+        descEl.textContent = t.takeawayDesc;
+    } else { 
+        // MODUL LA MASĂ: Cerem numărul mesei
+        tableInput.style.display = 'block';
+        tableInput.disabled = false; 
+        titleEl.textContent = t.orderModalTitle;
+        descEl.textContent = t.orderModalDesc;
+        const savedMesa = sessionStorage.getItem('fieraMesa'); 
+        tableInput.value = (savedMesa && savedMesa !== 'stabilita') ? savedMesa : ''; 
+    }
+
     document.getElementById('orderNoteInput').value = '';
     orderModal.classList.add('open');
   });
@@ -652,8 +707,6 @@
       const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
 
       let payloads = [];
-      // Includem nota atât la bar, cât și la bucătărie, chiar dacă una din secțiuni
-      // nu are produse proprii în comandă — ca ambele stații să o vadă.
       if(barItems.length > 0 || noteItem.length > 0) {
         payloads.push({
           mesa: tableNr, sectiune: 'bar',
@@ -692,7 +745,7 @@
       if(!mesa || mesa === 'stabilita') { mesa = prompt(t.askTable); if(!mesa) return; sessionStorage.setItem('fieraMesa', mesa); }
       
       await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + tip, cantitate: 1, pret_unitar: 0}] }]);
-      showCustomAlert("Succes", t.alertSent(mesa));
+      showCustomAlert("Notificare trimisă", t.alertSent(mesa));
       callModal.classList.remove('open');
   };
 
@@ -717,3 +770,5 @@
 </script>
 </body>
 </html>
+
+
