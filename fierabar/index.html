@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro" id="htmlRoot">
+<html lang="es" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -8,7 +8,7 @@
 
 <!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <script>
   if ('serviceWorker' in navigator) {
@@ -189,7 +189,7 @@
 
 <header class="hero">
   <div class="top-actions">
-    <button class="lang-toggle" id="langToggle" type="button">🇷🇴 RO</button>
+    <button class="lang-toggle" id="langToggle" type="button">🇪🇸 ES</button>
   </div>
   <div class="wrap hero-inner">
     <div class="hero-text">
@@ -244,9 +244,8 @@
       <h2 id="obLangTitle">Bun venit!</h2>
       <p id="obLangSubtitle">Alege limba meniului</p>
       <div class="lang-pick-row">
-        <button class="lang-pick-btn" data-lang="ro"><span class="flag">🇷🇴</span>RO</button>
-        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>EN</button>
         <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span>ES</button>
+        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>EN</button>
       </div>
     </div>
     <div id="obModeStep" style="display:none;">
@@ -339,7 +338,8 @@
   let outOfStockIds = new Set();
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
-  let currentLang = localStorage.getItem('aLibretto:lang') || 'ro';
+  let currentLang = localStorage.getItem('aLibretto:lang') || 'es';
+  if(currentLang !== 'es' && currentLang !== 'en') currentLang = 'es';
   let cartTotalValue = 0;
 
   // Funcție personalizată în loc de alert() pentru conformitate
@@ -369,7 +369,6 @@
   }
 
   const I18N = {
-    ro: { flag:'🇷🇴', code:'RO', eyebrow:'Meniu digital', title:'Á Libretto', tagline:'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.', allChip:'Toate', searchPlaceholder:'Caută...', emptyState:'Niciun produs găsit.', totalLabel:'Total:', btnOrderBar:'Trimite Comanda', obLangTitle:'Bun venit!', obLangSubtitle:'Alege limba meniului', obModeTitle:'Cum dorești să comanzi?', obModeSubtitle:'Alege una din opțiuni pentru a continua.', dineIn:'🍽️ Stau la masă', takeaway:'🥡 La pachet (Takeaway)', takeawayLabel:'La pachet', orderModalTitle:'Numărul Mesei', orderModalDesc:'Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.', tablePlaceholder:'Ex: 4', sendOrderBtnText:'Trimite Comanda', sendingText:'Se trimite...', callWaiterTitle:'Ai nevoie de noi?', callWaiterDesc:'Selectează motivul pentru care chemi ospătarul la masă.', callCash:'💵 Vreau să achit (Cash)', callCard:'💳 Vreau să achit (Card)', callHelp:'🙋‍♂️ Am nevoie de ajutor', alertSent:(m)=>`Ospătarul a fost chemat la masa ${m}!`, orderError:'Eroare la trimitere.', askTable:'Ce număr are masa ta?', catNames:{ entrante:'Aperitive', principal:'Fel Principal', coctel:'Cocktailuri', bebida:'Băuturi', postre:'Deserturi', otros:'Altele' }, smartWaiter: 'Ospătar', smartCart: 'Coșul Meu' },
     es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
     en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
   };
@@ -410,7 +409,7 @@
   }
 
   document.getElementById('langToggle').addEventListener('click', () => {
-    const order = ['ro', 'en', 'es'];
+    const order = ['es', 'en'];
     const next = order[(order.indexOf(currentLang) + 1) % order.length];
     applyLanguage(next);
   });
