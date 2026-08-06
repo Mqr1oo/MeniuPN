@@ -149,6 +149,10 @@
   .input-table { width: 100%; padding: 14px; font-size: 1.2rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; }
   .input-table:focus { outline: none; border-color: var(--pink-main); }
   .input-table:disabled { opacity: 0.6; }
+
+  .input-note { width: 100%; padding: 12px 14px; font-size: 0.95rem; text-align: left; background: var(--bg-base); color: var(--ink); border: 1px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Work Sans', sans-serif; resize: none; }
+  .input-note:focus { outline: none; border-color: var(--pink-main); }
+  .input-note::placeholder { color: var(--ink-soft); }
   
   .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 14px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px;}
   .btn-submit:active { transform: scale(0.96); }
@@ -262,9 +266,10 @@
   <div class="modal">
     <button class="modal-close" id="closeOrderModal">&times;</button>
     <h2 id="orderModalTitle">Numărul Mesei</h2>
-    <p id="orderModalDesc">Te rugăm să introduci numărul mesei pentru a trimite comanda la bar și bucătărie.</p>
-    <input type="text" id="tableNumberInput" class="input-table" placeholder="Ex: 4">
-    <button class="btn-submit" id="sendOrderBtn">Trimite Comanda</button>
+    <p id="orderModalDesc">Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.</p>
+    <input type="text" id="tableNumberInput" class="input-table" placeholder="Ej: 4">
+    <textarea id="orderNoteInput" class="input-note" placeholder="Nota para tu pedido (opcional). Ej: sin cebolla" rows="2"></textarea>
+    <button class="btn-submit" id="sendOrderBtn">Enviar Pedido</button>
   </div>
 </div>
 
@@ -369,8 +374,8 @@
   }
 
   const I18N = {
-    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
-    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
+    es: { flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', totalLabel:'Total:', btnOrderBar:'Enviar Pedido', obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional). Ej: sin cebolla', sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', callWaiterTitle:'¿Necesitas ayuda?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, smartWaiter: 'Camarero', smartCart: 'Mi Pedido' },
+    en: { flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', totalLabel:'Total:', btnOrderBar:'Send Order', obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional). E.g: no onion', sendOrderBtnText:'Send Order', sendingText:'Sending...', callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, smartWaiter: 'Waiter', smartCart: 'My Order' }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
@@ -397,6 +402,7 @@
     document.getElementById('orderModalTitle').textContent = t.orderModalTitle;
     document.getElementById('orderModalDesc').textContent = t.orderModalDesc;
     document.getElementById('tableNumberInput').placeholder = t.tablePlaceholder;
+    document.getElementById('orderNoteInput').placeholder = t.orderNotePlaceholder;
     document.getElementById('sendOrderBtn').textContent = t.sendOrderBtnText;
 
     document.getElementById('callWaiterTitle').textContent = t.callWaiterTitle;
@@ -583,6 +589,7 @@
     const tableInput = document.getElementById('tableNumberInput');
     if(savedMode === 'takeaway') { tableInput.value = I18N[currentLang].takeawayLabel; tableInput.disabled = true; } 
     else { tableInput.disabled = false; const savedMesa = sessionStorage.getItem('fieraMesa'); tableInput.value = (savedMesa && savedMesa !== 'stabilita') ? savedMesa : ''; }
+    document.getElementById('orderNoteInput').value = '';
     orderModal.classList.add('open');
   });
   
@@ -638,12 +645,29 @@
       const btn = document.getElementById('sendOrderBtn');
       btn.textContent = t.sendingText; btn.disabled = true;
 
+      const noteText = document.getElementById('orderNoteInput').value.trim();
+      const noteItem = noteText ? [{ nume: '📝 ' + noteText, cantitate: 0, pret_unitar: 0 }] : [];
+
       const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
       const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
-      
+
       let payloads = [];
-      if(barItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bar', total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
-      if(kitchenItems.length > 0) payloads.push({ mesa: tableNr, sectiune: 'bucatarie', total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0), produse: kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })) });
+      // Includem nota atât la bar, cât și la bucătărie, chiar dacă una din secțiuni
+      // nu are produse proprii în comandă — ca ambele stații să o vadă.
+      if(barItems.length > 0 || noteItem.length > 0) {
+        payloads.push({
+          mesa: tableNr, sectiune: 'bar',
+          total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
+          produse: [...barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
+        });
+      }
+      if(kitchenItems.length > 0 || noteItem.length > 0) {
+        payloads.push({
+          mesa: tableNr, sectiune: 'bucatarie',
+          total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
+          produse: [...kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
+        });
+      }
 
       const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
       btn.textContent = t.sendOrderBtnText; btn.disabled = false;
@@ -652,6 +676,7 @@
           showCustomAlert("Eroare", "Eroare Supabase: " + error.message);
       } else {
         orderModal.classList.remove('open');
+        document.getElementById('orderNoteInput').value = '';
         favoritesQty = {}; saveFavorites(); 
         activeFilter = 'all'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); document.querySelector('.chip[data-filter="all"]').classList.add('active');
         render(); window.scrollTo(0,0);
