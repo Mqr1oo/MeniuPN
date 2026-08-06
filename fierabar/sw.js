@@ -1,10 +1,9 @@
-const CACHE_NAME = 'álibretto-cache-v2';
+const CACHE_NAME = 'alibretto-cache-v4';
 
 const urlsToCache = [
   './',
   './dashboard.html',
   './menu.json',
-  './config.json',
   './manifest.json'
 ];
 
@@ -12,7 +11,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Cache Fiera Bar deschis cu succes');
+        console.log('Cache Álibretto deschis cu succes');
         return cache.addAll(urlsToCache);
       })
   );
@@ -34,22 +33,26 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+// NETWORK-FIRST Strategy: Descarcă mereu de pe net pentru a avea ultima versiune.
+// Folosește cache-ul doar dacă internetul a picat complet.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.match(event.request).then(cachedResponse => {
-        const fetchedResponse = fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            cache.put(event.request, networkResponse.clone());
-          }
-          return networkResponse;
-        }).catch(() => {
-          return cachedResponse;
-        });
-        return cachedResponse || fetchedResponse;
-      });
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        // Dacă răspunsul e valid, actualizăm cache-ul invizibil în fundal
+        if (networkResponse && networkResponse.status === 200) {
+          const cacheCopy = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, cacheCopy);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Dacă nu avem internet, returnăm versiunea din cache
+        return caches.match(event.request);
+      })
   );
 });
