@@ -616,7 +616,7 @@
       const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
       btn.textContent = t.sendOrderBtnText; btn.disabled = false;
 
-      if (error) alert(t.orderError);
+      if (error) alert("Eroare Supabase: " + error.message);
       else {
         orderModal.classList.remove('open');
         favoritesQty = {}; saveFavorites(); 
