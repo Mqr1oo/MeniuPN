@@ -245,7 +245,7 @@
 <div class="total-bar" id="totalBar">
   <div class="total-header">
     <span class="total-label" id="txtTotalLabel">Total:</span>
-    <span class="total-amount" id="totalAmount">0.00 RON</span>
+    <span class="total-amount" id="totalAmount">0.00 €</span>
   </div>
   <div class="action-buttons">
     <button class="btn-action btn-split-bill" id="btnOpenSplitBill">➗</button>
@@ -301,7 +301,7 @@
     
     <div class="split-row">
         <span id="splitL1">Total del carrito:</span>
-        <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 RON</span>
+        <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 €</span>
     </div>
     <div class="split-row">
         <span id="splitL2">Número de personas:</span>
@@ -320,7 +320,7 @@
         </div>
     </div>
     
-    <div class="split-total" id="sbPerPerson">0.00 RON / pers.</div>
+    <div class="split-total" id="sbPerPerson">0.00 € / pers.</div>
   </div>
 </div>
 
@@ -409,7 +409,7 @@
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
-      allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', 
+      allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontra€ productos.', 
       totalLabel:'Total:', btnOrderBar:'Enviar Pedido', trackerTitle:'Tu pedido',
       receiptNotice:'<b>¿No recibiste tu recibo?</b> Si no se te entrega el recibo al finalizar, avísanos: podría significar que tu pedido no está registrado.',
       obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', 
@@ -474,7 +474,7 @@
       smartWaiter: 'Serveur', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
-      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).'
+      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données se€t supprimées sous 48h (RGPD).'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -601,7 +601,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="card-top"><h3>${item.name}</h3><span class="price">${item.price.toFixed(2)} RON</span></div>
+              <div class="card-top"><h3>${item.name}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
               <p class="desc">${item.description || ''}</p>
             </div>
           </article>
@@ -634,7 +634,7 @@
       const totalItems = Object.values(favoritesQty).reduce((a,b)=>a+b,0);
       cartTotalValue = items.reduce((acc, i) => acc + (i.price * getQty(i)), 0);
       
-      document.getElementById('totalAmount').textContent = `${cartTotalValue.toFixed(2)} RON`;
+      document.getElementById('totalAmount').textContent = `${cartTotalValue.toFixed(2)} €`;
       
       const bar = document.getElementById('totalBar');
       const smartBtn = document.getElementById('smartActionBtn');
@@ -665,7 +665,7 @@
   let sbPersons = 2; let sbTip = 10;
   
   document.getElementById('btnOpenSplitBill').addEventListener('click', () => {
-      document.getElementById('sbTotalCos').textContent = `${cartTotalValue.toFixed(2)} RON`;
+      document.getElementById('sbTotalCos').textContent = `${cartTotalValue.toFixed(2)} €`;
       updateSplitUI();
       splitModal.classList.add('open');
   });
@@ -679,7 +679,7 @@
       document.getElementById('sbTip').textContent = sbTip + '%';
       const totalWithTip = cartTotalValue * (1 + (sbTip / 100));
       const perPerson = totalWithTip / sbPersons;
-      document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} RON`;
+      document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} €`;
   }
 
   const onboardingOverlay = document.getElementById('onboardingOverlay');
