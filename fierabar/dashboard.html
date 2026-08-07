@@ -1,893 +1,143 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Á Libretto OS &mdash; POS & Gestión</title>
-<meta name="robots" content="noindex, nofollow">
+🚀 7 Idei "WOW" de Nivel Enterprise pentru Fiera OS & Fiera Bar
+Aceste funcționalități pot fi adăugate imediat în fișierele existente (index.html și dashboard.html) fără infrastructură nouă, folosind doar tehnologiile pe care le ai deja integrate (Supabase, Web APIs de browser, JS pur).
+1. 🎙️ Bucătărie & Bar cu Sintetizator Vocal (Text-To-Speech)
+💡 Conceptul
+Când ospătarii sau clienții trimit o comandă nouă, ecranul din bucătărie sau de la bar nu doar că emite un sunet, ci citește vocal comanda în română:
+> "Comandă nouă la Masa 4: Două Burgeri Wagyu și un Aperol Spritz!"
+> 
+🛠️ Beneficiu
+Bucătarii și barmanii au de multe ori mâinile ocupate sau pline de făină/lichide și nu pot sta cu ochii pe ecran. Notificarea vocală elimină întârzierile complet.
+💻 Cod de adăugat în dashboard.html (în funcția playAlert()):
+// STREAMING_CHUNK:Sintetizator vocal pentru comenzi noi
+function speakOrder(mesa, produse) {
+  if (!('speechSynthesis' in window)) return;
+  
+  // Extrage doar numele produselor
+  const listaProduse = produse.map(p => `${p.cantitate} ${p.nume}`).join(', ');
+  const text = `Comandă nouă la masa ${mesa}: ${listaProduse}`;
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#16844e">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('Error SW: ', err));
-    });
-  }
-</script>
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ro-RO';
+  utterance.rate = 1.0; // Viteză vorbire
+  utterance.pitch = 1.0;
+  
+  window.speechSynthesis.speak(utterance);
+}
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #09090b; --bg-card: #18181b; --panel: rgba(24, 24, 27, 0.85); --border: rgba(255,255,255,0.08);
-    --accent: #16844e; --accent-hover: #1b9b5c; --accent-glow: rgba(22, 132, 78, 0.3);
-    --text: #f8fafc; --text-muted: #94a3b8;
-    --success: #10b981; --danger: #ef4444; --warning: #f59e0b; --blue: #3b82f6;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
-  
-  .auth-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;}
-  .auth-card { background: var(--bg-card); border: 1px solid var(--border); padding: 40px; border-radius: 24px; text-align: center; width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-  .auth-card h2 { font-size: 28px; margin-bottom: 8px; font-weight: 700; color: var(--accent); }
-  .auth-input { width: 100%; padding: 16px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; color: white; margin-bottom: 16px; font-size: 16px; outline: none; transition: border 0.3s; }
-  .auth-input:focus { border-color: var(--accent); }
-  .btn-primary { width: 100%; background: var(--accent); color: white; border: none; padding: 16px; border-radius: 14px; font-weight: 600; font-size: 17px; cursor: pointer; transition: 0.2s;}
-  .btn-primary:active { transform: scale(0.97); background: var(--accent-hover); }
-  
-  aside { width: 280px; background: var(--bg-card); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px; z-index: 100; flex-shrink: 0;}
-  .brand { font-size: 24px; font-weight: 700; color: var(--accent); margin-bottom: 40px; display: flex; align-items: center; gap: 8px;}
-  .nav-item { padding: 14px 16px; border-radius: 14px; color: var(--text-muted); cursor: pointer; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: all 0.2s; font-size: 15px; }
-  .nav-item:hover { background: rgba(255,255,255,0.03); color: var(--text); }
-  .nav-item.active { background: var(--accent); color: white; }
-  .nav-icon { font-size: 20px; }
-  .badge-count { background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 100px; font-size: 13px; font-family: 'Space Mono', monospace; margin-left: auto; font-weight: 700;}
-  .nav-item.active .badge-count { background: rgba(255,255,255,0.2); }
-  
-  .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); line-height: 1.6;}
-  .logout-btn { color: var(--danger); cursor: pointer; padding: 8px 0 0; font-weight: 600; display: inline-block;}
-
-  main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-  
-  header { height: 70px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; background: rgba(24, 24, 27, 0.6); backdrop-filter: blur(12px); flex-shrink: 0; z-index: 10; }
-  .page-title { font-size: 20px; font-weight: 700; margin: 0; }
-  .header-actions { display: flex; align-items: center; gap: 16px; }
-  .table-filter { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px; color: white; outline: none; width: 280px; font-family: 'Space Mono', monospace; font-size: 14px; transition: 0.3s; }
-  .table-filter:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); }
-  
-  .mobile-brand-area { display: none; flex-direction: column; }
-  .mobile-brand { font-size: 16px; font-weight: 700; color: var(--accent); }
-  .mobile-user { font-size: 11px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
-  .mobile-logout { display: none; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: none; padding: 8px 14px; border-radius: 100px; font-weight: 600; font-size: 12px; }
-
-  .content-area { padding: 24px 30px; overflow-y: auto; flex: 1; padding-bottom: 40px; }
-  
-  .grid-comenzi { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-items: start; }
-  .order-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-  
-  .order-card.warning { border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
-  .order-card.danger { border-color: var(--danger); box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
-  .order-card.danger .time-elapsed { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-  
-  .order-card.alert-waiter { border-color: var(--blue); background: rgba(59, 130, 246, 0.05); }
-  .order-card.alert-waiter .table-nr { color: var(--blue); }
-
-  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
-  .table-nr { font-size: 26px; font-weight: 800; color: var(--accent); font-family: 'Space Mono', monospace; display: flex; align-items: center; gap: 8px; letter-spacing: -1px;}
-  .o-time { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono', monospace; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;}
-  .time-elapsed { font-weight: 700; font-size: 15px; color: var(--text); background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 8px; }
-  
-  .o-items { list-style: none; margin-bottom: 24px; flex: 1;}
-  .o-items li { display: flex; justify-content: flex-start; align-items: baseline; padding: 10px 0; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.03); font-weight: 500;}
-  .o-items li:last-child { border-bottom: none; }
-  .qty { color: var(--text-muted); font-weight: 700; font-family: 'Space Mono', monospace; margin-right: 12px; font-size: 15px; min-width: 24px;}
-  
-  .o-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto;}
-  .btn-action { border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.2s; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; user-select: none;}
-  .btn-action:active { transform: scale(0.96); }
-  .btn-done { background: var(--accent); color: white; flex: 1; box-shadow: 0 4px 12px var(--accent-glow);}
-  .btn-done:active { background: var(--accent-hover); }
-  .btn-waiter-take { background: var(--blue); color: white; flex: 1; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);}
-  .btn-cancel { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 2px solid rgba(239, 68, 68, 0.3); width: 56px; }
-  .btn-cancel:active { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); }
-  
-  .bon-check { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; color: var(--warning); background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 600; flex: 1; transition: 0.2s; user-select: none;}
-  .bon-check:active { transform: scale(0.97); }
-  .bon-check.checked { color: var(--success); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
-  .bon-check input { width: 18px; height: 18px; accent-color: var(--success); cursor: pointer; pointer-events: none; }
-  .status-text { text-align: center; width: 100%; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.03); }
-
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 30px; }
-  .stat-card { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; border-radius: 20px; }
-  .stat-label { color: var(--text-muted); font-size: 13px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
-  .stat-val { font-size: 28px; font-weight: 800; color: var(--text); font-family: 'Space Mono', monospace; margin-top: 10px; }
-  .stat-val.alert { color: var(--warning); }
-  
-  .dash-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px;}
-  .dash-panel h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: var(--accent);}
-  
-  .top-list { list-style: none; }
-  .top-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 15px;}
-  .top-item:last-child { border-bottom: none; padding-bottom: 0;}
-  .time-toggle { display: flex; background: rgba(0,0,0,0.4); border-radius: 100px; padding: 4px; border: 1px solid var(--border); }
-  .time-toggle button { background: transparent; border: none; color: var(--text-muted); padding: 8px 16px; border-radius: 100px; cursor: pointer; font-weight: 600; font-size: 13px;}
-  .time-toggle button.active { background: var(--accent); color: white; }
-
-  .stock-list { overflow-y: auto; max-height: 60vh; padding-right: 10px;}
-  .stock-list::-webkit-scrollbar { width: 4px; }
-  .stock-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-  .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
-  .stock-item.epuizat .s-name { color: var(--text-muted); text-decoration: line-through;}
-  
-  .switch { position: relative; display: inline-block; width: 52px; height: 30px; }
-  .switch input { opacity: 0; width: 0; height: 0; }
-  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .3s; border-radius: 34px; border: 1px solid var(--border);}
-  .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.3);}
-  input:checked + .slider { background-color: var(--danger); border-color: var(--danger);}
-  input:checked + .slider:before { transform: translateX(20px); }
-
-  @media (max-width: 800px) {
-      body { flex-direction: column; }
-      
-      header { height: 60px; padding: 0 20px; border-bottom: 1px solid var(--border); justify-content: space-between;}
-      .page-title, .header-actions { display: none; }
-      .mobile-brand-area { display: flex; }
-      .mobile-logout { display: block; }
-      
-      .mobile-search-container { padding: 16px 20px 0; background: var(--bg); position: sticky; top: 0; z-index: 5; }
-      .table-filter { width: 100%; padding: 14px 20px; font-size: 16px; border-radius: 14px; background: var(--bg-card); }
-      
-      .content-area { padding: 16px 20px calc(80px + env(safe-area-inset-bottom)); }
-      .grid-comenzi { grid-template-columns: 1fr; gap: 16px; }
-      
-      aside { 
-          position: fixed; bottom: 0; left: 0; width: 100%; height: calc(65px + env(safe-area-inset-bottom));
-          flex-direction: row; padding: 0 10px env(safe-area-inset-bottom); border-right: none; border-top: 1px solid var(--border);
-          background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(15px); z-index: 1000;
-          justify-content: space-around; align-items: center; box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+// Apelare la primirea unei comenzi noi prin Realtime:
+_supabase.channel('public:comenzi')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, payload => {
+      const order = payload.new;
+      if (userRole === 'director' || order.sectiune === userRole) {
+          playAlert();
+          speakOrder(order.mesa, order.produse); // 🔊 Citire vocală
+          renderOrders();
       }
-      .brand, .user-info { display: none; }
-      
-      .nav-item { 
-          flex-direction: column; justify-content: center; gap: 4px; padding: 8px 4px; margin: 0;
-          font-size: 11px; flex: 1; border-radius: 12px; background: transparent; text-align: center;
-          position: relative;
-      }
-      .nav-item.active { background: transparent; color: var(--accent); }
-      .nav-icon { font-size: 22px; }
-      .nav-text { font-weight: 600; white-space: nowrap;}
-      
-      .badge-count { 
-          position: absolute; top: 2px; right: 20%; background: var(--danger); color: white;
-          padding: 2px 6px; font-size: 11px; border-radius: 100px; transform: translateX(50%);
-          border: 2px solid var(--bg-card);
-      }
-      
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-card { padding: 16px; }
-      .stat-val { font-size: 22px; }
-  }
-</style>
-</head>
-<body>
+  });
 
-<div class="auth-overlay" id="authOverlay">
-  <div class="auth-card">
-    <h2>Á Libretto OS</h2>
-    <p style="color: var(--text-muted); margin-bottom: 30px;">Autenticación Personal Staff</p>
-    <form id="loginForm">
-      <input type="email" id="emailInput" class="auth-input" placeholder="Email" required>
-      <input type="password" id="passwordInput" class="auth-input" placeholder="Contraseña" required>
-      <button type="submit" class="btn-primary">Entrar</button>
-    </form>
+
+2. 📱 Tracker de Comandă în Timp Real pe Telefonul Clientului (Ca la Tazz/Glovo)
+💡 Conceptul
+După ce clientul trimite comanda din index.html, pe ecranul lui apare un Widget Live de Stare:
+ * 🟡 Preluată de bucătărie (Status: noua)
+ * 🔵 În preparare (Status: in_lucru)
+ * 🟢 Gata / În drum spre masă (Status: finalizata)
+🛠️ Beneficiu
+Scade anxietatea clientului care altfel s-ar întreba "Oare a primit cineva comanda mea?". Îi oferă control total și transparență.
+💻 Cod de adăugat în index.html:
+<!-- Widget Stare Comandă Client -->
+<div id="orderTrackerWidget" class="order-tracker-card" style="display:none;">
+  <div class="tracker-header">
+    <span>Comanda ta la Masa <b id="trackTable">#4</b></span>
+    <span class="status-badge pulse" id="trackStatusText">În preparare...</span>
+  </div>
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" id="trackProgress" style="width: 50%;"></div>
   </div>
 </div>
 
-<aside>
-  <div class="brand">🔥 Á Libretto</div>
+
+// Supabase Realtime pe telefonul clientului
+function subscribeToMyOrder(orderId) {
+  _supabase.channel(`order_${orderId}`)
+    .on('postgres_changes', { 
+        event: 'UPDATE', 
+        schema: 'public', 
+        table: 'comenzi', 
+        filter: `id=eq.${orderId}` 
+    }, payload => {
+        const newStatus = payload.new.status;
+        updateTrackerUI(newStatus);
+    }).subscribe();
+}
+
+function updateTrackerUI(status) {
+  const tracker = document.getElementById('orderTrackerWidget');
+  const text = document.getElementById('trackStatusText');
+  const progress = document.getElementById('trackProgress');
   
-  <div class="nav-item active" id="navActive">
-      <div class="nav-icon">🛎️</div>
-      <div class="nav-text">Pedidos</div>
-      <span class="badge-count" id="countActive">0</span>
-  </div>
-  <div class="nav-item" id="navHistory">
-      <div class="nav-icon">🧾</div>
-      <div class="nav-text">Historial</div>
-  </div>
-  <div class="nav-item" id="navMeniu" style="display:none;">
-      <div class="nav-icon">📋</div>
-      <div class="nav-text">Menú</div>
-  </div>
-  <div class="nav-item" id="navStock" style="display:none;">
-      <div class="nav-icon">📦</div>
-      <div class="nav-text">Stock</div>
-  </div>
-  <div class="nav-item" id="navAdmin" style="display:none;">
-      <div class="nav-icon">📊</div>
-      <div class="nav-text">Jefe</div>
-  </div>
-  <div class="nav-item" id="navJurnal" style="display:none;">
-      <div class="nav-icon">🕵️</div>
-      <div class="nav-text">Log</div>
-  </div>
-  
-  <div class="user-info">
-    <div style="opacity: 0.7; margin-bottom: 4px;">Sesión iniciada:</div>
-    <b id="userEmailDisplay" style="color: var(--text); font-size: 14px;">...</b>
-    <div class="logout-btn" id="btnLogout">Cerrar sesión</div>
-  </div>
-</aside>
-
-<main>
-  <header>
-    <h2 class="page-title" id="pageTitle">Pedidos Activos</h2>
-    <div class="header-actions">
-        <input type="text" id="tableFilterInputDesc" class="table-filter" placeholder="🔍 Buscar Mesa (ej: 4)...">
-    </div>
-    
-    <div class="mobile-brand-area">
-        <span class="mobile-brand">🔥 Á Libretto</span>
-        <span class="mobile-user" id="mobileUserDisplay">...</span>
-    </div>
-    <button class="mobile-logout" id="btnMobileLogout">Salir</button>
-  </header>
-  
-  <div class="mobile-search-container" id="mobileSearchWrap">
-      <input type="text" id="tableFilterInputMob" class="table-filter" placeholder="🔍 Buscar Mesa (ej: 4)...">
-  </div>
-  
-  <div class="content-area">
-    <div id="ordersView" class="grid-comenzi"></div>
-
-    <div id="stockView" style="display: none;">
-      <div class="dash-panel">
-        <h3>🛑 Bloquear Productos (Sin Stock)</h3>
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; line-height: 1.5;">Desactiva los productos en el menú de los clientes si faltan ingredientes. Se actualiza al instante en sus teléfonos.</p>
-        <div class="stock-list" id="stockListContainer">Cargando...</div>
-      </div>
-    </div>
-
-    <div id="adminView" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
-          <div><h2 style="font-size: 24px; font-weight: 700;">Resumen Actividad</h2></div>
-          <div class="time-toggle">
-              <button class="active" id="btnStatsToday">Hoy</button>
-              <button id="btnStatsMonth">Este mes</button>
-          </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Ingresos (Tickets)</div><div class="stat-val" id="statRevenue">0 €</div></div>
-        <div class="stat-card"><div class="stat-label">Pedidos servidos</div><div class="stat-val" id="statCount">0</div></div>
-        <div class="stat-card" style="border-color: rgba(245,158,11,0.3);"><div class="stat-label">⚠️ Sin Ticket</div><div class="stat-val alert" id="statPendingBon">0</div></div>
-        <div class="stat-card"><div class="stat-label">Cocina / Barra</div><div class="stat-val" id="statKitchen">0 €</div></div>
-      </div>
-      
-      <div class="dash-panel">
-          <h3>🏆 Top 5 Productos</h3>
-          <ul class="top-list" id="topProductsList"></ul>
-      </div>
-
-      <div class="dash-panel">
-          <h3>🚨 Tickets No Confirmados (Por Staff)</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable. Un número alto en una sola persona es señal de alerta.</p>
-          <ul class="top-list" id="pendingByStaffList"></ul>
-      </div>
-    </div>
-
-    <div id="meniuView" style="display: none;">
-      <div class="dash-panel">
-        <h3>📋 Enviar Pedido Rápido</h3>
-        <input type="text" id="meniuTableInput" class="table-filter" style="width:100%; margin-bottom:16px;" placeholder="Número de mesa (ej: 4)">
-        <div class="stock-list" id="meniuListContainer">Cargando...</div>
-        <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
-          <div style="font-family:'Space Mono',monospace; font-weight:700;">Total: <span id="meniuTotal">0.00</span> RON</div>
-          <button class="btn-action btn-done" style="flex:0 0 auto; padding:14px 26px;" id="btnMeniuTrimite">Enviar Pedido</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="jurnalView" style="display: none;">
-      <div class="dash-panel">
-        <h3>🕵️ Log de Actividad (Auditoría)</h3>
-        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción (pedido, cancelación, tickets, gratis) se guarda con la hora exacta y el usuario. Registro permanente, imborrable desde la app.</p>
-        <ul class="top-list" id="jurnalList">Cargando...</ul>
-      </div>
-    </div>
-  </div>
-</main>
-
-<script>
-(function(){
-  const SUPABASE_URL = 'https://wnwllyyhtkufcejzjeay.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
-  const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  let userRole = 'bar'; 
-  let currentTab = 'active'; 
-  let allOrders = [];
-  let fullMenu = [];
-  let statsMode = 'today';
-  let currentUserEmail = '';
-  let meniuCart = {};
-
-  const searchDesc = document.getElementById('tableFilterInputDesc');
-  const searchMob = document.getElementById('tableFilterInputMob');
-  searchDesc.addEventListener('input', (e) => { searchMob.value = e.target.value; renderOrders(); });
-  searchMob.addEventListener('input', (e) => { searchDesc.value = e.target.value; renderOrders(); });
-
-  function getSearchTerm() {
-      return (window.innerWidth <= 800 ? searchMob.value : searchDesc.value).toLowerCase();
+  tracker.style.display = 'block';
+  if(status === 'noua') {
+      text.textContent = '👨‍🍳 Preluată de staff';
+      progress.style.width = '35%';
+  } else if(status === 'finalizata') {
+      text.textContent = '🍹 Comanda vine la masă!';
+      progress.style.width = '100%';
+      setTimeout(() => { tracker.style.display = 'none'; }, 10000); // dispare după 10s
   }
+}
 
-  async function logActivity(actiune, comanda_id, detalii) {
-    try {
-      await _supabase.from('jurnal_activitate').insert([{
-        utilizator: currentUserEmail || 'desconocido',
-        actiune: actiune,
-        comanda_id: comanda_id || null,
-        detalii: detalii || {}
-      }]);
-    } catch(e) { console.log('Error log:', e); }
-  }
 
-  function ensureNotificationPermission() {
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission().catch(()=>{});
-    }
-  }
-
-  function showBackgroundAlert(title, body) {
-    if (!('Notification' in window) || Notification.permission !== 'granted') return;
-    try {
-      if (navigator.serviceWorker && navigator.serviceWorker.ready) {
-        navigator.serviceWorker.ready.then(reg => {
-          reg.showNotification(title, { body, silent: true, vibrate: [400,200,400,200,800], icon: 'icons/icon-192.png', tag: 'alibretto-alert' });
-        }).catch(() => { try { new Notification(title, { body, silent: true }); } catch(e){} });
-      } else {
-        new Notification(title, { body, silent: true });
-      }
-    } catch(e) {}
-  }
-
-  function playAlertAndVibrate(order) {
-    try {
-      if (userRole === 'ospatar' && navigator.vibrate) {
-          navigator.vibrate([400, 200, 400, 200, 800]); 
-      }
-      if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
-          const itemNames = order.produse.map(p => `${p.cantitate} ${p.nume}`).join(', ');
-          const text = `Nuevo pedido, mesa ${order.mesa}. ${itemNames}`;
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'es-ES'; utterance.rate = 1.0;
-          window.speechSynthesis.speak(utterance);
-      }
-      if (userRole !== 'ospatar') {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const osc = ctx.createOscillator(); const gain = ctx.createGain();
-          osc.connect(gain); gain.connect(ctx.destination);
-          osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-          gain.gain.setValueAtTime(0, ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1.5);
-      }
-      if (document.hidden || document.visibilityState !== 'visible') {
-          const title = userRole === 'ospatar' ? '🔔 Alerta en mesa' : '🛎️ Nuevo pedido';
-          const body = `Mesa ${order.mesa}: ` + order.produse.map(p => p.nume).join(', ');
-          showBackgroundAlert(title, body);
-      }
-    } catch(e) {}
-  }
-
-  async function checkAuth() {
-    const { data: { session } } = await _supabase.auth.getSession();
-    if (session) { document.getElementById('authOverlay').style.display = 'none'; setupUserEnvironment(session.user.email); }
-  }
-
-  document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const { data, error } = await _supabase.auth.signInWithPassword({ 
-        email: document.getElementById('emailInput').value, 
-        password: document.getElementById('passwordInput').value 
-    });
-    if (!error) {
-        document.getElementById('authOverlay').style.display = 'none';
-        setupUserEnvironment(data.user.email);
-    } else {
-        alert("¡Fallo en la autenticación! Revisa email/contraseña.");
-    }
-  });
-
-  const logoutFn = async () => { await _supabase.auth.signOut(); location.reload(); };
-  document.getElementById('btnLogout').addEventListener('click', logoutFn);
-  document.getElementById('btnMobileLogout').addEventListener('click', logoutFn);
-
-  function setupUserEnvironment(email) {
-    currentUserEmail = email;
-    document.getElementById('userEmailDisplay').textContent = email;
-    document.getElementById('mobileUserDisplay').textContent = email;
-    const emailLower = email.toLowerCase();
-    
-    // ACTUALIZAT: Permite atât cuvintele din RO cât și din ES
-    if(emailLower.includes('director') || emailLower.includes('admin') || emailLower.includes('jefe')) userRole = 'director';
-    else if(emailLower.includes('bucatarie') || emailLower.includes('cocina')) userRole = 'bucatarie';
-    else if(emailLower.includes('ospatar') || emailLower.includes('camarero')) userRole = 'ospatar';
-    else userRole = 'bar'; // Default dacă nu are cuvintele cheie (ex: bar@alibretto.com)
-
-    if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'ospatar' || userRole === 'director') {
-        document.getElementById('navStock').style.display = 'flex';
-    }
-    if(userRole === 'director') { document.getElementById('navAdmin').style.display = 'flex'; document.getElementById('navJurnal').style.display = 'flex'; }
-    if(userRole === 'ospatar') { document.getElementById('navMeniu').style.display = 'flex'; }
-
-    ensureNotificationPermission();
-    loadOrders(); subscribeRealtime();
-    setInterval(updateTimersUI, 30000);
-  }
-
-  const navItems = ['navActive', 'navHistory', 'navStock', 'navAdmin', 'navMeniu', 'navJurnal'];
-  navItems.forEach(id => {
-      const el = document.getElementById(id);
-      if(el) el.addEventListener('click', () => switchTab(id.replace('nav', '').toLowerCase()));
-  });
-
-  function switchTab(tab) {
-    currentTab = tab;
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    
-    const showSearch = (tab === 'active' || tab === 'history');
-    document.getElementById('tableFilterInputDesc').style.display = showSearch ? 'block' : 'none';
-    document.getElementById('mobileSearchWrap').style.display = showSearch ? 'block' : 'none';
-    
-    document.getElementById('ordersView').style.display = 'none'; 
-    document.getElementById('stockView').style.display = 'none'; 
-    document.getElementById('adminView').style.display = 'none';
-    document.getElementById('meniuView').style.display = 'none';
-    document.getElementById('jurnalView').style.display = 'none';
-
-    document.querySelector('.content-area').scrollTop = 0;
-
-    if(tab === 'active') {
-        document.getElementById('navActive').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Pedidos Activos';
-        document.getElementById('ordersView').style.display = 'grid'; 
-        renderOrders();
-    } else if(tab === 'history') {
-        document.getElementById('navHistory').classList.add('active');
-        document.getElementById('pageTitle').textContent = userRole === 'ospatar' ? 'Mis Pedidos' : 'Historial & Tickets';
-        document.getElementById('ordersView').style.display = 'grid'; 
-        renderOrders();
-    } else if(tab === 'stock') {
-        document.getElementById('navStock').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Gestión de Stock';
-        document.getElementById('stockView').style.display = 'block';
-        loadFullMenuForStock();
-    } else if(tab === 'admin') {
-        document.getElementById('navAdmin').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Panel de Jefe';
-        document.getElementById('adminView').style.display = 'block';
-        calculateDirectorStats();
-    } else if(tab === 'meniu') {
-        document.getElementById('navMeniu').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Menú - Pedido Rápido';
-        document.getElementById('meniuView').style.display = 'block';
-        loadMeniuForOspatar();
-    } else if(tab === 'jurnal') {
-        document.getElementById('navJurnal').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Log de Actividad';
-        document.getElementById('jurnalView').style.display = 'block';
-        loadJurnal();
-    }
-  }
-
-  async function loadOrders() {
-    const { data } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
-    if(data) { allOrders = data; renderOrders(); }
-  }
-
-  function renderOrders() {
-    if(currentTab !== 'active' && currentTab !== 'history') return;
-    const container = document.getElementById('ordersView'); container.innerHTML = '';
-    const filterText = getSearchTerm();
-
-    let viewOrders = allOrders.filter(o => {
-        if(userRole === 'director') return true;
-        if(userRole === 'bar' && currentTab === 'history') return true; 
-        
-        const isAlert = o.produse.some(p => p.nume.includes('ALERTĂ'));
-        if(userRole === 'ospatar') return isAlert || o.status === 'gata' || (currentTab === 'history' && (o.creat_de === currentUserEmail || o.preluat_de === currentUserEmail));
-        if(userRole === 'bar') return o.sectiune === 'bar' || (isAlert && o.status === 'noua');
-        
-        return o.sectiune === userRole;
-    });
-
-    if(currentTab === 'active') {
-        viewOrders = viewOrders.filter(o => o.status === 'noua' || (userRole === 'ospatar' && o.status === 'gata'));
-    } else {
-        viewOrders = viewOrders.filter(o => o.status === 'finalizata' || o.status === 'anulata');
-        if(userRole === 'ospatar') {
-            viewOrders = viewOrders.filter(o => o.creat_de === currentUserEmail || o.preluat_de === currentUserEmail);
-        }
-    }
-    
-    if(filterText) viewOrders = viewOrders.filter(o => o.mesa.toLowerCase().includes(filterText));
-
-    if(currentTab === 'active' && !filterText) {
-        document.getElementById('countActive').textContent = viewOrders.length;
-        if(viewOrders.length === 0) document.getElementById('countActive').style.display = 'none';
-        else document.getElementById('countActive').style.display = 'inline-block';
-    }
-    
-    if(viewOrders.length === 0) {
-        return container.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 60px 20px;">
-            <div style="font-size: 40px; margin-bottom: 10px; opacity: 0.5;">🍽️</div>
-            No hay ningún pedido aquí.
-        </div>`;
-    }
-    
-    viewOrders.forEach(order => {
-      const isAlert = order.produse.some(p => p.nume.includes('ALERTĂ OSPĂTAR'));
-      
-      const card = document.createElement('div');
-      card.className = `order-card ${isAlert ? 'alert-waiter' : ''}`;
-      card.dataset.time = order.created_at;
-      card.dataset.status = order.status;
-      
-      let itemsHtml = order.produse.map(p => {
-        const isNote = p.cantitate === 0 && p.nume.startsWith('📝');
-        return isNote
-          ? `<li style="color: var(--warning); font-weight: 600; font-style: italic; font-size: 14px;">${p.nume}</li>`
-          : `<li><span class="qty">${p.cantitate > 0 ? p.cantitate+'x' : ''}</span> <span>${p.nume}</span></li>`;
-      }).join('');
-      let timeStr = new Date(order.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-      let staffLine = (order.creat_de || order.preluat_de) ? `<div style="font-size:11px; color:var(--text-muted); font-family:'Space Mono',monospace; margin-top:4px;">👤 ${order.preluat_de || order.creat_de}</div>` : '';
-
-      let footerHtml = '';
-      
-      if(currentTab === 'active' && userRole !== 'director') {
-          if (isAlert) {
-              if (userRole === 'ospatar') {
-                  footerHtml = `<button class="btn-action btn-waiter-take" onclick="updateOrderStatus(${order.id}, 'finalizata')">🙋‍♂️ Atendido</button>`;
-              } else {
-                  footerHtml = `<div class="status-text" style="color:var(--blue); font-weight: 600;">Esperando camarero...</div>`;
-              }
-          } else {
-              if (userRole === 'bucatarie' || userRole === 'bar') {
-                  footerHtml = `
-                    <button class="btn-action btn-done" onclick="updateOrderStatus(${order.id}, 'gata')">✓ Listo</button>
-                    <button class="btn-action btn-cancel" onclick="updateOrderStatus(${order.id}, 'anulata')">✕</button>
-                  `;
-              } else if (userRole === 'ospatar' && order.status === 'gata') {
-                  footerHtml = `<button class="btn-action btn-done" style="background:var(--blue);" onclick="updateOrderStatus(${order.id}, 'finalizata')">🍽️ Servido</button>`;
-              }
-          }
-      } else if (currentTab === 'history') {
-          let statusColor = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
-          let statusText = `<div class="status-text" style="color:${statusColor}; font-weight: 700;">${order.status.toUpperCase()}${order.comp_motiv ? ' · GRATIS' : ''}</div>`;
-          
-          if((userRole === 'bar' || userRole === 'director') && !isAlert && order.status === 'finalizata') {
-              let isChecked = order.bon_scos ? 'checked' : '';
-              let checkedClass = order.bon_scos ? 'checked' : '';
-              let bonLabel = order.comp_motiv ? '🎁 Invitación (Gratis)' : (order.bon_scos ? '🧾 Ticket impreso' : '🧾 Confirmar Ticket');
-              footerHtml = `
-                <label class="bon-check ${checkedClass}" onclick="event.preventDefault(); toggleBon(${order.id}, ${!order.bon_scos});">
-                   <input type="checkbox" ${isChecked} tabindex="-1">
-                   ${bonLabel}
-                </label>
-              `;
-              if(!order.bon_scos && !order.comp_motiv) {
-                footerHtml += `<button class="btn-action" style="background:rgba(245,158,11,0.15); color:var(--warning); border:1px solid rgba(245,158,11,0.3); flex:0 0 auto;" onclick="marcheazaGratis(${order.id})">🎁 Gratis</button>`;
-              }
-          } else {
-              footerHtml = statusText;
-          }
-      }
-
-      card.innerHTML = `
-        <div class="o-head">
-          <div class="table-nr">${order.mesa === 'Para llevar' || order.mesa.includes('Takeaway') || order.mesa.includes('Para llevar') ? '🥡 Llevar' : '#'+order.mesa}</div>
-          <div class="o-time">
-              ${(order.status === 'noua' || order.status === 'gata') ? `<span class="time-elapsed">0 min</span>` : ''}
-              <span>${timeStr}</span>
-          </div>
-        </div>
-        <ul class="o-items">${itemsHtml}</ul>
-        ${staffLine}
-        <div class="o-foot" style="margin-top:16px;">${footerHtml}</div>
-      `;
-      container.appendChild(card);
-    });
-
-    updateTimersUI();
-  }
-
-  function updateTimersUI() {
-      if(currentTab !== 'active') return;
-      document.querySelectorAll('.order-card').forEach(card => {
-          if(card.dataset.status === 'finalizata' || card.dataset.status === 'anulata') return;
-          const startTime = new Date(card.dataset.time).getTime();
-          const diffMin = Math.floor((Date.now() - startTime) / 60000);
-          
-          const timeBadge = card.querySelector('.time-elapsed');
-          if(timeBadge) {
-              timeBadge.textContent = diffMin + ' min';
-              if(diffMin >= 15) {
-                 timeBadge.textContent = '🔥 ' + diffMin + ' min';
-              }
-          }
-
-          card.classList.remove('warning', 'danger');
-          if(diffMin >= 15) card.classList.add('danger');
-          else if(diffMin >= 8) card.classList.add('warning');
-      });
-  }
-
-  window.updateOrderStatus = async function(id, status) {
-      const order = allOrders.find(o => o.id === id);
-      const updatePayload = { status };
-      if((status === 'finalizata') && userRole === 'ospatar') updatePayload.preluat_de = currentUserEmail;
-
-      const { error } = await _supabase.from('comenzi').update(updatePayload).eq('id', id);
-      if(!error) {
-          const index = allOrders.findIndex(o => o.id === id);
-          if(index !== -1) Object.assign(allOrders[index], updatePayload);
-          renderOrders();
-          logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null });
-      }
+3. 🧪 Flavor Finder / Somelier & Bartender AI Quiz (Interactiv)
+💡 Conceptul
+Un mini-chestionar interactiv pop-up din 3 întrebări rapide în meniu:
+ * "Ce preferi azi?" ➔ 🍹 Ceva alcoolic / 🍋 Răcoritor fără alcool / 🍔 Ceva de mâncat
+ * "Ce profil de gust îți place?" ➔ Dulce-fructat / Acrișor-citric / Amărui & Complex / Picant
+ * "Cât de foame/sete îți este?" ➔ Ceva ușor / Vreau ceva consistent
+Sistemul îi recomandă instant 1-2 băuturi sau preparate ideale cu un buton direct de "Adaugă în coș".
+🛠️ Beneficiu
+Turiștii sau clienții nedeciși nu mai pierd 10 minute citind tot meniul. Crește rata de conversie și vânzările pe produsele cu marjă mare.
+4. 🧮 "Split the Bill" & Calculator Bacșiș Integrat în Meniu
+💡 Conceptul
+Un buton în subsolul meniului: "Împarte Nota & Bacșiș".
+ * Permite alegerea numărului de persoane de la masă (ex: 4 persoane).
+ * Adăugarea rapidă a bacșișului (0%, 10%, 15%, 20%).
+ * Arată exact cât are de plătit fiecare persoană (ex: "45.00 RON / persoană").
+💻 Cod simplu JS pentru index.html:
+function calculateSplit(totalRon, numPersoane, tipPercentage) {
+  const totalWithTip = totalRon * (1 + tipPercentage / 100);
+  const perPerson = totalWithTip / numPersoane;
+  return {
+    totalCuBacsiss: totalWithTip.toFixed(2),
+    perPersoana: perPerson.toFixed(2)
   };
-
-  window.toggleBon = async function(id, newState) {
-      const order = allOrders.find(o => o.id === id);
-      const ids = (order && order.grup_comanda) ? allOrders.filter(o => o.grup_comanda === order.grup_comanda).map(o => o.id) : [id];
-      const { error } = await _supabase.from('comenzi').update({ bon_scos: newState }).in('id', ids);
-      if(!error) {
-          ids.forEach(oid => { const idx = allOrders.findIndex(o => o.id === oid); if(idx !== -1) allOrders[idx].bon_scos = newState; });
-          renderOrders();
-          logActivity('ticket_confirmado', id, { bon_scos: newState, mesa: order ? order.mesa : null });
-      }
-  };
-
-  window.marcheazaGratis = async function(id) {
-      const order = allOrders.find(o => o.id === id);
-      const motiv = prompt('¿Por qué se regala este pedido? (ej: cliente enfadado, invitación)');
-      if(motiv === null) return;
-      const payload = { comp_motiv: motiv || 'No especificado', comp_de: currentUserEmail, bon_scos: true };
-      const ids = (order && order.grup_comanda) ? allOrders.filter(o => o.grup_comanda === order.grup_comanda).map(o => o.id) : [id];
-      const { error } = await _supabase.from('comenzi').update(payload).in('id', ids);
-      if(!error) {
-          ids.forEach(oid => { const idx = allOrders.findIndex(o => o.id === oid); if(idx !== -1) Object.assign(allOrders[idx], payload); });
-          renderOrders();
-          logActivity('pedido_gratis', id, { motivo: payload.comp_motiv, autorizado_por: currentUserEmail, mesa: order ? order.mesa : null });
-      }
-  };
-
-  async function loadFullMenuForStock() {
-      try { 
-          if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); 
-      } catch(e) { return; }
-      
-      const { data: stocDB } = await _supabase.from('stoc_produse').select('*');
-      const epuizateSet = new Set((stocDB || []).filter(s => s.epuizat).map(s => s.id_produs));
-      
-      const container = document.getElementById('stockListContainer'); 
-      if(!container) return;
-      container.innerHTML = '';
-
-      let viewMenu = fullMenu;
-      if(userRole === 'bucatarie') viewMenu = fullMenu.filter(m => m.sectiune === 'bucatarie');
-      else if(userRole === 'bar') viewMenu = fullMenu.filter(m => (m.sectiune || 'bar') === 'bar');
-
-      viewMenu.forEach(item => {
-          const isOff = epuizateSet.has(item.imageNumber.toString());
-          container.innerHTML += `
-            <div class="stock-item ${isOff ? 'epuizat' : ''}">
-              <div>
-                 <div class="s-name" style="font-weight: 600; font-size: 15px;">${item.name}</div>
-                 <div style="font-size: 12px; color: ${isOff ? 'var(--danger)' : 'var(--success)'}; font-weight: 600; margin-top: 4px;">
-                    ${isOff ? '🔴 AGOTADO' : '🟢 ACTIVO'}
-                 </div>
-              </div>
-              <label class="switch"><input type="checkbox" onchange="toggleStock('${item.imageNumber}', this.checked)" ${isOff ? 'checked' : ''}><span class="slider"></span></label>
-            </div>`;
-      });
-  }
-
-  window.toggleStock = async function(id, isEpuizat) { 
-      await _supabase.from('stoc_produse').upsert({ id_produs: id.toString(), epuizat: isEpuizat });
-      loadFullMenuForStock(); 
-  };
-
-  document.getElementById('btnStatsToday').addEventListener('click', (e) => {
-      document.getElementById('btnStatsMonth').classList.remove('active');
-      e.target.classList.add('active'); statsMode = 'today'; calculateDirectorStats();
-  });
-  document.getElementById('btnStatsMonth').addEventListener('click', (e) => {
-      document.getElementById('btnStatsToday').classList.remove('active');
-      e.target.classList.add('active'); statsMode = 'month'; calculateDirectorStats();
-  });
-
-  function calculateDirectorStats() {
-      const istoric = allOrders.filter(o => o.status === 'finalizata' && !o.produse.some(p => p.nume.includes('ALERTĂ')));
-      let total = 0, kitchenTotal = 0, pendingBonCount = 0, productCounts = {}, pendingByStaff = {};
-
-      const now = new Date();
-      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-      
-      const cutoff = statsMode === 'today' ? todayStart : monthStart;
-
-      istoric.forEach(order => {
-          const orderTime = new Date(order.created_at).getTime();
-          if (orderTime >= cutoff) {
-              const val = Number(order.total);
-              
-              if (order.bon_scos) {
-                  if(!order.comp_motiv) { total += val; kitchenTotal += val; }
-              } else {
-                  pendingBonCount++; 
-                  const responsabil = order.creat_de || order.preluat_de || 'desconocido';
-                  pendingByStaff[responsabil] = (pendingByStaff[responsabil] || 0) + 1;
-              }
-
-              order.produse.forEach(p => { 
-                  if(p.cantitate > 0) {
-                      productCounts[p.nume] = (productCounts[p.nume]||0) + p.cantitate; 
-                  }
-              });
-          }
-      });
-
-      document.getElementById('statRevenue').textContent = `${total.toFixed(2)} RON`;
-      document.getElementById('statCount').textContent = istoric.length;
-      document.getElementById('statPendingBon').textContent = pendingBonCount;
-      document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} RON`;
-
-      const listEl = document.getElementById('topProductsList'); listEl.innerHTML = '';
-      const sorted = Object.entries(productCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      if(sorted.length === 0) listEl.innerHTML = '<li class="top-item" style="color:var(--text-muted);">Datos insuficientes</li>';
-      sorted.forEach(([n, c]) => listEl.innerHTML += `<li class="top-item"><span class="top-name">${n}</span><span class="badge-count" style="margin-left:0; background: var(--accent); color: white;">${c}</span></li>`);
-
-      const pendingListEl = document.getElementById('pendingByStaffList'); pendingListEl.innerHTML = '';
-      const sortedPending = Object.entries(pendingByStaff).sort((a,b) => b[1]-a[1]);
-      if(sortedPending.length === 0) pendingListEl.innerHTML = '<li class="top-item" style="color:var(--text-muted);">Sin tickets pendientes 👍</li>';
-      sortedPending.forEach(([n, c]) => pendingListEl.innerHTML += `<li class="top-item"><span class="top-name">${n}</span><span class="badge-count" style="margin-left:0; background: ${c>=3?'var(--danger)':'var(--warning)'}; color: white;">${c}</span></li>`);
-  }
-
-  async function loadMeniuForOspatar() {
-      try { if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); } catch(e) { return; }
-      const { data: stocDB } = await _supabase.from('stoc_produse').select('*');
-      const epuizateSet = new Set((stocDB || []).filter(s => s.epuizat).map(s => s.id_produs));
-
-      const container = document.getElementById('meniuListContainer');
-      container.innerHTML = '';
-      fullMenu.filter(item => !epuizateSet.has(item.imageNumber.toString())).forEach(item => {
-          const qty = meniuCart[item.imageNumber] || 0;
-          container.innerHTML += `
-            <div class="stock-item" id="meniu-item-${item.imageNumber}">
-              <div>
-                 <div class="s-name" style="font-weight: 600; font-size: 15px;">${item.name}</div>
-                 <div style="font-size: 13px; color: var(--text-muted); margin-top:2px;">${Number(item.price).toFixed(2)} RON</div>
-              </div>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <button class="btn-action" style="width:36px; height:36px; padding:0; background:rgba(255,255,255,0.06);" onclick="meniuChangeQty(${item.imageNumber}, -1)">−</button>
-                <span style="min-width:20px; text-align:center; font-family:'Space Mono',monospace; font-weight:700;">${qty}</span>
-                <button class="btn-action" style="width:36px; height:36px; padding:0; background:var(--accent);" onclick="meniuChangeQty(${item.imageNumber}, 1)">+</button>
-              </div>
-            </div>`;
-      });
-      updateMeniuTotal();
-  }
-
-  window.meniuChangeQty = function(id, delta) {
-      const item = fullMenu.find(i => i.imageNumber === id);
-      if(!item) return;
-      let q = (meniuCart[id] || 0) + delta;
-      if(q <= 0) delete meniuCart[id]; else meniuCart[id] = q;
-      loadMeniuForOspatar();
-  };
-
-  function updateMeniuTotal() {
-      let total = 0;
-      Object.entries(meniuCart).forEach(([id, q]) => { const item = fullMenu.find(i => i.imageNumber == id); if(item) total += item.price * q; });
-      document.getElementById('meniuTotal').textContent = total.toFixed(2);
-  }
-
-  document.getElementById('btnMeniuTrimite').addEventListener('click', async () => {
-      const mesa = document.getElementById('meniuTableInput').value.trim();
-      if(!mesa) { alert('Introduce el número de mesa.'); return; }
-      const items = Object.entries(meniuCart).map(([id, q]) => ({ item: fullMenu.find(i => i.imageNumber == id), q })).filter(x => x.item);
-      if(items.length === 0) { alert('Añade al menos un producto.'); return; }
-
-      const grupId = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+'-'+Math.random()));
-      const barItems = items.filter(x => (x.item.sectiune || 'bar') === 'bar');
-      const kitchenItems = items.filter(x => x.item.sectiune === 'bucatarie');
-
-      let payloads = [];
-      if(barItems.length > 0) payloads.push({
-          mesa, sectiune: 'bar', grup_comanda: grupId, creat_de: currentUserEmail,
-          total: barItems.reduce((a,x)=>a+x.item.price*x.q,0),
-          produse: barItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }))
-      });
-      if(kitchenItems.length > 0) payloads.push({
-          mesa, sectiune: 'bucatarie', grup_comanda: grupId, creat_de: currentUserEmail,
-          total: kitchenItems.reduce((a,x)=>a+x.item.price*x.q,0),
-          produse: kitchenItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }))
-      });
-
-      const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
-      if(error) { alert('Error: ' + error.message); return; }
-      logActivity('pedido_creado_camarero', data && data[0] ? data[0].id : null, { mesa, productos: payloads.flatMap(p=>p.produse) });
-      meniuCart = {};
-      document.getElementById('meniuTableInput').value = '';
-      loadMeniuForOspatar();
-      alert('¡Pedido enviado a la mesa ' + mesa + '!');
-  });
-
-  async function loadJurnal() {
-      const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(200);
-      const listEl = document.getElementById('jurnalList');
-      if(error) { listEl.innerHTML = `<li class="top-item" style="color:var(--danger);">Error cargando el log.</li>`; return; }
-      if(!data || data.length === 0) { listEl.innerHTML = '<li class="top-item" style="color:var(--text-muted);">Sin eventos aún.</li>'; return; }
-      
-      const actionLabels = { 
-          pedido_cancelado: '❌ Pedido cancelado', 
-          estado_cambiado: '🔄 Estado cambiado', 
-          ticket_confirmado: '🧾 Ticket confirmado', 
-          pedido_gratis: '🎁 Pedido gratis', 
-          pedido_creado_camarero: '📋 Pedido desde Menú',
-          comanda_anulata: '❌ Pedido cancelado',
-          status_schimbat: '🔄 Estado cambiado',
-          bon_confirmat: '🧾 Ticket confirmado',
-          comanda_gratis: '🎁 Pedido gratis',
-          comanda_creata_ospatar: '📋 Pedido desde Menú'
-      };
-      
-      listEl.innerHTML = data.map(log => {
-          const t = new Date(log.created_at).toLocaleString('es-ES', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
-          const label = actionLabels[log.actiune] || log.actiune;
-          const extra = log.detalii && (log.detalii.mesa || log.detalii.mesa) ? ` · Mesa ${log.detalii.mesa || log.detalii.mesa}` : '';
-          const motiv = log.detalii && log.detalii.motivo ? ` · "${log.detalii.motivo}"` : '';
-          return `<li class="top-item" style="flex-direction:column; align-items:flex-start; gap:4px;">
-            <div style="display:flex; justify-content:space-between; width:100%;">
-              <span style="font-weight:700;">${label}${extra}</span>
-              <span style="color:var(--text-muted); font-family:'Space Mono',monospace; font-size:12px;">${t}</span>
-            </div>
-            <div style="font-size:13px; color:var(--text-muted);">👤 ${log.utilizator}${motiv}</div>
-          </li>`;
-      }).join('');
-  }
-
-  function subscribeRealtime() {
-      _supabase.channel('public:comenzi')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
-          allOrders.unshift(p.new);
-          const isAlert = p.new.produse.some(prod => prod.nume.includes('ALERTĂ'));
-          if (userRole === 'director' || 
-              p.new.sectiune === userRole || 
-              (userRole === 'ospatar' && isAlert) ||
-              (userRole === 'bar' && isAlert)) { 
-              if(p.new.status === 'noua') { playAlertAndVibrate(p.new); renderOrders(); } 
-          }
-      })
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
-          const idx = allOrders.findIndex(o => o.id === p.new.id);
-          if(idx > -1) { 
-              allOrders[idx] = p.new; 
-              renderOrders(); 
-              if(currentTab === 'admin') calculateDirectorStats(); 
-          }
-      }).subscribe();
-  }
-
-  checkAuth();
-})();
-</script>
-</body>
-</html>
+}
+// Exemple: calculateSplit(200, 4, 10) => { totalCuBacsiss: "220.00", perPersoana: "55.00" }
 
 
+5. ⚡ Happy Hour Automat & Dynamic Pricing / Badges
+💡 Conceptul
+Sistemul detectează automat ora curentă:
+ * Dacă ora este între 17:00 și 19:00, pe toate cocktailurile apare un badge animat ⚡ HAPPY HOUR (-20%).
+ * Prețul din meniu se calculează automat redus în intervalul respectiv.
+ * În dashboard.html apare un contor special de încasări realizate pe durata Happy Hour.
+6. 📳 Haptic Feedback & Flash Visual Alert pe Tabletele / Telefoanele Ospătarilor
+💡 Conceptul
+Când un client apasă butonul "🔔 Cheamă Ospătar":
+ * Ecranul POS-ului de la Bar/Ospătari devine albastru complet și clipește (Flash alert).
+ * Dacă ospătarul poartă un telefon Android/iOS cu ecranul deschis, telefonul vibrează ritmic folosind Web Vibration API:
+// Ritm vibrație SOS / Atenție
+if ("vibrate" in navigator) {
+  navigator.vibrate([300, 100, 300, 100, 500]);
+}
+
+
+7. 📦 Scădere Automată din Stocul de Ingrediente pe Baza Rețetarului (Recipe Auto-Deduction)
+💡 Conceptul
+În menu.json ai deja definite rețetele (ex: Truffle Wagyu Burger folosește 200g carne vită, 1 chiflă, 40g cheddar).
+ * Când bucătarul apăsă "✓ Gata" pe cardul comenzii în dashboard.html, un script scade automat gramajele respective dintr-un tabel Supabase stoc_ingrediente.
+ * Când stocul de carne vită scade sub 1kg, burgerul trece automat pe status EPUIZAT în meniul tuturor clienților, fără intervenție umană!
+🎯 Plan Recomandat de Implementare
+ * Faza 1 (Impact vizual instant): Adaugă Sintetizatorul Vocal (Ideea 1) în dashboard.html și Split the Bill (Ideea 4) în index.html.
+ * Faza 2 (Experiență Client): Adaugă Trackerul Live (Ideea 2) și Flavor Finder AI Quiz (Ideea 3).
+ * Faza 3 (Automatizare Gestiune): Scădere automată pe rețetar (Ideea 7).
