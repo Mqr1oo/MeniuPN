@@ -406,48 +406,64 @@
   }
 
   function playAlertAndVibrate(order) {
-    if (!soundEnabled) return; // Si no hay sonido activado, abortamos
-    
     try {
-      if (userRole === 'ospatar' && navigator.vibrate) {
-          navigator.vibrate([400, 200, 400, 200, 800]); 
-      }
-      
-      if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
-          // Extraemos los items ignorando las notas para la lectura
+      // 1. OSPĂTARII (WAITERS) -> FĂRĂ SUNET AUDIO. Doar vibrație și Notificare (Push).
+      if (userRole === 'ospatar') {
+          if (navigator.vibrate) {
+              navigator.vibrate([400, 200, 400, 200, 800]); // Vibrează telefonul (doar pe Android)
+          }
+          // Trimitem notificarea pe ecran (chiar dacă app-ul e deschis, e util pentru ei)
+          const title = '🔔 Alerta en mesa / Pedido Listo';
           const validItems = order.produse.filter(p => p.cantitate > 0);
-          const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
+          const body = `Mesa ${order.mesa}: ` + validItems.map(p => p.nume).join(', ');
+          showBackgroundAlert(title, body);
           
-          let cleanMesa = order.mesa.replace('Tk:', 'Takeaway').replace('#', '');
-          const text = `Nuevo pedido, mesa ${cleanMesa}. ${itemNames}`;
-          
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'es-ES'; // Español de españa
-          utterance.rate = 1.0; 
-          utterance.pitch = 1.0;
-          
-          // Cancelamos habla anterior si se amontonan pedidos
-          window.speechSynthesis.cancel();
-          window.speechSynthesis.speak(utterance);
+          return; // IMPORTANT: Ieșim aici din funcție ca să NU ajungă la codul de sunet.
       }
       
-      if (userRole === 'bar') {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const osc = ctx.createOscillator(); const gain = ctx.createGain();
-          osc.connect(gain); gain.connect(ctx.destination);
-          osc.type = 'sine'; osc.frequency.setValueAtTime(800, ctx.currentTime);
-          gain.gain.setValueAtTime(0, ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
-          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1.5);
+      // 2. SUNET PENTRU BUCĂTĂRIE, BAR ȘI DIRECTOR (dacă sunetul e activat din buton)
+      if (soundEnabled) {
+          if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
+              // BUCĂTĂRIE: Citire text (Voce)
+              const validItems = order.produse.filter(p => p.cantitate > 0);
+              const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
+              let cleanMesa = order.mesa.replace('Tk:', 'Takeaway').replace('#', '');
+              
+              const text = `Nuevo pedido, mesa ${cleanMesa}. ${itemNames}`;
+              const utterance = new SpeechSynthesisUtterance(text);
+              utterance.lang = 'es-ES'; // Español
+              utterance.rate = 1.0; 
+              
+              window.speechSynthesis.cancel(); 
+              window.speechSynthesis.speak(utterance);
+              
+          } else if (userRole === 'bar' || userRole === 'director') {
+              // BAR & DIRECTOR: Sunet (Beep/Clopoțel curat)
+              const ctx = new (window.AudioContext || window.webkitAudioContext)();
+              const osc = ctx.createOscillator(); 
+              const gain = ctx.createGain();
+              osc.connect(gain); gain.connect(ctx.destination);
+              
+              osc.type = 'sine'; 
+              osc.frequency.setValueAtTime(1000, ctx.currentTime); // Frecvență înaltă, se aude clar
+              
+              gain.gain.setValueAtTime(0, ctx.currentTime);
+              gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 0.05);
+              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+              
+              osc.start(ctx.currentTime); 
+              osc.stop(ctx.currentTime + 0.8);
+          }
       }
       
+      // 3. Notificări de fundal pentru Bar/Bucătărie (dacă sunt pe altă aplicație)
       if (document.hidden || document.visibilityState !== 'visible') {
-          const title = userRole === 'ospatar' ? '🔔 Alerta en mesa' : '🛎️ Nuevo pedido';
-          const body = `Mesa ${order.mesa}: ` + order.produse.map(p => p.nume).join(', ');
+          const title = '🛎️ Nuevo pedido';
+          const validItems = order.produse.filter(p => p.cantitate > 0);
+          const body = `Mesa ${order.mesa}: ` + validItems.map(p => p.nume).join(', ');
           showBackgroundAlert(title, body);
       }
-    } catch(e) { console.error('Audio play error:', e); }
+    } catch(e) { console.error('Alert error:', e); }
   }
 
   async function checkAuth() {
