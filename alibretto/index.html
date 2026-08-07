@@ -44,6 +44,8 @@
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
   .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
+  .busy-banner { display: none; background: #f59e0b; color: #000; padding: 12px 20px; font-weight: 700; text-align: center; font-size: 14.5px; z-index: 100; position: relative; line-height: 1.3;}
+
   .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
   .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
   
@@ -178,7 +180,6 @@
     .search-box { width: 100%; }
     .grid{ grid-template-columns:1fr; }
     
-    /* Tweaks pt mobil carduri mai compacte */
     .c-qty-btn { width: 38px; height: 38px; font-size: 1.3rem; }
     .card-body{ padding: 14px 16px; gap:6px; }
     .card-top h3 { font-size: 1.05rem; }
@@ -192,6 +193,11 @@
 </style>
 </head>
 <body>
+
+<!-- BANNER ORE DE VÂRF -->
+<div id="busyBanner" class="busy-banner">
+  🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores.
+</div>
 
 <header class="hero">
   <div class="top-actions">
@@ -331,6 +337,26 @@
   </div>
 </div>
 
+<!-- MODAL FEEDBACK (NOU) -->
+<div class="modal-overlay" id="feedbackOverlay">
+  <div class="modal" style="text-align:center;">
+    <button class="modal-close" onclick="document.getElementById('feedbackOverlay').classList.remove('open')">&times;</button>
+    <h2 id="fbTitle">¿Qué tal la comida?</h2>
+    <div id="starContainer" style="font-size: 38px; display:flex; justify-content:center; gap:10px; margin:20px 0; cursor:pointer; color: var(--ink-soft); user-select:none;">
+       <span data-val="1">☆</span><span data-val="2">☆</span><span data-val="3">☆</span><span data-val="4">☆</span><span data-val="5">☆</span>
+    </div>
+    <div id="fbBad" style="display:none; transition: opacity 0.3s;">
+       <textarea id="fbMessage" class="input-note" placeholder="¿Qué podemos mejorar?" rows="3"></textarea>
+       <button class="btn-submit" id="btnSubmitFb">Enviar Feedback</button>
+    </div>
+    <div id="fbGood" style="display:none; transition: opacity 0.3s;">
+       <p id="fbGoogleText" style="margin-bottom:16px;">¡Genial! Nos ayudaría mucho una reseña en Google.</p>
+       <!-- ÎNLOCUIEȘTE LINK-UL DE MAI JOS CU LINKUL REAL DE LA GOOGLE MAPS AL RESTAURANTULUI -->
+       <a href="https://g.page/r/your-link/review" target="_blank" class="btn-submit" id="fbGoogleBtn" style="display:block; text-decoration:none; background:#4285F4; margin-bottom: 0;">Dejar reseña en Google</a>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="customAlertOverlay">
   <div class="modal" style="max-width:340px;">
     <h3 id="customAlertTitle" style="margin-bottom:12px; font-size: 1.4rem;">Notificación</h3>
@@ -370,6 +396,7 @@
   let favoritesQty = loadFavorites();
   let currentLang = localStorage.getItem('aLibretto:lang'); 
   let cartTotalValue = 0;
+  let currentRating = 0; // pt feedback
 
   function showCustomAlert(title, text) {
     document.getElementById('customAlertTitle').textContent = title;
@@ -417,13 +444,15 @@
       smartWaiter: 'Camarero', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
       badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
-      privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos tu nombre y teléfono únicamente para gestionar tu pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).'
+      privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos tu nombre y teléfono únicamente para gestionar tu pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
+      // Texte Noi (Busy Hours + Feedback)
+      busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
       allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', 
       totalLabel:'Total:', btnOrderBar:'Send Order', trackerTitle:'Your order',
-
       obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', 
       obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', 
       dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', 
@@ -440,7 +469,10 @@
       smartWaiter: 'Waiter', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
       badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
-      privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).'
+      privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
+      // Texte Noi
+      busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -462,7 +494,10 @@
       smartWaiter: 'Serveur', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
-      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données se€t supprimées sous 48h (RGPD).'
+      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données se€t supprimées sous 48h (RGPD).',
+      // Texte Noi
+      busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -516,6 +551,14 @@
     document.getElementById('privacyTitle').textContent = t.privacyTitle;
     document.getElementById('privacyText').textContent = t.privacyText;
     document.getElementById('txtGdprNote').textContent = t.gdprNote;
+    
+    // Setare Texte Noi
+    document.getElementById('busyBanner').textContent = t.busyBanner;
+    document.getElementById('fbTitle').textContent = t.fbTitle;
+    document.getElementById('fbMessage').placeholder = t.fbPlaceholder;
+    document.getElementById('btnSubmitFb').textContent = t.fbBtn;
+    document.getElementById('fbGoogleText').textContent = t.fbGoogle;
+    document.getElementById('fbGoogleBtn').textContent = t.fbGoogleBtn;
 
     renderTagFilters(); render(); updateBottomBar();
   }
@@ -740,7 +783,53 @@
       if(e.target === splitModal) splitModal.classList.remove('open'); 
       if(e.target === document.getElementById('customAlertOverlay')) document.getElementById('customAlertOverlay').classList.remove('open');
       if(e.target === document.getElementById('privacyOverlay')) document.getElementById('privacyOverlay').classList.remove('open');
+      if(e.target === document.getElementById('feedbackOverlay')) document.getElementById('feedbackOverlay').classList.remove('open');
   });
+
+  // LOGICA FEEDBACK CLIENT
+  document.querySelectorAll('#starContainer span').forEach(star => {
+      star.addEventListener('click', (e) => {
+          currentRating = parseInt(e.target.dataset.val);
+          document.querySelectorAll('#starContainer span').forEach(s => {
+              let v = parseInt(s.dataset.val);
+              s.style.color = v <= currentRating ? '#fbbf24' : 'var(--ink-soft)';
+              s.textContent = v <= currentRating ? '★' : '☆';
+          });
+          if(currentRating === 5) {
+              document.getElementById('fbBad').style.display = 'none';
+              document.getElementById('fbGood').style.display = 'block';
+          } else {
+              document.getElementById('fbGood').style.display = 'none';
+              document.getElementById('fbBad').style.display = 'block';
+          }
+      });
+  });
+
+  document.getElementById('btnSubmitFb').addEventListener('click', async () => {
+      let msg = document.getElementById('fbMessage').value;
+      const masa = sessionStorage.getItem('fieraMesa') || 'N/A';
+      await _supabase.from('jurnal_activitate').insert([{ 
+          utilizator: 'client', actiune: 'feedback_client', 
+          detalii: { rating: currentRating, mesaj: msg, mesa: masa } 
+      }]);
+      const t = I18N[currentLang];
+      document.getElementById('feedbackOverlay').innerHTML = `<div class="modal"><h2 style="color:var(--pink-bright); margin:0;">${t.fbThanks}</h2></div>`;
+      setTimeout(()=>document.getElementById('feedbackOverlay').classList.remove('open'), 3000);
+  });
+
+  function showFeedbackModal() {
+      document.getElementById('feedbackOverlay').classList.add('open');
+  }
+
+  // PRELUARE SETARI (BUSY HOURS)
+  async function checkSettings() {
+      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
+      if(data && data.length > 0 && data[0].detalii && data[0].detalii.isBusy) {
+          document.getElementById('busyBanner').style.display = 'block';
+      } else {
+          document.getElementById('busyBanner').style.display = 'none';
+      }
+  }
 
   let trackingOrderId = null;
   function startTrackingOrder(id) {
@@ -768,7 +857,13 @@
                   statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
               }
               progress.style.width = '100%';
-              setTimeout(() => { tracker.classList.remove('show'); }, 8000);
+              
+              // CÂND E GATA, ASCUNDE TRACKER-UL ȘI AFIȘEAZĂ FEEDBACK-UL
+              setTimeout(() => { 
+                  tracker.classList.remove('show'); 
+                  setTimeout(showFeedbackModal, 2000); // Apare după încă 2 secunde discret
+              }, 6000);
+
           } else if (s === 'anulata') {
               statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado': (currentLang==='fr'?'Annulé':'Canceled'));
               statText.style.color = 'var(--danger)';
@@ -862,7 +957,7 @@
 
   document.getElementById('searchInput').addEventListener('input', render);
 
-  // Fallback in caz de eroare json
+  // Initializare generală
   fetch('menu.json').then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
@@ -873,6 +968,11 @@
           render(); 
       }).subscribe();
 
+      // Check busy mode la load
+      checkSettings();
+      // Mai verifica o data la fiecare 2 minute
+      setInterval(checkSettings, 120000); 
+
       if(currentLang) applyLanguage(currentLang);
   }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
 
@@ -880,4 +980,5 @@
 </script>
 </body>
 </html>
+
 
