@@ -74,10 +74,10 @@
   .order-card.alert-waiter { border-color: var(--blue); background: rgba(59, 130, 246, 0.05); }
   .order-card.alert-waiter .table-nr { color: var(--blue); }
 
-  .o-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
-  /* Am scazut fontul putin ca sa incapa Numele pt Takeaway */
-  .table-nr { font-size: 20px; font-weight: 800; color: var(--accent); font-family: 'Space Mono', monospace; display: flex; align-items: center; gap: 8px; letter-spacing: -1px;}
-  .o-time { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono', monospace; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;}
+  .o-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
+  /* Am scazut fontul putin ca sa incapa Numele pt Takeaway perfect */
+  .table-nr { font-size: 18px; line-height: 1.3; font-weight: 800; color: var(--accent); font-family: 'Space Mono', monospace; letter-spacing: -0.5px; flex: 1; padding-right: 10px;}
+  .o-time { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono', monospace; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;}
   .time-elapsed { font-weight: 700; font-size: 15px; color: var(--text); background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 8px; }
   
   .o-items { list-style: none; margin-bottom: 24px; flex: 1;}
@@ -233,7 +233,7 @@
   <header>
     <h2 class="page-title" id="pageTitle">Pedidos Activos</h2>
     <div class="header-actions">
-        <input type="text" id="tableFilterInputDesc" class="table-filter" placeholder="🔍 Buscar Mesa (ej: 4)...">
+        <input type="text" id="tableFilterInputDesc" class="table-filter" placeholder="🔍 Buscar Mesa / Takeaway...">
     </div>
     
     <div class="mobile-brand-area">
@@ -312,7 +312,7 @@
   <div class="modal" style="text-align: left;">
     <button class="modal-close" onclick="document.getElementById('privacyOverlay').classList.remove('open')">&times;</button>
     <h2>Política de Privacidad Interna</h2>
-    <p style="font-size:14px; color: var(--text-muted);">El sistema Á Libretto gestiona datos operativos. Los nombres y números de teléfono recopilados para pedidos "Takeaway" se eliminan automáticamente de nuestra base de datos (Supabase) después de 48 horas, de acuerdo con las normativas europeas RGPD. Como miembro del personal, no debe guardar ni utilizar esta información de contacto para fines ajenos al pedido actual.</p>
+    <p style="font-size:14px; color: var(--text-muted); margin-top:10px;">El sistema Á Libretto gestiona datos operativos. Los nombres y números de teléfono recopilados para pedidos "Takeaway" se eliminan automáticamente de nuestra base de datos (Supabase) después de 48 horas, de acuerdo con las normativas europeas RGPD. Como miembro del personal, no debe guardar ni utilizar esta información de contacto para fines ajenos al pedido actual.</p>
   </div>
 </div>
 
@@ -602,19 +602,16 @@
               footerHtml = statusText;
           }
       }
-      
-      // Afișare inteligentă dacă e cu număr masă sau e Takeaway
+
+      // Afișează numărul mesei curat (Fără # pt Takeaway)
       let mesaDisp = order.mesa;
-      if (mesaDisp === 'Para llevar' || mesaDisp.includes('Takeaway') || mesaDisp.includes('Para llevar')) {
-          if (!mesaDisp.includes('(')) mesaDisp = '🥡 Llevar';
-          else mesaDisp = '🥡 ' + mesaDisp; // Afișează Takeaway (Nume / Telefon)
-      } else {
+      if(mesaDisp !== 'Takeaway' && !mesaDisp.includes('Tk:')) {
           mesaDisp = '#' + mesaDisp;
       }
 
       card.innerHTML = `
         <div class="o-head">
-          <div class="table-nr" style="font-size: 18px;">${mesaDisp}</div>
+          <div class="table-nr">${mesaDisp}</div>
           <div class="o-time">
               ${(order.status === 'noua' || order.status === 'gata') ? `<span class="time-elapsed">0 min</span>` : ''}
               <span>${timeStr}</span>

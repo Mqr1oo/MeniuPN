@@ -6,6 +6,7 @@
 <title>Á Libretto &mdash; Menú digital</title>
 <meta name="description" content="Menú digital Á Libretto. Cócteles y platos deliciosos.">
 
+<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -16,8 +17,11 @@
     });
   }
 </script>
+<!-- ================================== -->
 
+<!-- ===== SUPABASE SDK ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ======================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,18 +38,19 @@
   *{ box-sizing:border-box; }
   html, body { overflow-x: hidden; width: 100%; position: relative; }
   html{ scroll-behavior:smooth; }
-  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 120px;}
+  body{ margin:0; background:var(--bg-base); color:var(--ink); font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing: antialiased; padding-bottom: 140px;}
   img{ max-width:100%; display:block; }
   :focus-visible{ outline:2px solid var(--pink-main); outline-offset:3px; }
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
   .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
+  /* HERO */
   .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
   .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
   
+  /* SELECTOR LIMBĂ DROWPDOWN */
   .lang-toggle-btn { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; display: flex; align-items: center; gap: 6px;}
   .lang-toggle-btn:active{ transform:scale(0.92); }
-  
   .lang-menu-dropdown { position: absolute; top: 50px; left: 0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 8px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; min-width: 140px;}
   .lang-menu-dropdown.show { display: flex; }
   .lang-option { background: transparent; border: none; color: var(--ink); padding: 10px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 13px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
@@ -60,6 +65,7 @@
   .hero h1 em{ font-style:italic; color: var(--pink-main); font-weight:500; }
   .hero p.tag{ margin-top:18px; max-width:46ch; color:var(--ink-soft); font-size:1.02rem; }
 
+  /* CONTROLS & CHIPS */
   .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
   .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 54px; width: 100%; transition: all 0.3s; }
   .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(22, 132, 78, 0.2); }
@@ -74,6 +80,7 @@
   .chip:active{ transform: translateY(0) scale(0.94); }
   .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.35); }
   
+  /* GRID & CARDS - REPARAT PENTRU MOBIL */
   .menu-section{ padding: 10px 0 100px; }
   .category-section{ margin-top:38px; }
   .category-section h2{ font-size:1.6rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
@@ -103,13 +110,14 @@
   .c-qty-val { width: 30px; text-align: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1.1rem; color: var(--pink-bright); }
 
   .card-body{ padding:20px; display:flex; flex-direction:column; gap:12px; flex:1; }
-  .card-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-  .card-top h3{ font-size:1.25rem; line-height:1.2; margin:0;}
-  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); white-space:nowrap; font-size:1.15rem; }
-  .desc{ font-size:15px; color:var(--ink-soft); margin:0; line-height: 1.5;}
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .card-top h3{ font-size:1.15rem; line-height:1.3; margin:0; flex: 1; word-break: break-word;}
+  .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); font-size:1.1rem; flex-shrink:0; background: rgba(22, 132, 78, 0.15); padding: 4px 8px; border-radius: 6px;}
+  .desc{ font-size:14px; color:var(--ink-soft); margin:0; line-height: 1.5;}
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
+  /* TOTAL BAR */
   .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
   .total-bar.show { transform: translateY(0); }
   .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 10px; }
@@ -121,6 +129,7 @@
   .btn-order-bar { background: var(--pink-main); color: white; font-size: 18px; }
   .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 55px; font-size: 20px; }
 
+  /* WIDGET STATUS COMANDĂ */
   .tracker-widget { position: fixed; top: calc(15px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 92%; max-width: 450px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 2px solid var(--pink-main); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 10px 40px rgba(22, 132, 78, 0.3); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
   .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
   .t-head { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; font-weight: 700; }
@@ -129,11 +138,13 @@
   .t-bar-bg { width: 100%; height: 8px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
+  /* BUTON PLUTITOR: MUTAT JOS DREAPTA */
   .global-fav-btn { position: fixed; bottom: calc(25px + env(safe-area-inset-bottom)); right: 20px; height: 56px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--pink-main); padding: 0 24px; gap: 10px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 8px 25px rgba(22, 132, 78, 0.3); }
   .global-fav-btn:active { transform: scale(0.92); }
   .global-fav-btn svg { width: 24px; height: 24px; fill: currentColor; }
   body.has-cart-bar .global-fav-btn { transform: translateY(-130px); }
 
+  /* MODALS */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
   .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:420px; width:100%; border-radius:var(--radius-lg); padding:32px; position:relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: center;}
@@ -159,19 +170,19 @@
   .split-total { font-size: 26px; font-weight: 700; color: var(--pink-bright); margin: 24px 0; }
   
   #onboardingOverlay .modal{ max-width: 440px; }
-  .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;}
-  .lang-pick-btn{ font-family:'Space Mono', monospace; font-size:14px; font-weight:700; letter-spacing:.03em; padding:16px 10px; border-radius: var(--radius-md); border: 2px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:8px; }
-  .lang-pick-btn .flag{ font-size:2rem; line-height:1; }
-  .lang-pick-btn:active{ transform: scale(0.94); border-color: var(--pink-main); }
+  .lang-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px;}
+  .lang-pick-btn{ font-family:'Space Mono', monospace; font-size:16px; font-weight:700; letter-spacing:.03em; padding:18px 20px; border-radius: var(--radius-md); border: 2px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; align-items:center; justify-content: center; gap:12px; }
+  .lang-pick-btn .flag{ font-size:1.8rem; line-height:1; }
+  .lang-pick-btn:active{ transform: scale(0.96); border-color: var(--pink-main); }
 
   .receipt-notice { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-md); padding: 14px 16px; margin: 18px 0 0; font-size: 13px; color: #fbbf6b; display: flex; gap: 10px; align-items: flex-start; }
   .receipt-notice b { color: #ffcf8a; }
 
   footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:40px 0 26px; font-size:14px; margin-top: 40px;}
   .footer-inner{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; align-items:center; }
-  .footer-links button { background: none; border: none; color: var(--ink-soft); font-family: 'Space Mono', monospace; font-size: 13px; text-decoration: underline; cursor: pointer;}
+  .footer-links button { background: none; border: none; color: var(--ink-soft); font-family: 'Space Mono', monospace; font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0;}
   
-  .gdpr-note { font-size: 11px; color: var(--pink-main); margin-top: -10px; margin-bottom: 20px; display: block; font-style: italic;}
+  .gdpr-note { font-size: 12px; color: var(--coral); margin-top: -10px; margin-bottom: 20px; display: block; font-style: italic;}
 
   @media (max-width:640px){
     .hero{ padding-top:44px; }
@@ -250,7 +261,7 @@
 
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
-<!-- ONBOARDING (Modificat doar ES, EN, FR) -->
+<!-- ONBOARDING MODAL (Fără Română, Doar 3 limbi) -->
 <div class="modal-overlay" id="onboardingOverlay">
   <div class="modal">
     <p class="eyebrow centered">Á Libretto</p>
@@ -258,9 +269,9 @@
       <h2 id="obLangTitle">¡Bienvenido!</h2>
       <p id="obLangSubtitle">Elige el idioma del menú</p>
       <div class="lang-grid">
-        <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span>Español</button>
-        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>English</button>
-        <button class="lang-pick-btn" data-lang="fr"><span class="flag">🇫🇷</span>Français</button>
+        <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
+        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span> English</button>
+        <button class="lang-pick-btn" data-lang="fr"><span class="flag">🇫🇷</span> Français</button>
       </div>
     </div>
     <div id="obModeStep" style="display:none;">
@@ -272,17 +283,17 @@
   </div>
 </div>
 
-<!-- MODAL COMANDĂ (Cu logică Nume/Telefon pentru Takeaway) -->
+<!-- MODAL COMANDĂ (Integrează GDPR Takeaway strict) -->
 <div class="modal-overlay" id="orderOverlay">
   <div class="modal">
     <button class="modal-close" id="closeOrderModal">&times;</button>
     <h2 id="orderModalTitle">Número de Mesa</h2>
     <p id="orderModalDesc">Introduce el número de tu mesa.</p>
     
-    <!-- Pt masă normală -->
+    <!-- Input Masă normală -->
     <input type="text" id="tableNumberInput" class="input-table" placeholder="Ej: 4">
     
-    <!-- Pt Takeaway (Apar doar când se selectează Takeaway) -->
+    <!-- Inputs Takeaway (Nume + Telefon + GDPR) -->
     <input type="text" id="takeawayNameInput" class="input-table" placeholder="Tu Nombre" style="display:none;">
     <input type="tel" id="takeawayPhoneInput" class="input-table" placeholder="Teléfono" style="display:none;">
     <span class="gdpr-note" id="txtGdprNote" style="display:none;">Tus datos se borrarán automáticamente en 48h (GDPR).</span>
@@ -347,8 +358,8 @@
   <div class="modal" style="text-align: left;">
     <button class="modal-close" onclick="document.getElementById('privacyOverlay').classList.remove('open')">&times;</button>
     <h2 id="privacyTitle">Política de Privacidad</h2>
-    <p id="privacyText" style="font-size:14px;">Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.</p>
-    <button class="btn-submit" onclick="document.getElementById('privacyOverlay').classList.remove('open')" style="margin-top: 10px;">Cerrar</button>
+    <p id="privacyText" style="font-size:15px; color: var(--ink-soft); line-height: 1.5; margin-top: 10px;">Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.</p>
+    <button class="btn-submit" onclick="document.getElementById('privacyOverlay').classList.remove('open')" style="margin-top: 20px;">Cerrar</button>
   </div>
 </div>
 
@@ -372,7 +383,7 @@
   let outOfStockIds = new Set();
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
-  let currentLang = localStorage.getItem('aLibretto:lang') || 'es';
+  let currentLang = localStorage.getItem('aLibretto:lang'); 
   let cartTotalValue = 0;
 
   function showCustomAlert(title, text) {
@@ -471,6 +482,7 @@
       privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).'
     }
   };
+  const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
   function applyLanguage(lang){
     if(!I18N[lang]) lang = 'es';
@@ -687,7 +699,13 @@
     else { onboardingOverlay.classList.remove('open'); }
   }
 
-  if(needsLang() || needsMode()){ onboardingOverlay.classList.add('open'); if(!needsLang()) showModeStepOrClose(); }
+  if(needsLang() || needsMode()){ 
+      if(!currentLang) currentLang = 'es'; // default ca să nu dea crash UI-ul din spate
+      onboardingOverlay.classList.add('open'); 
+      if(!needsLang()) showModeStepOrClose(); 
+  } else {
+      applyLanguage(currentLang);
+  }
 
   document.querySelectorAll('.lang-pick-btn').forEach(btn => {
     btn.addEventListener('click', () => { applyLanguage(btn.dataset.lang); showModeStepOrClose(); });
@@ -751,26 +769,26 @@
       const t = I18N[currentLang];
       
       tracker.classList.add('show');
-      statText.textContent = '👨‍🍳 ' + (currentLang==='es'?'Recibido por el staff':'Order Received');
+      statText.textContent = '👨‍🍳 ' + (currentLang==='es'?'Recibido por el staff': (currentLang==='fr'?'Reçu par le personnel':'Order Received'));
       progress.style.width = '35%';
 
       _supabase.channel(`order_tracker_${id}`)
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi', filter: `id=eq.${id}` }, p => {
           const s = p.new.status;
           if (s === 'gata' || s === 'in_lucru') {
-              statText.textContent = '🔥 ' + (currentLang==='es'?'En preparación':'Preparing');
+              statText.textContent = '🔥 ' + (currentLang==='es'?'En preparación': (currentLang==='fr'?'En préparation':'Preparing'));
               progress.style.width = '70%';
           } else if (s === 'finalizata') {
               if(p.new.comp_motiv) {
-                  statText.textContent = '🎁 GRATIS (' + p.new.comp_motiv + ')';
+                  statText.textContent = '🎁 GRATIS';
                   statText.style.color = '#fbbf24';
               } else {
-                  statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado':'Completed');
+                  statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
               }
               progress.style.width = '100%';
               setTimeout(() => { tracker.classList.remove('show'); }, 8000);
           } else if (s === 'anulata') {
-              statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado':'Canceled');
+              statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado': (currentLang==='fr'?'Annulé':'Canceled'));
               statText.style.color = 'var(--danger)';
               progress.style.width = '100%';
               progress.style.background = 'var(--danger)';
@@ -790,11 +808,11 @@
           if(!tkName || !tkPhone) {
               alert(t.takeawayReq); return;
           }
-          finalTableNr = `Takeaway (${tkName} / ${tkPhone})`;
+          finalTableNr = `🥡 Tk: ${tkName} / ${tkPhone}`;
           sessionStorage.setItem('fieraMesa', 'Takeaway');
       } else {
           const tableInput = document.getElementById('tableNumberInput');
-          finalTableNr = tableInput.value.trim() || 'No-Nr';
+          finalTableNr = tableInput.value.trim() || 'Fără-Nr';
           sessionStorage.setItem('fieraMesa', finalTableNr);
       }
 
@@ -862,7 +880,7 @@
 
   document.getElementById('searchInput').addEventListener('input', render);
 
-  applyLanguage(currentLang);
+  // Fallback in caz de eroare json
   fetch('menu.json').then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
@@ -873,8 +891,8 @@
           render(); 
       }).subscribe();
 
-      renderTagFilters(); render();
-  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang].emptyState; document.getElementById('emptyState').style.display = 'block'; });
+      if(currentLang) applyLanguage(currentLang);
+  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
 
 })();
 </script>
