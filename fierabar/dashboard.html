@@ -260,10 +260,10 @@
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Ingresos (Tickets)</div><div class="stat-val" id="statRevenue">0 RON</div></div>
+        <div class="stat-card"><div class="stat-label">Ingresos (Tickets)</div><div class="stat-val" id="statRevenue">0 €</div></div>
         <div class="stat-card"><div class="stat-label">Pedidos servidos</div><div class="stat-val" id="statCount">0</div></div>
         <div class="stat-card" style="border-color: rgba(245,158,11,0.3);"><div class="stat-label">⚠️ Sin Ticket</div><div class="stat-val alert" id="statPendingBon">0</div></div>
-        <div class="stat-card"><div class="stat-label">Cocina / Barra</div><div class="stat-val" id="statKitchen">0 RON</div></div>
+        <div class="stat-card"><div class="stat-label">Cocina / Barra</div><div class="stat-val" id="statKitchen">0 €</div></div>
       </div>
       
       <div class="dash-panel">
@@ -273,7 +273,7 @@
 
       <div class="dash-panel">
           <h3>🚨 Tickets No Confirmados (Por Staff)</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable. Un número alto en una sola persona es señal de alerta.</p>
           <ul class="top-list" id="pendingByStaffList"></ul>
       </div>
     </div>
@@ -293,7 +293,7 @@
     <div id="jurnalView" style="display: none;">
       <div class="dash-panel">
         <h3>🕵️ Log de Actividad (Auditoría)</h3>
-        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción (pedido, cancelación, tickets, gratis) se guarda con la hora exacta y el usuario.</p>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción (pedido, cancelación, tickets, gratis) se guarda con la hora exacta y el usuario. Registro permanente, imborrable desde la app.</p>
         <ul class="top-list" id="jurnalList">Cargando...</ul>
       </div>
     </div>
@@ -406,18 +406,17 @@
   document.getElementById('btnLogout').addEventListener('click', logoutFn);
   document.getElementById('btnMobileLogout').addEventListener('click', logoutFn);
 
-  // RECONOAȘTERE MULTILINGVĂ A ROLURILOR DUPĂ EMAIL:
   function setupUserEnvironment(email) {
     currentUserEmail = email;
     document.getElementById('userEmailDisplay').textContent = email;
     document.getElementById('mobileUserDisplay').textContent = email;
     const emailLower = email.toLowerCase();
     
-    // Suportat: director/admin/jefe -> director; bucatarie/cocina -> bucatarie; ospatar/mesero/camarero -> ospatar; altfel -> bar
+    // ACTUALIZAT: Permite atât cuvintele din RO cât și din ES
     if(emailLower.includes('director') || emailLower.includes('admin') || emailLower.includes('jefe')) userRole = 'director';
     else if(emailLower.includes('bucatarie') || emailLower.includes('cocina')) userRole = 'bucatarie';
-    else if(emailLower.includes('ospatar') || emailLower.includes('mesero') || emailLower.includes('camarero')) userRole = 'ospatar';
-    else userRole = 'bar'; 
+    else if(emailLower.includes('ospatar') || emailLower.includes('camarero')) userRole = 'ospatar';
+    else userRole = 'bar'; // Default dacă nu are cuvintele cheie (ex: bar@alibretto.com)
 
     if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'ospatar' || userRole === 'director') {
         document.getElementById('navStock').style.display = 'flex';
@@ -890,4 +889,5 @@
 </script>
 </body>
 </html>
+
 
