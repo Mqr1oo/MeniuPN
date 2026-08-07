@@ -6,6 +6,7 @@
 <title>Á Libretto &mdash; Menú digital</title>
 <meta name="description" content="Menú digital Á Libretto. Cócteles y platos deliciosos.">
 
+<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -16,8 +17,11 @@
     });
   }
 </script>
+<!-- ================================== -->
 
+<!-- ===== SUPABASE SDK ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ======================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,18 +44,12 @@
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
   .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
+  /* HERO */
   .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
   .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
+  .lang-toggle{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; }
+  .lang-toggle:active{ transform:scale(0.92); }
   
-  /* Selector de limba */
-  .lang-toggle-btn { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; display: flex; align-items: center; gap: 6px;}
-  .lang-toggle-btn:active{ transform:scale(0.92); }
-  
-  .lang-menu-dropdown { position: absolute; top: 50px; left: 0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 8px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; min-width: 140px;}
-  .lang-menu-dropdown.show { display: flex; }
-  .lang-option { background: transparent; border: none; color: var(--ink); padding: 10px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 13px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
-  .lang-option:hover { background: rgba(255,255,255,0.05); }
-
   .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:24px; }
   .hero-text{ flex:1 1 340px; min-width:260px; }
   .eyebrow{ font-family:'Space Mono', monospace; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--pink-main); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
@@ -61,6 +59,7 @@
   .hero h1 em{ font-style:italic; color: var(--pink-main); font-weight:500; }
   .hero p.tag{ margin-top:18px; max-width:46ch; color:var(--ink-soft); font-size:1.02rem; }
 
+  /* CONTROLS & CHIPS */
   .controls{ padding: 24px 0 10px; display: flex; flex-direction: column; gap: 20px; }
   .search-box{ display: flex; align-items: center; background: var(--bg-card); border: 1.5px solid var(--paper-dim); border-radius: var(--radius-md); padding: 0 14px; height: 54px; width: 100%; transition: all 0.3s; }
   .search-box:focus-within { border-color: var(--pink-main); box-shadow: 0 4px 16px rgba(22, 132, 78, 0.2); }
@@ -75,6 +74,7 @@
   .chip:active{ transform: translateY(0) scale(0.94); }
   .chip.active{ background: var(--pink-main); color: #fff; border-color: var(--pink-main); font-weight: 700; box-shadow: 0 4px 12px rgba(22, 132, 78, 0.35); }
   
+  /* GRID & CARDS */
   .menu-section{ padding: 10px 0 100px; }
   .category-section{ margin-top:38px; }
   .category-section h2{ font-size:1.6rem; padding-bottom:8px; border-bottom:2px solid var(--pink-main); display:inline-block; }
@@ -87,7 +87,6 @@
   .card.out-of-stock .card-img { filter: grayscale(100%) opacity(0.5); }
   .card.out-of-stock .price { text-decoration: line-through; color: var(--ink-soft); }
   .card.out-of-stock .card-qty-controls { display: none !important; }
-  
   .badge-epuizat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 15; pointer-events: none; }
   .badge-epuizat span { background: var(--coral); color: white; padding: 10px 20px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 18px; text-transform: uppercase; transform: rotate(-5deg); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
   
@@ -97,6 +96,7 @@
   .ribbon { position: absolute; top: 16px; left: -6px; background: var(--pink-main); color: #fff; padding: 8px 14px; font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; border-radius: 0 4px 4px 0; z-index: 10; }
   .ribbon::before { content: ""; position: absolute; bottom: -6px; left: 0; border-top: 6px solid #11683d; border-left: 6px solid transparent; }
 
+  /* QTY CONTROLS (Marime mai mare pentru telefoane) */
   .card-qty-controls { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; background: rgba(18, 18, 18, 0.95); border: 1.5px solid var(--paper-dim); backdrop-filter: blur(6px); border-radius: 100px; box-shadow: 0 4px 16px rgba(0,0,0,0.6); overflow: hidden; z-index: 10; transition: border-color 0.2s; }
   .card-qty-controls.has-items { border-color: var(--pink-main); }
   .c-qty-btn { width: 44px; height: 44px; border: none; background: transparent; color: var(--ink); font-size: 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -111,6 +111,7 @@
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
+  /* TOTAL BAR */
   .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
   .total-bar.show { transform: translateY(0); }
   .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 10px; }
@@ -122,6 +123,7 @@
   .btn-order-bar { background: var(--pink-main); color: white; font-size: 18px; }
   .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 55px; font-size: 20px; }
 
+  /* LIVE ORDER TRACKER WIDGET (Afișat Sus) */
   .tracker-widget { position: fixed; top: calc(15px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 92%; max-width: 450px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 2px solid var(--pink-main); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 10px 40px rgba(22, 132, 78, 0.3); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
   .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
   .t-head { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; font-weight: 700; }
@@ -130,13 +132,18 @@
   .t-bar-bg { width: 100%; height: 8px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
+  /* FLOATING BUTTON (SMART CART / WAITER) - MUTAT JOS DREAPTA */
   .global-fav-btn { position: fixed; bottom: calc(25px + env(safe-area-inset-bottom)); right: 20px; height: 56px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--pink-main); padding: 0 24px; gap: 10px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 8px 25px rgba(22, 132, 78, 0.3); }
   .global-fav-btn:active { transform: scale(0.92); }
   .global-fav-btn svg { width: 24px; height: 24px; fill: currentColor; }
+  
+  /* Dacă bara de checkout e vizibilă, butonul plutitor se mută mai sus ca să nu se suprapună */
   body.has-cart-bar .global-fav-btn { transform: translateY(-130px); }
 
+  /* MODALS */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
+  
   .modal{ background:var(--bg-card); border: 1px solid var(--paper-dim); max-width:420px; width:100%; border-radius:var(--radius-lg); padding:32px; position:relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: center;}
   .modal h2 { margin-bottom: 16px; font-size: 1.6rem; }
   .modal p { color: var(--ink-soft); margin-bottom: 24px; font-size: 15px; line-height: 1.4;}
@@ -144,26 +151,32 @@
   
   .input-table { width: 100%; padding: 18px; font-size: 1.4rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700; transition: border-color 0.3s;}
   .input-table:focus { outline: none; border-color: var(--pink-main); }
+  
   .input-note { width: 100%; padding: 16px; font-size: 1rem; text-align: left; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 24px; font-family: 'Work Sans', sans-serif; resize: none; transition: border-color 0.3s;}
   .input-note:focus { outline: none; border-color: var(--pink-main); }
+  .input-note::placeholder { color: var(--ink-soft); }
   
   .btn-submit { width: 100%; background: var(--pink-main); color: white; border: none; padding: 18px; border-radius: var(--radius-md); font-weight: 700; font-size: 1.2rem; font-family: 'Work Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; box-shadow: 0 8px 20px rgba(22, 132, 78, 0.3);}
   .btn-submit:active { transform: scale(0.96); }
+  .btn-submit:disabled { opacity: 0.7; }
   
   .btn-waiter-option { width: 100%; background: var(--bg-panel); color: var(--ink); border: 2px solid var(--paper-dim); padding: 18px; border-radius: var(--radius-md); font-weight: 600; font-size: 1.1rem; cursor: pointer; margin-bottom: 14px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;}
   .btn-waiter-option:active { transform: scale(0.96); border-color: var(--pink-main); }
 
+  /* SPLIT BILL SELECTOR */
   .split-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-size: 15px;}
   .split-ctrl { display: flex; align-items: center; gap: 12px; }
   .split-btn { width: 36px; height: 36px; background: var(--bg-panel); color: white; border: 1.5px solid var(--paper-dim); border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 18px;}
   .split-total { font-size: 26px; font-weight: 700; color: var(--pink-bright); margin: 24px 0; }
   
-  #onboardingOverlay .modal{ max-width: 440px; }
-  .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;}
-  .lang-pick-btn{ font-family:'Space Mono', monospace; font-size:14px; font-weight:700; letter-spacing:.03em; padding:16px 10px; border-radius: var(--radius-md); border: 2px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:8px; }
-  .lang-pick-btn .flag{ font-size:2rem; line-height:1; }
+  /* ONBOARDING MODAL */
+  #onboardingOverlay .modal{ max-width: 400px; }
+  .lang-pick-row{ display:flex; gap:12px; margin-bottom:10px; }
+  .lang-pick-btn{ flex:1; font-family:'Space Mono', monospace; font-size:15px; font-weight:700; letter-spacing:.03em; padding:20px 10px; border-radius: var(--radius-md); border: 2px solid var(--paper-dim); background: var(--bg-panel); color: var(--ink); cursor:pointer; transition: all .2s; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .lang-pick-btn .flag{ font-size:2.2rem; line-height:1; }
   .lang-pick-btn:active{ transform: scale(0.94); border-color: var(--pink-main); }
 
+  /* AVISO BON FISCAL */
   .receipt-notice { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-md); padding: 14px 16px; margin: 18px 0 0; font-size: 13px; color: #fbbf6b; display: flex; gap: 10px; align-items: flex-start; }
   .receipt-notice b { color: #ffcf8a; }
 
@@ -186,17 +199,7 @@
 
 <header class="hero">
   <div class="top-actions">
-    <div style="position: relative;">
-        <button class="lang-toggle-btn" id="langToggleBtn">
-            <span id="currentLangIcon">🇪🇸</span> <span id="currentLangText">ES</span> ▼
-        </button>
-        <div class="lang-menu-dropdown" id="langDropdown">
-            <button class="lang-option" data-lang="es"><span>🇪🇸</span> Español</button>
-            <button class="lang-option" data-lang="en"><span>🇬🇧</span> English</button>
-            <button class="lang-option" data-lang="fr"><span>🇫🇷</span> Français</button>
-            <button class="lang-option" data-lang="ro"><span>🇷🇴</span> Română</button>
-        </div>
-    </div>
+    <button class="lang-toggle" id="langToggle" type="button">🇪🇸 ES</button>
   </div>
   <div class="wrap hero-inner">
     <div class="hero-text">
@@ -207,6 +210,7 @@
   </div>
 </header>
 
+<!-- TRACKER WIDGET -->
 <div class="tracker-widget" id="liveTracker">
   <div class="t-head">
       <span id="trackerTitle">Tu pedido</span>
@@ -241,24 +245,24 @@
     <span class="total-amount" id="totalAmount">0.00 RON</span>
   </div>
   <div class="action-buttons">
-    <button class="btn-action btn-split-bill" id="btnOpenSplitBill">➗</button>
+    <button class="btn-action btn-split-bill" id="btnOpenSplitBill" title="Dividir la cuenta (Split Bill)">➗</button>
     <button class="btn-action btn-order-bar" id="btnOpenOrderModal">Enviar Pedido</button>
   </div>
 </div>
 
+<!-- BUTON PLUTITOR: MUTAT JOS DREAPTA PENTRU A NU SE SUPRAPUNE -->
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
+<!-- MODAL ONBOARDING -->
 <div class="modal-overlay" id="onboardingOverlay">
   <div class="modal">
     <p class="eyebrow centered">Á Libretto</p>
     <div id="obLangStep">
       <h2 id="obLangTitle">¡Bienvenido!</h2>
       <p id="obLangSubtitle">Elige el idioma del menú</p>
-      <div class="lang-grid">
-        <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span>Español</button>
-        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>English</button>
-        <button class="lang-pick-btn" data-lang="fr"><span class="flag">🇫🇷</span>Français</button>
-        <button class="lang-pick-btn" data-lang="ro"><span class="flag">🇷🇴</span>Română</button>
+      <div class="lang-pick-row">
+        <button class="lang-pick-btn" data-lang="es"><span class="flag">🇪🇸</span>ES</button>
+        <button class="lang-pick-btn" data-lang="en"><span class="flag">🇬🇧</span>EN</button>
       </div>
     </div>
     <div id="obModeStep" style="display:none;">
@@ -270,29 +274,34 @@
   </div>
 </div>
 
+<!-- MODAL COMANDĂ (Intelligent Takeaway Hide) -->
 <div class="modal-overlay" id="orderOverlay">
   <div class="modal">
     <button class="modal-close" id="closeOrderModal">&times;</button>
     <h2 id="orderModalTitle">Número de Mesa</h2>
-    <p id="orderModalDesc">Introduce el número de tu mesa.</p>
+    <p id="orderModalDesc">Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.</p>
+    
+    <!-- Acest input se ascunde automat dacă modul e Takeaway -->
     <input type="text" id="tableNumberInput" class="input-table" placeholder="Ej: 4">
-    <textarea id="orderNoteInput" class="input-note" placeholder="Nota para tu pedido (opcional)." rows="2"></textarea>
+    
+    <textarea id="orderNoteInput" class="input-note" placeholder="Nota para tu pedido (opcional). Ej: sin cebolla" rows="2"></textarea>
     <button class="btn-submit" id="sendOrderBtn">Enviar Pedido</button>
   </div>
 </div>
 
+<!-- MODAL SPLIT BILL -->
 <div class="modal-overlay" id="splitBillOverlay">
   <div class="modal">
     <button class="modal-close" id="closeSplitBill">&times;</button>
-    <h2 id="splitTitle">Dividir la cuenta</h2>
-    <p id="splitDesc" style="color:var(--text-muted); font-size: 14px;">Calcula rápido cuánto debe pagar cada persona.</p>
+    <h2>Dividir la cuenta (Split Bill)</h2>
+    <p style="color:var(--text-muted); font-size: 14px;">Calcula rápido cuánto debe pagar cada persona, incluida la propina.</p>
     
     <div class="split-row">
-        <span id="splitL1">Total del carrito:</span>
+        <span>Total del carrito:</span>
         <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 RON</span>
     </div>
     <div class="split-row">
-        <span id="splitL2">Número de personas:</span>
+        <span>Número de personas:</span>
         <div class="split-ctrl">
             <button class="split-btn" onclick="adjSplitPersons(-1)">-</button>
             <span id="sbPersons" style="color:white; width: 20px; text-align:center;">2</span>
@@ -300,7 +309,7 @@
         </div>
     </div>
     <div class="split-row">
-        <span id="splitL3">Propina (%):</span>
+        <span>Propina (%):</span>
         <div class="split-ctrl">
             <button class="split-btn" onclick="adjSplitTip(-5)">-</button>
             <span id="sbTip" style="color:white; width: 40px; text-align:center;">10%</span>
@@ -312,17 +321,19 @@
   </div>
 </div>
 
+<!-- MODAL CHEAMĂ OSPĂTAR -->
 <div class="modal-overlay" id="callWaiterOverlay">
   <div class="modal">
     <button class="modal-close" id="closeCallWaiter">&times;</button>
     <h2 id="callWaiterTitle">¿Necesitas algo?</h2>
     <p id="callWaiterDesc">Selecciona el motivo por el que llamas al camarero.</p>
-    <button class="btn-waiter-option" id="btnCallCash" onclick="sendSpecialAlert('cash')">💵 Quiero pagar (Efectivo)</button>
-    <button class="btn-waiter-option" id="btnCallCard" onclick="sendSpecialAlert('card')">💳 Quiero pagar (Tarjeta)</button>
-    <button class="btn-waiter-option" id="btnCallHelp" onclick="sendSpecialAlert('help')">🙋‍♂️ Necesito ayuda</button>
+    <button class="btn-waiter-option" id="btnCallCash" onclick="sendSpecialAlert('Cuenta (Efectivo)')">💵 Quiero pagar (Efectivo)</button>
+    <button class="btn-waiter-option" id="btnCallCard" onclick="sendSpecialAlert('Cuenta (Tarjeta)')">💳 Quiero pagar (Tarjeta)</button>
+    <button class="btn-waiter-option" id="btnCallHelp" onclick="sendSpecialAlert('Ayuda / Otro')">🙋‍♂️ Necesito ayuda</button>
   </div>
 </div>
 
+<!-- MODAL NOTIFICĂRI CUSTOM -->
 <div class="modal-overlay" id="customAlertOverlay">
   <div class="modal" style="max-width:340px;">
     <h3 id="customAlertTitle" style="margin-bottom:12px; font-size: 1.4rem;">Notificación</h3>
@@ -349,6 +360,7 @@
   let activeFilter = 'all';
   let favoritesQty = loadFavorites();
   let currentLang = localStorage.getItem('aLibretto:lang') || 'es';
+  if(currentLang !== 'es' && currentLang !== 'en') currentLang = 'es';
   let cartTotalValue = 0;
 
   function showCustomAlert(title, text) {
@@ -381,93 +393,47 @@
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
       allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', 
       totalLabel:'Total:', btnOrderBar:'Enviar Pedido', trackerTitle:'Tu pedido',
-      receiptNotice:'<b>¿No recibiste tu recibo?</b> Si no se te entrega el recibo al finalizar, avísanos: podría significar que tu pedido no está registrado y puede ser gratis.',
+      receiptNotice:'<b>¿No recibiste tu recibo/ticket?</b> Si no se te entrega el recibo al finalizar, avísanos: podría significar que tu pedido no está registrado.',
       obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', 
       obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', 
-      dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar', takeawayLabel:'Para llevar', 
+      dineIn:'🍽️ Estoy en una mesa', takeaway:'🥡 Para llevar (Takeaway)', takeawayLabel:'Para llevar', 
       orderModalTitle:'Número de Mesa', orderModalDesc:'Introduce el número de tu mesa para enviar el pedido al bar y a la cocina.', 
       takeawayTitle:'Pedido para llevar', takeawayDesc:'Añade una nota si es necesario y envía el pedido.',
-      tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional).', 
+      tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional). Ej: sin cebolla', 
       sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', 
       callWaiterTitle:'¿Necesitas algo?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', 
       callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
-      alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, 
+      alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, orderError:'Error al enviar.', askTable:'¿Qué número tiene tu mesa?', 
       catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, 
-      smartWaiter: 'Camarero', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
-      badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
-      alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' }
+      smartWaiter: 'Camarero', smartCart: 'Mi Pedido' 
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
       allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', 
       totalLabel:'Total:', btnOrderBar:'Send Order', trackerTitle:'Your order',
-      receiptNotice:"<b>Didn't get your receipt?</b> If you're not given a receipt at the end, let us know — it could mean your order wasn't registered and might be free.",
+      receiptNotice:"<b>Didn't get your receipt?</b> If you're not given a receipt at the end, please let us know — it could mean your order wasn't registered.",
       obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', 
       obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', 
       dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', 
-      orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order.', 
+      orderModalTitle:'Table Number', orderModalDesc:'Please enter your table number to send the order to the bar and kitchen.', 
       takeawayTitle:'Takeaway Order', takeawayDesc:'Add a note if needed and send the order.',
-      tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional).', 
+      tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional). E.g: no onion', 
       sendOrderBtnText:'Send Order', sendingText:'Sending...', 
       callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', 
       callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
-      alertSent:(m)=>`The waiter has been called to table ${m}!`, 
+      alertSent:(m)=>`The waiter has been called to table ${m}!`, orderError:'Error sending order.', askTable:'What is your table number?', 
       catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, 
-      smartWaiter: 'Waiter', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
-      badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
-      alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' }
-    },
-    fr: { 
-      flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
-      allChip:'Tout', searchPlaceholder:'Rechercher...', emptyState:'Aucun produit trouvé.', 
-      totalLabel:'Total:', btnOrderBar:'Envoyer la commande', trackerTitle:'Votre commande',
-      receiptNotice:"<b>Vous n'avez pas reçu de reçu ?</b> Si on ne vous donne pas de reçu à la fin, prévenez-nous : votre commande pourrait ne pas être enregistrée et être gratuite.",
-      obLangTitle:'Bienvenue !', obLangSubtitle:'Choisissez la langue de votre menu', 
-      obModeTitle:'Comment souhaitez-vous commander ?', obModeSubtitle:'Choisissez une option pour continuer.', 
-      dineIn:"🍽️ Je suis à une table", takeaway:'🥡 À emporter', takeawayLabel:'À emporter', 
-      orderModalTitle:'Numéro de table', orderModalDesc:'Veuillez entrer votre numéro de table pour envoyer la commande.', 
-      takeawayTitle:'Commande à emporter', takeawayDesc:'Ajoutez une note si nécessaire.',
-      tablePlaceholder:'Ex: 4', orderNotePlaceholder:'Note pour votre commande (optionnel).', 
-      sendOrderBtnText:'Envoyer la commande', sendingText:'Envoi...', 
-      callWaiterTitle:'Besoin de nous ?', callWaiterDesc:'Sélectionnez la raison de votre appel.', 
-      callCash:'💵 Je veux payer (Espèces)', callCard:'💳 Je veux payer (Carte)', callHelp:"🙋‍♂️ J'ai besoin d'aide", 
-      alertSent:(m)=>`Le serveur a été appelé à la table ${m} !`, 
-      catNames:{ entrante:'Entrées', principal:'Plat Principal', coctel:'Cocktails', bebida:'Boissons', postre:'Desserts', otros:'Autre' }, 
-      smartWaiter: 'Serveur', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
-      badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
-      alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' }
-    },
-    ro: { 
-      flag:'🇷🇴', code:'RO', eyebrow:'Meniu digital', title:'Á Libretto', tagline:'Cocktailuri internaționale, băuturi rafinate și preparate delicioase.', 
-      allChip:'Toate', searchPlaceholder:'Caută...', emptyState:'Nu am găsit produse.', 
-      totalLabel:'Total:', btnOrderBar:'Trimite Comanda', trackerTitle:'Comanda ta',
-      receiptNotice:"<b>Nu ai primit bonul fiscal?</b> Dacă la final nu primești bonul, anunță-ne: comanda ta ar putea fi din partea casei.",
-      obLangTitle:'Bun venit!', obLangSubtitle:'Alege limba meniului', 
-      obModeTitle:'Cum dorești să comanzi?', obModeSubtitle:'Alege o opțiune pentru a continua.', 
-      dineIn:"🍽️ Stau la masă", takeaway:'🥡 La pachet', takeawayLabel:'La pachet', 
-      orderModalTitle:'Numărul Mesei', orderModalDesc:'Introdu numărul mesei pentru a trimite comanda.', 
-      takeawayTitle:'Comandă la pachet', takeawayDesc:'Adaugă o notă dacă este nevoie.',
-      tablePlaceholder:'Ex: 4', orderNotePlaceholder:'Notă pentru comandă (opțional).', 
-      sendOrderBtnText:'Trimite Comanda', sendingText:'Se trimite...', 
-      callWaiterTitle:'Ai nevoie de noi?', callWaiterDesc:'Selectează motivul pentru care chemi ospătarul.', 
-      callCash:'💵 Vreau să achit (Cash)', callCard:'💳 Vreau să achit (Card)', callHelp:"🙋‍♂️ Am nevoie de ajutor", 
-      alertSent:(m)=>`Ospătarul a fost chemat la masa ${m}!`, 
-      catNames:{ entrante:'Aperitive', principal:'Fel Principal', coctel:'Cocktailuri', bebida:'Băuturi', postre:'Desert', otros:'Altele' }, 
-      smartWaiter: 'Ospătar', smartCart: 'Comanda Mea', splitTitle: 'Împarte Nota', splitDesc: 'Calculează rapid cât are de plătit fiecare.', sl1: 'Total coș:', sl2: 'Număr persoane:', sl3: 'Bacșiș (%):',
-      badgeEpuizat: 'Epuizat', ribbonEsp: 'Specialitate',
-      alertPayload: { cash: 'Nota (Cash)', card: 'Nota (Card)', help: 'Ajutor / Altceva' }
+      smartWaiter: 'Waiter', smartCart: 'My Order' 
     }
   };
+  const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
   function applyLanguage(lang){
-    if(!I18N[lang]) lang = 'es';
     currentLang = lang;
     localStorage.setItem('aLibretto:lang', lang);
     const t = I18N[lang];
 
-    document.getElementById('currentLangIcon').textContent = t.flag;
-    document.getElementById('currentLangText').textContent = t.code;
-    
+    document.getElementById('langToggle').textContent = `${t.flag} ${t.code}`;
     document.getElementById('txtEyebrow').textContent = t.eyebrow;
     document.getElementById('txtTitle').textContent = t.title;
     document.getElementById('txtTagline').textContent = t.tagline;
@@ -484,6 +450,7 @@
     document.getElementById('btnDineIn').textContent = t.dineIn;
     document.getElementById('btnTakeaway').textContent = t.takeaway;
 
+    // Setările implicite (pot fi suprascrise dacă se deschide în mod Takeaway)
     document.getElementById('orderModalTitle').textContent = t.orderModalTitle;
     document.getElementById('orderModalDesc').textContent = t.orderModalDesc;
     
@@ -496,24 +463,14 @@
     document.getElementById('btnCallCash').textContent = t.callCash;
     document.getElementById('btnCallCard').textContent = t.callCard;
     document.getElementById('btnCallHelp').textContent = t.callHelp;
-    
-    document.getElementById('splitTitle').textContent = t.splitTitle;
-    document.getElementById('splitDesc').textContent = t.splitDesc;
-    document.getElementById('splitL1').textContent = t.sl1;
-    document.getElementById('splitL2').textContent = t.sl2;
-    document.getElementById('splitL3').textContent = t.sl3;
 
-    renderTagFilters(); render(); updateBottomBar();
+    renderTagFilters(); render();
   }
 
-  // Meniu dropdown pentru limbi
-  const langBtn = document.getElementById('langToggleBtn');
-  const langDropdown = document.getElementById('langDropdown');
-  langBtn.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('show'); });
-  document.addEventListener('click', () => langDropdown.classList.remove('show'));
-  
-  document.querySelectorAll('.lang-option').forEach(opt => {
-      opt.addEventListener('click', () => { applyLanguage(opt.dataset.lang); });
+  document.getElementById('langToggle').addEventListener('click', () => {
+    const order = ['es', 'en'];
+    const next = order[(order.indexOf(currentLang) + 1) % order.length];
+    applyLanguage(next);
   });
 
   function renderTagFilters(){
@@ -561,8 +518,8 @@
         html += `
           <article class="card ${isEpuizat ? 'out-of-stock' : ''}">
             <div class="card-img-wrap">
-              ${isEpuizat ? `<div class="badge-epuizat"><span>${t.badgeEpuizat}</span></div>` : ''}
-              ${(item.tags||[]).includes('especialidad') ? `<div class="ribbon">${t.ribbonEsp}</div>` : ''}
+              ${isEpuizat ? '<div class="badge-epuizat"><span>Agotado</span></div>' : ''}
+              ${(item.tags||[]).includes('especialidad') ? '<div class="ribbon">Especialidad</div>' : ''}
               <img src="images/${item.imageNumber}.jpg" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
               <div class="card-qty-controls ${q>0?'has-items':''}">
                 <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
@@ -611,7 +568,7 @@
       
       if(activeFilter === 'favorites' && items.length > 0) {
         bar.classList.add('show');
-        document.body.classList.add('has-cart-bar'); 
+        document.body.classList.add('has-cart-bar'); // Adăugăm clasă pt a ridica butonul Waiter
       } else {
         bar.classList.remove('show');
         document.body.classList.remove('has-cart-bar');
@@ -631,6 +588,7 @@
       }
   }
 
+  // --- SPLIT THE BILL LOGIC ---
   const splitModal = document.getElementById('splitBillOverlay');
   let sbPersons = 2; let sbTip = 10;
   
@@ -649,9 +607,10 @@
       document.getElementById('sbTip').textContent = sbTip + '%';
       const totalWithTip = cartTotalValue * (1 + (sbTip / 100));
       const perPerson = totalWithTip / sbPersons;
-      document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} RON`;
+      document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} RON / pers.`;
   }
 
+  // --- ONBOARDING & MODALS ---
   const onboardingOverlay = document.getElementById('onboardingOverlay');
   const obLangStep = document.getElementById('obLangStep');
   const obModeStep = document.getElementById('obModeStep');
@@ -684,11 +643,13 @@
     const t = I18N[currentLang];
 
     if(savedMode === 'takeaway') { 
+        // MODUL TAKEAWAY: Nu cerem masa absolut deloc
         tableInput.style.display = 'none';
         tableInput.value = t.takeawayLabel; 
         titleEl.textContent = t.takeawayTitle;
         descEl.textContent = t.takeawayDesc;
     } else { 
+        // MODUL LA MASĂ: Cerem numărul mesei
         tableInput.style.display = 'block';
         tableInput.disabled = false; 
         titleEl.textContent = t.orderModalTitle;
@@ -710,36 +671,30 @@
       if(e.target === document.getElementById('customAlertOverlay')) document.getElementById('customAlertOverlay').classList.remove('open');
   });
 
+  // --- ORDER TRACKER LOGIC ---
   let trackingOrderId = null;
   function startTrackingOrder(id) {
       trackingOrderId = id;
       const tracker = document.getElementById('liveTracker');
       const statText = document.getElementById('trackerStatusText');
       const progress = document.getElementById('trackerProgress');
-      const t = I18N[currentLang];
       
       tracker.classList.add('show');
-      statText.textContent = '👨‍🍳 ' + (currentLang==='es'?'Recibido':'Preliuat');
+      statText.textContent = '👨‍🍳 Recibido por el staff';
       progress.style.width = '35%';
 
       _supabase.channel(`order_tracker_${id}`)
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi', filter: `id=eq.${id}` }, p => {
           const s = p.new.status;
           if (s === 'gata' || s === 'in_lucru') {
-              statText.textContent = '🔥 ' + (currentLang==='es'?'En preparación':'În preparare');
+              statText.textContent = '🔥 En preparación / Listo para servir';
               progress.style.width = '70%';
           } else if (s === 'finalizata') {
-              // Aici arătăm clar că e din partea casei dacă e cazul
-              if(p.new.comp_motiv) {
-                  statText.textContent = '🎁 GRATIS (' + p.new.comp_motiv + ')';
-                  statText.style.color = '#fbbf24';
-              } else {
-                  statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado':'Servit / Finalizat');
-              }
+              statText.textContent = '✅ Servido / Finalizado';
               progress.style.width = '100%';
               setTimeout(() => { tracker.classList.remove('show'); }, 8000);
           } else if (s === 'anulata') {
-              statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado':'Anulată');
+              statText.textContent = '❌ Pedido Cancelado';
               statText.style.color = 'var(--danger)';
               progress.style.width = '100%';
               progress.style.background = 'var(--danger)';
@@ -748,10 +703,11 @@
       }).subscribe();
   }
 
+  // --- SEND ORDER ---
   document.getElementById('sendOrderBtn').addEventListener('click', async () => {
       const t = I18N[currentLang];
       const tableInput = document.getElementById('tableNumberInput');
-      const tableNr = tableInput.value.trim() || 'No-Nr';
+      const tableNr = tableInput.value.trim() || 'Sin número';
       sessionStorage.setItem('fieraMesa', tableNr);
 
       const items = allItems.filter(i => getQty(i) > 0);
@@ -761,6 +717,8 @@
       const noteText = document.getElementById('orderNoteInput').value.trim();
       const noteItem = noteText ? [{ nume: '📝 ' + noteText, cantitate: 0, pret_unitar: 0 }] : [];
 
+      // Grupăm bonul de bar și cel de bucătărie sub același ID, ca la fiscalizare
+      // să fie tratate ca UN SINGUR bon, nu două separate.
       const grupId = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+'-'+Math.random()));
 
       const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
@@ -786,7 +744,7 @@
       btn.textContent = t.sendOrderBtnText; btn.disabled = false;
 
       if (error) {
-          showCustomAlert("Error", "Error DB: " + error.message);
+          showCustomAlert("Error", "Error de Supabase: " + error.message);
       } else {
         orderModal.classList.remove('open');
         document.getElementById('orderNoteInput').value = '';
@@ -798,25 +756,20 @@
       }
   });
 
-  window.sendSpecialAlert = async function(tipKey) {
+  // CALL WAITER
+  window.sendSpecialAlert = async function(tip) {
       const t = I18N[currentLang];
       let mesa = sessionStorage.getItem('fieraMesa');
-      if(!mesa || mesa === 'stabilita') { 
-          // prompt standard browser
-          mesa = prompt("Table Number / Număr masă:"); 
-          if(!mesa) return; 
-          sessionStorage.setItem('fieraMesa', mesa); 
-      }
+      if(!mesa || mesa === 'stabilita') { mesa = prompt(t.askTable); if(!mesa) return; sessionStorage.setItem('fieraMesa', mesa); }
       
-      const payloadText = t.alertPayload[tipKey] || tipKey;
-      
-      await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + payloadText, cantitate: 1, pret_unitar: 0}] }]);
-      showCustomAlert("OK!", t.alertSent(mesa));
+      await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + tip, cantitate: 1, pret_unitar: 0}] }]);
+      showCustomAlert("Notificación enviada", t.alertSent(mesa));
       callModal.classList.remove('open');
   };
 
   document.getElementById('searchInput').addEventListener('input', render);
 
+  // INIT
   applyLanguage(currentLang);
   fetch('menu.json').then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
@@ -835,4 +788,3 @@
 </script>
 </body>
 </html>
-
