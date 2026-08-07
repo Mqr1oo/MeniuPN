@@ -136,22 +136,32 @@
   .modal{ background:var(--bg-card); border: 1px solid var(--border); max-width:420px; width:100%; border-radius:20px; padding:32px; position:relative; }
   .modal-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.05); border:none; border-radius: 50%; width:36px; height:36px; color:var(--text-muted); cursor:pointer;}
 
-  /* Stiluri Tabel Log-uri */
   .table-responsive { overflow-x: auto; width: 100%; }
   .table-logs { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
   .table-logs th { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600; }
   .table-logs td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
   .table-logs tr:hover td { background: rgba(255,255,255,0.02); }
   
-  /* Stiluri Hartă (Floor Plan) */
+  /* Hartă inteligentă cu zone/clădiri */
+  .zone-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+  .zone-tab { padding: 8px 16px; border-radius: 100px; background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .zone-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+  
   .map-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; background: var(--bg-card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); max-width: 600px; margin: 0 auto; transition: 0.3s;}
   .map-grid.editing { border-color: var(--accent); box-shadow: 0 0 20px rgba(22, 132, 78, 0.2); }
-  .map-cell { aspect-ratio: 1; border: 2px dashed rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 16px; position: relative; cursor: pointer; transition: all 0.2s; user-select: none;}
+  .map-cell { aspect-ratio: 1; border: 2px dashed rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 15px; position: relative; cursor: pointer; transition: all 0.2s; user-select: none;}
   .map-cell:hover { background: rgba(255,255,255,0.05); }
   .map-cell.has-table { border: 2px solid var(--accent); background: rgba(22, 132, 78, 0.1); color: white; font-weight: 700; box-shadow: inset 0 0 10px rgba(22, 132, 78, 0.2);}
   .map-cell.status-red { border-color: var(--danger); background: rgba(239, 68, 68, 0.2); box-shadow: 0 0 15px rgba(239,68,68,0.4), inset 0 0 15px rgba(239,68,68,0.2); animation: pulseRed 2s infinite; }
   .map-cell.status-yellow { border-color: var(--warning); background: rgba(245, 158, 11, 0.2); box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.2);}
   @keyframes pulseRed { 0% {box-shadow: 0 0 15px rgba(239,68,68,0.4);} 50% {box-shadow: 0 0 25px rgba(239,68,68,0.7);} 100% {box-shadow: 0 0 15px rgba(239,68,68,0.4);} }
+
+  /* Grafic de vânzări pe lună */
+  .chart-container { display: flex; align-items: flex-end; gap: 8px; height: 180px; padding: 20px 10px 10px; border-bottom: 2px solid var(--border); margin-top: 15px; overflow-x: auto; }
+  .chart-bar-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 26px; height: 100%; justify-content: flex-end; }
+  .chart-bar { width: 100%; background: var(--accent); border-radius: 6px 6px 0 0; transition: height 0.5s; min-height: 4px; }
+  .chart-bar:hover { background: var(--accent-hover); }
+  .chart-label { font-size: 10px; color: var(--text-muted); margin-top: 6px; font-family: 'Space Mono', monospace; }
 
   @media (max-width: 800px) {
       body { flex-direction: column; }
@@ -274,15 +284,21 @@
   <div class="content-area">
     <div id="ordersView" class="grid-comenzi"></div>
 
-    <!-- HARTA SALII (FLOOR PLAN) -->
+    <!-- HARTA SALII (MULTI-ZONA / CLĂDIRI) -->
     <div id="mapView" style="display:none;">
        <div class="dash-panel" style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap:16px;">
           <div>
-            <h3>🗺️ Plano de la Sala</h3>
-            <p style="color:var(--text-muted); font-size:13px; line-height: 1.5;">Gris: Libre | <span style="color:var(--warning)">Amarillo: En curso</span> | <span style="color:var(--danger)">Rojo: ¡Alerta de cliente o Espera >15min!</span></p>
+            <h3>🗺️ Plano de la Sala & Edificios</h3>
+            <p style="color:var(--text-muted); font-size:13px; line-height: 1.5;">Selecciona la zona o planta. Gris: Libre | <span style="color:var(--warning)">Amarillo: En curso</span> | <span style="color:var(--danger)">Rojo: ¡Alerta!</span></p>
           </div>
-          <button id="btnEditMap" class="btn-action" style="border:1px solid var(--border); display:none;">✏️ Editar Mapeado</button>
+          <div style="display:flex; gap:10px; align-items:center;">
+             <button id="btnAddZone" class="btn-action" style="border:1px solid var(--border); display:none; font-size:13px; padding: 10px 14px;">➕ Nueva Zona</button>
+             <button id="btnEditMap" class="btn-action" style="border:1px solid var(--border); display:none; font-size:13px; padding: 10px 14px;">✏️ Editar Mapeado</button>
+          </div>
        </div>
+       
+       <!-- Tab-uri Zone -->
+       <div class="zone-tabs" id="zoneTabsContainer"></div>
        <div id="mapGrid" class="map-grid"></div>
     </div>
 
@@ -299,6 +315,7 @@
           <div><h2 style="font-size: 24px; font-weight: 700;">Resumen Actividad</h2></div>
           <div style="display: flex; gap: 10px; align-items: center;">
               <button class="btn-action" style="background:var(--accent); color:white; font-size:13px; padding: 10px 16px;" onclick="exportCSV()">📥 Descargar Excel</button>
+              <button class="btn-action" style="background:var(--blue); color:white; font-size:13px; padding: 10px 16px;" onclick="exportLogsCSV()">📥 Descargar Logs (CSV)</button>
               <div class="time-toggle">
                   <button class="active" id="btnStatsToday">Hoy</button>
                   <button id="btnStatsMonth">Este mes</button>
@@ -313,7 +330,12 @@
         <div class="stat-card"><div class="stat-label">Cocina / Barra</div><div class="stat-val" id="statKitchen">0 €</div></div>
       </div>
 
-      <!-- MOD BUSY HOURS (Pentru Sef) -->
+      <!-- GRAFIC VÂNZĂRI -->
+      <div class="dash-panel" id="chartPanel">
+         <h3 id="chartTitle">📈 Evolución de Ingresos</h3>
+         <div class="chart-container" id="revenueChartBars"></div>
+      </div>
+
       <div class="dash-panel" style="border-color: var(--warning);">
          <h3 style="color: var(--warning);">🔥 Horas Punta (Aviso Cocina)</h3>
          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -327,7 +349,6 @@
           <ul class="top-list" id="topProductsList"></ul>
       </div>
 
-      <!-- FEEDBACK NEGATIV CIENTI -->
       <div class="dash-panel" id="feedbackPanel" style="display:none;">
           <h3 style="color: var(--blue);">💬 Opiniones Internas (Mejora)</h3>
           <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">Feedbacks privados enviados por clientes (1 a 4 estrellas).</p>
@@ -336,7 +357,7 @@
 
       <div class="dash-panel">
           <h3>🚨 Tickets No Confirmados (Por Staff)</h3>
-          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable. Un número alto en una sola persona es señal de alerta.</p>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable.</p>
           <ul class="top-list" id="pendingByStaffList"></ul>
       </div>
     </div>
@@ -356,7 +377,7 @@
     <div id="jurnalView" style="display: none;">
       <div class="dash-panel">
         <h3>🕵️ Log de Actividad (Auditoría)</h3>
-        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción se guarda con la hora exacta. Registro permanente, imborrable. Atención: Por políticas de privacidad (RGPD), los datos se borran automáticamente tras 48h.</p>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción se guarda con la hora exacta. Registro permanente, imborrable.</p>
         
         <div class="table-responsive">
           <table class="table-logs">
@@ -368,9 +389,7 @@
                 <th>Detalles (Mesa/Motivo)</th>
               </tr>
             </thead>
-            <tbody id="jurnalList">
-               <!-- Logs will be loaded here -->
-            </tbody>
+            <tbody id="jurnalList"></tbody>
           </table>
         </div>
       </div>
@@ -382,7 +401,7 @@
   <div class="modal" style="text-align: left;">
     <button class="modal-close" onclick="document.getElementById('privacyOverlay').classList.remove('open')">&times;</button>
     <h2>Política de Privacidad Interna</h2>
-    <p style="font-size:14px; color: var(--text-muted); margin-top:10px;">El sistema Á Libretto gestiona datos operativos. Los nombres y números de teléfono recopilados para pedidos "Takeaway" se eliminan automáticamente de nuestra base de datos (Supabase) después de 48 horas, de acuerdo con las normativas europeas RGPD. Como miembro del personal, no debe guardar ni utilizar esta información de contacto para fines ajenos al pedido actual.</p>
+    <p style="font-size:14px; color: var(--text-muted); margin-top:10px;">El sistema Á Libretto gestiona datos operativos. Los nombres y números de teléfono recopilados para pedidos "Takeaway" se eliminan automáticamente de nuestra base de datos (Supabase) después de 48 horas.</p>
   </div>
 </div>
 
@@ -402,8 +421,9 @@
   
   let soundEnabled = false;
 
-  // FLOOR PLAN VARS
-  let floorPlan = {}; // ex: { 'cell-3': '1', 'cell-8': 'T1' }
+  // FLOOR PLAN AVANSAT (Multi-zona / Clădiri)
+  let floorZones = { "Salon Principal": {} }; // ex: { "Salon Principal": { "cell-3": "1" }, "Terraza": { ... } }
+  let currentZone = "Salon Principal";
   let isEditingMap = false;
 
   const searchDesc = document.getElementById('tableFilterInputDesc');
@@ -425,7 +445,6 @@
               const htmlStr = '🔊 Sonido: ON';
               btnDesc.innerHTML = htmlStr; btnMob.innerHTML = htmlStr;
               btnDesc.classList.add('on'); btnMob.classList.add('on');
-              
               if ('speechSynthesis' in window) {
                   const unlockMsg = new SpeechSynthesisUtterance('');
                   window.speechSynthesis.speak(unlockMsg);
@@ -436,7 +455,6 @@
               btnDesc.classList.remove('on'); btnMob.classList.remove('on');
           }
       };
-      
       document.getElementById('btnToggleSound').addEventListener('click', toggleFn);
       document.getElementById('btnToggleSoundMobile').addEventListener('click', toggleFn);
   }
@@ -496,7 +514,6 @@
               
               window.speechSynthesis.cancel(); 
               window.speechSynthesis.speak(utterance);
-              
           } else if (userRole === 'bar' || userRole === 'director') {
               const ctx = new (window.AudioContext || window.webkitAudioContext)();
               const osc = ctx.createOscillator(); 
@@ -561,7 +578,6 @@
     if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'ospatar' || userRole === 'director') {
         document.getElementById('navStock').style.display = 'flex';
     }
-    // Harta se vede de către Ospătari și Director
     if(userRole === 'director' || userRole === 'ospatar') {
         document.getElementById('navMap').style.display = 'flex';
     }
@@ -570,6 +586,7 @@
         document.getElementById('navAdmin').style.display = 'flex'; 
         document.getElementById('navJurnal').style.display = 'flex';
         document.getElementById('btnEditMap').style.display = 'block';
+        document.getElementById('btnAddZone').style.display = 'block';
         document.getElementById('feedbackPanel').style.display = 'block';
     }
     
@@ -577,8 +594,8 @@
 
     ensureNotificationPermission();
     loadOrders(); 
-    loadMapSettings(); // Harta Settings
-    loadBusyMode(); // Busy Mode
+    loadMapSettings(); 
+    loadBusyMode(); 
     if(userRole === 'director') loadFeedbacks();
     
     subscribeRealtime();
@@ -642,28 +659,45 @@
         document.getElementById('navMap').classList.add('active');
         document.getElementById('pageTitle').textContent = 'Plano de la Sala';
         document.getElementById('mapView').style.display = 'block';
+        renderMapZones();
         renderMap();
     }
   }
 
-  // --- HARTA SALII (FLOOR PLAN) LOGIC ---
+  // --- HARTA SALII (MULTI-ZONA AVANSAT) ---
   async function loadMapSettings() {
       const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_harta').order('created_at', {ascending:false}).limit(1);
-      if(data && data.length > 0 && data[0].detalii) {
-          floorPlan = data[0].detalii.floorPlan || {};
+      if(data && data.length > 0 && data[0].detalii && data[0].detalii.floorZones) {
+          floorZones = data[0].detalii.floorZones;
+          const zones = Object.keys(floorZones);
+          if(zones.length > 0 && !floorZones[currentZone]) currentZone = zones[0];
       }
   }
 
   async function saveMapSettings() {
-      await logActivity('setari_harta', null, { floorPlan });
+      await logActivity('setari_harta', null, { floorZones });
       isEditingMap = false; 
       const btn = document.getElementById('btnEditMap');
       btn.textContent = '✏️ Editar Mapeado';
       btn.style.background = 'transparent';
       btn.style.color = 'var(--text)';
       document.getElementById('mapGrid').classList.remove('editing');
+      renderMapZones();
       renderMap();
   }
+
+  document.getElementById('btnAddZone').addEventListener('click', () => {
+      let zName = prompt('Nombre de la nueva zona o edificio (ej: Terraza, Planta 1):');
+      if(zName && zName.trim() !== '') {
+          zName = zName.trim();
+          if(!floorZones[zName]) {
+              floorZones[zName] = {};
+              currentZone = zName;
+              renderMapZones();
+              renderMap();
+          }
+      }
+  });
 
   document.getElementById('btnEditMap').addEventListener('click', () => {
       isEditingMap = !isEditingMap;
@@ -678,25 +712,35 @@
       }
   });
 
+  function renderMapZones() {
+      const container = document.getElementById('zoneTabsContainer');
+      container.innerHTML = '';
+      Object.keys(floorZones).forEach(z => {
+          let tab = document.createElement('div');
+          tab.className = `zone-tab ${z === currentZone ? 'active' : ''}`;
+          tab.textContent = z;
+          tab.onclick = () => { currentZone = z; renderMapZones(); renderMap(); };
+          container.appendChild(tab);
+      });
+  }
+
   function getTableStatusColor(tableNr) {
-      // Find orders that belong to this table and are NOT finalized
       let active = allOrders.filter(o => o.mesa === tableNr && o.status !== 'finalizata' && o.status !== 'anulata');
-      if(active.length === 0) return 'none'; // Goală (Gris)
-      
+      if(active.length === 0) return 'none';
       let hasAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ')));
-      let isOld = active.some(o => (Date.now() - new Date(o.created_at).getTime()) > 15 * 60000); // Mai vechi de 15min
-      
-      if(hasAlert || isOld) return 'red'; // Urgent
-      return 'yellow'; // In lucru
+      let isOld = active.some(o => (Date.now() - new Date(o.created_at).getTime()) > 15 * 60000);
+      if(hasAlert || isOld) return 'red';
+      return 'yellow';
   }
 
   function renderMap() {
       const grid = document.getElementById('mapGrid');
       grid.innerHTML = '';
-      // Generăm 48 celule (Grid 6x8)
+      let zoneData = floorZones[currentZone] || {};
+
       for(let i=0; i<48; i++) {
           let cellId = 'cell-' + i;
-          let tableNr = floorPlan[cellId];
+          let tableNr = zoneData[cellId];
           let cell = document.createElement('div');
           cell.className = 'map-cell';
           
@@ -710,14 +754,14 @@
           
           cell.onclick = () => {
              if(isEditingMap) {
-                let p = prompt('Número de mesa para esta casilla (deja vacío para borrar):', tableNr || '');
+                let p = prompt(`Número de mesa para esta casilla en [${currentZone}] (vacío para borrar):`, tableNr || '');
                 if(p !== null) {
-                   if(p.trim() === '') delete floorPlan[cellId];
-                   else floorPlan[cellId] = p.trim();
-                   renderMap(); // Redenam vizual in timp real
+                   if(!floorZones[currentZone]) floorZones[currentZone] = {};
+                   if(p.trim() === '') delete floorZones[currentZone][cellId];
+                   else floorZones[currentZone][cellId] = p.trim();
+                   renderMap();
                 }
              } else if(tableNr) {
-                // Dacă dă click pe masă, filtrează comenzile pentru ea și deschide Tab-ul
                 searchDesc.value = tableNr;
                 searchMob.value = tableNr;
                 switchTab('active');
@@ -728,7 +772,6 @@
       }
   }
 
-  // --- BUSY HOURS LOGIC ---
   async function loadBusyMode() {
       const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
       if(data && data.length > 0 && data[0].detalii) {
@@ -740,7 +783,6 @@
       await logActivity('setari_busy', null, { isBusy: e.target.checked });
   });
 
-  // --- FEEDBACK INTERN LOGIC (JEFE) ---
   async function loadFeedbacks() {
       const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'feedback_client').order('created_at', {ascending:false}).limit(50);
       const fbList = document.getElementById('feedbackList');
@@ -764,7 +806,6 @@
       }).join('');
   }
 
-  // --- SISTEM BAZA DE COMENZI ---
   async function loadOrders() {
     const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
     if(error) console.error("Error loading orders:", error);
@@ -903,16 +944,13 @@
           const timeBadge = card.querySelector('.time-elapsed');
           if(timeBadge) {
               timeBadge.textContent = diffMin + ' min';
-              if(diffMin >= 15) {
-                 timeBadge.textContent = '🔥 ' + diffMin + ' min';
-              }
+              if(diffMin >= 15) timeBadge.textContent = '🔥 ' + diffMin + ' min';
           }
 
           card.classList.remove('warning', 'danger');
           if(diffMin >= 15) card.classList.add('danger');
           else if(diffMin >= 8) card.classList.add('warning');
       });
-      // Refacem și harta la fiecare minut ca să apară roșu
       if(currentTab === 'map') renderMap();
   }
 
@@ -1000,6 +1038,7 @@
       e.target.classList.add('active'); statsMode = 'month'; calculateDirectorStats();
   });
 
+  // EXPORT COMANZI CSV
   window.exportCSV = function() {
       const now = new Date();
       const cutoff = statsMode === 'today'
@@ -1028,7 +1067,32 @@
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
       link.setAttribute("href", url);
-      link.setAttribute("download", `Reporte_${statsMode}_${now.toISOString().slice(0,10)}.csv`);
+      link.setAttribute("download", `Reporte_Comandos_${statsMode}_${now.toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  };
+
+  // EXPORT LOGS CSV (Nou cerut)
+  window.exportLogsCSV = async function() {
+      const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(2000);
+      if(error || !data) { alert('Error al descargar logs'); return; }
+
+      let csvContent = '\uFEFF';
+      csvContent += "ID,Fecha,Hora,Usuario,Accion,Detalles\n";
+      data.forEach(l => {
+          const dt = new Date(l.created_at);
+          const fDate = dt.toLocaleDateString('es-ES');
+          const fTime = dt.toLocaleTimeString('es-ES');
+          const detStr = JSON.stringify(l.detalii || {}).replace(/"/g, '""');
+          csvContent += `"${l.id}","${fDate}","${fTime}","${l.utilizator}","${l.actiune}","${detStr}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Log_Actividad_${new Date().toISOString().slice(0,10)}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1044,13 +1108,25 @@
       
       const cutoff = statsMode === 'today' ? todayStart : monthStart;
 
+      // Obiect pentru graficul pe zile/luni
+      let chartData = {};
+
       istoric.forEach(order => {
           const orderTime = new Date(order.created_at).getTime();
           if (orderTime >= cutoff) {
               const val = Number(order.total);
               
               if (order.bon_scos) {
-                  if(!order.comp_motiv) { total += val; kitchenTotal += val; }
+                  if(!order.comp_motiv) { 
+                      total += val; 
+                      kitchenTotal += val; 
+
+                      // Grupăm pentru grafic
+                      let dKey = statsMode === 'today' 
+                          ? new Date(order.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})
+                          : new Date(order.created_at).toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
+                      chartData[dKey] = (chartData[dKey] || 0) + val;
+                  }
               } else {
                   pendingBonCount++; 
                   const responsabil = order.creat_de || order.preluat_de || 'desconocido';
@@ -1069,6 +1145,27 @@
       document.getElementById('statCount').textContent = istoric.length;
       document.getElementById('statPendingBon').textContent = pendingBonCount;
       document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} €`;
+
+      // RENDERIZARE GRAFIC BARE
+      const chartContainer = document.getElementById('revenueChartBars');
+      chartContainer.innerHTML = '';
+      const chartEntries = Object.entries(chartData);
+      
+      if(chartEntries.length === 0) {
+          chartContainer.innerHTML = `<div style="width:100%; text-align:center; color:var(--text-muted); font-size:13px; padding-top:60px;">Sin datos de ingresos para este periodo</div>`;
+      } else {
+          let maxVal = Math.max(...chartEntries.map(e => e[1]), 10);
+          chartEntries.forEach(([label, amount]) => {
+              let hPercent = Math.max(Math.round((amount / maxVal) * 100), 5);
+              chartContainer.innerHTML += `
+                <div class="chart-bar-wrap" title="${amount.toFixed(2)} €">
+                   <div style="font-size:10px; color:var(--text-muted); margin-bottom:4px; font-family:'Space Mono',monospace;">${Math.round(amount)}€</div>
+                   <div class="chart-bar" style="height: ${hPercent}%;"></div>
+                   <div class="chart-label">${label}</div>
+                </div>
+              `;
+          });
+      }
 
       const listEl = document.getElementById('topProductsList'); listEl.innerHTML = '';
       const sorted = Object.entries(productCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -1169,11 +1266,6 @@
           ticket_confirmado: '<span style="color:var(--text)">🧾 Confirmado</span>', 
           pedido_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>', 
           pedido_creado_camarero: '<span style="color:var(--blue)">📋 Nuevo Menu</span>',
-          comanda_anulata: '<span style="color:var(--danger)">❌ Cancelado</span>',
-          status_schimbat: '<span style="color:var(--success)">🔄 Estado</span>',
-          bon_confirmat: '<span style="color:var(--text)">🧾 Confirmado</span>',
-          comanda_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>',
-          comanda_creata_ospatar: '<span style="color:var(--blue)">📋 Nuevo Menu</span>',
           setari_harta: '<span style="color:var(--warning)">🗺️ Edit Mapa</span>',
           setari_busy: '<span style="color:var(--warning)">🔥 Modo Punta</span>',
           feedback_client: '<span style="color:var(--success)">💬 Feedback</span>'
@@ -1214,9 +1306,7 @@
               (userRole === 'ospatar' && isAlert) ||
               (userRole === 'bar' && isAlert)) { 
               
-              if(p.new.status === 'noua') { 
-                 playAlertAndVibrate(p.new); 
-              } 
+              if(p.new.status === 'noua') playAlertAndVibrate(p.new); 
               renderOrders(); 
               if (currentTab === 'map') renderMap();
           }
@@ -1238,5 +1328,4 @@
 </script>
 </body>
 </html>
-
 
