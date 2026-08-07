@@ -45,6 +45,8 @@
   .nav-icon { font-size: 20px; }
   .badge-count { background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 100px; font-size: 13px; font-family: 'Space Mono', monospace; margin-left: auto; font-weight: 700;}
   .nav-item.active .badge-count { background: rgba(255,255,255,0.2); }
+  .badge-count.badge-full { background: var(--danger); color: white; }
+  .badge-count.badge-ok { background: rgba(16, 185, 129, 0.25); color: var(--success); }
   
   .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); line-height: 1.6;}
   .logout-btn { color: var(--danger); cursor: pointer; padding: 8px 0 0; font-weight: 600; display: inline-block;}
@@ -57,7 +59,7 @@
   .table-filter { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px; color: white; outline: none; width: 280px; font-family: 'Space Mono', monospace; font-size: 14px; transition: 0.3s; }
   .table-filter:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); }
   
-  .btn-sound-toggle { padding: 10px 20px; border-radius: 100px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: 0.3s; background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+  .btn-sound-toggle { padding: 10px 20px; border-radius: 100px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: 0.3s; background: rgba(239, 68, 68, 0.15); color: var(--danger); display: none; }
   .btn-sound-toggle.on { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 
   .mobile-brand-area { display: none; flex-direction: column; }
@@ -142,19 +144,31 @@
   .table-logs td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
   .table-logs tr:hover td { background: rgba(255,255,255,0.02); }
   
-  /* Hartă inteligentă cu zone/clădiri */
+  /* Zona / Sala (mese reale, cu scaune) */
   .zone-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
-  .zone-tab { padding: 8px 16px; border-radius: 100px; background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .zone-tab { padding: 8px 16px; border-radius: 100px; background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 13px; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
   .zone-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-  
-  .map-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; background: var(--bg-card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); max-width: 600px; margin: 0 auto; transition: 0.3s;}
-  .map-grid.editing { border-color: var(--accent); box-shadow: 0 0 20px rgba(22, 132, 78, 0.2); }
-  .map-cell { aspect-ratio: 1; border: 2px dashed rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 15px; position: relative; cursor: pointer; transition: all 0.2s; user-select: none;}
-  .map-cell:hover { background: rgba(255,255,255,0.05); }
-  .map-cell.has-table { border: 2px solid var(--accent); background: rgba(22, 132, 78, 0.1); color: white; font-weight: 700; box-shadow: inset 0 0 10px rgba(22, 132, 78, 0.2);}
-  .map-cell.status-red { border-color: var(--danger); background: rgba(239, 68, 68, 0.2); box-shadow: 0 0 15px rgba(239,68,68,0.4), inset 0 0 15px rgba(239,68,68,0.2); animation: pulseRed 2s infinite; }
-  .map-cell.status-yellow { border-color: var(--warning); background: rgba(245, 158, 11, 0.2); box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.2);}
-  @keyframes pulseRed { 0% {box-shadow: 0 0 15px rgba(239,68,68,0.4);} 50% {box-shadow: 0 0 25px rgba(239,68,68,0.7);} 100% {box-shadow: 0 0 15px rgba(239,68,68,0.4);} }
+  .zone-tab .zone-del { opacity: 0.7; font-weight: 900; padding: 0 2px; }
+  .zone-tab .zone-del:hover { opacity: 1; color: var(--danger); }
+
+  .sala-legend { display:flex; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--text-muted); margin-top:10px; }
+  .sala-legend span { display:flex; align-items:center; gap:6px; }
+  .sala-legend i { width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+  .tables-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 14px; margin-top: 6px; }
+  .table-card { aspect-ratio: 1; border-radius: 16px; border: 2px solid var(--border); background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; transition: all 0.2s; position: relative; user-select: none; }
+  .table-card:active { transform: scale(0.95); }
+  .table-card .t-num { font-family: 'Space Mono', monospace; font-weight: 800; font-size: 20px; }
+  .table-card .t-seats { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+  .table-card.status-free { border-color: rgba(255,255,255,0.12); }
+  .table-card.status-yellow { border-color: var(--warning); background: rgba(245, 158, 11, 0.12); box-shadow: inset 0 0 12px rgba(245,158,11,0.15); }
+  .table-card.status-red { border-color: var(--danger); background: rgba(239, 68, 68, 0.16); box-shadow: 0 0 16px rgba(239,68,68,0.35), inset 0 0 12px rgba(239,68,68,0.15); animation: pulseRed 2s infinite; }
+  .table-card.status-blue { border-color: var(--blue); background: rgba(59, 130, 246, 0.16); box-shadow: inset 0 0 12px rgba(59,130,246,0.2); }
+  .table-card.editing-mode { border-style: dashed; }
+  .table-card .t-del { position: absolute; top: 4px; right: 6px; font-size: 13px; color: var(--danger); font-weight: 900; display: none; }
+  .table-card.editing-mode .t-del { display: block; }
+  .add-table-card { aspect-ratio: 1; border-radius: 16px; border: 2px dashed var(--border); background: transparent; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--text-muted); cursor: pointer; }
+  .add-table-card:active { transform: scale(0.95); }
 
   /* Grafic de vânzări pe lună */
   .chart-container { display: flex; align-items: flex-end; gap: 8px; height: 180px; padding: 20px 10px 10px; border-bottom: 2px solid var(--border); margin-top: 15px; overflow-x: auto; }
@@ -200,9 +214,28 @@
           border: 2px solid var(--bg-card);
       }
       
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-card { padding: 16px; }
-      .stat-val { font-size: 22px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat-card { padding: 14px; border-radius: 16px; }
+      .stat-val { font-size: 19px; margin-top: 6px; }
+      .stat-label { font-size: 11px; }
+
+      .dash-panel { padding: 16px; border-radius: 16px; margin-bottom: 16px; }
+      .dash-panel h3 { font-size: 15.5px; margin-bottom: 12px; flex-wrap: wrap; }
+
+      #adminView > div[style*="justify-content: space-between"] { flex-direction: column; align-items: stretch !important; gap: 10px !important; }
+      #adminView .time-toggle { width: 100%; }
+      #adminView .time-toggle button { flex: 1; }
+      #adminView > div[style*="display: flex"][style*="gap: 10px"] { flex-wrap: wrap; }
+      #adminView button[onclick^="export"] { flex: 1 1 auto; font-size: 12px !important; padding: 10px 12px !important; }
+
+      .table-logs { font-size: 12.5px; }
+      .table-logs th, .table-logs td { padding: 10px 8px; }
+
+      .tables-grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
+      .table-card .t-num { font-size: 16px; }
+      .table-card .t-seats { font-size: 10px; }
+
+      .top-item { font-size: 13.5px; padding: 10px 0; }
   }
 </style>
 </head>
@@ -231,6 +264,7 @@
   <div class="nav-item" id="navMap" style="display:none;">
       <div class="nav-icon">🗺️</div>
       <div class="nav-text">Sala</div>
+      <span class="badge-count" id="countMesasLibres" style="display:none;">0</span>
   </div>
   <div class="nav-item" id="navHistory">
       <div class="nav-icon">🧾</div>
@@ -284,22 +318,30 @@
   <div class="content-area">
     <div id="ordersView" class="grid-comenzi"></div>
 
-    <!-- HARTA SALII (MULTI-ZONA / CLĂDIRI) -->
+    <!-- SALA: mese reale, cu scaune, ocupare automată -->
     <div id="mapView" style="display:none;">
        <div class="dash-panel" style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap:16px;">
           <div>
-            <h3>🗺️ Plano de la Sala & Edificios</h3>
-            <p style="color:var(--text-muted); font-size:13px; line-height: 1.5;">Selecciona la zona o planta. Gris: Libre | <span style="color:var(--warning)">Amarillo: En curso</span> | <span style="color:var(--danger)">Rojo: ¡Alerta!</span></p>
+            <h3>🗺️ Plano de la Sala</h3>
+            <p style="color:var(--text-muted); font-size:13px; line-height: 1.5;">Toca una mesa ocupada para ver el pedido o liberarla. <span id="salaFullMsg" style="display:none; color:var(--danger); font-weight:700;">· SALA COMPLETA</span></p>
           </div>
-          <div style="display:flex; gap:10px; align-items:center;">
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
              <button id="btnAddZone" class="btn-action" style="border:1px solid var(--border); display:none; font-size:13px; padding: 10px 14px;">➕ Nueva Zona</button>
-             <button id="btnEditMap" class="btn-action" style="border:1px solid var(--border); display:none; font-size:13px; padding: 10px 14px;">✏️ Editar Mapeado</button>
+             <button id="btnDeleteZone" class="btn-action" style="border:1px solid var(--danger); color:var(--danger); background:transparent; display:none; font-size:13px; padding: 10px 14px;">🗑️ Eliminar Zona</button>
+             <button id="btnEditMap" class="btn-action" style="border:1px solid var(--border); display:none; font-size:13px; padding: 10px 14px;">✏️ Editar Mesas</button>
           </div>
        </div>
        
-       <!-- Tab-uri Zone -->
        <div class="zone-tabs" id="zoneTabsContainer"></div>
-       <div id="mapGrid" class="map-grid"></div>
+       <div class="dash-panel">
+         <div class="tables-grid" id="tablesGrid"></div>
+         <div class="sala-legend">
+            <span><i style="background:var(--bg); border:2px solid var(--border);"></i> Libre</span>
+            <span><i style="background:rgba(245,158,11,0.4); border:2px solid var(--warning);"></i> Ocupada</span>
+            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> +15 min / Alerta</span>
+            <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Pidió la cuenta</span>
+         </div>
+       </div>
     </div>
 
     <div id="stockView" style="display: none;">
@@ -405,6 +447,16 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="tableActionOverlay">
+  <div class="modal" style="max-width:360px; text-align:center;">
+    <button class="modal-close" onclick="document.getElementById('tableActionOverlay').classList.remove('open')">&times;</button>
+    <h2 id="taTitle" style="margin-bottom:6px;">Mesa</h2>
+    <p id="taStatus" style="color:var(--text-muted); margin-bottom:20px; font-size:14px;">—</p>
+    <button class="btn-action btn-done" style="width:100%; margin-bottom:10px;" id="taViewOrders">👀 Ver pedidos</button>
+    <button class="btn-action" style="width:100%; background:rgba(16,185,129,0.15); color:var(--success); border:1px solid rgba(16,185,129,0.3);" id="taFreeTable">🔓 Liberar mesa ahora</button>
+  </div>
+</div>
+
 <script>
 (function(){
   const SUPABASE_URL = 'https://wnwllyyhtkufcejzjeay.supabase.co';
@@ -421,10 +473,15 @@
   
   let soundEnabled = false;
 
-  // FLOOR PLAN AVANSAT (Multi-zona / Clădiri)
-  let floorZones = { "Salon Principal": {} }; // ex: { "Salon Principal": { "cell-3": "1" }, "Terraza": { ... } }
-  let currentZone = "Salon Principal";
+  // --- SALA / MESE (config real: zone -> mese cu numar+scaune) ---
+  let salaConfig = { zones: [ { nume: "Salón Principal", mese: [] } ] };
+  let currentZone = "Salón Principal";
   let isEditingMap = false;
+  let freedTables = {}; // { "4": timestampMs }
+  let autoFreedGuard = new Set(); // evita inserturi duplicate pt auto-liberare
+
+  const AUTO_FREE_MINUTES = 13; // 3 min pana la nota reala + ~10 min pana pleaca clientul
+  const TABLE_ACTIVE_KEEP_MS = AUTO_FREE_MINUTES * 60000;
 
   const searchDesc = document.getElementById('tableFilterInputDesc');
   const searchMob = document.getElementById('tableFilterInputMob');
@@ -578,15 +635,22 @@
     if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'ospatar' || userRole === 'director') {
         document.getElementById('navStock').style.display = 'flex';
     }
-    if(userRole === 'director' || userRole === 'ospatar') {
+    // Sonido: SOLO bar y cocina lo necesitan (jefe y camareros no lo usan, así queda más limpio)
+    const showSound = (userRole === 'bar' || userRole === 'bucatarie');
+    document.getElementById('btnToggleSound').style.display = showSound ? 'inline-flex' : 'none';
+    document.getElementById('btnToggleSoundMobile').style.display = showSound ? 'block' : 'none';
+
+    // Sala: jefe, camareros Y barra pueden ver el plano y liberar mesas
+    if(userRole === 'director' || userRole === 'ospatar' || userRole === 'bar') {
         document.getElementById('navMap').style.display = 'flex';
     }
     
     if(userRole === 'director') { 
         document.getElementById('navAdmin').style.display = 'flex'; 
         document.getElementById('navJurnal').style.display = 'flex';
-        document.getElementById('btnEditMap').style.display = 'block';
-        document.getElementById('btnAddZone').style.display = 'block';
+        document.getElementById('btnEditMap').style.display = 'inline-flex';
+        document.getElementById('btnAddZone').style.display = 'inline-flex';
+        document.getElementById('btnDeleteZone').style.display = 'inline-flex';
         document.getElementById('feedbackPanel').style.display = 'block';
     }
     
@@ -594,7 +658,8 @@
 
     ensureNotificationPermission();
     loadOrders(); 
-    loadMapSettings(); 
+    loadTablesConfig(); 
+    loadFreedTables();
     loadBusyMode(); 
     if(userRole === 'director') loadFeedbacks();
     
@@ -659,118 +724,249 @@
         document.getElementById('navMap').classList.add('active');
         document.getElementById('pageTitle').textContent = 'Plano de la Sala';
         document.getElementById('mapView').style.display = 'block';
-        renderMapZones();
-        renderMap();
+        renderZoneTabs();
+        renderTablesGrid();
     }
   }
 
-  // --- HARTA SALII (MULTI-ZONA AVANSAT) ---
-  async function loadMapSettings() {
-      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_harta').order('created_at', {ascending:false}).limit(1);
-      if(data && data.length > 0 && data[0].detalii && data[0].detalii.floorZones) {
-          floorZones = data[0].detalii.floorZones;
-          const zones = Object.keys(floorZones);
-          if(zones.length > 0 && !floorZones[currentZone]) currentZone = zones[0];
+  // ================== SALA / MESE (config + ocupare automata) ==================
+
+  async function loadTablesConfig() {
+      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1);
+      if(data && data.length > 0 && data[0].detalii && Array.isArray(data[0].detalii.zones) && data[0].detalii.zones.length > 0) {
+          salaConfig = data[0].detalii;
+          currentZone = salaConfig.zones[0].nume;
       }
+      updateMapBadge();
   }
 
-  async function saveMapSettings() {
-      await logActivity('setari_harta', null, { floorZones });
-      isEditingMap = false; 
-      const btn = document.getElementById('btnEditMap');
-      btn.textContent = '✏️ Editar Mapeado';
-      btn.style.background = 'transparent';
-      btn.style.color = 'var(--text)';
-      document.getElementById('mapGrid').classList.remove('editing');
-      renderMapZones();
-      renderMap();
+  async function saveTablesConfig() {
+      await logActivity('config_mese', null, salaConfig);
   }
+
+  async function loadFreedTables() {
+      const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'mesa_liberada').order('created_at', {ascending:false}).limit(300);
+      freedTables = {};
+      if(data) {
+          data.forEach(log => {
+              const mesa = log.detalii && log.detalii.mesa;
+              if(mesa && !freedTables[mesa]) freedTables[mesa] = new Date(log.created_at).getTime();
+          });
+      }
+      updateMapBadge();
+      if(currentTab === 'map') renderTablesGrid();
+  }
+
+  function getZoneObj(nume) { return salaConfig.zones.find(z => z.nume === nume); }
 
   document.getElementById('btnAddZone').addEventListener('click', () => {
-      let zName = prompt('Nombre de la nueva zona o edificio (ej: Terraza, Planta 1):');
+      let zName = prompt('Nombre de la nueva zona (ej: Terraza, Planta 1):');
       if(zName && zName.trim() !== '') {
           zName = zName.trim();
-          if(!floorZones[zName]) {
-              floorZones[zName] = {};
+          if(!getZoneObj(zName)) {
+              salaConfig.zones.push({ nume: zName, mese: [] });
               currentZone = zName;
-              renderMapZones();
-              renderMap();
+              saveTablesConfig();
+              renderZoneTabs(); renderTablesGrid();
           }
       }
+  });
+
+  document.getElementById('btnDeleteZone').addEventListener('click', () => {
+      if(salaConfig.zones.length <= 1) { alert('Debe quedar al menos una zona.'); return; }
+      if(!confirm(`¿Eliminar la zona "${currentZone}" y todas sus mesas? Esta acción no se puede deshacer.`)) return;
+      salaConfig.zones = salaConfig.zones.filter(z => z.nume !== currentZone);
+      currentZone = salaConfig.zones[0].nume;
+      saveTablesConfig();
+      renderZoneTabs(); renderTablesGrid();
   });
 
   document.getElementById('btnEditMap').addEventListener('click', () => {
       isEditingMap = !isEditingMap;
       const btn = document.getElementById('btnEditMap');
       if(isEditingMap) {
-          btn.innerHTML = '💾 Guardar Mapa';
+          btn.innerHTML = '💾 Guardar';
           btn.style.background = 'var(--accent)';
           btn.style.color = 'white';
-          document.getElementById('mapGrid').classList.add('editing');
+          btn.style.borderColor = 'var(--accent)';
       } else {
-          saveMapSettings();
+          btn.innerHTML = '✏️ Editar Mesas';
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text)';
+          btn.style.borderColor = 'var(--border)';
+          saveTablesConfig();
       }
+      renderTablesGrid();
   });
 
-  function renderMapZones() {
+  function renderZoneTabs() {
       const container = document.getElementById('zoneTabsContainer');
       container.innerHTML = '';
-      Object.keys(floorZones).forEach(z => {
+      salaConfig.zones.forEach(z => {
           let tab = document.createElement('div');
-          tab.className = `zone-tab ${z === currentZone ? 'active' : ''}`;
-          tab.textContent = z;
-          tab.onclick = () => { currentZone = z; renderMapZones(); renderMap(); };
+          tab.className = `zone-tab ${z.nume === currentZone ? 'active' : ''}`;
+          tab.innerHTML = `<span>${z.nume} (${z.mese.length})</span>`;
+          tab.onclick = () => { currentZone = z.nume; renderZoneTabs(); renderTablesGrid(); };
           container.appendChild(tab);
       });
   }
 
-  function getTableStatusColor(tableNr) {
-      let active = allOrders.filter(o => o.mesa === tableNr && o.status !== 'finalizata' && o.status !== 'anulata');
-      if(active.length === 0) return 'none';
+  // Determina statusul actual al unei mese: 'free' | 'yellow' | 'red' | 'blue'
+  function getTableStatus(tableNr) {
+      const strNr = String(tableNr);
+      let ordersForTable = allOrders.filter(o => String(o.mesa) === strNr && o.status !== 'anulata');
+      let active = ordersForTable.filter(o => o.status === 'noua' || o.status === 'gata');
+
+      let lastFreed = freedTables[strNr] || 0;
+
+      // Cea mai recentă comandă (activă sau nu) folosită ca referință de timp
+      let lastOrderTime = 0;
+      ordersForTable.forEach(o => { const t = new Date(o.created_at).getTime(); if(t > lastOrderTime) lastOrderTime = t; });
+
+      if(active.length === 0) return { status:'free', label:'Libre' };
+      // Daca a fost liberata manual/automat DUPA ultima comanda -> libera
+      if(lastFreed > lastOrderTime) return { status:'free', label:'Libre' };
+
       let hasAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ')));
+      let hasBillRequest = active.some(o => o.produse.some(p => p.nume.includes('Cuenta') || p.nume.includes('ALERTĂ')));
       let isOld = active.some(o => (Date.now() - new Date(o.created_at).getTime()) > 15 * 60000);
-      if(hasAlert || isOld) return 'red';
-      return 'yellow';
+
+      if(hasAlert) {
+          // alerta de "quiero pagar" / ayuda -> mesa marcada especial (azul) hasta que se libere
+          return { status:'blue', label:'Pidió la cuenta / ayuda' };
+      }
+      if(hasBillRequest || isOld) return { status:'red', label:'Ocupada (+15 min)' };
+      return { status:'yellow', label:'Ocupada' };
   }
 
-  function renderMap() {
-      const grid = document.getElementById('mapGrid');
-      grid.innerHTML = '';
-      let zoneData = floorZones[currentZone] || {};
+  // Auto-liberare: dupa AUTO_FREE_MINUTES de la ultima alerta de "cuenta", se elibereaza singura
+  async function checkAutoFreeTables() {
+      const strKeys = new Set();
+      salaConfig.zones.forEach(z => z.mese.forEach(m => strKeys.add(String(m.numar))));
 
-      for(let i=0; i<48; i++) {
-          let cellId = 'cell-' + i;
-          let tableNr = zoneData[cellId];
-          let cell = document.createElement('div');
-          cell.className = 'map-cell';
-          
-          if(tableNr) {
-             cell.classList.add('has-table');
-             cell.textContent = tableNr;
-             let status = getTableStatusColor(tableNr);
-             if(status === 'red') cell.classList.add('status-red');
-             if(status === 'yellow') cell.classList.add('status-yellow');
+      for(const tableNr of strKeys) {
+          let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && (o.status === 'noua' || o.status === 'gata'));
+          let alertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ')));
+          if(alertOrders.length === 0) continue;
+
+          let lastAlertTime = Math.max(...alertOrders.map(o => new Date(o.created_at).getTime()));
+          let lastFreed = freedTables[tableNr] || 0;
+          if(lastFreed > lastAlertTime) continue; // ya liberada
+
+          const elapsedMin = (Date.now() - lastAlertTime) / 60000;
+          const guardKey = tableNr + ':' + lastAlertTime;
+          if(elapsedMin >= AUTO_FREE_MINUTES && !autoFreedGuard.has(guardKey)) {
+              autoFreedGuard.add(guardKey);
+              await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
           }
-          
-          cell.onclick = () => {
-             if(isEditingMap) {
-                let p = prompt(`Número de mesa para esta casilla en [${currentZone}] (vacío para borrar):`, tableNr || '');
-                if(p !== null) {
-                   if(!floorZones[currentZone]) floorZones[currentZone] = {};
-                   if(p.trim() === '') delete floorZones[currentZone][cellId];
-                   else floorZones[currentZone][cellId] = p.trim();
-                   renderMap();
-                }
-             } else if(tableNr) {
-                searchDesc.value = tableNr;
-                searchMob.value = tableNr;
-                switchTab('active');
-                renderOrders();
-             }
-          };
-          grid.appendChild(cell);
       }
   }
+
+  async function freeTableManually(tableNr) {
+      await logActivity('mesa_liberada', null, { mesa: String(tableNr), automat: false });
+      freedTables[String(tableNr)] = Date.now();
+      renderTablesGrid();
+      updateMapBadge();
+  }
+
+  function updateMapBadge() {
+      const badge = document.getElementById('countMesasLibres');
+      let allTables = [];
+      salaConfig.zones.forEach(z => z.mese.forEach(m => allTables.push(m.numar)));
+      if(allTables.length === 0) { badge.style.display = 'none'; return; }
+
+      let freeCount = allTables.filter(nr => getTableStatus(nr).status === 'free').length;
+      badge.style.display = 'inline-block';
+      badge.classList.remove('badge-full', 'badge-ok');
+      if(freeCount === 0) { badge.textContent = 'LLENO'; badge.classList.add('badge-full'); }
+      else { badge.textContent = `${freeCount}/${allTables.length}`; badge.classList.add('badge-ok'); }
+
+      const fullMsg = document.getElementById('salaFullMsg');
+      if(fullMsg) fullMsg.style.display = freeCount === 0 ? 'inline' : 'none';
+  }
+
+  function renderTablesGrid() {
+      const grid = document.getElementById('tablesGrid');
+      grid.innerHTML = '';
+      const zone = getZoneObj(currentZone);
+      if(!zone) return;
+
+      zone.mese.forEach(mesa => {
+          const st = getTableStatus(mesa.numar);
+          let card = document.createElement('div');
+          card.className = `table-card status-${st.status === 'free' ? 'free' : st.status} ${isEditingMap ? 'editing-mode' : ''}`;
+          card.innerHTML = `
+             ${isEditingMap ? `<span class="t-del" data-action="del">✕</span>` : ''}
+             <div class="t-num">${mesa.numar}</div>
+             <div class="t-seats">🪑 ${mesa.scaune}</div>
+          `;
+          card.onclick = (e) => {
+              if(isEditingMap) {
+                  if(e.target.dataset.action === 'del') {
+                      if(confirm(`¿Eliminar la mesa ${mesa.numar}?`)) {
+                          zone.mese = zone.mese.filter(m => m.numar !== mesa.numar);
+                          renderZoneTabs(); renderTablesGrid();
+                      }
+                      return;
+                  }
+                  let newSeats = prompt(`Plazas en la mesa ${mesa.numar}:`, mesa.scaune);
+                  if(newSeats !== null && !isNaN(parseInt(newSeats))) {
+                      mesa.scaune = parseInt(newSeats);
+                      renderTablesGrid();
+                  }
+              } else {
+                  openTableAction(mesa.numar, st);
+              }
+          };
+          grid.appendChild(card);
+      });
+
+      if(isEditingMap) {
+          let addCard = document.createElement('div');
+          addCard.className = 'add-table-card';
+          addCard.textContent = '+';
+          addCard.onclick = () => {
+              let numar = prompt('Número de la nueva mesa (ej: 12):');
+              if(!numar || numar.trim() === '') return;
+              numar = numar.trim();
+              if(zone.mese.some(m => String(m.numar) === numar)) { alert('Ya existe una mesa con ese número.'); return; }
+              let scaune = prompt('¿Cuántas plazas / sillas tiene?', '4');
+              scaune = parseInt(scaune) || 4;
+              zone.mese.push({ numar, scaune });
+              renderZoneTabs(); renderTablesGrid();
+          };
+          grid.appendChild(addCard);
+      }
+
+      updateMapBadge();
+  }
+
+  function openTableAction(tableNr, statusInfo) {
+      document.getElementById('taTitle').textContent = `Mesa ${tableNr}`;
+      document.getElementById('taStatus').textContent = statusInfo.label;
+      const canFree = (userRole === 'director' || userRole === 'ospatar' || userRole === 'bar');
+      const freeBtn = document.getElementById('taFreeTable');
+      const viewBtn = document.getElementById('taViewOrders');
+
+      viewBtn.style.display = statusInfo.status === 'free' ? 'none' : 'flex';
+      freeBtn.style.display = (statusInfo.status !== 'free' && canFree) ? 'flex' : 'none';
+
+      viewBtn.onclick = () => {
+          searchDesc.value = tableNr; searchMob.value = tableNr;
+          document.getElementById('tableActionOverlay').classList.remove('open');
+          switchTab('active'); renderOrders();
+      };
+      freeBtn.onclick = () => {
+          if(confirm(`¿Liberar la mesa ${tableNr} ahora?`)) {
+              freeTableManually(tableNr);
+              document.getElementById('tableActionOverlay').classList.remove('open');
+          }
+      };
+
+      document.getElementById('tableActionOverlay').classList.add('open');
+  }
+
+  // ================== FIN SALA ==================
 
   async function loadBusyMode() {
       const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
@@ -809,7 +1005,7 @@
   async function loadOrders() {
     const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
     if(error) console.error("Error loading orders:", error);
-    if(data) { allOrders = data; renderOrders(); if (currentTab === 'map') renderMap(); }
+    if(data) { allOrders = data; renderOrders(); if (currentTab === 'map') renderTablesGrid(); updateMapBadge(); }
   }
 
   function renderOrders() {
@@ -935,23 +1131,26 @@
   }
 
   function updateTimersUI() {
-      if(currentTab !== 'active') return;
-      document.querySelectorAll('.order-card').forEach(card => {
-          if(card.dataset.status === 'finalizata' || card.dataset.status === 'anulata') return;
-          const startTime = new Date(card.dataset.time).getTime();
-          const diffMin = Math.floor((Date.now() - startTime) / 60000);
-          
-          const timeBadge = card.querySelector('.time-elapsed');
-          if(timeBadge) {
-              timeBadge.textContent = diffMin + ' min';
-              if(diffMin >= 15) timeBadge.textContent = '🔥 ' + diffMin + ' min';
-          }
+      if(currentTab === 'active') {
+          document.querySelectorAll('.order-card').forEach(card => {
+              if(card.dataset.status === 'finalizata' || card.dataset.status === 'anulata') return;
+              const startTime = new Date(card.dataset.time).getTime();
+              const diffMin = Math.floor((Date.now() - startTime) / 60000);
 
-          card.classList.remove('warning', 'danger');
-          if(diffMin >= 15) card.classList.add('danger');
-          else if(diffMin >= 8) card.classList.add('warning');
-      });
-      if(currentTab === 'map') renderMap();
+              const timeBadge = card.querySelector('.time-elapsed');
+              if(timeBadge) {
+                  timeBadge.textContent = diffMin + ' min';
+                  if(diffMin >= 15) timeBadge.textContent = '🔥 ' + diffMin + ' min';
+              }
+
+              card.classList.remove('warning', 'danger');
+              if(diffMin >= 15) card.classList.add('danger');
+              else if(diffMin >= 8) card.classList.add('warning');
+          });
+      }
+      checkAutoFreeTables();
+      updateMapBadge();
+      if(currentTab === 'map') renderTablesGrid();
   }
 
   window.updateOrderStatus = async function(id, status) {
@@ -964,6 +1163,7 @@
           const index = allOrders.findIndex(o => o.id === id);
           if(index !== -1) Object.assign(allOrders[index], updatePayload);
           renderOrders();
+          updateMapBadge();
           logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null });
       }
   };
@@ -1073,7 +1273,7 @@
       document.body.removeChild(link);
   };
 
-  // EXPORT LOGS CSV (Nou cerut)
+  // EXPORT LOGS CSV
   window.exportLogsCSV = async function() {
       const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(2000);
       if(error || !data) { alert('Error al descargar logs'); return; }
@@ -1108,7 +1308,6 @@
       
       const cutoff = statsMode === 'today' ? todayStart : monthStart;
 
-      // Obiect pentru graficul pe zile/luni
       let chartData = {};
 
       istoric.forEach(order => {
@@ -1121,7 +1320,6 @@
                       total += val; 
                       kitchenTotal += val; 
 
-                      // Grupăm pentru grafic
                       let dKey = statsMode === 'today' 
                           ? new Date(order.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})
                           : new Date(order.created_at).toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
@@ -1146,7 +1344,6 @@
       document.getElementById('statPendingBon').textContent = pendingBonCount;
       document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} €`;
 
-      // RENDERIZARE GRAFIC BARE
       const chartContainer = document.getElementById('revenueChartBars');
       chartContainer.innerHTML = '';
       const chartEntries = Object.entries(chartData);
@@ -1266,7 +1463,8 @@
           ticket_confirmado: '<span style="color:var(--text)">🧾 Confirmado</span>', 
           pedido_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>', 
           pedido_creado_camarero: '<span style="color:var(--blue)">📋 Nuevo Menu</span>',
-          setari_harta: '<span style="color:var(--warning)">🗺️ Edit Mapa</span>',
+          config_mese: '<span style="color:var(--warning)">🗺️ Edit Sala</span>',
+          mesa_liberada: '<span style="color:var(--success)">🔓 Mesa Liberada</span>',
           setari_busy: '<span style="color:var(--warning)">🔥 Modo Punta</span>',
           feedback_client: '<span style="color:var(--success)">💬 Feedback</span>'
       };
@@ -1281,6 +1479,7 @@
               if (log.detalii.motivo) detText += `(${log.detalii.motivo}) `;
               if (log.actiune === 'feedback_client') detText += `(${log.detalii.rating} Estrellas)`;
               if (log.actiune === 'setari_busy') detText += log.detalii.isBusy ? '(Activado)' : '(Desactivado)';
+              if (log.actiune === 'mesa_liberada') detText += log.detalii.automat ? '(Automático)' : '(Manual)';
           }
 
           return `
@@ -1308,19 +1507,41 @@
               
               if(p.new.status === 'noua') playAlertAndVibrate(p.new); 
               renderOrders(); 
-              if (currentTab === 'map') renderMap();
+              if (currentTab === 'map') renderTablesGrid();
           }
+          updateMapBadge();
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
           const idx = allOrders.findIndex(o => o.id === p.new.id);
           if(idx > -1) { 
               allOrders[idx] = p.new; 
               renderOrders(); 
-              if (currentTab === 'map') renderMap();
+              if (currentTab === 'map') renderTablesGrid();
               if (currentTab === 'admin') calculateDirectorStats(); 
           }
+          updateMapBadge();
       })
       .subscribe();
+
+      // Canal separat pentru marcarea instant a meselor libere / config sala pe toate device-urile
+      const salaChannel = _supabase.channel('public:jurnal_sala');
+      salaChannel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
+          if(p.new.actiune === 'mesa_liberada') {
+              const mesa = p.new.detalii && p.new.detalii.mesa;
+              if(mesa) {
+                  freedTables[String(mesa)] = new Date(p.new.created_at).getTime();
+                  updateMapBadge();
+                  if(currentTab === 'map') renderTablesGrid();
+              }
+          } else if(p.new.actiune === 'config_mese') {
+              if(p.new.detalii && Array.isArray(p.new.detalii.zones)) {
+                  salaConfig = p.new.detalii;
+                  if(!getZoneObj(currentZone)) currentZone = salaConfig.zones[0].nume;
+                  updateMapBadge();
+                  if(currentTab === 'map') { renderZoneTabs(); renderTablesGrid(); }
+              }
+          }
+      }).subscribe();
   }
 
   checkAuth();
@@ -1328,4 +1549,3 @@
 </script>
 </body>
 </html>
-
