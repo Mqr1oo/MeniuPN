@@ -57,6 +57,9 @@
   .table-filter { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px; color: white; outline: none; width: 280px; font-family: 'Space Mono', monospace; font-size: 14px; transition: 0.3s; }
   .table-filter:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); }
   
+  .btn-sound-toggle { padding: 10px 20px; border-radius: 100px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: 0.3s; background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+  .btn-sound-toggle.on { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+
   .mobile-brand-area { display: none; flex-direction: column; }
   .mobile-brand { font-size: 16px; font-weight: 700; color: var(--accent); }
   .mobile-user { font-size: 11px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
@@ -75,7 +78,6 @@
   .order-card.alert-waiter .table-nr { color: var(--blue); }
 
   .o-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
-  /* Am scazut fontul putin ca sa incapa Numele pt Takeaway perfect */
   .table-nr { font-size: 18px; line-height: 1.3; font-weight: 800; color: var(--accent); font-family: 'Space Mono', monospace; letter-spacing: -0.5px; flex: 1; padding-right: 10px;}
   .o-time { font-size: 13px; color: var(--text-muted); font-family: 'Space Mono', monospace; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;}
   .time-elapsed { font-weight: 700; font-size: 15px; color: var(--text); background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 8px; }
@@ -129,7 +131,6 @@
   input:checked + .slider { background-color: var(--danger); border-color: var(--danger);}
   input:checked + .slider:before { transform: translateX(20px); }
 
-  /* Modale */
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:9999; backdrop-filter: blur(8px);}
   .modal-overlay.open{ display:flex;}
   .modal{ background:var(--bg-card); border: 1px solid var(--border); max-width:420px; width:100%; border-radius:20px; padding:32px; position:relative; }
@@ -233,6 +234,8 @@
   <header>
     <h2 class="page-title" id="pageTitle">Pedidos Activos</h2>
     <div class="header-actions">
+        <!-- BOTÓN DE SONIDO (ESENCIAL PARA LA LECTURA EN VOZ ALTA) -->
+        <button id="btnToggleSound" class="btn-sound-toggle">🔇 Sonido: OFF</button>
         <input type="text" id="tableFilterInputDesc" class="table-filter" placeholder="🔍 Buscar Mesa / Takeaway...">
     </div>
     
@@ -244,6 +247,8 @@
   </header>
   
   <div class="mobile-search-container" id="mobileSearchWrap">
+      <!-- En movil, el boton de sonido se mostrará aquí para que esté accesible -->
+      <button id="btnToggleSoundMobile" class="btn-sound-toggle" style="width: 100%; margin-bottom: 10px;">🔇 Sonido: OFF</button>
       <input type="text" id="tableFilterInputMob" class="table-filter" placeholder="🔍 Buscar Mesa / Takeaway...">
   </div>
   
@@ -329,6 +334,9 @@
   let statsMode = 'today';
   let currentUserEmail = '';
   let meniuCart = {};
+  
+  // Variables para sonido
+  let soundEnabled = false;
 
   const searchDesc = document.getElementById('tableFilterInputDesc');
   const searchMob = document.getElementById('tableFilterInputMob');
@@ -338,6 +346,34 @@
   function getSearchTerm() {
       return (window.innerWidth <= 800 ? searchMob.value : searchDesc.value).toLowerCase();
   }
+  
+  function initSoundToggle() {
+      const toggleFn = () => {
+          soundEnabled = !soundEnabled;
+          const btnDesc = document.getElementById('btnToggleSound');
+          const btnMob = document.getElementById('btnToggleSoundMobile');
+          
+          if (soundEnabled) {
+              const htmlStr = '🔊 Sonido: ON';
+              btnDesc.innerHTML = htmlStr; btnMob.innerHTML = htmlStr;
+              btnDesc.classList.add('on'); btnMob.classList.add('on');
+              
+              // Desbloqueamos el motor de voz del navegador
+              if ('speechSynthesis' in window) {
+                  const unlockMsg = new SpeechSynthesisUtterance('');
+                  window.speechSynthesis.speak(unlockMsg);
+              }
+          } else {
+              const htmlStr = '🔇 Sonido: OFF';
+              btnDesc.innerHTML = htmlStr; btnMob.innerHTML = htmlStr;
+              btnDesc.classList.remove('on'); btnMob.classList.remove('on');
+          }
+      };
+      
+      document.getElementById('btnToggleSound').addEventListener('click', toggleFn);
+      document.getElementById('btnToggleSoundMobile').addEventListener('click', toggleFn);
+  }
+  initSoundToggle();
 
   async function logActivity(actiune, comanda_id, detalii) {
     try {
@@ -370,18 +406,32 @@
   }
 
   function playAlertAndVibrate(order) {
+    if (!soundEnabled) return; // Si no hay sonido activado, abortamos
+    
     try {
       if (userRole === 'ospatar' && navigator.vibrate) {
           navigator.vibrate([400, 200, 400, 200, 800]); 
       }
+      
       if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
-          const itemNames = order.produse.map(p => `${p.cantitate} ${p.nume}`).join(', ');
-          const text = `Nuevo pedido, mesa ${order.mesa}. ${itemNames}`;
+          // Extraemos los items ignorando las notas para la lectura
+          const validItems = order.produse.filter(p => p.cantitate > 0);
+          const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
+          
+          let cleanMesa = order.mesa.replace('Tk:', 'Takeaway').replace('#', '');
+          const text = `Nuevo pedido, mesa ${cleanMesa}. ${itemNames}`;
+          
           const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'es-ES'; utterance.rate = 1.0;
+          utterance.lang = 'es-ES'; // Español de españa
+          utterance.rate = 1.0; 
+          utterance.pitch = 1.0;
+          
+          // Cancelamos habla anterior si se amontonan pedidos
+          window.speechSynthesis.cancel();
           window.speechSynthesis.speak(utterance);
       }
-      if (userRole !== 'ospatar') {
+      
+      if (userRole === 'bar') {
           const ctx = new (window.AudioContext || window.webkitAudioContext)();
           const osc = ctx.createOscillator(); const gain = ctx.createGain();
           osc.connect(gain); gain.connect(ctx.destination);
@@ -391,12 +441,13 @@
           gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
           osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1.5);
       }
+      
       if (document.hidden || document.visibilityState !== 'visible') {
           const title = userRole === 'ospatar' ? '🔔 Alerta en mesa' : '🛎️ Nuevo pedido';
           const body = `Mesa ${order.mesa}: ` + order.produse.map(p => p.nume).join(', ');
           showBackgroundAlert(title, body);
       }
-    } catch(e) {}
+    } catch(e) { console.error('Audio play error:', e); }
   }
 
   async function checkAuth() {
@@ -500,7 +551,8 @@
   }
 
   async function loadOrders() {
-    const { data } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
+    const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
+    if(error) console.error("Error loading orders:", error);
     if(data) { allOrders = data; renderOrders(); }
   }
 
@@ -659,6 +711,8 @@
           if(index !== -1) Object.assign(allOrders[index], updatePayload);
           renderOrders();
           logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null });
+      } else {
+          console.error('Update err:', error);
       }
   };
 
@@ -884,15 +938,25 @@
   }
 
   function subscribeRealtime() {
-      _supabase.channel('public:comenzi')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
-          allOrders.unshift(p.new);
+      // NOTE: Para que esto funcione 100% instantáneo en tu Supabase,
+      // DEBES haber ejecutado "alter publication supabase_realtime add table comenzi;"
+      // en el SQL Editor de tu cuenta de Supabase.
+      
+      const channel = _supabase.channel('public:comenzi');
+      
+      channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
+          allOrders.unshift(p.new); // Agregar al frente
           const isAlert = p.new.produse.some(prod => prod.nume.includes('ALERTĂ'));
+          
           if (userRole === 'director' || 
               p.new.sectiune === userRole || 
               (userRole === 'ospatar' && isAlert) ||
               (userRole === 'bar' && isAlert)) { 
-              if(p.new.status === 'noua') { playAlertAndVibrate(p.new); renderOrders(); } 
+              
+              if(p.new.status === 'noua') { 
+                 playAlertAndVibrate(p.new); 
+              } 
+              renderOrders(); 
           }
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
@@ -902,7 +966,13 @@
               renderOrders(); 
               if(currentTab === 'admin') calculateDirectorStats(); 
           }
-      }).subscribe();
+      })
+      .subscribe((status) => {
+          console.log("Realtime status:", status);
+          if (status !== 'SUBSCRIBED') {
+              console.warn("Realtime not hooked yet. Check table publication settings.");
+          }
+      });
   }
 
   checkAuth();
@@ -910,5 +980,3 @@
 </script>
 </body>
 </html>
-
-
