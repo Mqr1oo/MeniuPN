@@ -136,6 +136,13 @@
   .modal{ background:var(--bg-card); border: 1px solid var(--border); max-width:420px; width:100%; border-radius:20px; padding:32px; position:relative; }
   .modal-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.05); border:none; border-radius: 50%; width:36px; height:36px; color:var(--text-muted); cursor:pointer;}
 
+  /* Stiluri Tabel Log-uri */
+  .table-responsive { overflow-x: auto; width: 100%; }
+  .table-logs { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+  .table-logs th { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600; }
+  .table-logs td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
+  .table-logs tr:hover td { background: rgba(255,255,255,0.02); }
+
   @media (max-width: 800px) {
       body { flex-direction: column; }
       
@@ -234,7 +241,7 @@
   <header>
     <h2 class="page-title" id="pageTitle">Pedidos Activos</h2>
     <div class="header-actions">
-        <!-- BOTÓN DE SONIDO (ESENCIAL PARA LA LECTURA EN VOZ ALTA) -->
+        <!-- BOTÓN DE SONIDO -->
         <button id="btnToggleSound" class="btn-sound-toggle">🔇 Sonido: OFF</button>
         <input type="text" id="tableFilterInputDesc" class="table-filter" placeholder="🔍 Buscar Mesa / Takeaway...">
     </div>
@@ -247,7 +254,6 @@
   </header>
   
   <div class="mobile-search-container" id="mobileSearchWrap">
-      <!-- En movil, el boton de sonido se mostrará aquí para que esté accesible -->
       <button id="btnToggleSoundMobile" class="btn-sound-toggle" style="width: 100%; margin-bottom: 10px;">🔇 Sonido: OFF</button>
       <input type="text" id="tableFilterInputMob" class="table-filter" placeholder="🔍 Buscar Mesa / Takeaway...">
   </div>
@@ -266,9 +272,12 @@
     <div id="adminView" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
           <div><h2 style="font-size: 24px; font-weight: 700;">Resumen Actividad</h2></div>
-          <div class="time-toggle">
-              <button class="active" id="btnStatsToday">Hoy</button>
-              <button id="btnStatsMonth">Este mes</button>
+          <div style="display: flex; gap: 10px; align-items: center;">
+              <button class="btn-action" style="background:var(--accent); color:white; font-size:13px; padding: 10px 16px;" onclick="exportCSV()">📥 Descargar Excel</button>
+              <div class="time-toggle">
+                  <button class="active" id="btnStatsToday">Hoy</button>
+                  <button id="btnStatsMonth">Este mes</button>
+              </div>
           </div>
       </div>
 
@@ -297,7 +306,7 @@
         <input type="text" id="meniuTableInput" class="table-filter" style="width:100%; margin-bottom:16px;" placeholder="Número de mesa (ej: 4)">
         <div class="stock-list" id="meniuListContainer">Cargando...</div>
         <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
-          <div style="font-family:'Space Mono',monospace; font-weight:700;">Total: <span id="meniuTotal">0.00</span> RON</div>
+          <div style="font-family:'Space Mono',monospace; font-weight:700;">Total: <span id="meniuTotal">0.00</span> €</div>
           <button class="btn-action btn-done" style="flex:0 0 auto; padding:14px 26px;" id="btnMeniuTrimite">Enviar Pedido</button>
         </div>
       </div>
@@ -307,7 +316,23 @@
       <div class="dash-panel">
         <h3>🕵️ Log de Actividad (Auditoría)</h3>
         <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción se guarda con la hora exacta. Registro permanente, imborrable. Atención: Por políticas de privacidad (RGPD), los datos se borran automáticamente tras 48h.</p>
-        <ul class="top-list" id="jurnalList">Cargando...</ul>
+        
+        <!-- Tabel Jurnal (Clean / Professional) -->
+        <div class="table-responsive">
+          <table class="table-logs">
+            <thead>
+              <tr>
+                <th>Fecha / Hora</th>
+                <th>Personal</th>
+                <th>Acción</th>
+                <th>Detalles (Mesa/Motivo)</th>
+              </tr>
+            </thead>
+            <tbody id="jurnalList">
+               <!-- Logs will be loaded here -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -335,7 +360,6 @@
   let currentUserEmail = '';
   let meniuCart = {};
   
-  // Variables para sonido
   let soundEnabled = false;
 
   const searchDesc = document.getElementById('tableFilterInputDesc');
@@ -358,7 +382,6 @@
               btnDesc.innerHTML = htmlStr; btnMob.innerHTML = htmlStr;
               btnDesc.classList.add('on'); btnMob.classList.add('on');
               
-              // Desbloqueamos el motor de voz del navegador
               if ('speechSynthesis' in window) {
                   const unlockMsg = new SpeechSynthesisUtterance('');
                   window.speechSynthesis.speak(unlockMsg);
@@ -407,45 +430,37 @@
 
   function playAlertAndVibrate(order) {
     try {
-      // 1. OSPĂTARII (WAITERS) -> FĂRĂ SUNET AUDIO. Doar vibrație și Notificare (Push).
       if (userRole === 'ospatar') {
-          if (navigator.vibrate) {
-              navigator.vibrate([400, 200, 400, 200, 800]); // Vibrează telefonul (doar pe Android)
-          }
-          // Trimitem notificarea pe ecran (chiar dacă app-ul e deschis, e util pentru ei)
+          if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 800]); 
           const title = '🔔 Alerta en mesa / Pedido Listo';
           const validItems = order.produse.filter(p => p.cantitate > 0);
           const body = `Mesa ${order.mesa}: ` + validItems.map(p => p.nume).join(', ');
           showBackgroundAlert(title, body);
-          
-          return; // IMPORTANT: Ieșim aici din funcție ca să NU ajungă la codul de sunet.
+          return; 
       }
       
-      // 2. SUNET PENTRU BUCĂTĂRIE, BAR ȘI DIRECTOR (dacă sunetul e activat din buton)
       if (soundEnabled) {
           if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
-              // BUCĂTĂRIE: Citire text (Voce)
               const validItems = order.produse.filter(p => p.cantitate > 0);
               const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
               let cleanMesa = order.mesa.replace('Tk:', 'Takeaway').replace('#', '');
               
               const text = `Nuevo pedido, mesa ${cleanMesa}. ${itemNames}`;
               const utterance = new SpeechSynthesisUtterance(text);
-              utterance.lang = 'es-ES'; // Español
+              utterance.lang = 'es-ES'; 
               utterance.rate = 1.0; 
               
               window.speechSynthesis.cancel(); 
               window.speechSynthesis.speak(utterance);
               
           } else if (userRole === 'bar' || userRole === 'director') {
-              // BAR & DIRECTOR: Sunet (Beep/Clopoțel curat)
               const ctx = new (window.AudioContext || window.webkitAudioContext)();
               const osc = ctx.createOscillator(); 
               const gain = ctx.createGain();
               osc.connect(gain); gain.connect(ctx.destination);
               
               osc.type = 'sine'; 
-              osc.frequency.setValueAtTime(1000, ctx.currentTime); // Frecvență înaltă, se aude clar
+              osc.frequency.setValueAtTime(1000, ctx.currentTime);
               
               gain.gain.setValueAtTime(0, ctx.currentTime);
               gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 0.05);
@@ -456,7 +471,6 @@
           }
       }
       
-      // 3. Notificări de fundal pentru Bar/Bucătărie (dacă sunt pe altă aplicație)
       if (document.hidden || document.visibilityState !== 'visible') {
           const title = '🛎️ Nuevo pedido';
           const validItems = order.produse.filter(p => p.cantitate > 0);
@@ -653,7 +667,8 @@
           let statusColor = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
           let statusText = `<div class="status-text" style="color:${statusColor}; font-weight: 700;">${order.status.toUpperCase()}${order.comp_motiv ? ' · GRATIS' : ''}</div>`;
           
-          if((userRole === 'bar' || userRole === 'director') && !isAlert && order.status === 'finalizata') {
+          // OSPATAR, BAR y DIRECTOR pueden marcar el ticket sacado.
+          if(['bar', 'director', 'ospatar'].includes(userRole) && !isAlert && order.status === 'finalizata') {
               let isChecked = order.bon_scos ? 'checked' : '';
               let checkedClass = order.bon_scos ? 'checked' : '';
               let bonLabel = order.comp_motiv ? '🎁 Invitación (Gratis)' : (order.bon_scos ? '🧾 Ticket impreso' : '🧾 Confirmar Ticket');
@@ -671,7 +686,6 @@
           }
       }
 
-      // Afișează numărul mesei curat (Fără # pt Takeaway)
       let mesaDisp = order.mesa;
       if(mesaDisp !== 'Takeaway' && !mesaDisp.includes('Tk:')) {
           mesaDisp = '#' + mesaDisp;
@@ -802,6 +816,43 @@
       e.target.classList.add('active'); statsMode = 'month'; calculateDirectorStats();
   });
 
+  // Export CSV (Excel)
+  window.exportCSV = function() {
+      const now = new Date();
+      // Corectăm calculul pentru luna curentă, pornind mereu de la ziua 1.
+      const cutoff = statsMode === 'today'
+          ? new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+          : new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+      const filteredOrders = allOrders.filter(o => new Date(o.created_at).getTime() >= cutoff);
+      
+      // Adăugăm BOM ca Excel să citească perfect accentele spaniole
+      let csvContent = '\uFEFF'; 
+      csvContent += "ID,Fecha,Hora,Mesa,Estado,Total (€),Ticket Scos,Ticket Gratis,Productos,Responsable\n";
+
+      filteredOrders.forEach(o => {
+          const dt = new Date(o.created_at);
+          const fDate = dt.toLocaleDateString('es-ES');
+          const fTime = dt.toLocaleTimeString('es-ES');
+          
+          const cleanProds = o.produse.filter(p=>p.cantitate>0).map(p=>`${p.cantitate}x ${p.nume}`).join(' + ');
+          const ticketStat = o.bon_scos ? 'Si' : 'No';
+          const gratisStat = o.comp_motiv ? o.comp_motiv : '-';
+          const resp = o.preluat_de || o.creat_de || 'N/A';
+          
+          csvContent += `"${o.id}","${fDate}","${fTime}","${o.mesa}","${o.status}","${o.total}","${ticketStat}","${gratisStat}","${cleanProds}","${resp}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Reporte_${statsMode}_${now.toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  };
+
   function calculateDirectorStats() {
       const istoric = allOrders.filter(o => o.status === 'finalizata' && !o.produse.some(p => p.nume.includes('ALERTĂ')));
       let total = 0, kitchenTotal = 0, pendingBonCount = 0, productCounts = {}, pendingByStaff = {};
@@ -833,10 +884,10 @@
           }
       });
 
-      document.getElementById('statRevenue').textContent = `${total.toFixed(2)} RON`;
+      document.getElementById('statRevenue').textContent = `${total.toFixed(2)} €`;
       document.getElementById('statCount').textContent = istoric.length;
       document.getElementById('statPendingBon').textContent = pendingBonCount;
-      document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} RON`;
+      document.getElementById('statKitchen').textContent = `${kitchenTotal.toFixed(2)} €`;
 
       const listEl = document.getElementById('topProductsList'); listEl.innerHTML = '';
       const sorted = Object.entries(productCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -862,7 +913,7 @@
             <div class="stock-item" id="meniu-item-${item.imageNumber}">
               <div>
                  <div class="s-name" style="font-weight: 600; font-size: 15px;">${item.name}</div>
-                 <div style="font-size: 13px; color: var(--text-muted); margin-top:2px;">${Number(item.price).toFixed(2)} RON</div>
+                 <div style="font-size: 13px; color: var(--text-muted); margin-top:2px;">${Number(item.price).toFixed(2)} €</div>
               </div>
               <div style="display:flex; align-items:center; gap:10px;">
                 <button class="btn-action" style="width:36px; height:36px; padding:0; background:rgba(255,255,255,0.06);" onclick="meniuChangeQty(${item.imageNumber}, -1)">−</button>
@@ -922,46 +973,54 @@
   async function loadJurnal() {
       const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(200);
       const listEl = document.getElementById('jurnalList');
-      if(error) { listEl.innerHTML = `<li class="top-item" style="color:var(--danger);">Error cargando el log.</li>`; return; }
-      if(!data || data.length === 0) { listEl.innerHTML = '<li class="top-item" style="color:var(--text-muted);">Sin eventos aún.</li>'; return; }
+      if(error) { 
+          listEl.innerHTML = `<tr><td colspan="4" style="color:var(--danger); text-align:center;">Error cargando el log.</td></tr>`; 
+          return; 
+      }
+      if(!data || data.length === 0) { 
+          listEl.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted); text-align:center;">Sin eventos aún.</td></tr>`; 
+          return; 
+      }
       
       const actionLabels = { 
-          pedido_cancelado: '❌ Pedido cancelado', 
-          estado_cambiado: '🔄 Estado cambiado', 
-          ticket_confirmado: '🧾 Ticket confirmado', 
-          pedido_gratis: '🎁 Pedido gratis', 
-          pedido_creado_camarero: '📋 Pedido desde Menú',
-          comanda_anulata: '❌ Pedido cancelado',
-          status_schimbat: '🔄 Estado cambiado',
-          bon_confirmat: '🧾 Ticket confirmado',
-          comanda_gratis: '🎁 Pedido gratis',
-          comanda_creata_ospatar: '📋 Pedido desde Menú'
+          pedido_cancelado: '<span style="color:var(--danger)">❌ Cancelado</span>', 
+          estado_cambiado: '<span style="color:var(--success)">🔄 Estado</span>', 
+          ticket_confirmado: '<span style="color:var(--text)">🧾 Confirmado</span>', 
+          pedido_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>', 
+          pedido_creado_camarero: '<span style="color:var(--blue)">📋 Nuevo Menu</span>',
+          comanda_anulata: '<span style="color:var(--danger)">❌ Cancelado</span>',
+          status_schimbat: '<span style="color:var(--success)">🔄 Estado</span>',
+          bon_confirmat: '<span style="color:var(--text)">🧾 Confirmado</span>',
+          comanda_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>',
+          comanda_creata_ospatar: '<span style="color:var(--blue)">📋 Nuevo Menu</span>'
       };
       
       listEl.innerHTML = data.map(log => {
           const t = new Date(log.created_at).toLocaleString('es-ES', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
           const label = actionLabels[log.actiune] || log.actiune;
-          const extra = log.detalii && (log.detalii.mesa || log.detalii.mesa) ? ` · Mesa ${log.detalii.mesa || log.detalii.mesa}` : '';
-          const motiv = log.detalii && log.detalii.motivo ? ` · "${log.detalii.motivo}"` : '';
-          return `<li class="top-item" style="flex-direction:column; align-items:flex-start; gap:4px;">
-            <div style="display:flex; justify-content:space-between; width:100%;">
-              <span style="font-weight:700;">${label}${extra}</span>
-              <span style="color:var(--text-muted); font-family:'Space Mono',monospace; font-size:12px;">${t}</span>
-            </div>
-            <div style="font-size:13px; color:var(--text-muted);">👤 ${log.utilizator}${motiv}</div>
-          </li>`;
+          
+          let detText = "";
+          if (log.detalii) {
+              if (log.detalii.mesa) detText += `Mesa ${log.detalii.mesa} `;
+              if (log.detalii.motivo) detText += `(${log.detalii.motivo}) `;
+          }
+
+          return `
+            <tr>
+              <td style="font-family:'Space Mono', monospace;">${t}</td>
+              <td style="font-weight: 600;">👤 ${log.utilizator}</td>
+              <td>${label}</td>
+              <td style="color: var(--text-muted); font-size: 13px;">${detText || '-'}</td>
+            </tr>
+          `;
       }).join('');
   }
 
   function subscribeRealtime() {
-      // NOTE: Para que esto funcione 100% instantáneo en tu Supabase,
-      // DEBES haber ejecutado "alter publication supabase_realtime add table comenzi;"
-      // en el SQL Editor de tu cuenta de Supabase.
-      
       const channel = _supabase.channel('public:comenzi');
       
       channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
-          allOrders.unshift(p.new); // Agregar al frente
+          allOrders.unshift(p.new); 
           const isAlert = p.new.produse.some(prod => prod.nume.includes('ALERTĂ'));
           
           if (userRole === 'director' || 
@@ -983,12 +1042,7 @@
               if(currentTab === 'admin') calculateDirectorStats(); 
           }
       })
-      .subscribe((status) => {
-          console.log("Realtime status:", status);
-          if (status !== 'SUBSCRIBED') {
-              console.warn("Realtime not hooked yet. Check table publication settings.");
-          }
-      });
+      .subscribe();
   }
 
   checkAuth();
@@ -996,3 +1050,4 @@
 </script>
 </body>
 </html>
+
