@@ -2,7 +2,7 @@
   {
     "imageNumber": 1,
     "name": "Truffle Wagyu Burger",
-    "price": 69.9,
+    "price": 14.50,
     "weight": "450 g",
     "kcal": 920,
     "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
@@ -14,81 +14,40 @@
       "Truffle mayo"
     ],
     "recipe": [
-      {
-        "item": "Vită Wagyu",
-        "quantity": 200,
-        "unit": "g"
-      },
-      {
-        "item": "Chiflă brioche",
-        "quantity": 1,
-        "unit": "buc"
-      },
-      {
-        "item": "Brânză Cheddar",
-        "quantity": 50,
-        "unit": "g"
-      },
-      {
-        "item": "Ceapă caramelizată",
-        "quantity": 40,
-        "unit": "g"
-      },
-      {
-        "item": "Maioneză cu trufe",
-        "quantity": 30,
-        "unit": "g"
-      }
+      { "item": "Carne de vacuno Wagyu", "quantity": 200, "unit": "g" },
+      { "item": "Pan brioche", "quantity": 1, "unit": "ud" },
+      { "item": "Queso Cheddar", "quantity": 50, "unit": "g" },
+      { "item": "Cebolla caramelizada", "quantity": 40, "unit": "g" },
+      { "item": "Mayonesa de trufa", "quantity": 30, "unit": "g" }
     ],
-    "allergens": [
-      "Gluten",
-      "Lácteos",
-      "Huevo"
-    ],
-    "tags": [
-      "principal",
-      "especialidad"
-    ],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["principal", "especialidad"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Burger Wagyu cu Trufe",
-        "description": "Chiftea premium din carne de vită Wagyu, cu ceapă caramelizată, cheddar topit și maioneză cu trufe într-o chiflă brioche.",
-        "ingredients": [
-          "Vită Wagyu",
-          "Chiflă brioche",
-          "Cheddar",
-          "Ceapă caramelizată",
-          "Maioneză cu trufe"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo"
-        ]
+      "es": {
+        "name": "Burger Wagyu con Trufa",
+        "description": "Medallón de carne Wagyu premium con cebolla caramelizada, cheddar fundido y mayonesa de trufa en pan brioche tostado.",
+        "ingredients": ["Carne Wagyu", "Pan brioche", "Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
       },
       "en": {
         "name": "Truffle Wagyu Burger",
         "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
-        "ingredients": [
-          "Wagyu beef",
-          "Brioche bun",
-          "Cheddar",
-          "Caramelized onions",
-          "Truffle mayo"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo"
-        ]
+        "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar", "Caramelized onions", "Truffle mayo"],
+        "allergens": ["Gluten", "Dairy", "Egg"]
+      },
+      "fr": {
+        "name": "Burger Wagyu à la Truffe",
+        "description": "Steak haché de bœuf Wagyu premium avec oignons caramélisés, cheddar fondu et mayonnaise à la truffe sur pain brioché.",
+        "ingredients": ["Bœuf Wagyu", "Pain brioché", "Cheddar", "Oignons caramélisés", "Mayonnaise à la truffe"],
+        "allergens": ["Gluten", "Produits laitiers", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 2,
     "name": "Authentic Tacos al Pastor",
-    "price": 49.9,
+    "price": 10.50,
     "weight": "350 g",
     "kcal": 540,
     "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
@@ -100,62 +59,32 @@
       "Onions"
     ],
     "recipe": [
-      {
-        "item": "Tortillas de porumb",
-        "quantity": 3,
-        "unit": "buc"
-      },
-      {
-        "item": "Carne de porc marinată",
-        "quantity": 180,
-        "unit": "g"
-      },
-      {
-        "item": "Ananas proaspăt",
-        "quantity": 50,
-        "unit": "g"
-      },
-      {
-        "item": "Coriandru proaspăt",
-        "quantity": 10,
-        "unit": "g"
-      },
-      {
-        "item": "Ceapă roșie",
-        "quantity": 30,
-        "unit": "g"
-      }
+      { "item": "Tortillas de maíz", "quantity": 3, "unit": "ud" },
+      { "item": "Carne de cerdo marinada", "quantity": 180, "unit": "g" },
+      { "item": "Piña fresca", "quantity": 50, "unit": "g" },
+      { "item": "Cilantro fresco", "quantity": 10, "unit": "g" },
+      { "item": "Cebolla", "quantity": 30, "unit": "g" }
     ],
     "allergens": [],
-    "tags": [
-      "principal",
-      "para compartir",
-      "sin gluten"
-    ],
+    "tags": ["principal", "para compartir", "sin gluten"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Tacos al Pastor Autentic",
-        "description": "Trei tortillas de porumb umplute cu carne de porc marinată, bucăți de ananas, coriandru proaspăt și ceapă.",
-        "ingredients": [
-          "Tortillas de porumb",
-          "Carne de porc",
-          "Ananas",
-          "Coriandru",
-          "Ceapă"
-        ],
+      "es": {
+        "name": "Tacos al Pastor Auténticos",
+        "description": "Tres tortillas de maíz rellenas de carne de cerdo marinada, trozos de piña, cilantro fresco y cebolla.",
+        "ingredients": ["Tortillas de maíz", "Cerdo marinado", "Piña", "Cilantro", "Cebolla"],
         "allergens": []
       },
       "en": {
-        "name": "Tacos al Pastor",
+        "name": "Authentic Tacos al Pastor",
         "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
-        "ingredients": [
-          "Corn tortillas",
-          "Marinated pork",
-          "Pineapple",
-          "Cilantro",
-          "Onions"
-        ],
+        "ingredients": ["Corn tortillas", "Marinated pork", "Pineapple", "Cilantro", "Onions"],
+        "allergens": []
+      },
+      "fr": {
+        "name": "Tacos al Pastor Authentiques",
+        "description": "Trois tortillas de maïs garnies de porc mariné, morceaux d'ananas, coriandre fraîche et oignons.",
+        "ingredients": ["Tortillas de maïs", "Porc mariné", "Ananas", "Coriandre", "Oignons"],
         "allergens": []
       }
     }
@@ -163,7 +92,7 @@
   {
     "imageNumber": 3,
     "name": "Spicy Tuna Sushi Roll",
-    "price": 69.9,
+    "price": 14.50,
     "weight": "250 g",
     "kcal": 380,
     "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
@@ -175,82 +104,40 @@
       "Sesame seeds"
     ],
     "recipe": [
-      {
-        "item": "Orez sushi",
-        "quantity": 120,
-        "unit": "g"
-      },
-      {
-        "item": "Ton proaspăt",
-        "quantity": 80,
-        "unit": "g"
-      },
-      {
-        "item": "Maioneză picantă",
-        "quantity": 25,
-        "unit": "g"
-      },
-      {
-        "item": "Foie de alge nori",
-        "quantity": 1,
-        "unit": "buc"
-      },
-      {
-        "item": "Semințe de susan",
-        "quantity": 5,
-        "unit": "g"
-      }
+      { "item": "Arroz de sushi", "quantity": 120, "unit": "g" },
+      { "item": "Atún fresco", "quantity": 80, "unit": "g" },
+      { "item": "Mayonesa picante", "quantity": 25, "unit": "g" },
+      { "item": "Alga nori", "quantity": 1, "unit": "ud" },
+      { "item": "Semillas de sésamo", "quantity": 5, "unit": "g" }
     ],
-    "allergens": [
-      "Pescado",
-      "Huevo",
-      "Gluten"
-    ],
-    "tags": [
-      "entrante",
-      "especialidad",
-      "marisco"
-    ],
+    "allergens": ["Pescado", "Huevo", "Gluten"],
+    "tags": ["entrante", "especialidad", "marisco"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Sushi Roll Spicy Tuna",
-        "description": "Ton proaspăt amestecat cu maioneză picantă, învelit în orez pentru sushi și alge nori, presărat cu susan.",
-        "ingredients": [
-          "Orez sushi",
-          "Ton proaspăt",
-          "Maioneză picantă",
-          "Alge nori",
-          "Susan"
-        ],
-        "allergens": [
-          "Pescado",
-          "Huevo",
-          "Gluten"
-        ]
+      "es": {
+        "name": "Sushi Roll de Atún Picante",
+        "description": "Atún fresco mezclado con mayonesa picante, envuelto en arroz de sushi y alga nori, coronado con semillas de sésamo.",
+        "ingredients": ["Arroz de sushi", "Atún fresco", "Mayonesa picante", "Alga nori", "Sésamo"],
+        "allergens": ["Pescado", "Huevo", "Gluten"]
       },
       "en": {
         "name": "Spicy Tuna Sushi Roll",
         "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
-        "ingredients": [
-          "Sushi rice",
-          "Fresh tuna",
-          "Spicy mayo",
-          "Nori seaweed",
-          "Sesame seeds"
-        ],
-        "allergens": [
-          "Pescado",
-          "Huevo",
-          "Gluten"
-        ]
+        "ingredients": ["Sushi rice", "Fresh tuna", "Spicy mayo", "Nori seaweed", "Sesame seeds"],
+        "allergens": ["Fish", "Egg", "Gluten"]
+      },
+      "fr": {
+        "name": "Sushi Roll Thon Epicé",
+        "description": "Thon frais mélangé à de la mayonnaise épicée, enveloppé dans du riz à sushi et de l'algue nori, garni de sésame.",
+        "ingredients": ["Riz à sushi", "Thon frais", "Mayonnaise épicée", "Algue nori", "Graines de sésame"],
+        "allergens": ["Poisson", "Œuf", "Gluten"]
       }
     }
   },
   {
     "imageNumber": 4,
     "name": "Shrimp Pad Thai",
-    "price": 55.0,
+    "price": 11.50,
     "weight": "400 g",
     "kcal": 610,
     "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
@@ -263,86 +150,41 @@
       "Tamarind sauce"
     ],
     "recipe": [
-      {
-        "item": "Tăiței de orez",
-        "quantity": 150,
-        "unit": "g"
-      },
-      {
-        "item": "Creveți proaspeți",
-        "quantity": 120,
-        "unit": "g"
-      },
-      {
-        "item": "Ouă proaspete",
-        "quantity": 1,
-        "unit": "buc"
-      },
-      {
-        "item": "Arahide mărunțite",
-        "quantity": 30,
-        "unit": "g"
-      },
-      {
-        "item": "Muguri de fasole",
-        "quantity": 50,
-        "unit": "g"
-      },
-      {
-        "item": "Sos tamarind",
-        "quantity": 40,
-        "unit": "ml"
-      }
+      { "item": "Fideos de arroz", "quantity": 150, "unit": "g" },
+      { "item": "Gambas frescas", "quantity": 120, "unit": "g" },
+      { "item": "Huevo", "quantity": 1, "unit": "ud" },
+      { "item": "Cacahuetes picados", "quantity": 30, "unit": "g" },
+      { "item": "Brotes de soja", "quantity": 50, "unit": "g" },
+      { "item": "Salsa de tamarindo", "quantity": 40, "unit": "ml" }
     ],
-    "allergens": [
-      "Marisco",
-      "Huevo"
-    ],
-    "tags": [
-      "principal",
-      "especialidad",
-      "sin gluten"
-    ],
+    "allergens": ["Marisco", "Huevo"],
+    "tags": ["principal", "especialidad", "sin gluten"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Pad Thai cu Creveți",
-        "description": "Tăiței de orez thailandezi trași la tigaie cu creveți suculenți, ou, arahide, muguri de fasole și lime.",
-        "ingredients": [
-          "Tăiței de orez",
-          "Creveți",
-          "Ou",
-          "Arahide",
-          "Muguri de fasole",
-          "Sos tamarind"
-        ],
-        "allergens": [
-          "Marisco",
-          "Huevo"
-        ]
+      "es": {
+        "name": "Pad Thai de Gambas",
+        "description": "Clásicos fideos de arroz salteados al estilo tailandés con gambas jugosas, huevo, cacahuetes, brotes de soja y lima.",
+        "ingredients": ["Fideos de arroz", "Gambas", "Huevo", "Cacahuetes", "Brotes de soja", "Salsa de tamarindo"],
+        "allergens": ["Marisco", "Huevo"]
       },
       "en": {
         "name": "Shrimp Pad Thai",
         "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
-        "ingredients": [
-          "Rice noodles",
-          "Shrimp",
-          "Egg",
-          "Peanuts",
-          "Bean sprouts",
-          "Tamarind sauce"
-        ],
-        "allergens": [
-          "Marisco",
-          "Huevo"
-        ]
+        "ingredients": ["Rice noodles", "Shrimp", "Egg", "Peanuts", "Bean sprouts", "Tamarind sauce"],
+        "allergens": ["Shellfish", "Egg"]
+      },
+      "fr": {
+        "name": "Pad Thai aux Crevettes",
+        "description": "Nouilles de riz sautées classiques thaïlandaises avec crevettes juteuses, œuf, cacahuètes, pousses de soja et citron vert.",
+        "ingredients": ["Nouilles de riz", "Crevettes", "Œuf", "Cacahuètes", "Pousses de soja", "Sauce tamarin"],
+        "allergens": ["Crustacés", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 5,
     "name": "Pizza Margherita Verace",
-    "price": 35.0,
+    "price": 7.50,
     "weight": "420 g",
     "kcal": 800,
     "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
@@ -354,79 +196,40 @@
       "Olive oil"
     ],
     "recipe": [
-      {
-        "item": "Aluat pizza",
-        "quantity": 250,
-        "unit": "g"
-      },
-      {
-        "item": "Sos roșii San Marzano",
-        "quantity": 80,
-        "unit": "g"
-      },
-      {
-        "item": "Mozzarella de bivoliță",
-        "quantity": 100,
-        "unit": "g"
-      },
-      {
-        "item": "Busuioc proaspăt",
-        "quantity": 5,
-        "unit": "g"
-      },
-      {
-        "item": "Ulei de măsline extra virgin",
-        "quantity": 10,
-        "unit": "ml"
-      }
+      { "item": "Masa de pizza", "quantity": 250, "unit": "g" },
+      { "item": "Salsa de tomate San Marzano", "quantity": 80, "unit": "g" },
+      { "item": "Mozzarella de búfala", "quantity": 100, "unit": "g" },
+      { "item": "Albahaca fresca", "quantity": 5, "unit": "g" },
+      { "item": "Aceite de oliva virgen extra", "quantity": 10, "unit": "ml" }
     ],
-    "allergens": [
-      "Gluten",
-      "Lácteos"
-    ],
-    "tags": [
-      "principal",
-      "tradicional",
-      "para compartir"
-    ],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["principal", "tradicional", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
+      "es": {
         "name": "Pizza Margherita Verace",
-        "description": "Pizza napoletană autentică, cu sos de roșii San Marzano, mozzarella di bufala proaspătă și busuioc.",
-        "ingredients": [
-          "Aluat pizza",
-          "Roșii San Marzano",
-          "Mozzarella de bivoliță",
-          "Busuioc proaspăt",
-          "Ulei de măsline"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos"
-        ]
+        "description": "Auténtica pizza napolitana con salsa de tomate San Marzano, mozzarella di bufala fresca y albahaca.",
+        "ingredients": ["Masa de pizza", "Tomate San Marzano", "Mozzarella de búfala", "Albahaca", "Aceite de oliva"],
+        "allergens": ["Gluten", "Lácteos"]
       },
       "en": {
         "name": "Pizza Margherita Verace",
         "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
-        "ingredients": [
-          "Pizza dough",
-          "San Marzano tomatoes",
-          "Buffalo mozzarella",
-          "Fresh basil",
-          "Olive oil"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos"
-        ]
+        "ingredients": ["Pizza dough", "San Marzano tomatoes", "Buffalo mozzarella", "Fresh basil", "Olive oil"],
+        "allergens": ["Gluten", "Dairy"]
+      },
+      "fr": {
+        "name": "Pizza Margherita Verace",
+        "description": "Authentique pizza napolitaine avec sauce tomate San Marzano, mozzarella di bufala fraîche et basilic.",
+        "ingredients": ["Pâte à pizza", "Tomates San Marzano", "Mozzarella di bufala", "Basilic frais", "Huile d'olive"],
+        "allergens": ["Gluten", "Produits laitiers"]
       }
     }
   },
   {
     "imageNumber": 6,
     "name": "Classic Caesar Salad",
-    "price": 40.0,
+    "price": 8.50,
     "weight": "300 g",
     "kcal": 450,
     "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
@@ -438,79 +241,39 @@
       "Anchovies"
     ],
     "recipe": [
-      {
-        "item": "Salată Romaine",
-        "quantity": 180,
-        "unit": "g"
-      },
-      {
-        "item": "Parmezan ras",
-        "quantity": 40,
-        "unit": "g"
-      },
-      {
-        "item": "Crutoane cu usturoi",
-        "quantity": 40,
-        "unit": "g"
-      },
-      {
-        "item": "Dressing Caesar",
-        "quantity": 50,
-        "unit": "ml"
-      }
+      { "item": "Lechuga romana", "quantity": 180, "unit": "g" },
+      { "item": "Queso parmesano rallado", "quantity": 40, "unit": "g" },
+      { "item": "Picatostes al ajo", "quantity": 40, "unit": "g" },
+      { "item": "Salsa César", "quantity": 50, "unit": "ml" }
     ],
-    "allergens": [
-      "Gluten",
-      "Lácteos",
-      "Huevo",
-      "Pescado"
-    ],
-    "tags": [
-      "entrante",
-      "tradicional"
-    ],
+    "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"],
+    "tags": ["entrante", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Salată Caesar Clasică",
-        "description": "Salată romaine crocantă amestecată cu dressing Caesar făcut în casă, parmezan ras și crutoane crocante.",
-        "ingredients": [
-          "Salată romaine",
-          "Parmezan",
-          "Crutoane",
-          "Dressing Caesar",
-          "Anșoa"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo",
-          "Pescado"
-        ]
+      "es": {
+        "name": "Ensalada César Clásica",
+        "description": "Lechuga romana crujiente aliñada con salsa César casera, virutas de parmesano y picatostes crujientes.",
+        "ingredients": ["Lechuga romana", "Parmesano", "Picatostes", "Salsa César", "Anchoas"],
+        "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"]
       },
       "en": {
         "name": "Classic Caesar Salad",
         "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
-        "ingredients": [
-          "Romaine lettuce",
-          "Parmesan cheese",
-          "Croutons",
-          "Caesar dressing",
-          "Anchovies"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo",
-          "Pescado"
-        ]
+        "ingredients": ["Romaine lettuce", "Parmesan cheese", "Croutons", "Caesar dressing", "Anchovies"],
+        "allergens": ["Gluten", "Dairy", "Egg", "Fish"]
+      },
+      "fr": {
+        "name": "Salade César Classique",
+        "description": "Laitue romaine croquante mélangée à une sauce César maison, copeaux de parmesan et croûtons croustillants.",
+        "ingredients": ["Laitue romaine", "Parmesan", "Croûtons", "Sauce César", "Anchois"],
+        "allergens": ["Gluten", "Produits laitiers", "Œuf", "Poisson"]
       }
     }
   },
   {
     "imageNumber": 7,
     "name": "Italian Classic Tiramisu",
-    "price": 25.0,
+    "price": 5.50,
     "weight": "180 g",
     "kcal": 410,
     "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
@@ -522,76 +285,39 @@
       "Egg"
     ],
     "recipe": [
-      {
-        "item": "Cremă Mascarpone",
-        "quantity": 100,
-        "unit": "g"
-      },
-      {
-        "item": "Pișcoturi Savoiardi",
-        "quantity": 4,
-        "unit": "buc"
-      },
-      {
-        "item": "Espresso concentrate",
-        "quantity": 40,
-        "unit": "ml"
-      },
-      {
-        "item": "Pudră de cacao",
-        "quantity": 10,
-        "unit": "g"
-      }
+      { "item": "Crema de mascarpone", "quantity": 100, "unit": "g" },
+      { "item": "Bizcochos Savoiardi", "quantity": 4, "unit": "ud" },
+      { "item": "Café espresso concentrado", "quantity": 40, "unit": "ml" },
+      { "item": "Cacao en polvo", "quantity": 10, "unit": "g" }
     ],
-    "allergens": [
-      "Gluten",
-      "Lácteos",
-      "Huevo"
-    ],
-    "tags": [
-      "postre",
-      "tradicional"
-    ],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["postre", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
-      "ro": {
-        "name": "Tiramisu Clasic Italian",
-        "description": "Desert clasic italian cu pișcoturi înmuiate în espresso, stratificate cu o cremă fină de mascarpone.",
-        "ingredients": [
-          "Mascarpone",
-          "Pișcoturi",
-          "Cafea espresso",
-          "Cacao pudră",
-          "Ou"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo"
-        ]
+      "es": {
+        "name": "Tiramisú Clásico Italiano",
+        "description": "Postre clásico italiano elaborado con bizcochos empapados en espresso, en capas con una crema ligera de mascarpone.",
+        "ingredients": ["Mascarpone", "Bizcochos", "Café espresso", "Cacao en polvo", "Huevo"],
+        "allergens": ["Gluten", "Lácteos", "Huevo"]
       },
       "en": {
         "name": "Classic Tiramisu",
         "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
-        "ingredients": [
-          "Mascarpone",
-          "Ladyfingers",
-          "Espresso coffee",
-          "Cocoa powder",
-          "Egg"
-        ],
-        "allergens": [
-          "Gluten",
-          "Lácteos",
-          "Huevo"
-        ]
+        "ingredients": ["Mascarpone", "Ladyfingers", "Espresso coffee", "Cocoa powder", "Egg"],
+        "allergens": ["Gluten", "Dairy", "Egg"]
+      },
+      "fr": {
+        "name": "Tiramisu Classique Italien",
+        "description": "Dessert classique italien à base de biscuits cuillère trempés dans l'espresso, superposés d'une crème mascarpone fouettée.",
+        "ingredients": ["Mascarpone", "Biscuits cuillère", "Café espresso", "Cacao en poudre", "Œuf"],
+        "allergens": ["Gluten", "Produits laitiers", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 8,
     "name": "Venetian Aperol Spritz",
-    "price": 30.0,
+    "price": 6.50,
     "weight": "300 ml",
     "kcal": 170,
     "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
@@ -602,68 +328,39 @@
       "Orange slice"
     ],
     "recipe": [
-      {
-        "item": "Aperol",
-        "quantity": 60,
-        "unit": "ml"
-      },
-      {
-        "item": "Prosecco",
-        "quantity": 90,
-        "unit": "ml"
-      },
-      {
-        "item": "Apă minerală carbogazoasă",
-        "quantity": 30,
-        "unit": "ml"
-      },
-      {
-        "item": "Felie de portocală proaspătă",
-        "quantity": 1,
-        "unit": "buc"
-      }
+      { "item": "Aperol", "quantity": 60, "unit": "ml" },
+      { "item": "Prosecco", "quantity": 90, "unit": "ml" },
+      { "item": "Agua con gas", "quantity": 30, "unit": "ml" },
+      { "item": "Rodaja de naranja fresca", "quantity": 1, "unit": "ud" }
     ],
-    "allergens": [
-      "Sulfitos"
-    ],
-    "tags": [
-      "coctel",
-      "bebida"
-    ],
+    "allergens": ["Sulfitos"],
+    "tags": ["coctel", "bebida"],
     "sectiune": "bar",
     "translations": {
-      "ro": {
-        "name": "Aperol Spritz",
-        "description": "Aperitivul italian prin excelență: Aperol, Prosecco spumant, puțină apă minerală și o felie de portocală.",
-        "ingredients": [
-          "Aperol",
-          "Prosecco",
-          "Apă minerală",
-          "Felie de portocală"
-        ],
-        "allergens": [
-          "Sulfitos"
-        ]
+      "es": {
+        "name": "Aperol Spritz Veneciano",
+        "description": "El aperitivo italiano por excelencia: Aperol, Prosecco espumoso y un toque de agua con gas con una rodaja de naranja.",
+        "ingredients": ["Aperol", "Prosecco", "Agua con gas", "Rodaja de naranja"],
+        "allergens": ["Sulfitos"]
       },
       "en": {
-        "name": "Aperol Spritz",
+        "name": "Venetian Aperol Spritz",
         "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
-        "ingredients": [
-          "Aperol",
-          "Prosecco",
-          "Club soda",
-          "Orange slice"
-        ],
-        "allergens": [
-          "Sulfitos"
-        ]
+        "ingredients": ["Aperol", "Prosecco", "Club soda", "Orange slice"],
+        "allergens": ["Sulfites"]
+      },
+      "fr": {
+        "name": "Aperol Spritz Vénitien",
+        "description": "L'apéritif italien par excellence : Aperol, Prosecco pétillant et un trait d'eau gazeuse avec une rondelle d'orange.",
+        "ingredients": ["Aperol", "Prosecco", "Eau gazeuse", "Rondelle d'orange"],
+        "allergens": ["Sulfites"]
       }
     }
   },
   {
     "imageNumber": 9,
     "name": "Classic Margarita",
-    "price": 30.0,
+    "price": 6.50,
     "weight": "200 ml",
     "kcal": 220,
     "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
@@ -674,55 +371,31 @@
       "Salt"
     ],
     "recipe": [
-      {
-        "item": "Tequila Blanco",
-        "quantity": 50,
-        "unit": "ml"
-      },
-      {
-        "item": "Lichior Cointreau",
-        "quantity": 20,
-        "unit": "ml"
-      },
-      {
-        "item": "Suc proaspăt de lime",
-        "quantity": 30,
-        "unit": "ml"
-      },
-      {
-        "item": "Sare fină rim",
-        "quantity": 2,
-        "unit": "g"
-      }
+      { "item": "Tequila Blanco", "quantity": 50, "unit": "ml" },
+      { "item": "Licor Cointreau", "quantity": 20, "unit": "ml" },
+      { "item": "Zumo de lima fresco", "quantity": 30, "unit": "ml" },
+      { "item": "Sal fina para el borde", "quantity": 2, "unit": "g" }
     ],
     "allergens": [],
-    "tags": [
-      "coctel",
-      "especialidad",
-      "bebida"
-    ],
+    "tags": ["coctel", "especialidad", "bebida"],
     "sectiune": "bar",
     "translations": {
-      "ro": {
-        "name": "Margarita Clasică",
-        "description": "Un clasic mexican perfect echilibrat, cu tequila premium, suc proaspăt de lime și Cointreau, cu o margine de sare.",
-        "ingredients": [
-          "Tequila",
-          "Suc de lime proaspăt",
-          "Lichior Cointreau",
-          "Sare"
-        ],
+      "es": {
+        "name": "Margarita Clásica",
+        "description": "Un clásico mexicano perfectamente equilibrado con tequila premium, zumo de lima fresco y Cointreau con borde salado.",
+        "ingredients": ["Tequila", "Zumo de lima", "Cointreau", "Sal"],
         "allergens": []
       },
       "en": {
         "name": "Classic Margarita",
         "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
-        "ingredients": [
-          "Tequila",
-          "Fresh lime juice",
-          "Cointreau liqueur",
-          "Salt"
-        ],
+        "ingredients": ["Tequila", "Fresh lime juice", "Cointreau liqueur", "Salt"],
+        "allergens": []
+      },
+      "fr": {
+        "name": "Margarita Classique",
+        "description": "Un classique mexicain parfaitement équilibré à base de tequila premium, jus de citron vert frais et Cointreau avec bord salé.",
+        "ingredients": ["Tequila", "Jus de citron vert", "Cointreau", "Sel"],
         "allergens": []
       }
     }
@@ -730,7 +403,7 @@
   {
     "imageNumber": 10,
     "name": "Espresso Martini",
-    "price": 21.0,
+    "price": 4.50,
     "weight": "150 ml",
     "kcal": 210,
     "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
@@ -741,54 +414,31 @@
       "Simple syrup"
     ],
     "recipe": [
-      {
-        "item": "Vodcă Premium",
-        "quantity": 50,
-        "unit": "ml"
-      },
-      {
-        "item": "Lichior de cafea Kahlúa",
-        "quantity": 20,
-        "unit": "ml"
-      },
-      {
-        "item": "Espresso proaspăt",
-        "quantity": 30,
-        "unit": "ml"
-      },
-      {
-        "item": "Sirop de zahăr",
-        "quantity": 10,
-        "unit": "ml"
-      }
+      { "item": "Vodka Premium", "quantity": 50, "unit": "ml" },
+      { "item": "Licor de café Kahlúa", "quantity": 20, "unit": "ml" },
+      { "item": "Espresso fresco", "quantity": 30, "unit": "ml" },
+      { "item": "Sirope de azúcar", "quantity": 10, "unit": "ml" }
     ],
     "allergens": [],
-    "tags": [
-      "coctel",
-      "bebida"
-    ],
+    "tags": ["coctel", "bebida"],
     "sectiune": "bar",
     "translations": {
-      "ro": {
+      "es": {
         "name": "Espresso Martini",
-        "description": "Un cocktail sofisticat și energizant care combină vodcă premium, lichior de cafea bogat și espresso proaspăt preparat.",
-        "ingredients": [
-          "Vodcă",
-          "Lichior de cafea",
-          "Espresso proaspăt",
-          "Sirop de zahăr"
-        ],
+        "description": "Un cóctel sofisticado y enérgico que mezcla vodka premium, rico licor de café y espresso recién hecho.",
+        "ingredients": ["Vodka", "Licor de café", "Espresso", "Sirope de azúcar"],
         "allergens": []
       },
       "en": {
         "name": "Espresso Martini",
         "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
-        "ingredients": [
-          "Vodka",
-          "Coffee liqueur",
-          "Fresh espresso",
-          "Simple syrup"
-        ],
+        "ingredients": ["Vodka", "Coffee liqueur", "Fresh espresso", "Simple syrup"],
+        "allergens": []
+      },
+      "fr": {
+        "name": "Espresso Martini",
+        "description": "Un cocktail sophistiqué et énergique mélangeant vodka premium, liqueur de café riche et espresso fraîchement préparé.",
+        "ingredients": ["Vodka", "Liqueur de café", "Espresso", "Sirop de sucre"],
         "allergens": []
       }
     }
