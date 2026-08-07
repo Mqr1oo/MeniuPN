@@ -1,10 +1,11 @@
 const CACHE_NAME = 'alibretto-cache-v4';
 
 const urlsToCache = [
-  './',
-  './dashboard.html',
-  './menu.json',
-  './manifest.json'
+  '/',
+  '/dashboard',
+  '/dashboard.html',
+  '/menu.json',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', event => {
@@ -33,15 +34,13 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// NETWORK-FIRST Strategy: Descarcă mereu de pe net pentru a avea ultima versiune.
-// Folosește cache-ul doar dacă internetul a picat complet.
+// NETWORK-FIRST Strategy
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
     fetch(event.request)
       .then(networkResponse => {
-        // Dacă răspunsul e valid, actualizăm cache-ul invizibil în fundal
         if (networkResponse && networkResponse.status === 200) {
           const cacheCopy = networkResponse.clone();
           caches.open(CACHE_NAME).then(cache => {
@@ -51,7 +50,6 @@ self.addEventListener('fetch', event => {
         return networkResponse;
       })
       .catch(() => {
-        // Dacă nu avem internet, returnăm versiunea din cache
         return caches.match(event.request);
       })
   );
