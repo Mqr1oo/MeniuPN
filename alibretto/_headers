@@ -1,0 +1,7 @@
+/sw.js Cache-Control: no-cache, no-store, must-revalidate
+
+/sw-menu.js Cache-Control: no-cache, no-store, must-revalidate
+
+/menu.json Cache-Control: no-cache, must-revalidate
+
+/manifest.json Cache-Control: no-cache, must-revalidate
