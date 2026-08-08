@@ -46,7 +46,7 @@
   
   .lang-toggle-btn { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; display: flex; align-items: center; gap: 6px;}
   .lang-toggle-btn:active{ transform:scale(0.92); }
-  .lang-menu-dropdown { position: absolute; top: 50px; left: 0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; min-width: 140px; display: none;}
+  .lang-menu-dropdown { position: absolute; top: 50px; left: 0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 8px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; min-width: 140px;}
   .lang-menu-dropdown.show { display: flex; }
   .lang-option { background: transparent; border: none; color: var(--ink); padding: 10px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 13px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
   .lang-option:hover { background: rgba(255,255,255,0.05); }
@@ -946,7 +946,12 @@
               statText.textContent = '🔥 ' + (currentLang==='es'?'En preparación': (currentLang==='fr'?'En préparation':'Preparing'));
               progress.style.width = '70%';
           } else if (s === 'finalizata') {
-              statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
+              if(p.new.comp_motiv) {
+                  statText.textContent = '🎁 GRATIS';
+                  statText.style.color = '#fbbf24';
+              } else {
+                  statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
+              }
               progress.style.width = '100%';
               setTimeout(() => { 
                   tracker.classList.remove('show'); 
@@ -1073,3 +1078,5 @@
 </script>
 </body>
 </html>
+
+
