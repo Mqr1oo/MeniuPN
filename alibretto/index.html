@@ -6,23 +6,14 @@
 <title>Á Libretto &mdash; Menú digital</title>
 <meta name="description" content="Menú digital Á Libretto. Cócteles y platos deliciosos.">
 
-<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('Error SW: ', err));
-    });
-  }
+
 </script>
-<!-- ================================== -->
 
-<!-- ===== SUPABASE SDK ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- ======================== -->
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -44,8 +35,11 @@
   h1,h2,h3{ font-family:'Fraunces', serif; margin:0; font-weight:600; }
   .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 20px; }
 
-  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:60px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
-  .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
+  .busy-banner { display: none; background: #f59e0b; color: #000; padding: 12px 20px; font-weight: 700; text-align: center; font-size: 14.5px; z-index: 100; position: relative; line-height: 1.3;}
+
+  /* --- HEADER --- */
+  .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:85px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
+  .top-actions{ position:absolute; top:20px; left:20px; right:20px; z-index:2; display:flex; justify-content: space-between; align-items: flex-start; gap:8px; }
   
   .lang-toggle-btn { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; display: flex; align-items: center; gap: 6px;}
   .lang-toggle-btn:active{ transform:scale(0.92); }
@@ -54,7 +48,7 @@
   .lang-option { background: transparent; border: none; color: var(--ink); padding: 10px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 13px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
   .lang-option:hover { background: rgba(255,255,255,0.05); }
 
-  .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:24px; }
+  .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:10px; }
   .hero-text{ flex:1 1 340px; min-width:260px; }
   .eyebrow{ font-family:'Space Mono', monospace; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--pink-main); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
   .eyebrow::before{ content:""; width:22px; height:1px; background:var(--pink-main); display:inline-block; }
@@ -113,29 +107,40 @@
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
-  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
+  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 10px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
   .total-bar.show { transform: translateY(0); }
-  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 10px; }
-  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--pink-bright); }
+  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 8px; font-size: 13px; }
+  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.15rem; font-weight: 700; color: var(--pink-bright); }
   
-  .action-buttons { display: flex; gap: 12px; }
-  .btn-action { flex: 1; border: none; padding: 16px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
+  .action-buttons { display: flex; gap: 10px; }
+  .btn-action { flex: 1; border: none; padding: 13px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
-  .btn-order-bar { background: var(--pink-main); color: white; font-size: 18px; }
-  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 55px; font-size: 20px; }
+  .btn-order-bar { background: var(--pink-main); color: white; font-size: 15px; }
+  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 46px; font-size: 17px; }
 
-  .tracker-widget { position: fixed; top: calc(15px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 92%; max-width: 450px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 2px solid var(--pink-main); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 10px 40px rgba(22, 132, 78, 0.3); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+  .tracker-widget { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 84%; max-width: 340px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 1.5px solid var(--pink-main); border-radius: var(--radius-md); padding: 11px 14px; box-shadow: 0 8px 28px rgba(22, 132, 78, 0.28); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
   .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
-  .t-head { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; font-weight: 700; }
-  .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; }
+  .t-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 7px; font-weight: 700; gap: 8px; }
+  .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; white-space: nowrap; }
   @keyframes pulseText { 0% {opacity: 1;} 50% {opacity: 0.6;} 100% {opacity: 1;} }
-  .t-bar-bg { width: 100%; height: 8px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
+  .t-bar-bg { width: 100%; height: 5px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
-  .global-fav-btn { position: fixed; bottom: calc(25px + env(safe-area-inset-bottom)); right: 20px; height: 56px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--pink-main); padding: 0 24px; gap: 10px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 8px 25px rgba(22, 132, 78, 0.3); }
+  .global-fav-btn { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px; height: 48px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); padding: 0 20px; gap: 8px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 6px 20px rgba(22, 132, 78, 0.4); }
   .global-fav-btn:active { transform: scale(0.92); }
-  .global-fav-btn svg { width: 24px; height: 24px; fill: currentColor; }
-  body.has-cart-bar .global-fav-btn { transform: translateY(-130px); }
+  .global-fav-btn svg { width: 18px; height: 18px; fill: currentColor; }
+  body.has-cart-bar .global-fav-btn { transform: translateY(-115px); }
+
+  .tables-badge { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.03em; padding:8px 14px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18,18,18,0.7); backdrop-filter: blur(8px); color:var(--ink-soft); display:none; align-items:center; gap:6px; cursor:pointer; opacity:0.85; transition: all .2s; }
+  .tables-badge:active { transform: scale(0.92); }
+  .tables-badge.badge-low { border-color: var(--pink-main); color: var(--pink-bright); opacity: 1; }
+  .tables-badge.badge-full { border-color: var(--coral); background: rgba(255,71,87,0.18); color: #fff; opacity: 1; font-weight:700; box-shadow: 0 0 0 rgba(255,71,87,0.5); animation: pulseFull 1.4s infinite; }
+  @keyframes pulseFull { 0% { box-shadow: 0 0 0 0 rgba(255,71,87,0.55); } 70% { box-shadow: 0 0 0 10px rgba(255,71,87,0); } 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0); } }
+  
+  .tables-badge-list { position:absolute; top:48px; right:0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 10px; min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display:none; flex-direction:column; gap:6px; font-family:'Space Mono', monospace; font-size:13px; color: var(--ink-soft); z-index: 50; max-height: 300px; overflow-y: auto;}
+  .tables-badge-list.show { display:flex; }
+  .tables-badge-list span { padding: 6px 8px; border-radius: 6px; background: rgba(255,255,255,0.03); display: block; border-left: 3px solid var(--pink-main); color: var(--ink); }
+  .tables-badge-wrap { position:relative; }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
@@ -167,10 +172,6 @@
   .lang-pick-btn .flag{ font-size:1.8rem; line-height:1; }
   .lang-pick-btn:active{ transform: scale(0.96); border-color: var(--pink-main); }
 
-  /* Pe pagina mobila e modificat */
-  .receipt-notice { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; padding: 12px; margin-top: 15px; font-size: 12px; color: #fbbf6b; text-align: left;}
-  .receipt-notice b { color: #ffcf8a; }
-
   footer{ background:var(--bg-card); border-top: 1px solid var(--paper-dim); color:var(--ink-soft); padding:30px 0 20px; font-size:14px; margin-top: 40px;}
   .footer-inner{ display:flex; flex-direction: column; gap:16px; align-items:center; text-align:center;}
   .footer-links button { background: none; border: none; color: var(--ink-soft); font-family: 'Space Mono', monospace; font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0;}
@@ -178,11 +179,10 @@
   .gdpr-note { font-size: 12px; color: var(--coral); margin-top: -10px; margin-bottom: 20px; display: block; font-style: italic;}
 
   @media (max-width:640px){
-    .hero{ padding-top:44px; }
+    .hero{ padding-top:85px; } 
     .search-box { width: 100%; }
     .grid{ grid-template-columns:1fr; }
     
-    /* Tweaks pt mobil carduri mai compacte */
     .c-qty-btn { width: 38px; height: 38px; font-size: 1.3rem; }
     .card-body{ padding: 14px 16px; gap:6px; }
     .card-top h3 { font-size: 1.05rem; }
@@ -197,6 +197,10 @@
 </head>
 <body>
 
+<div id="busyBanner" class="busy-banner">
+  🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores.
+</div>
+
 <header class="hero">
   <div class="top-actions">
     <div style="position: relative;">
@@ -209,7 +213,14 @@
             <button class="lang-option" data-lang="fr"><span>🇫🇷</span> Français</button>
         </div>
     </div>
+    
+    <!-- WRAPPER BADGE MESE (acum dropdown la click) -->
+    <div class="tables-badge-wrap">
+        <button class="tables-badge" id="tablesBadge"></button>
+        <div class="tables-badge-list" id="tablesBadgeList"></div>
+    </div>
   </div>
+  
   <div class="wrap hero-inner">
     <div class="hero-text">
       <p class="eyebrow" id="txtEyebrow">Menú digital</p>
@@ -253,6 +264,7 @@
   </div>
 </div>
 
+<!-- BUTONUL SMART (va afisa Textul de Pagar/Ayuda sau Cart-ul) -->
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
 <div class="modal-overlay" id="onboardingOverlay">
@@ -335,11 +347,29 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="feedbackOverlay">
+  <div class="modal" style="text-align:center;">
+    <button class="modal-close" onclick="document.getElementById('feedbackOverlay').classList.remove('open')">&times;</button>
+    <h2 id="fbTitle">¿Qué tal la comida?</h2>
+    <div id="starContainer" style="font-size: 38px; display:flex; justify-content:center; gap:10px; margin:20px 0; cursor:pointer; color: var(--ink-soft); user-select:none;">
+       <span data-val="1">☆</span><span data-val="2">☆</span><span data-val="3">☆</span><span data-val="4">☆</span><span data-val="5">☆</span>
+    </div>
+    <div id="fbBad" style="display:none; transition: opacity 0.3s;">
+       <textarea id="fbMessage" class="input-note" placeholder="¿Qué podemos mejorar?" rows="3"></textarea>
+       <button class="btn-submit" id="btnSubmitFb">Enviar Feedback</button>
+    </div>
+    <div id="fbGood" style="display:none; transition: opacity 0.3s;">
+       <p id="fbGoogleText" style="margin-bottom:16px;">¡Genial! Nos ayudaría mucho una reseña en Google.</p>
+       <a href="https://maps.app.goo.gl/CExuDvVM4sihuBUk7" target="_blank" class="btn-submit" id="fbGoogleBtn" style="display:block; text-decoration:none; background:#4285F4; margin-bottom: 0;">Dejar reseña en Google</a>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="customAlertOverlay">
   <div class="modal" style="max-width:340px;">
     <h3 id="customAlertTitle" style="margin-bottom:12px; font-size: 1.4rem;">Notificación</h3>
     <p id="customAlertText" style="margin-bottom:24px; font-size: 15px;">Mensaje...</p>
-    <button class="btn-submit" onclick="document.getElementById('customAlertOverlay').classList.remove('open')">OK</button>
+    <button class="btn-submit" id="customAlertOkBtn" onclick="closeCustomAlert()">OK</button>
   </div>
 </div>
 
@@ -355,12 +385,6 @@
 <footer>
   <div class="wrap footer-inner">
     <div class="brand">Á Libretto</div>
-    
-    <!-- Mutați notația de factură (Ticket info) aici in Footer micuț -->
-    <div class="receipt-notice" id="txtReceiptNotice" style="max-width: 500px; margin: 0 auto 16px;">
-        <b>¿No recibiste tu recibo/ticket?</b> Si no se te entrega el recibo al finalizar, avísanos: podría significar que tu pedido no está registrado y puede ser gratis.
-    </div>
-
     <div class="footer-links">
         <button id="btnPrivacyPolicy">Política de Privacidad (GDPR)</button>
     </div>
@@ -380,11 +404,31 @@
   let favoritesQty = loadFavorites();
   let currentLang = localStorage.getItem('aLibretto:lang'); 
   let cartTotalValue = 0;
+  let currentRating = 0;
+  let pendingReviewPrompt = false;
+  let validTableNumbers = null; 
 
   function showCustomAlert(title, text) {
     document.getElementById('customAlertTitle').textContent = title;
     document.getElementById('customAlertText').textContent = text;
     document.getElementById('customAlertOverlay').classList.add('open');
+  }
+
+  window.closeCustomAlert = function() {
+    document.getElementById('customAlertOverlay').classList.remove('open');
+    if(pendingReviewPrompt) {
+      pendingReviewPrompt = false;
+      setTimeout(showDirectReviewModal, 1000);
+    }
+  };
+
+  function showDirectReviewModal() {
+    const t = I18N[currentLang];
+    document.getElementById('fbTitle').textContent = t.fbDirectTitle;
+    document.getElementById('starContainer').style.display = 'none';
+    document.getElementById('fbBad').style.display = 'none';
+    document.getElementById('fbGood').style.display = 'block';
+    document.getElementById('feedbackOverlay').classList.add('open');
   }
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -406,10 +450,11 @@
     saveFavorites();
   }
 
+  // --- I18N ACTUALIZAT (TEXTUL BUTONULUI) ---
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
-      allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontra€ productos.', 
+      allChip:'Todos', searchPlaceholder:'Buscar...', emptyState:'No se encontraron productos.', 
       totalLabel:'Total:', btnOrderBar:'Enviar Pedido', trackerTitle:'Tu pedido',
       obLangTitle:'¡Bienvenido!', obLangSubtitle:'Elige el idioma del menú', 
       obModeTitle:'¿Cómo deseas pedir?', obModeSubtitle:'Elige una opción para continuar.', 
@@ -424,16 +469,17 @@
       callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
       alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, 
       catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, 
-      smartWaiter: 'Camarero', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
+      smartWaiter: '💳 Pagar / Ayuda 🙋‍♂️', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
       badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
-      privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos tu nombre y teléfono únicamente para gestionar tu pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).'
+      privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
+      busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'plazas'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
       allChip:'All', searchPlaceholder:'Search...', emptyState:'No products found.', 
       totalLabel:'Total:', btnOrderBar:'Send Order', trackerTitle:'Your order',
-
       obLangTitle:'Welcome!', obLangSubtitle:'Choose your menu language', 
       obModeTitle:'How would you like to order?', obModeSubtitle:'Pick one option to continue.', 
       dineIn:"🍽️ I'm at a table", takeaway:'🥡 Takeaway', takeawayLabel:'Takeaway', 
@@ -447,10 +493,12 @@
       callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
       alertSent:(m)=>`The waiter has been called to table ${m}!`, 
       catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, 
-      smartWaiter: 'Waiter', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
+      smartWaiter: '💳 Pay / Help 🙋‍♂️', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
       badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
-      privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).'
+      privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
+      busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'seats'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -469,10 +517,12 @@
       callCash:'💵 Je veux payer (Espèces)', callCard:'💳 Je veux payer (Carte)', callHelp:"🙋‍♂️ J'ai besoin d'aide", 
       alertSent:(m)=>`Le serveur a été appelé à la table ${m} !`, 
       catNames:{ entrante:'Entrées', principal:'Plat Principal', coctel:'Cocktails', bebida:'Boissons', postre:'Desserts', otros:'Autre' }, 
-      smartWaiter: 'Serveur', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
+      smartWaiter: '💳 Payer / Aide 🙋‍♂️', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
-      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données se€t supprimées sous 48h (RGPD).'
+      privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).',
+      busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -493,7 +543,6 @@
     document.getElementById('btnOpenOrderModal').textContent = t.btnOrderBar;
     document.getElementById('searchInput').placeholder = t.searchPlaceholder;
     document.getElementById('trackerTitle').textContent = t.trackerTitle;
-    document.getElementById('txtReceiptNotice').innerHTML = t.receiptNotice;
 
     document.getElementById('obLangTitle').textContent = t.obLangTitle;
     document.getElementById('obLangSubtitle').textContent = t.obLangSubtitle;
@@ -527,8 +576,16 @@
     document.getElementById('privacyTitle').textContent = t.privacyTitle;
     document.getElementById('privacyText').textContent = t.privacyText;
     document.getElementById('txtGdprNote').textContent = t.gdprNote;
+    
+    document.getElementById('busyBanner').textContent = t.busyBanner;
+    document.getElementById('fbTitle').textContent = t.fbTitle;
+    document.getElementById('fbMessage').placeholder = t.fbPlaceholder;
+    document.getElementById('btnSubmitFb').textContent = t.fbBtn;
+    document.getElementById('fbGoogleText').textContent = t.fbGoogle;
+    document.getElementById('fbGoogleBtn').textContent = t.fbGoogleBtn;
 
     renderTagFilters(); render(); updateBottomBar();
+    if(typeof renderTablesBadge === 'function' && salaConfigClient) renderTablesBadge();
   }
 
   const langBtn = document.getElementById('langToggleBtn');
@@ -536,6 +593,19 @@
   langBtn.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('show'); });
   document.addEventListener('click', () => langDropdown.classList.remove('show'));
   
+  // EVENIMENT PENTRU DESCHIDERE DROPDOWN MESE LA CLICK
+  const tablesBadge = document.getElementById('tablesBadge');
+  const tablesBadgeList = document.getElementById('tablesBadgeList');
+  tablesBadge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tablesBadgeList.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+      if(!e.target.closest('.tables-badge-wrap')) {
+          tablesBadgeList.classList.remove('show');
+      }
+  });
+
   document.querySelectorAll('.lang-option').forEach(opt => {
       opt.addEventListener('click', () => { applyLanguage(opt.dataset.lang); });
   });
@@ -652,7 +722,8 @@
           smartBtn.style.background = 'var(--pink-main)';
           smartBtn.style.color = 'white';
       } else {
-          smartBtn.innerHTML = `🔔 <span style="margin-left: 6px;">${t.smartWaiter}</span>`;
+          // --- BUTONUL SMART PENTRU PAGAR/AYUDA ---
+          smartBtn.innerHTML = `<span>${t.smartWaiter}</span>`;
           smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
           smartBtn.style.background = 'rgba(18, 18, 18, 0.95)';
           smartBtn.style.color = 'var(--ink)';
@@ -693,7 +764,7 @@
   }
 
   if(needsLang() || needsMode()){ 
-      if(!currentLang) currentLang = 'es'; // default ca să nu dea crash UI-ul din spate
+      if(!currentLang) currentLang = 'es';
       onboardingOverlay.classList.add('open'); 
       if(!needsLang()) showModeStepOrClose(); 
   } else {
@@ -749,9 +820,60 @@
       if(e.target === orderModal) orderModal.classList.remove('open'); 
       if(e.target === callModal) callModal.classList.remove('open'); 
       if(e.target === splitModal) splitModal.classList.remove('open'); 
-      if(e.target === document.getElementById('customAlertOverlay')) document.getElementById('customAlertOverlay').classList.remove('open');
+      if(e.target === document.getElementById('customAlertOverlay')) closeCustomAlert();
       if(e.target === document.getElementById('privacyOverlay')) document.getElementById('privacyOverlay').classList.remove('open');
+      if(e.target === document.getElementById('feedbackOverlay')) document.getElementById('feedbackOverlay').classList.remove('open');
   });
+
+  document.querySelectorAll('#starContainer span').forEach(star => {
+      star.addEventListener('click', (e) => {
+          currentRating = parseInt(e.target.dataset.val);
+          document.querySelectorAll('#starContainer span').forEach(s => {
+              let v = parseInt(s.dataset.val);
+              s.style.color = v <= currentRating ? '#fbbf24' : 'var(--ink-soft)';
+              s.textContent = v <= currentRating ? '★' : '☆';
+          });
+          if(currentRating === 5) {
+              document.getElementById('fbBad').style.display = 'none';
+              document.getElementById('fbGood').style.display = 'block';
+          } else {
+              document.getElementById('fbGood').style.display = 'none';
+              document.getElementById('fbBad').style.display = 'block';
+          }
+      });
+  });
+
+  document.getElementById('btnSubmitFb').addEventListener('click', async () => {
+      let msg = document.getElementById('fbMessage').value;
+      const masa = sessionStorage.getItem('fieraMesa') || 'N/A';
+      await _supabase.from('jurnal_activitate').insert([{ 
+          utilizator: 'client', actiune: 'feedback_client', 
+          detalii: { rating: currentRating, mesaj: msg, mesa: masa } 
+      }]);
+      const t = I18N[currentLang];
+      document.getElementById('feedbackOverlay').innerHTML = `<div class="modal"><h2 style="color:var(--pink-bright); margin:0;">${t.fbThanks}</h2></div>`;
+      setTimeout(()=>document.getElementById('feedbackOverlay').classList.remove('open'), 3000);
+  });
+
+  function showFeedbackModal() {
+      const t = I18N[currentLang];
+      document.getElementById('fbTitle').textContent = t.fbTitle;
+      document.getElementById('starContainer').style.display = 'flex';
+      document.getElementById('fbGood').style.display = 'none';
+      document.getElementById('fbBad').style.display = 'none';
+      currentRating = 0;
+      document.querySelectorAll('#starContainer span').forEach(s => { s.style.color = 'var(--ink-soft)'; s.textContent = '☆'; });
+      document.getElementById('feedbackOverlay').classList.add('open');
+  }
+
+  async function checkSettings() {
+      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
+      applyBusyState(data && data.length > 0 && data[0].detalii ? !!data[0].detalii.isBusy : false);
+  }
+
+  function applyBusyState(isBusy) {
+      document.getElementById('busyBanner').style.display = isBusy ? 'block' : 'none';
+  }
 
   let trackingOrderId = null;
   function startTrackingOrder(id) {
@@ -779,7 +901,9 @@
                   statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
               }
               progress.style.width = '100%';
-              setTimeout(() => { tracker.classList.remove('show'); }, 8000);
+              setTimeout(() => { 
+                  tracker.classList.remove('show'); 
+              }, 6000);
           } else if (s === 'anulata') {
               statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado': (currentLang==='fr'?'Annulé':'Canceled'));
               statText.style.color = 'var(--danger)';
@@ -806,6 +930,16 @@
       } else {
           const tableInput = document.getElementById('tableNumberInput');
           finalTableNr = tableInput.value.trim() || 'Fără-Nr';
+
+          if(validTableNumbers && validTableNumbers.size > 0 && !validTableNumbers.has(finalTableNr)) {
+              showCustomAlert(
+                currentLang === 'es' ? 'Mesa no válida' : (currentLang === 'fr' ? 'Table invalide' : 'Invalid table'),
+                currentLang === 'es' ? `No existe la mesa "${finalTableNr}". Revisa el número e inténtalo de nuevo.` :
+                (currentLang === 'fr' ? `La table "${finalTableNr}" n'existe pas. Vérifiez le numéro.` :
+                `Table "${finalTableNr}" doesn't exist. Please check the number.`)
+              );
+              return;
+          }
           sessionStorage.setItem('fieraMesa', finalTableNr);
       }
 
@@ -867,14 +1001,82 @@
       const payloadText = t.alertPayload[tipKey] || tipKey;
       
       await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + payloadText, cantitate: 1, pret_unitar: 0}] }]);
+      pendingReviewPrompt = (tipKey === 'cash' || tipKey === 'card');
       showCustomAlert("OK!", t.alertSent(mesa));
       callModal.classList.remove('open');
   };
 
   document.getElementById('searchInput').addEventListener('input', render);
 
-  // Fallback in caz de eroare json
-  fetch('menu.json').then(r => r.json()).then(async menuData => {
+  // ------- Indicador de mesas libres -------
+  let salaConfigClient = null;
+  let freedTablesClient = {};
+  let ordersForTablesClient = [];
+
+  async function loadTablesConfigClient() {
+      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1);
+      if(data && data.length > 0 && data[0].detalii && Array.isArray(data[0].detalii.zones)) {
+          salaConfigClient = data[0].detalii;
+          validTableNumbers = new Set();
+          salaConfigClient.zones.forEach(z => z.mese.forEach(m => validTableNumbers.add(String(m.numar))));
+      } else {
+          validTableNumbers = new Set();
+      }
+  }
+
+  async function loadFreedTablesClient() {
+      const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'mesa_liberada').order('created_at', {ascending:false}).limit(300);
+      freedTablesClient = {};
+      if(data) data.forEach(log => { const mesa = log.detalii && log.detalii.mesa; if(mesa && !freedTablesClient[mesa]) freedTablesClient[mesa] = new Date(log.created_at).getTime(); });
+  }
+
+  async function loadActiveOrdersClient() {
+      const { data } = await _supabase.from('comenzi').select('mesa,status,created_at').neq('status', 'anulata').order('created_at', { ascending: false }).limit(500);
+      ordersForTablesClient = data || [];
+  }
+
+  function isTableFreeClient(tableNr) {
+      const strNr = String(tableNr);
+      let ordersForTable = ordersForTablesClient.filter(o => String(o.mesa) === strNr);
+      if(ordersForTable.length === 0) return true;
+      let lastOrderTime = Math.max(...ordersForTable.map(o => new Date(o.created_at).getTime()));
+      let lastFreed = freedTablesClient[strNr] || 0;
+      return lastFreed > lastOrderTime;
+  }
+
+  function renderTablesBadge() {
+      if(!salaConfigClient) return;
+      const t = I18N[currentLang] || I18N.es;
+      let allTables = [];
+      salaConfigClient.zones.forEach(z => z.mese.forEach(m => allTables.push(m)));
+      if(allTables.length === 0) { document.getElementById('tablesBadge').style.display = 'none'; return; }
+
+      const freeTables = allTables.filter(m => isTableFreeClient(m.numar));
+      const badge = document.getElementById('tablesBadge');
+      const list = document.getElementById('tablesBadgeList');
+      badge.classList.remove('badge-low', 'badge-full');
+
+      if(freeTables.length === 0) {
+          badge.textContent = `🪑 ${t.tablesFull}`;
+          badge.classList.add('badge-full');
+          list.innerHTML = `<span>${t.tablesFull}</span>`;
+      } else {
+          badge.textContent = `🪑 ${freeTables.length}/${allTables.length} ${t.tablesFree}`;
+          badge.classList.add('badge-low');
+          
+          // GENERĂM LISTA ÎN DROPDOWN
+          list.innerHTML = freeTables.map(m => `<span>Mesa #${m.numar} · ${m.scaune} ${t.tablesFor}</span>`).join('');
+      }
+      badge.style.display = 'flex';
+  }
+
+  async function refreshTablesStatus() {
+      await Promise.all([loadTablesConfigClient(), loadFreedTablesClient(), loadActiveOrdersClient()]);
+      renderTablesBadge();
+  }
+
+  /* --- FETCH-UL CĂTRE menu.json --- */
+  fetch('menu.json?v=' + Date.now()).then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
       if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
@@ -884,10 +1086,22 @@
           render(); 
       }).subscribe();
 
+      checkSettings();
+      setInterval(checkSettings, 120000); 
+
+      refreshTablesStatus();
+      setInterval(refreshTablesStatus, 30000);
+      _supabase.channel('mesas_live_client').on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, () => refreshTablesStatus())
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
+            if(p.new.actiune === 'mesa_liberada' || p.new.actiune === 'config_mese') refreshTablesStatus();
+            if(p.new.actiune === 'setari_busy') applyBusyState(p.new.detalii && !!p.new.detalii.isBusy);
+        }).subscribe();
+
       if(currentLang) applyLanguage(currentLang);
-  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
+  }).catch((err) => {     console.error('Menu fetch failed:', err);     document.getElementById('emptyState').textContent = 'DEBUG: ' + (err && err.message ? err.message : String(err));     document.getElementById('emptyState').style.display = 'block'; });
 
 })();
 </script>
 </body>
 </html>
+
