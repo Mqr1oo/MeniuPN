@@ -51,6 +51,13 @@
   .lang-option { background: transparent; border: none; color: var(--ink); padding: 10px 12px; text-align: left; font-family: 'Space Mono', monospace; font-size: 13px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;}
   .lang-option:hover { background: rgba(255,255,255,0.05); }
 
+  /* Indicador discreto de mesas libres */
+  .tables-indicator { position: absolute; top: 20px; right: 20px; z-index: 2; font-family:'Space Mono', monospace; font-size: 11px; letter-spacing:.03em; padding: 7px 12px; border-radius: 100px; border: 1px solid var(--paper-dim); background: rgba(18,18,18,0.55); backdrop-filter: blur(8px); color: var(--ink-soft); display: none; align-items: center; gap: 6px; cursor: default; opacity: 0.85; }
+  .tables-indicator .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink-bright); flex-shrink: 0; }
+  .tables-indicator.full .dot { background: var(--coral); }
+  .tables-indicator-detail { position: absolute; top: 46px; right: 20px; z-index: 2; background: rgba(18,18,18,0.9); backdrop-filter: blur(10px); border: 1px solid var(--paper-dim); border-radius: 10px; padding: 8px 10px; display: none; flex-direction: column; gap: 4px; font-family:'Space Mono', monospace; font-size: 10.5px; color: var(--ink-soft); min-width: 130px; }
+  .tables-indicator-detail span { display:flex; justify-content:space-between; gap:10px; }
+
   .hero-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:32px; padding-bottom:50px; padding-top:24px; }
   .hero-text{ flex:1 1 340px; min-width:260px; }
   .eyebrow{ font-family:'Space Mono', monospace; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--pink-main); display:flex; align-items:center; gap:10px; margin-bottom:16px; }
@@ -110,29 +117,29 @@
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
-  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
+  .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 10px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
   .total-bar.show { transform: translateY(0); }
-  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 10px; }
-  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--pink-bright); }
+  .total-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--paper-dim); padding-bottom: 7px; font-size: 13px; }
+  .total-amount { font-family: 'Space Mono', monospace; font-size: 1.15rem; font-weight: 700; color: var(--pink-bright); }
   
-  .action-buttons { display: flex; gap: 12px; }
-  .btn-action { flex: 1; border: none; padding: 16px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
+  .action-buttons { display: flex; gap: 10px; }
+  .btn-action { flex: 1; border: none; padding: 12px; border-radius: var(--radius-md); font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: transform 0.2s; -webkit-tap-highlight-color: transparent; }
   .btn-action:active { transform: scale(0.96); }
-  .btn-order-bar { background: var(--pink-main); color: white; font-size: 18px; }
-  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 55px; font-size: 20px; }
+  .btn-order-bar { background: var(--pink-main); color: white; font-size: 15.5px; }
+  .btn-split-bill { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); flex: 0 0 46px; font-size: 17px; }
 
-  .tracker-widget { position: fixed; top: calc(15px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 92%; max-width: 450px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 2px solid var(--pink-main); border-radius: var(--radius-md); padding: 18px; box-shadow: 0 10px 40px rgba(22, 132, 78, 0.3); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+  .tracker-widget { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-30px); width: 88%; max-width: 340px; background: rgba(18,18,18,0.98); backdrop-filter: blur(12px); border: 1.5px solid var(--pink-main); border-radius: 12px; padding: 10px 14px; box-shadow: 0 8px 24px rgba(22, 132, 78, 0.25); z-index: 9999; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
   .tracker-widget.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
-  .t-head { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; font-weight: 700; }
+  .t-head { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 8px; font-weight: 700; }
   .t-status { color: var(--pink-bright); animation: pulseText 2s infinite; }
   @keyframes pulseText { 0% {opacity: 1;} 50% {opacity: 0.6;} 100% {opacity: 1;} }
-  .t-bar-bg { width: 100%; height: 8px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
+  .t-bar-bg { width: 100%; height: 5px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
   .global-fav-btn { position: fixed; bottom: calc(25px + env(safe-area-inset-bottom)); right: 20px; height: 56px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--pink-main); padding: 0 24px; gap: 10px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 8px 25px rgba(22, 132, 78, 0.3); }
   .global-fav-btn:active { transform: scale(0.92); }
   .global-fav-btn svg { width: 24px; height: 24px; fill: currentColor; }
-  body.has-cart-bar .global-fav-btn { transform: translateY(-130px); }
+  body.has-cart-bar .global-fav-btn { transform: translateY(-110px); }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
@@ -143,6 +150,8 @@
   
   .input-table { width: 100%; padding: 18px; font-size: 1.1rem; text-align: center; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 16px; font-family: 'Space Mono', monospace; font-weight: 700; transition: border-color 0.3s;}
   .input-table:focus { outline: none; border-color: var(--pink-main); }
+  .input-table.invalid { border-color: var(--coral); }
+  .input-error { color: var(--coral); font-size: 13px; margin: -10px 0 16px; display: none; text-align: left; font-family: 'Work Sans', sans-serif; }
   
   .input-note { width: 100%; padding: 16px; font-size: 1rem; text-align: left; background: var(--bg-base); color: var(--ink); border: 2px solid var(--paper-dim); border-radius: var(--radius-md); margin-bottom: 24px; font-family: 'Work Sans', sans-serif; resize: none; transition: border-color 0.3s;}
   .input-note:focus { outline: none; border-color: var(--pink-main); }
@@ -179,6 +188,9 @@
     .card-body{ padding: 14px 16px; gap:6px; }
     .card-top h3 { font-size: 1.05rem; }
     .price { font-size: 1rem; }
+
+    .tables-indicator { top: 14px; right: 14px; font-size: 10px; padding: 6px 10px; }
+    .tables-indicator-detail { top: 40px; right: 14px; }
   }
   @media (min-width:641px){
     .controls { flex-direction: row; align-items: center; justify-content: space-between; }
@@ -206,6 +218,8 @@
         </div>
     </div>
   </div>
+  <div class="tables-indicator" id="tablesIndicator"><span class="dot"></span><span id="tablesIndicatorText">—</span></div>
+  <div class="tables-indicator-detail" id="tablesIndicatorDetail"></div>
   <div class="wrap hero-inner">
     <div class="hero-text">
       <p class="eyebrow" id="txtEyebrow">Menú digital</p>
@@ -279,6 +293,7 @@
     <p id="orderModalDesc">Introduce el número de tu mesa.</p>
     
     <input type="text" id="tableNumberInput" class="input-table" placeholder="Ej: 4">
+    <div class="input-error" id="tableNumberError">Esa mesa no existe. Comprueba el número.</div>
     
     <input type="text" id="takeawayNameInput" class="input-table" placeholder="Tu Nombre" style="display:none;">
     <input type="tel" id="takeawayPhoneInput" class="input-table" placeholder="Teléfono" style="display:none;">
@@ -429,6 +444,7 @@
       tablePlaceholder:'Ej: 4', orderNotePlaceholder:'Nota para tu pedido (opcional).',
       tkNameHolder: 'Tu Nombre (Ej: Juan)', tkPhoneHolder: 'Teléfono (Ej: 600123456)',
       takeawayReq: 'Por favor, introduce tu nombre y teléfono.',
+      tableInvalid: 'Esa mesa no existe. Comprueba el número.',
       sendOrderBtnText:'Enviar Pedido', sendingText:'Enviando...', 
       callWaiterTitle:'¿Necesitas algo?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', 
       callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
@@ -439,7 +455,8 @@
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
       privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
       busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
-      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google'
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google',
+      tablesFree: (n,total)=> `${n}/${total} mesas libres`, tablesFull: 'Sala completa', seats:'plazas'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
@@ -453,6 +470,7 @@
       tablePlaceholder:'E.g: 4', orderNotePlaceholder:'Note for your order (optional).', 
       tkNameHolder: 'Your Name (E.g: John)', tkPhoneHolder: 'Phone (E.g: 0712345678)',
       takeawayReq: 'Please enter your name and phone number.',
+      tableInvalid: "That table doesn't exist. Please check the number.",
       sendOrderBtnText:'Send Order', sendingText:'Sending...', 
       callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', 
       callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
@@ -463,7 +481,8 @@
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
       privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
       busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
-      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review'
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review',
+      tablesFree: (n,total)=> `${n}/${total} tables free`, tablesFull: 'Fully booked', seats:'seats'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -477,6 +496,7 @@
       tablePlaceholder:'Ex: 4', orderNotePlaceholder:'Note pour votre commande (optionnel).', 
       tkNameHolder: 'Votre Nom (Ex: Jean)', tkPhoneHolder: 'Téléphone (Ex: 0612345678)',
       takeawayReq: 'Veuillez entrer votre nom et numéro de téléphone.',
+      tableInvalid: "Cette table n'existe pas. Vérifiez le numéro.",
       sendOrderBtnText:'Envoyer la commande', sendingText:'Envoi...', 
       callWaiterTitle:'Besoin de nous ?', callWaiterDesc:'Sélectionnez la raison de votre appel.', 
       callCash:'💵 Je veux payer (Espèces)', callCard:'💳 Je veux payer (Carte)', callHelp:"🙋‍♂️ J'ai besoin d'aide", 
@@ -487,7 +507,8 @@
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
       privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).',
       busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
-      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google'
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google',
+      tablesFree: (n,total)=> `${n}/${total} tables libres`, tablesFull: 'Complet', seats:'places'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -520,6 +541,7 @@
     document.getElementById('orderModalDesc').textContent = t.orderModalDesc;
     
     document.getElementById('tableNumberInput').placeholder = t.tablePlaceholder;
+    document.getElementById('tableNumberError').textContent = t.tableInvalid;
     document.getElementById('takeawayNameInput').placeholder = t.tkNameHolder;
     document.getElementById('takeawayPhoneInput').placeholder = t.tkPhoneHolder;
     document.getElementById('orderNoteInput').placeholder = t.orderNotePlaceholder;
@@ -549,7 +571,7 @@
     document.getElementById('fbGoogleText').textContent = t.fbGoogle;
     document.getElementById('fbGoogleBtn').textContent = t.fbGoogleBtn;
 
-    renderTagFilters(); render(); updateBottomBar();
+    renderTagFilters(); render(); updateBottomBar(); renderTablesIndicator();
   }
 
   const langBtn = document.getElementById('langToggleBtn');
@@ -741,6 +763,9 @@
     const descEl = document.getElementById('orderModalDesc');
     const t = I18N[currentLang];
 
+    tableInput.classList.remove('invalid');
+    document.getElementById('tableNumberError').style.display = 'none';
+
     if(savedMode === 'takeaway') { 
         tableInput.style.display = 'none';
         nameInput.style.display = 'block';
@@ -818,6 +843,82 @@
       }
   }
 
+  // ================== INDICADOR DISCRETO DE MESAS LIBRES ==================
+  // Reutiliza la misma lógica de estado de mesa que el panel de staff (config_mese,
+  // mesa_liberada, ticket_confirmado + pedidos activos), pero solo para pintar
+  // un indicador discreto — no permite editar nada desde aquí.
+  let salaConfig = null;
+  let freedTables = {};
+  let ticketTables = {};
+  let liveOrders = [];
+
+  async function loadSalaData() {
+      const [{data: cfgData}, {data: evData}, {data: ordData}] = await Promise.all([
+          _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1),
+          _supabase.from('jurnal_activitate').select('*').in('actiune', ['mesa_liberada', 'ticket_confirmado']).order('created_at', {ascending:false}).limit(500),
+          _supabase.from('comenzi').select('*').in('status', ['noua','gata']).order('created_at', {ascending:false}).limit(300)
+      ]);
+
+      if(cfgData && cfgData.length > 0 && cfgData[0].detalii && Array.isArray(cfgData[0].detalii.zones)) {
+          salaConfig = cfgData[0].detalii;
+      }
+      freedTables = {}; ticketTables = {};
+      if(evData) evData.forEach(log => {
+          const mesa = log.detalii && log.detalii.mesa;
+          if(!mesa) return;
+          const tm = new Date(log.created_at).getTime();
+          if(log.actiune === 'mesa_liberada' && !freedTables[mesa]) freedTables[mesa] = tm;
+          if(log.actiune === 'ticket_confirmado' && !ticketTables[mesa]) ticketTables[mesa] = tm;
+      });
+      liveOrders = ordData || [];
+      renderTablesIndicator();
+  }
+
+  function getTableFreeStatus(tableNr) {
+      const strNr = String(tableNr);
+      const active = liveOrders.filter(o => String(o.mesa) === strNr);
+      const lastFreed = freedTables[strNr] || 0;
+      const lastTicket = ticketTables[strNr] || 0;
+      let lastOrderTime = 0;
+      active.forEach(o => { const tm = new Date(o.created_at).getTime(); if(tm > lastOrderTime) lastOrderTime = tm; });
+      if(lastFreed > lastOrderTime && lastFreed > lastTicket) return true;
+      if(active.length === 0) return true;
+      return false;
+  }
+
+  function isValidTableNumber(nr) {
+      if(!salaConfig || !Array.isArray(salaConfig.zones)) return true; // sin datos, no bloqueamos
+      let allTables = [];
+      salaConfig.zones.forEach(z => z.mese.forEach(m => allTables.push(String(m.numar))));
+      if(allTables.length === 0) return true;
+      return allTables.includes(String(nr).trim());
+  }
+
+  function renderTablesIndicator() {
+      const t = I18N[currentLang] || I18N.es;
+      const indicator = document.getElementById('tablesIndicator');
+      const textEl = document.getElementById('tablesIndicatorText');
+      const detailEl = document.getElementById('tablesIndicatorDetail');
+      if(!salaConfig || !Array.isArray(salaConfig.zones)) { indicator.style.display = 'none'; return; }
+
+      let allTables = [];
+      salaConfig.zones.forEach(z => z.mese.forEach(m => allTables.push(m)));
+      if(allTables.length === 0) { indicator.style.display = 'none'; return; }
+
+      const freeTables = allTables.filter(m => getTableFreeStatus(m.numar));
+      indicator.style.display = 'inline-flex';
+      indicator.classList.toggle('full', freeTables.length === 0);
+      textEl.textContent = freeTables.length === 0 ? t.tablesFull : t.tablesFree(freeTables.length, allTables.length);
+
+      if(freeTables.length > 0 && freeTables.length <= 3) {
+          detailEl.style.display = 'flex';
+          detailEl.innerHTML = freeTables.map(m => `<span><b>#${m.numar}</b><span>${m.scaune} ${t.seats}</span></span>`).join('');
+      } else {
+          detailEl.style.display = 'none';
+      }
+  }
+  // ================== FIN INDICADOR MESAS ==================
+
   let trackingOrderId = null;
   function startTrackingOrder(id) {
       trackingOrderId = id;
@@ -837,12 +938,7 @@
               statText.textContent = '🔥 ' + (currentLang==='es'?'En preparación': (currentLang==='fr'?'En préparation':'Preparing'));
               progress.style.width = '70%';
           } else if (s === 'finalizata') {
-              if(p.new.comp_motiv) {
-                  statText.textContent = '🎁 GRATIS';
-                  statText.style.color = '#fbbf24';
-              } else {
-                  statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
-              }
+              statText.textContent = '✅ ' + (currentLang==='es'?'Finalizado': (currentLang==='fr'?'Terminé':'Completed'));
               progress.style.width = '100%';
               setTimeout(() => { 
                   tracker.classList.remove('show'); 
@@ -873,7 +969,14 @@
           sessionStorage.setItem('fieraMesa', 'Takeaway');
       } else {
           const tableInput = document.getElementById('tableNumberInput');
-          finalTableNr = tableInput.value.trim() || 'Fără-Nr';
+          const rawTable = tableInput.value.trim();
+          if(!rawTable) { alert(t.tableInvalid); return; }
+          if(!isValidTableNumber(rawTable)) {
+              tableInput.classList.add('invalid');
+              document.getElementById('tableNumberError').style.display = 'block';
+              return;
+          }
+          finalTableNr = rawTable;
           sessionStorage.setItem('fieraMesa', finalTableNr);
       }
 
@@ -920,6 +1023,7 @@
         render(); window.scrollTo(0,0);
         
         if (data && data.length > 0) startTrackingOrder(data[0].id);
+        loadSalaData();
       }
   });
 
@@ -934,7 +1038,10 @@
       
       const payloadText = t.alertPayload[tipKey] || tipKey;
       
-      await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + payloadText, cantitate: 1, pret_unitar: 0}] }]);
+      // 'tip' es un marcador interno (independiente del idioma) que el panel de staff usa
+      // para saber si es petición de cuenta (cash/card, dispara el temporizador de 15 min
+      // de liberación de mesa) o solo una llamada de ayuda.
+      await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + payloadText, cantitate: 1, pret_unitar: 0, tip: tipKey}] }]);
       showCustomAlert("OK!", t.alertSent(mesa));
       callModal.classList.remove('open');
   };
@@ -953,6 +1060,12 @@
 
       checkSettings();
       setInterval(checkSettings, 120000); 
+
+      loadSalaData();
+      setInterval(loadSalaData, 60000);
+      _supabase.channel('sala_live_menu').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
+          if(['mesa_liberada','ticket_confirmado','config_mese'].includes(p.new.actiune)) loadSalaData();
+      }).on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, () => loadSalaData()).subscribe();
 
       if(currentLang) applyLanguage(currentLang);
   }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
