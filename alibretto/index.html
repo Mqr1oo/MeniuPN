@@ -1098,7 +1098,11 @@
         }).subscribe();
 
       if(currentLang) applyLanguage(currentLang);
-  }).catch((err) => {     console.error('Menu fetch failed:', err);     document.getElementById('emptyState').textContent = 'DEBUG: ' + (err && err.message ? err.message : String(err));     document.getElementById('emptyState').style.display = 'block'; });
+  }).catch((err) => {   
+    console.error('Menu fetch failed:', err); 
+    document.getElementById('emptyState').textContent = 'DEBUG: ' + (err && err.message ? err.message : String(err));
+    document.getElementById('emptyState').style.display = 'block'; 
+  });
 
 })();
 </script>
