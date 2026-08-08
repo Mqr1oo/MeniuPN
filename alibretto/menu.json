@@ -1,444 +1,542 @@
 [
   {
     "imageNumber": 1,
-    "name": "Truffle Wagyu Burger",
-    "price": 14.50,
-    "weight": "450 g",
-    "kcal": 920,
-    "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
+    "name": "Croquetas de Jamón Ibérico",
+    "price": 8.50,
+    "weight": "250 g",
+    "kcal": 480,
+    "description": "Croquetas caseras de jamón ibérico de bellota con bechamel cremosa y rebozado crujiente.",
     "ingredients": [
-      "Wagyu beef",
-      "Brioche bun",
-      "Cheddar",
-      "Caramelized onions",
-      "Truffle mayo"
-    ],
-    "recipe": [
-      { "item": "Carne de vacuno Wagyu", "quantity": 200, "unit": "g" },
-      { "item": "Pan brioche", "quantity": 1, "unit": "ud" },
-      { "item": "Queso Cheddar", "quantity": 50, "unit": "g" },
-      { "item": "Cebolla caramelizada", "quantity": 40, "unit": "g" },
-      { "item": "Mayonesa de trufa", "quantity": 30, "unit": "g" }
+      "Jamón ibérico de bellota",
+      "Leche entera",
+      "Harina de trigo",
+      "Mantequilla",
+      "Pan rallado",
+      "Huevo"
     ],
     "allergens": ["Gluten", "Lácteos", "Huevo"],
-    "tags": ["principal", "especialidad"],
+    "tags": ["entrante", "tradicional", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Burger Wagyu con Trufa",
-        "description": "Medallón de carne Wagyu premium con cebolla caramelizada, cheddar fundido y mayonesa de trufa en pan brioche tostado.",
-        "ingredients": ["Carne Wagyu", "Pan brioche", "Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
+        "name": "Croquetas de Jamón Ibérico",
+        "description": "Croquetas caseras de jamón ibérico de bellota con bechamel cremosa y rebozado crujiente.",
+        "ingredients": ["Jamón ibérico de bellota", "Leche entera", "Harina de trigo", "Mantequilla", "Pan rallado", "Huevo"],
         "allergens": ["Gluten", "Lácteos", "Huevo"]
       },
       "en": {
-        "name": "Truffle Wagyu Burger",
-        "description": "Premium Wagyu beef patty with caramelized onions, melted cheddar, and truffle mayo on a toasted brioche bun.",
-        "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar", "Caramelized onions", "Truffle mayo"],
+        "name": "Iberian Ham Croquettes",
+        "description": "Homemade acorn-fed Iberian ham croquettes with creamy bechamel and a crispy coating.",
+        "ingredients": ["Iberian ham", "Whole milk", "Wheat flour", "Butter", "Breadcrumbs", "Egg"],
         "allergens": ["Gluten", "Dairy", "Egg"]
       },
       "fr": {
-        "name": "Burger Wagyu à la Truffe",
-        "description": "Steak haché de bœuf Wagyu premium avec oignons caramélisés, cheddar fondu et mayonnaise à la truffe sur pain brioché.",
-        "ingredients": ["Bœuf Wagyu", "Pain brioché", "Cheddar", "Oignons caramélisés", "Mayonnaise à la truffe"],
+        "name": "Croquettes de Jambon Ibérique",
+        "description": "Croquettes maison au jambon ibérique bellota avec béchamel crémeuse et enrobage croustillant.",
+        "ingredients": ["Jambon ibérique", "Lait entier", "Farine de blé", "Beurre", "Chapelure", "Œuf"],
         "allergens": ["Gluten", "Produits laitiers", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 2,
-    "name": "Authentic Tacos al Pastor",
-    "price": 10.50,
-    "weight": "350 g",
-    "kcal": 540,
-    "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
+    "name": "Nachos con Guacamole y Queso",
+    "price": 9.50,
+    "weight": "380 g",
+    "kcal": 680,
+    "description": "Totopos de maíz crujientes con guacamole fresco, queso fundido, jalapeños y pico de gallo.",
     "ingredients": [
-      "Corn tortillas",
-      "Marinated pork",
-      "Pineapple",
-      "Cilantro",
-      "Onions"
+      "Totopos de maíz",
+      "Aguacate",
+      "Queso Cheddar fundido",
+      "Jalapeños",
+      "Tomate",
+      "Cebolla",
+      "Cilantro"
     ],
-    "recipe": [
-      { "item": "Tortillas de maíz", "quantity": 3, "unit": "ud" },
-      { "item": "Carne de cerdo marinada", "quantity": 180, "unit": "g" },
-      { "item": "Piña fresca", "quantity": 50, "unit": "g" },
-      { "item": "Cilantro fresco", "quantity": 10, "unit": "g" },
-      { "item": "Cebolla", "quantity": 30, "unit": "g" }
-    ],
-    "allergens": [],
-    "tags": ["principal", "para compartir", "sin gluten"],
+    "allergens": ["Lácteos"],
+    "tags": ["entrante", "para compartir", "sin gluten"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Tacos al Pastor Auténticos",
-        "description": "Tres tortillas de maíz rellenas de carne de cerdo marinada, trozos de piña, cilantro fresco y cebolla.",
-        "ingredients": ["Tortillas de maíz", "Cerdo marinado", "Piña", "Cilantro", "Cebolla"],
-        "allergens": []
+        "name": "Nachos con Guacamole y Queso",
+        "description": "Totopos de maíz crujientes con guacamole fresco, queso fundido, jalapeños y pico de gallo.",
+        "ingredients": ["Totopos de maíz", "Aguacate", "Queso Cheddar fundido", "Jalapeños", "Tomate", "Cebolla", "Cilantro"],
+        "allergens": ["Lácteos"]
       },
       "en": {
-        "name": "Authentic Tacos al Pastor",
-        "description": "Three corn tortillas filled with marinated pork, pineapple chunks, fresh cilantro, and diced onions.",
-        "ingredients": ["Corn tortillas", "Marinated pork", "Pineapple", "Cilantro", "Onions"],
-        "allergens": []
+        "name": "Nachos with Guacamole & Cheese",
+        "description": "Crispy corn tortilla chips topped with fresh guacamole, melted cheese, jalapeños, and pico de gallo.",
+        "ingredients": ["Corn tortilla chips", "Avocado", "Melted Cheddar cheese", "Jalapeños", "Tomato", "Onion", "Cilantro"],
+        "allergens": ["Dairy"]
       },
       "fr": {
-        "name": "Tacos al Pastor Authentiques",
-        "description": "Trois tortillas de maïs garnies de porc mariné, morceaux d'ananas, coriandre fraîche et oignons.",
-        "ingredients": ["Tortillas de maïs", "Porc mariné", "Ananas", "Coriandre", "Oignons"],
-        "allergens": []
+        "name": "Nachos au Guacamole et Fromage",
+        "description": "Chips de maïs croustillantes nappées de guacamole frais, fromage fondu, jalapeños et pico de gallo.",
+        "ingredients": ["Chips de maïs", "Avocat", "Cheddar fondu", "Jalapeños", "Tomate", "Oignon", "Coriandre"],
+        "allergens": ["Produits laitiers"]
       }
     }
   },
   {
     "imageNumber": 3,
-    "name": "Spicy Tuna Sushi Roll",
-    "price": 14.50,
-    "weight": "250 g",
-    "kcal": 380,
-    "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
+    "name": "Calamares a la Andaluza",
+    "price": 11.00,
+    "weight": "300 g",
+    "kcal": 520,
+    "description": "Calamares frescos fritos al estilo andaluz acompañados de alioli casero de ajo negro.",
     "ingredients": [
-      "Sushi rice",
-      "Fresh tuna",
-      "Spicy mayo",
-      "Nori seaweed",
-      "Sesame seeds"
+      "Calamares frescos",
+      "Harina de trigo",
+      "Aceite de oliva",
+      "Ajo negro",
+      "Mayonesa",
+      "Limón"
     ],
-    "recipe": [
-      { "item": "Arroz de sushi", "quantity": 120, "unit": "g" },
-      { "item": "Atún fresco", "quantity": 80, "unit": "g" },
-      { "item": "Mayonesa picante", "quantity": 25, "unit": "g" },
-      { "item": "Alga nori", "quantity": 1, "unit": "ud" },
-      { "item": "Semillas de sésamo", "quantity": 5, "unit": "g" }
-    ],
-    "allergens": ["Pescado", "Huevo", "Gluten"],
-    "tags": ["entrante", "especialidad", "marisco"],
+    "allergens": ["Moluscos", "Gluten", "Huevo"],
+    "tags": ["entrante", "marisco", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Sushi Roll de Atún Picante",
-        "description": "Atún fresco mezclado con mayonesa picante, envuelto en arroz de sushi y alga nori, coronado con semillas de sésamo.",
-        "ingredients": ["Arroz de sushi", "Atún fresco", "Mayonesa picante", "Alga nori", "Sésamo"],
-        "allergens": ["Pescado", "Huevo", "Gluten"]
+        "name": "Calamares a la Andaluza",
+        "description": "Calamares frescos fritos al estilo andaluz acompañados de alioli casero de ajo negro.",
+        "ingredients": ["Calamares frescos", "Harina de trigo", "Aceite de oliva", "Ajo negro", "Mayonesa", "Limón"],
+        "allergens": ["Moluscos", "Gluten", "Huevo"]
       },
       "en": {
-        "name": "Spicy Tuna Sushi Roll",
-        "description": "Fresh tuna mixed with spicy mayo, wrapped in sushi rice and nori, topped with sesame seeds.",
-        "ingredients": ["Sushi rice", "Fresh tuna", "Spicy mayo", "Nori seaweed", "Sesame seeds"],
-        "allergens": ["Fish", "Egg", "Gluten"]
+        "name": "Andalusian Style Squid",
+        "description": "Fresh crispy fried squid served with homemade black garlic aioli.",
+        "ingredients": ["Fresh squid", "Wheat flour", "Olive oil", "Black garlic", "Mayonnaise", "Lemon"],
+        "allergens": ["Molluscs", "Gluten", "Egg"]
       },
       "fr": {
-        "name": "Sushi Roll Thon Epicé",
-        "description": "Thon frais mélangé à de la mayonnaise épicée, enveloppé dans du riz à sushi et de l'algue nori, garni de sésame.",
-        "ingredients": ["Riz à sushi", "Thon frais", "Mayonnaise épicée", "Algue nori", "Graines de sésame"],
-        "allergens": ["Poisson", "Œuf", "Gluten"]
+        "name": "Calamars à l'Andalouse",
+        "description": "Calamars frais frits à l'andalouse servis avec de l'aïoli maison à l'ail noir.",
+        "ingredients": ["Calamars frais", "Farine de blé", "Huile d'olive", "Ail noir", "Mayonnaise", "Citron"],
+        "allergens": ["Mollusques", "Gluten", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 4,
-    "name": "Shrimp Pad Thai",
-    "price": 11.50,
+    "name": "Tabla de Embutidos y Quesos",
+    "price": 16.00,
     "weight": "400 g",
-    "kcal": 610,
-    "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
+    "kcal": 850,
+    "description": "Selección premium de embutidos ibéricos y quesos artesanos acompañados de pan de cristal con tomate.",
     "ingredients": [
-      "Rice noodles",
-      "Shrimp",
-      "Egg",
-      "Peanuts",
-      "Bean sprouts",
-      "Tamarind sauce"
+      "Jamón ibérico",
+      "Lomo ibérico",
+      "Chorizo ibérico",
+      "Queso manchego curado",
+      "Queso de cabra",
+      "Pan de cristal",
+      "Tomate rallado"
     ],
-    "recipe": [
-      { "item": "Fideos de arroz", "quantity": 150, "unit": "g" },
-      { "item": "Gambas frescas", "quantity": 120, "unit": "g" },
-      { "item": "Huevo", "quantity": 1, "unit": "ud" },
-      { "item": "Cacahuetes picados", "quantity": 30, "unit": "g" },
-      { "item": "Brotes de soja", "quantity": 50, "unit": "g" },
-      { "item": "Salsa de tamarindo", "quantity": 40, "unit": "ml" }
-    ],
-    "allergens": ["Marisco", "Huevo"],
-    "tags": ["principal", "especialidad", "sin gluten"],
+    "allergens": ["Lácteos", "Gluten"],
+    "tags": ["entrante", "especialidad", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Pad Thai de Gambas",
-        "description": "Clásicos fideos de arroz salteados al estilo tailandés con gambas jugosas, huevo, cacahuetes, brotes de soja y lima.",
-        "ingredients": ["Fideos de arroz", "Gambas", "Huevo", "Cacahuetes", "Brotes de soja", "Salsa de tamarindo"],
-        "allergens": ["Marisco", "Huevo"]
+        "name": "Tabla de Embutidos y Quesos",
+        "description": "Selección premium de embutidos ibéricos y quesos artesanos acompañados de pan de cristal con tomate.",
+        "ingredients": ["Jamón ibérico", "Lomo ibérico", "Chorizo ibérico", "Queso manchego curado", "Queso de cabra", "Pan de cristal", "Tomate rallado"],
+        "allergens": ["Lácteos", "Gluten"]
       },
       "en": {
-        "name": "Shrimp Pad Thai",
-        "description": "Classic Thai stir-fried rice noodles with juicy shrimp, egg, peanuts, bean sprouts, and lime.",
-        "ingredients": ["Rice noodles", "Shrimp", "Egg", "Peanuts", "Bean sprouts", "Tamarind sauce"],
-        "allergens": ["Shellfish", "Egg"]
+        "name": "Cured Meats & Cheese Board",
+        "description": "Premium selection of cured Iberian meats and artisan cheeses served with crystal bread and tomato.",
+        "ingredients": ["Iberian ham", "Iberian pork loin", "Iberian chorizo", "Cured Manchego cheese", "Goat cheese", "Crystal bread", "Grated tomato"],
+        "allergens": ["Dairy", "Gluten"]
       },
       "fr": {
-        "name": "Pad Thai aux Crevettes",
-        "description": "Nouilles de riz sautées classiques thaïlandaises avec crevettes juteuses, œuf, cacahuètes, pousses de soja et citron vert.",
-        "ingredients": ["Nouilles de riz", "Crevettes", "Œuf", "Cacahuètes", "Pousses de soja", "Sauce tamarin"],
-        "allergens": ["Crustacés", "Œuf"]
+        "name": "Planche de Charcuterie et Fromages",
+        "description": "Sélection premium de charcuteries ibériques et fromages artisanaux accompagnés de pain cristal à la tomate.",
+        "ingredients": ["Jambon ibérique", "Lomo ibérique", "Chorizo ibérique", "Manchego affiné", "Fromage de chèvre", "Pain cristal", "Tomate râpée"],
+        "allergens": ["Produits laitiers", "Gluten"]
       }
     }
   },
   {
     "imageNumber": 5,
-    "name": "Pizza Margherita Verace",
-    "price": 7.50,
-    "weight": "420 g",
-    "kcal": 800,
-    "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
+    "name": "Ensalada Burrata y Tomate",
+    "price": 12.00,
+    "weight": "320 g",
+    "kcal": 510,
+    "description": "Burrata fresca de búfala sobre tomates de huerta, pesto casero de albahaca y reducción de módena.",
     "ingredients": [
-      "Pizza dough",
-      "San Marzano tomatoes",
-      "Buffalo mozzarella",
-      "Fresh basil",
-      "Olive oil"
+      "Burrata de búfala",
+      "Tomate de huerta",
+      "Pesto de albahaca",
+      "Piñones",
+      "Reducción de vinagre de Módena",
+      "Aceite de oliva virgen extra"
     ],
-    "recipe": [
-      { "item": "Masa de pizza", "quantity": 250, "unit": "g" },
-      { "item": "Salsa de tomate San Marzano", "quantity": 80, "unit": "g" },
-      { "item": "Mozzarella de búfala", "quantity": 100, "unit": "g" },
-      { "item": "Albahaca fresca", "quantity": 5, "unit": "g" },
-      { "item": "Aceite de oliva virgen extra", "quantity": 10, "unit": "ml" }
-    ],
-    "allergens": ["Gluten", "Lácteos"],
-    "tags": ["principal", "tradicional", "para compartir"],
+    "allergens": ["Lácteos", "Frutos de cáscara"],
+    "tags": ["ensalada", "fresco", "vegetariano"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Pizza Margherita Verace",
-        "description": "Auténtica pizza napolitana con salsa de tomate San Marzano, mozzarella di bufala fresca y albahaca.",
-        "ingredients": ["Masa de pizza", "Tomate San Marzano", "Mozzarella de búfala", "Albahaca", "Aceite de oliva"],
-        "allergens": ["Gluten", "Lácteos"]
+        "name": "Ensalada Burrata y Tomate",
+        "description": "Burrata fresca de búfala sobre tomates de huerta, pesto casero de albahaca y reducción de módena.",
+        "ingredients": ["Burrata de búfala", "Tomate de huerta", "Pesto de albahaca", "Piñones", "Reducción de Módena", "Aceite de oliva"],
+        "allergens": ["Lácteos", "Frutos de cáscara"]
       },
       "en": {
-        "name": "Pizza Margherita Verace",
-        "description": "Authentic Neapolitan pizza with San Marzano tomato sauce, fresh mozzarella di bufala, and basil.",
-        "ingredients": ["Pizza dough", "San Marzano tomatoes", "Buffalo mozzarella", "Fresh basil", "Olive oil"],
-        "allergens": ["Gluten", "Dairy"]
+        "name": "Burrata & Tomato Salad",
+        "description": "Fresh buffalo burrata on heirloom tomatoes, basil pesto, and balsamic glaze reduction.",
+        "ingredients": ["Buffalo burrata", "Heirloom tomatoes", "Basil pesto", "Pine nuts", "Balsamic glaze", "Olive oil"],
+        "allergens": ["Dairy", "Nuts"]
       },
       "fr": {
-        "name": "Pizza Margherita Verace",
-        "description": "Authentique pizza napolitaine avec sauce tomate San Marzano, mozzarella di bufala fraîche et basilic.",
-        "ingredients": ["Pâte à pizza", "Tomates San Marzano", "Mozzarella di bufala", "Basilic frais", "Huile d'olive"],
-        "allergens": ["Gluten", "Produits laitiers"]
+        "name": "Salade Burrata et Tomates",
+        "description": "Burrata fraîche de bufflonne sur tomates du verger, pesto de basilic et réduction de balsamique.",
+        "ingredients": ["Burrata de bufflonne", "Tomates du potager", "Pesto de basilic", "Pignons de pin", "Réduction de balsamique", "Huile d'olive"],
+        "allergens": ["Produits laitiers", "Fruits à coque"]
       }
     }
   },
   {
     "imageNumber": 6,
-    "name": "Classic Caesar Salad",
-    "price": 8.50,
-    "weight": "300 g",
-    "kcal": 450,
-    "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
+    "name": "Ensalada Pokē de Salmón",
+    "price": 13.50,
+    "weight": "380 g",
+    "kcal": 560,
+    "description": "Base de arroz sushi, salmón fresco troceado, aguacate, edamame, mango jugoso y salsa ponzu.",
     "ingredients": [
-      "Romaine lettuce",
-      "Parmesan cheese",
-      "Croutons",
-      "Caesar dressing",
-      "Anchovies"
+      "Salmón fresco",
+      "Arroz de sushi",
+      "Aguacate",
+      "Edamame",
+      "Mango",
+      "Sésamo",
+      "Salsa ponzu"
     ],
-    "recipe": [
-      { "item": "Lechuga romana", "quantity": 180, "unit": "g" },
-      { "item": "Queso parmesano rallado", "quantity": 40, "unit": "g" },
-      { "item": "Picatostes al ajo", "quantity": 40, "unit": "g" },
-      { "item": "Salsa César", "quantity": 50, "unit": "ml" }
-    ],
-    "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"],
-    "tags": ["entrante", "tradicional"],
+    "allergens": ["Pescado", "Soja", "Sésamo"],
+    "tags": ["ensalada", "saludable", "especialidad"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Ensalada César Clásica",
-        "description": "Lechuga romana crujiente aliñada con salsa César casera, virutas de parmesano y picatostes crujientes.",
-        "ingredients": ["Lechuga romana", "Parmesano", "Picatostes", "Salsa César", "Anchoas"],
-        "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"]
+        "name": "Ensalada Pokē de Salmón",
+        "description": "Base de arroz sushi, salmón fresco troceado, aguacate, edamame, mango jugoso y salsa ponzu.",
+        "ingredients": ["Salmón fresco", "Arroz de sushi", "Aguacate", "Edamame", "Mango", "Sésamo", "Salsa ponzu"],
+        "allergens": ["Pescado", "Soja", "Sésamo"]
       },
       "en": {
-        "name": "Classic Caesar Salad",
-        "description": "Crisp romaine lettuce tossed in house-made Caesar dressing, topped with parmesan shavings and crunchy croutons.",
-        "ingredients": ["Romaine lettuce", "Parmesan cheese", "Croutons", "Caesar dressing", "Anchovies"],
-        "allergens": ["Gluten", "Dairy", "Egg", "Fish"]
+        "name": "Salmon Poké Salad",
+        "description": "Sushi rice base, fresh diced salmon, avocado, edamame, juicy mango, and citrusy ponzu sauce.",
+        "ingredients": ["Fresh salmon", "Sushi rice", "Avocado", "Edamame", "Mango", "Sesame seeds", "Ponzu sauce"],
+        "allergens": ["Fish", "Soy", "Sesame"]
       },
       "fr": {
-        "name": "Salade César Classique",
-        "description": "Laitue romaine croquante mélangée à une sauce César maison, copeaux de parmesan et croûtons croustillants.",
-        "ingredients": ["Laitue romaine", "Parmesan", "Croûtons", "Sauce César", "Anchois"],
-        "allergens": ["Gluten", "Produits laitiers", "Œuf", "Poisson"]
+        "name": "Poké Bowl au Saumon",
+        "description": "Riz à sushi, dés de saumon frais, avocat, edamame, mangue juteuse et sauce ponzu.",
+        "ingredients": ["Saumon frais", "Riz à sushi", "Avocat", "Edamame", "Mangue", "Sésame", "Sauce ponzu"],
+        "allergens": ["Poisson", "Soja", "Sésamo"]
       }
     }
   },
   {
     "imageNumber": 7,
-    "name": "Italian Classic Tiramisu",
-    "price": 5.50,
-    "weight": "180 g",
-    "kcal": 410,
-    "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
+    "name": "Burger Trufada Wagyu",
+    "price": 15.00,
+    "weight": "450 g",
+    "kcal": 940,
+    "description": "Carne de Wagyu 200g, queso cheddar fundido, cebolla caramelizada y mayonesa de trufa en pan brioche artesanal.",
     "ingredients": [
-      "Mascarpone",
-      "Ladyfingers",
-      "Espresso coffee",
-      "Cocoa powder",
-      "Egg"
-    ],
-    "recipe": [
-      { "item": "Crema de mascarpone", "quantity": 100, "unit": "g" },
-      { "item": "Bizcochos Savoiardi", "quantity": 4, "unit": "ud" },
-      { "item": "Café espresso concentrado", "quantity": 40, "unit": "ml" },
-      { "item": "Cacao en polvo", "quantity": 10, "unit": "g" }
+      "Carne Wagyu 200g",
+      "Pan brioche artesanal",
+      "Queso Cheddar",
+      "Cebolla caramelizada",
+      "Mayonesa de trufa negra"
     ],
     "allergens": ["Gluten", "Lácteos", "Huevo"],
-    "tags": ["postre", "tradicional"],
+    "tags": ["principal", "especialidad", "hamburguesa"],
     "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Tiramisú Clásico Italiano",
-        "description": "Postre clásico italiano elaborado con bizcochos empapados en espresso, en capas con una crema ligera de mascarpone.",
-        "ingredients": ["Mascarpone", "Bizcochos", "Café espresso", "Cacao en polvo", "Huevo"],
+        "name": "Burger Trufada Wagyu",
+        "description": "Carne de Wagyu 200g, queso cheddar fundido, cebolla caramelizada y mayonesa de trufa en pan brioche artesanal.",
+        "ingredients": ["Carne Wagyu", "Pan brioche", "Queso Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
         "allergens": ["Gluten", "Lácteos", "Huevo"]
       },
       "en": {
-        "name": "Classic Tiramisu",
-        "description": "Classic Italian dessert made of ladyfingers dipped in espresso, layered with a whipped mascarpone cream.",
-        "ingredients": ["Mascarpone", "Ladyfingers", "Espresso coffee", "Cocoa powder", "Egg"],
+        "name": "Truffle Wagyu Burger",
+        "description": "200g Wagyu patty, melted cheddar cheese, caramelized onions, and black truffle mayo on a brioche bun.",
+        "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar cheese", "Caramelized onion", "Truffle mayo"],
         "allergens": ["Gluten", "Dairy", "Egg"]
       },
       "fr": {
-        "name": "Tiramisu Classique Italien",
-        "description": "Dessert classique italien à base de biscuits cuillère trempés dans l'espresso, superposés d'une crème mascarpone fouettée.",
-        "ingredients": ["Mascarpone", "Biscuits cuillère", "Café espresso", "Cacao en poudre", "Œuf"],
+        "name": "Burger Wagyu à la Truffe",
+        "description": "Steak de Wagyu 200g, cheddar fondu, oignons caramélisés et mayonnaise à la truffe sur pain brioché.",
+        "ingredients": ["Bœuf Wagyu", "Pain brioché", "Cheddar", "Oignons caramélisés", "Mayonnaise à la truffe"],
         "allergens": ["Gluten", "Produits laitiers", "Œuf"]
       }
     }
   },
   {
     "imageNumber": 8,
-    "name": "Venetian Aperol Spritz",
-    "price": 6.50,
-    "weight": "300 ml",
-    "kcal": 170,
-    "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
+    "name": "Chicken Crispy Burger",
+    "price": 11.50,
+    "weight": "400 g",
+    "kcal": 780,
+    "description": "Pechuga de pollo crujiente rebozada, lechuga fresca, tomate, pepinillos y salsa de miel y mostaza.",
     "ingredients": [
-      "Aperol",
-      "Prosecco",
-      "Club soda",
-      "Orange slice"
+      "Pechuga de pollo crujiente",
+      "Pan brioche",
+      "Lechuga",
+      "Tomate",
+      "Pepinillos",
+      "Salsa de miel y mostaza"
     ],
-    "recipe": [
-      { "item": "Aperol", "quantity": 60, "unit": "ml" },
-      { "item": "Prosecco", "quantity": 90, "unit": "ml" },
-      { "item": "Agua con gas", "quantity": 30, "unit": "ml" },
-      { "item": "Rodaja de naranja fresca", "quantity": 1, "unit": "ud" }
-    ],
-    "allergens": ["Sulfitos"],
-    "tags": ["coctel", "bebida"],
-    "sectiune": "bar",
+    "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"],
+    "tags": ["principal", "hamburguesa"],
+    "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Aperol Spritz Veneciano",
-        "description": "El aperitivo italiano por excelencia: Aperol, Prosecco espumoso y un toque de agua con gas con una rodaja de naranja.",
-        "ingredients": ["Aperol", "Prosecco", "Agua con gas", "Rodaja de naranja"],
-        "allergens": ["Sulfitos"]
+        "name": "Chicken Crispy Burger",
+        "description": "Pechuga de pollo crujiente rebozada, lechuga fresca, tomate, pepinillos y salsa de miel y mostaza.",
+        "ingredients": ["Pollo crujiente", "Pan brioche", "Lechuga", "Tomate", "Pepinillos", "Salsa miel y mostaza"],
+        "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"]
       },
       "en": {
-        "name": "Venetian Aperol Spritz",
-        "description": "The quintessential Italian aperitif: Aperol, sparkling Prosecco, and a splash of club soda with an orange slice.",
-        "ingredients": ["Aperol", "Prosecco", "Club soda", "Orange slice"],
-        "allergens": ["Sulfites"]
+        "name": "Crispy Chicken Burger",
+        "description": "Crispy fried chicken breast, fresh lettuce, tomato, pickles, and honey mustard sauce on a brioche bun.",
+        "ingredients": ["Crispy chicken", "Brioche bun", "Lettuce", "Tomato", "Pickles", "Honey mustard sauce"],
+        "allergens": ["Gluten", "Egg", "Mustard", "Dairy"]
       },
       "fr": {
-        "name": "Aperol Spritz Vénitien",
-        "description": "L'apéritif italien par excellence : Aperol, Prosecco pétillant et un trait d'eau gazeuse avec une rondelle d'orange.",
-        "ingredients": ["Aperol", "Prosecco", "Eau gazeuse", "Rondelle d'orange"],
-        "allergens": ["Sulfites"]
+        "name": "Burger Poulet Croustillant",
+        "description": "Poitrine de poulet croustillante, laitue, tomate, cornichons et sauce miel-moutarde sur pain brioché.",
+        "ingredients": ["Poulet croustillant", "Pain brioché", "Laitue", "Tomate", "Cornichons", "Sauce miel-moutarde"],
+        "allergens": ["Gluten", "Œuf", "Moutarde", "Produits laitiers"]
       }
     }
   },
   {
     "imageNumber": 9,
-    "name": "Classic Margarita",
-    "price": 6.50,
-    "weight": "200 ml",
-    "kcal": 220,
-    "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
+    "name": "Solomillo de Ternera a la Brasa",
+    "price": 19.50,
+    "weight": "420 g",
+    "kcal": 720,
+    "description": "Solomillo de ternera madurada a la brasa con patatas rústicas especiadas y pimientos del padrón.",
     "ingredients": [
-      "Tequila",
-      "Fresh lime juice",
-      "Cointreau liqueur",
-      "Salt"
-    ],
-    "recipe": [
-      { "item": "Tequila Blanco", "quantity": 50, "unit": "ml" },
-      { "item": "Licor Cointreau", "quantity": 20, "unit": "ml" },
-      { "item": "Zumo de lima fresco", "quantity": 30, "unit": "ml" },
-      { "item": "Sal fina para el borde", "quantity": 2, "unit": "g" }
+      "Solomillo de ternera madurada",
+      "Patatas rústicas",
+      "Pimientos del Padrón",
+      "Sal escamada",
+      "Aceite de oliva virgen extra"
     ],
     "allergens": [],
-    "tags": ["coctel", "especialidad", "bebida"],
-    "sectiune": "bar",
+    "tags": ["principal", "carne", "especialidad", "sin gluten"],
+    "sectiune": "bucatarie",
     "translations": {
       "es": {
-        "name": "Margarita Clásica",
-        "description": "Un clásico mexicano perfectamente equilibrado con tequila premium, zumo de lima fresco y Cointreau con borde salado.",
-        "ingredients": ["Tequila", "Zumo de lima", "Cointreau", "Sal"],
+        "name": "Solomillo de Ternera a la Brasa",
+        "description": "Solomillo de ternera madurada a la brasa con patatas rústicas especiadas y pimientos del padrón.",
+        "ingredients": ["Solomillo de ternera", "Patatas rústicas", "Pimientos del Padrón", "Sal en escamas", "Aceite de oliva"],
         "allergens": []
       },
       "en": {
-        "name": "Classic Margarita",
-        "description": "A perfectly balanced Mexican classic featuring premium tequila, fresh lime juice, and Cointreau with a salted rim.",
-        "ingredients": ["Tequila", "Fresh lime juice", "Cointreau liqueur", "Salt"],
+        "name": "Grilled Beef Tenderloin",
+        "description": "Grilled aged beef tenderloin served with seasoned rustic potatoes and Padrón peppers.",
+        "ingredients": ["Aged beef tenderloin", "Rustic potatoes", "Padrón peppers", "Sea salt flakes", "Olive oil"],
         "allergens": []
       },
       "fr": {
-        "name": "Margarita Classique",
-        "description": "Un classique mexicain parfaitement équilibré à base de tequila premium, jus de citron vert frais et Cointreau avec bord salé.",
-        "ingredients": ["Tequila", "Jus de citron vert", "Cointreau", "Sel"],
+        "name": "Filet de Bœuf Grillé",
+        "description": "Filet de bœuf maffiné grillé servie avec pommes de terre rustiques et piments Padrón.",
+        "ingredients": ["Filet de bœuf", "Pommes de terre rustiques", "Piments Padrón", "Fleur de sel", "Huile d'olive"],
         "allergens": []
       }
     }
   },
   {
     "imageNumber": 10,
-    "name": "Espresso Martini",
-    "price": 4.50,
-    "weight": "150 ml",
-    "kcal": 210,
-    "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
+    "name": "Risotto de Setas y Trufa",
+    "price": 14.00,
+    "weight": "360 g",
+    "kcal": 610,
+    "description": "Arroz cremoso Carnaroli con selección de setas silvestres de temporada, queso parmesano y aceite de trufa.",
     "ingredients": [
-      "Vodka",
-      "Coffee liqueur",
-      "Fresh espresso",
-      "Simple syrup"
+      "Arroz Carnaroli",
+      "Setas silvestres",
+      "Queso Parmesano",
+      "Mantequilla",
+      "Caldo vegetal",
+      "Aceite de trufa"
     ],
-    "recipe": [
-      { "item": "Vodka Premium", "quantity": 50, "unit": "ml" },
-      { "item": "Licor de café Kahlúa", "quantity": 20, "unit": "ml" },
-      { "item": "Espresso fresco", "quantity": 30, "unit": "ml" },
-      { "item": "Sirope de azúcar", "quantity": 10, "unit": "ml" }
+    "allergens": ["Lácteos"],
+    "tags": ["principal", "vegetariano", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": {
+        "name": "Risotto de Setas y Trufa",
+        "description": "Arroz cremoso Carnaroli con selección de setas silvestres de temporada, queso parmesano y aceite de trufa.",
+        "ingredients": ["Arroz Carnaroli", "Setas silvestres", "Queso Parmesano", "Mantequilla", "Caldo vegetal", "Aceite de trufa"],
+        "allergens": ["Lácteos"]
+      },
+      "en": {
+        "name": "Mushroom & Truffle Risotto",
+        "description": "Creamy Carnaroli rice cooked with wild seasonal mushrooms, parmesan cheese, and truffle oil.",
+        "ingredients": ["Carnaroli rice", "Wild mushrooms", "Parmesan cheese", "Butter", "Vegetable broth", "Truffle oil"],
+        "allergens": ["Dairy"]
+      },
+      "fr": {
+        "name": "Risotto aux Champignons et Truffe",
+        "description": "Riz Carnaroli crémeux aux champignons sauvages de saison, parmesan et huile de truffe.",
+        "ingredients": ["Riz Carnaroli", "Champignons sauvages", "Parmesan", "Beurre", "Bouillon végétal", "Huile de truffe"],
+        "allergens": ["Produits laitiers"]
+      }
+    }
+  },
+  {
+    "imageNumber": 11,
+    "name": "Pizza Margherita Verace",
+    "price": 9.00,
+    "weight": "420 g",
+    "kcal": 810,
+    "description": "Auténtica pizza estilo napolitana con salsa de tomate San Marzano, mozzarella fior di latte y albahaca.",
+    "ingredients": [
+      "Masa artesanal de pizza",
+      "Salsa de tomate San Marzano",
+      "Mozzarella Fior di Latte",
+      "Albahaca fresca",
+      "Aceite de oliva virgen extra"
+    ],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["pizza", "principal", "tradicional", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": {
+        "name": "Pizza Margherita Verace",
+        "description": "Auténtica pizza estilo napolitana con salsa de tomate San Marzano, mozzarella fior di latte y albahaca.",
+        "ingredients": ["Masa artesanal", "Tomate San Marzano", "Mozzarella Fior di Latte", "Albahaca fresca", "Aceite de oliva"],
+        "allergens": ["Gluten", "Lácteos"]
+      },
+      "en": {
+        "name": "Pizza Margherita Verace",
+        "description": "Authentic Neapolitan-style pizza with San Marzano tomato sauce, fior di latte mozzarella, and fresh basil.",
+        "ingredients": ["Artisanal pizza dough", "San Marzano tomatoes", "Fior di Latte mozzarella", "Fresh basil", "Olive oil"],
+        "allergens": ["Gluten", "Dairy"]
+      },
+      "fr": {
+        "name": "Pizza Margherita Verace",
+        "description": "Authentique pizza napolitaine avec sauce tomate San Marzano, mozzarella fior di latte et basilic frais.",
+        "ingredients": ["Pâte à pizza artisanale", "Tomates San Marzano", "Mozzarella Fior di Latte", "Basilic frais", "Huile d'olive"],
+        "allergens": ["Gluten", "Produits laitiers"]
+      }
+    }
+  },
+  {
+    "imageNumber": 12,
+    "name": "Tarta de Queso Cremosa",
+    "price": 6.00,
+    "weight": "190 g",
+    "kcal": 490,
+    "description": "Tarta de queso horneada al estilo donostiarra con corazón cremoso, acompañada de mermelada de frutos rojos.",
+    "ingredients": [
+      "Queso crema",
+      "Nata líquida",
+      "Huevo",
+      "Azúcar",
+      "Mermelada de frutos rojos"
+    ],
+    "allergens": ["Lácteos", "Huevo"],
+    "tags": ["postre", "especialidad", "casero"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": {
+        "name": "Tarta de Queso Cremosa",
+        "description": "Tarta de queso horneada al estilo donostiarra con corazón cremoso, acompañada de mermelada de frutos rojos.",
+        "ingredients": ["Queso crema", "Nata líquida", "Huevo", "Azúcar", "Mermelada de frutos rojos"],
+        "allergens": ["Lácteos", "Huevo"]
+      },
+      "en": {
+        "name": "Creamy Baked Cheesecake",
+        "description": "Basque-style baked cheesecake with a soft creamy center, served with berry jam.",
+        "ingredients": ["Cream cheese", "Heavy cream", "Egg", "Sugar", "Red berry jam"],
+        "allergens": ["Dairy", "Egg"]
+      },
+      "fr": {
+        "name": "Cheesecake Crémeux",
+        "description": "Gâteau au fromage cuit au four style basque au cœur fondant, servi avec confiture de fruits rouges.",
+        "ingredients": ["Fromage frais", "Crème liquide", "Œuf", "Sucre", "Confiture de fruits rouges"],
+        "allergens": ["Produits laitiers", "Œuf"]
+      }
+    }
+  },
+  {
+    "imageNumber": 13,
+    "name": "Mojito Clásico",
+    "price": 7.50,
+    "weight": "330 ml",
+    "kcal": 190,
+    "description": "Refrescante cóctel caribeño elaborado con ron blanco, lima fresca majada, hojas de menta, azúcar de caña y soda.",
+    "ingredients": [
+      "Ron blanco",
+      "Zumo de lima fresca",
+      "Hojas de menta fresca",
+      "Azúcar de caña",
+      "Agua con gas / Soda"
     ],
     "allergens": [],
-    "tags": ["coctel", "bebida"],
+    "tags": ["coctel", "bebida", "refrescante"],
     "sectiune": "bar",
     "translations": {
       "es": {
-        "name": "Espresso Martini",
-        "description": "Un cóctel sofisticado y enérgico que mezcla vodka premium, rico licor de café y espresso recién hecho.",
-        "ingredients": ["Vodka", "Licor de café", "Espresso", "Sirope de azúcar"],
+        "name": "Mojito Clásico",
+        "description": "Refrescante cóctel caribeño elaborado con ron blanco, lima fresca majada, hojas de menta, azúcar de caña y soda.",
+        "ingredients": ["Ron blanco", "Zumo de lima fresca", "Hojas de menta", "Azúcar de caña", "Soda"],
         "allergens": []
       },
       "en": {
-        "name": "Espresso Martini",
-        "description": "A sophisticated and energetic cocktail mixing premium vodka, rich coffee liqueur, and freshly brewed espresso.",
-        "ingredients": ["Vodka", "Coffee liqueur", "Fresh espresso", "Simple syrup"],
+        "name": "Classic Mojito",
+        "description": "Refreshing Cuban cocktail made with white rum, muddled fresh lime, mint leaves, cane sugar, and soda water.",
+        "ingredients": ["White rum", "Fresh lime juice", "Mint leaves", "Cane sugar", "Soda water"],
         "allergens": []
       },
       "fr": {
-        "name": "Espresso Martini",
-        "description": "Un cocktail sophistiqué et énergique mélangeant vodka premium, liqueur de café riche et espresso fraîchement préparé.",
-        "ingredients": ["Vodka", "Liqueur de café", "Espresso", "Sirop de sucre"],
+        "name": "Mojito Classique",
+        "description": "Cocktail rafraîchissant à base de rhum blanc, citron vert pilonné, menthe fraîche, sucre de canne et eau gazeuse.",
+        "ingredients": ["Rhum blanc", "Jus de citron vert", "Feuilles de menthe", "Sucre de canne", "Eau gazeuse"],
+        "allergens": []
+      }
+    }
+  },
+  {
+    "imageNumber": 14,
+    "name": "Limonada Casera con Menta",
+    "price": 3.50,
+    "weight": "350 ml",
+    "kcal": 110,
+    "description": "Limonada natural hecha en casa con zumo de limón recién exprimido, agua, azúcar de caña y hojas de menta fresca.",
+    "ingredients": [
+      "Zumo de limón natural",
+      "Agua mineral",
+      "Azúcar de caña",
+      "Hojas de menta fresca"
+    ],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "casero", "refrescante"],
+    "sectiune": "bar",
+    "translations": {
+      "es": {
+        "name": "Limonada Casera con Menta",
+        "description": "Limonada natural hecha en casa con zumo de limón recién exprimido, agua, azúcar de caña y hojas de menta fresca.",
+        "ingredients": ["Zumo de limón", "Agua", "Azúcar de caña", "Menta fresca"],
+        "allergens": []
+      },
+      "en": {
+        "name": "Homemade Mint Lemonade",
+        "description": "Freshly squeezed homemade lemonade with mineral water, cane sugar, and fresh mint leaves.",
+        "ingredients": ["Fresh lemon juice", "Water", "Cane sugar", "Fresh mint"],
+        "allergens": []
+      },
+      "fr": {
+        "name": "Limonade Maison à la Menthe",
+        "description": "Limonade naturelle faite maison avec jus de citron pressé, eau, sucre de canne et menthe fraîche.",
+        "ingredients": ["Jus de citron frais", "Eau", "Sucre de canne", "Menthe fraîche"],
         "allergens": []
       }
     }
