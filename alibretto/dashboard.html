@@ -835,49 +835,52 @@
   }
 
   // Determina statusul actual al unei mese: 'free' | 'yellow' | 'red' | 'blue'
+  // Logica: Libre -> Ocupada (al comandar) -> Ocupada (llega la comida, sigue ocupada) -> Ocupada (pide la cuenta) -> 15 min -> Libre
+  // La mesa NO se libera sola por servir/finalizar un pedido. Solo se libera manualmente o 15 min después de pedir la cuenta.
   function getTableStatus(tableNr) {
       const strNr = String(tableNr);
+      // Todas las comandas de esta mesa (cualquier estado, menos las anuladas) mantienen la mesa ocupada
       let ordersForTable = allOrders.filter(o => String(o.mesa) === strNr && o.status !== 'anulata');
-      let active = ordersForTable.filter(o => o.status === 'noua' || o.status === 'gata');
 
+      if(ordersForTable.length === 0) return { status:'free', label:'Libre' };
+
+      let lastOrderTime = Math.max(...ordersForTable.map(o => new Date(o.created_at).getTime()));
       let lastFreed = freedTables[strNr] || 0;
 
-      // Cea mai recentă comandă (activă sau nu) folosită ca referință de timp
-      let lastOrderTime = 0;
-      ordersForTable.forEach(o => { const t = new Date(o.created_at).getTime(); if(t > lastOrderTime) lastOrderTime = t; });
-
-      if(active.length === 0) return { status:'free', label:'Libre' };
-      // Daca a fost liberata manual/automat DUPA ultima comanda -> libera
+      // Si se liberó (manual o automáticamente) DESPUÉS de la última comanda -> libre
       if(lastFreed > lastOrderTime) return { status:'free', label:'Libre' };
 
-      let hasHelpAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ') && HELP_ALERT_REGEX.test(p.nume)));
-      let hasPaymentAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
-      let isOld = active.some(o => (Date.now() - new Date(o.created_at).getTime()) > 15 * 60000);
+      // Alerta de ayuda: solo cuenta mientras no ha sido atendida (status 'noua')
+      let hasHelpAlert = ordersForTable.some(o => o.status === 'noua' && o.produse.some(p => p.nume.includes('ALERTĂ') && HELP_ALERT_REGEX.test(p.nume)));
+      if(hasHelpAlert) return { status:'blue', label:'Necesita ayuda' };
 
-      if(hasHelpAlert) {
-          return { status:'blue', label:'Necesita ayuda' };
+      // Alerta de cuenta (cash/card): cuenta desde que se pulsó, sin importar si fue atendida o no
+      let paymentAlertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
+      if(paymentAlertOrders.length > 0) {
+          let lastPaymentTime = Math.max(...paymentAlertOrders.map(o => new Date(o.created_at).getTime()));
+          let remainingMin = Math.max(0, Math.ceil(AUTO_FREE_MINUTES - (Date.now() - lastPaymentTime) / 60000));
+          return { status:'blue', label: remainingMin > 0 ? `Pidió la cuenta · se libera en ${remainingMin} min` : 'Pidió la cuenta · liberando...' };
       }
-      if(hasPaymentAlert) {
-          // pidió la cuenta -> mesa marcada especial (azul), se libera sola en 15 min
-          return { status:'blue', label:'Pidió la cuenta' };
-      }
-      if(isOld) return { status:'red', label:'Ocupada (+15 min)' };
-      return { status:'yellow', label:'Ocupada' };
+
+      // Ocupada normal (comió/está sentada, aún no pidió la cuenta)
+      let isOld = (Date.now() - lastOrderTime) > 30 * 60000;
+      return isOld ? { status:'red', label:'Ocupada (sentada hace rato)' } : { status:'yellow', label:'Ocupada' };
   }
 
-  // Auto-liberare: la 15 min de la ultima cerere de "cuenta" (cash/card), masa se elibereaza singura
+  // Auto-liberare: la 15 min EXACT de la ultima cerere de "cuenta" (cash/card), masa se elibereaza singura,
+  // independent de starea comenzii (atendida sau no) si independent de daca a fost servita mancarea.
   async function checkAutoFreeTables() {
       const strKeys = new Set();
       salaConfig.zones.forEach(z => z.mese.forEach(m => strKeys.add(String(m.numar))));
 
       for(const tableNr of strKeys) {
-          let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && (o.status === 'noua' || o.status === 'gata'));
+          let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && o.status !== 'anulata');
           let alertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
           if(alertOrders.length === 0) continue;
 
           let lastAlertTime = Math.max(...alertOrders.map(o => new Date(o.created_at).getTime()));
           let lastFreed = freedTables[tableNr] || 0;
-          if(lastFreed > lastAlertTime) continue; // ya liberada
+          if(lastFreed > lastAlertTime) continue; // ya liberada tras esa petición de cuenta
 
           const elapsedMin = (Date.now() - lastAlertTime) / 60000;
           const guardKey = tableNr + ':' + lastAlertTime;
