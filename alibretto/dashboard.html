@@ -432,7 +432,7 @@
     <div id="jurnalView" style="display: none;">
       <div class="dash-panel">
         <h3>🕵️ Log de Actividad (Auditoría)</h3>
-        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción se guarda con la hora exacta. Registro permanente, imborrable.</p>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Cada acción se guarda con la hora exacta. Se carga solo al abrir esta pestaña (nunca queda cargado en segundo plano) y se conserva 30 días — las entradas más antiguas se eliminan automáticamente cada noche.</p>
         
         <div class="table-responsive">
           <table class="table-logs">
@@ -736,8 +736,17 @@
   });
 
   function switchTab(tab) {
+    const previousTab = currentTab;
     currentTab = tab;
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+    // Cuando sales del panel de Log, se vacía la tabla de la pantalla:
+    // no se queda nada cargado en el navegador si no lo estás viendo.
+    // Los datos siempre viven en Supabase, nunca en memoria del servidor.
+    if (previousTab === 'jurnal' && tab !== 'jurnal') {
+        const jl = document.getElementById('jurnalList');
+        if (jl) jl.innerHTML = '';
+    }
     
     const showSearch = (tab === 'active' || tab === 'history');
     document.getElementById('tableFilterInputDesc').style.display = showSearch ? 'block' : 'none';
