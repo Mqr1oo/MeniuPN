@@ -669,7 +669,7 @@
             <div class="card-img-wrap">
               ${isEpuizat ? `<div class="badge-epuizat"><span>${t.badgeEpuizat}</span></div>` : ''}
               ${(item.tags||[]).includes('especialidad') ? `<div class="ribbon">${t.ribbonEsp}</div>` : ''}
-              <img src="images/${item.imageNumber}.jpg" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
+              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
               <div class="card-qty-controls ${q>0?'has-items':''}">
                 <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
                 <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
