@@ -1,1342 +1,1328 @@
-{
-"Antipasti/ Entrantes": [
-{
-"imageNumber": 1,
-"name": "Pimientos asados al horno de leña",
-"price": 7.50,
-"weight": "200 g",
-"kcal": 140,
-"description": "Pimientos frescos asados lentamente al horno de leña con aceite de oliva y sal.",
-"ingredients": ["Pimientos", "Aceite de oliva", "Sal"],
-"allergens": [],
-"tags": ["entrante", "vegetariano", "vegano", "sin gluten"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Pimientos asados al horno de leña", "description": "Pimientos frescos asados lentamente al horno de leña con aceite de oliva y sal.", "ingredients": ["Pimientos", "Aceite de oliva", "Sal"], "allergens": [] },
-"en": { "name": "Wood-fired Roasted Peppers", "description": "Fresh peppers slowly roasted in a wood-fired oven with olive oil and salt.", "ingredients": ["Peppers", "Olive oil", "Salt"], "allergens": [] },
-"fr": { "name": "Poivrons Rôtis au Feu de Bois", "description": "Poivrons frais rôtis lentement au four à bois avec de l'huile d'olive et du sel.", "ingredients": ["Poivrons", "Huile d'olive", "Sel"], "allergens": [] }
-}
-},
-{
-"imageNumber": 2,
-"name": "Pisto de berenjena",
-"price": 7.50,
-"weight": "220 g",
-"kcal": 180,
-"description": "Tradicional pisto de berenjena y hortalizas de temporada pochadas a fuego lento.",
-"ingredients": ["Berenjena", "Tomate", "Cebolla", "Pimiento", "Aceite de oliva"],
-"allergens": [],
-"tags": ["entrante", "vegetariano", "vegano", "sin gluten"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Pisto de berenjena", "description": "Tradicional pisto de berenjena y hortalizas de temporada pochadas a fuego lento.", "ingredients": ["Berenjena", "Tomate", "Cebolla", "Pimiento", "Aceite de oliva"], "allergens": [] },
-"en": { "name": "Eggplant Pisto", "description": "Traditional eggplant and seasonal vegetable stew slow-cooked.", "ingredients": ["Eggplant", "Tomato", "Onion", "Pepper", "Olive oil"], "allergens": [] },
-"fr": { "name": "Pisto d'Aubergine", "description": "Ratatouille traditionnelle à l'aubergine et légumes de saison mijotés à feu doux.", "ingredients": ["Aubergine", "Tomate", "Oignon", "Poivron", "Huile d'olive"], "allergens": [] }
-}
-},
-{
-"imageNumber": 3,
-"name": "Berenjena plancha",
-"price": 8.00,
-"weight": "180 g",
-"kcal": 150,
-"description": "Rodajas de berenjena fresca cocinadas a la plancha con un toque de aceite de oliva y sal marina.",
-"ingredients": ["Berenjena", "Aceite de oliva", "Sal marina"],
-"allergens": [],
-"tags": ["entrante", "vegetariano", "vegano", "sin gluten"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Berenjena plancha", "description": "Rodajas de berenjena fresca cocinadas a la plancha con un toque de aceite de oliva y sal marina.", "ingredients": ["Berenjena", "Aceite de oliva", "Sal marina"], "allergens": [] },
-"en": { "name": "Grilled Eggplant", "description": "Fresh eggplant slices cooked on the griddle with a touch of olive oil and sea salt.", "ingredients": ["Eggplant", "Olive oil", "Sea salt"], "allergens": [] },
-"fr": { "name": "Aubergine à la Plancha", "description": "Tranches d'aubergine fraîche cuites à la plancha avec un filet d'huile d'olive et de sel marin.", "ingredients": ["Aubergine", "Huile d'olive", "Sel marin"], "allergens": [] }
-}
-},
-{
-"imageNumber": 4,
-"name": "Champiñones trifolato",
-"price": 7.00,
-"weight": "200 g",
-"kcal": 190,
-"description": "Champiñones salteados al estilo italiano con ajo, perejil y aceite de oliva.",
-"ingredients": ["Champiñones", "Ajo", "Perejil", "Aceite de oliva"],
-"allergens": [],
-"tags": ["entrante", "vegetariano", "vegano", "sin gluten"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Champiñones trifolato", "description": "Champiñones salteados al estilo italiano con ajo, perejil y aceite de oliva.", "ingredients": ["Champiñones", "Ajo", "Perejil", "Aceite de oliva"], "allergens": [] },
-"en": { "name": "Trifolato Mushrooms", "description": "Italian-style sautéed mushrooms with garlic, parsley, and olive oil.", "ingredients": ["Mushrooms", "Garlic", "Parsley", "Olive oil"], "allergens": [] },
-"fr": { "name": "Champignons Trifolato", "description": "Champignons sautés à l'italienne avec de l'ail, du persil et de l'huile d'olive.", "ingredients": ["Champignons", "Ail", "Persil", "Huile d'olive"], "allergens": [] }
-}
-},
-{
-"imageNumber": 5,
-"name": "Rollito de berenjena",
-"price": 14.00,
-"weight": "260 g",
-"kcal": 380,
-"description": "Rollito de berenjena a la plancha, crema de queso, salsa de tomate, parmesano, albahaca, gotas de pesto.",
-"ingredients": ["Rollito de berenjena a la plancha", "crema de queso", "salsa de tomate", "parmesano", "albahaca", "gotas de pesto"],
-"allergens": ["Lácteos", "Frutos de cáscara"],
-"tags": ["entrante", "vegetariano", "especialidad"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Rollito de berenjena", "description": "Rollito de berenjena a la plancha, crema de queso, salsa de tomate, parmesano, albahaca, gotas de pesto.", "ingredients": ["Berenjena", "Crema de queso", "Salsa de tomate", "Parmesano", "Albahaca", "Pesto"], "allergens": ["Lácteos", "Frutos de cáscara"] },
-"en": { "name": "Eggplant Roll", "description": "Grilled eggplant roll, cream cheese, tomato sauce, parmesan, basil, pesto drops.", "ingredients": ["Eggplant", "Cream cheese", "Tomato sauce", "Parmesan", "Basil", "Pesto"], "allergens": ["Dairy", "Nuts"] },
-"fr": { "name": "Roulé d'Aubergine", "description": "Roulé d'aubergine grillé, crème de the, sauce tomate, parmesan, basilic, gouttes de pesto.", "ingredients": ["Aubergine", "Crème de fromage", "Sauce tomate", "Parmesan", "Basilic", "Pesto"], "allergens": ["Produits laitiers", "Fruits à coque"] }
-}
-},
-{
-"imageNumber": 6,
-"name": "Carpaccio de ternera",
-"price": 15.00,
-"weight": "210 g",
-"kcal": 310,
-"description": "Finas lonchas de carne de ternera con lascas de parmesano, rúcula y AOVE.",
-"ingredients": ["Carne de ternera", "lasca de parmesano", "rúcula", "AOVE"],
-"allergens": ["Lácteos"],
-"tags": ["entrante", "especialidad", "sin gluten"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Carpaccio de ternera", "description": "Finas lonchas de carne de ternera con lascas de parmesano, rúcula y AOVE.", "ingredients": ["Carne de ternera", "Parmesano", "Rúcula", "AOVE"], "allergens": ["Lácteos"] },
-"en": { "name": "Beef Carpaccio", "description": "Thin slices of beef with parmesan shavings, arugula, and EVOO.", "ingredients": ["Beef meat", "Parmesan", "Arugula", "EVOO"], "allergens": ["Dairy"] },
-"fr": { "name": "Carpaccio de Bœuf", "description": "Fines tranches de bœuf avec copeaux de parmesan, roquette et huile d'olive vierge extra.", "ingredients": ["Viande de bœuf", "Parmesan", "Roquette", "Huile d'olive"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 7,
-"name": "Burrata con jamón",
-"price": 15.00,
-"weight": "280 g",
-"kcal": 460,
-"description": "Burrata fresca acompañada de exquisito jamón de Parma y AOVE.",
-"ingredients": ["Burrata", "jamón de Parma", "AOVE"],
-"allergens": ["Lácteos"],
-"tags": ["entrante", "especialidad"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Burrata con jamón", "description": "Burrata fresca acompañada de exquisito jamón de Parma y AOVE.", "ingredients": ["Burrata", "Jamón de Parma", "AOVE"], "allergens": ["Lácteos"] },
-"en": { "name": "Burrata with Ham", "description": "Fresh burrata accompanied by exquisite Parma ham and EVOO.", "ingredients": ["Burrata", "Parma ham", "EVOO"], "allergens": ["Dairy"] },
-"fr": { "name": "Burrata au Jambon", "description": "Burrata fraîche accompagnée de jambon de Parme exquis et huile d'olive.", "ingredients": ["Burrata", "Jambon de Parme", "Huile d'olive"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 8,
-"name": "Mejillones napolitano",
-"price": 15.00,
-"weight": "350 g",
-"kcal": 320,
-"description": "Mejillones frescos cocinados con salsa de tomate y guindilla.",
-"ingredients": ["Mejillones", "salsa de tomate", "guindilla"],
-"allergens": ["Moluscos"],
-"tags": ["entrante", "marisco", "picante"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Mejillones napolitano", "description": "Mejillones frescos cocinados con salsa de tomate y guindilla.", "ingredients": ["Mejillones", "Salsa de tomate", "Guindilla"], "allergens": ["Moluscos"] },
-"en": { "name": "Neapolitan Mussels", "description": "Fresh mussels cooked with tomato sauce and chili pepper.", "ingredients": ["Mussels", "Tomato sauce", "Chili pepper"], "allergens": ["Molluscs"] },
-"fr": { "name": "Moules Napolitaines", "description": "Moules fraîches cuisinées avec une sauce tomate et du piment.", "ingredients": ["Moules", "Sauce tomate", "Piment"], "allergens": ["Mollusques"] }
-}
-},
-{
-"imageNumber": 9,
-"name": "Mejillones al vapor con limón",
-"price": 14.00,
-"weight": "350 g",
-"kcal": 250,
-"description": "Mejillones frescos al vapor servidos con rodajas de limón natural.",
-"ingredients": ["Mejillones", "Limón", "Agua", "Sal"],
-"allergens": ["Moluscos"],
-"tags": ["entrante", "marisco", "saludable"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Mejillones al vapor con limón", "description": "Mejillones frescos al vapor servidos con rodajas de limón natural.", "ingredients": ["Mejillones", "Limón", "Agua", "Sal"], "allergens": ["Moluscos"] },
-"en": { "name": "Steamed Mussels with Lemon", "description": "Fresh steamed mussels served with natural lemon slices.", "ingredients": ["Mussels", "Lemon", "Water", "Salt"], "allergens": ["Molluscs"] },
-"fr": { "name": "Moules Vapeur au Citron", "description": "Moules fraîches à la vapeur servies avec des tranches de citron naturel.", "ingredients": ["Moules", "Citron", "Eau", "Sel"], "allergens": ["Mollusques"] }
-}
-},
-{
-"imageNumber": 10,
-"name": "Mejillones pepata",
-"price": 14.00,
-"weight": "350 g",
-"kcal": 280,
-"description": "Mejillones preparados al estilo tradicional con pimienta y ajos.",
-"ingredients": ["Mejillones", "Pimienta", "Ajos", "Aceite de oliva"],
-"allergens": ["Moluscos"],
-"tags": ["entrante", "marisco", "tradicional"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Mejillones pepata", "description": "Mejillones preparados al estilo tradicional con pimienta y ajos.", "ingredients": ["Mejillones", "Pimienta", "Ajos", "Aceite de oliva"], "allergens": ["Moluscos"] },
-"en": { "name": "Peppata Mussels", "description": "Mussels prepared in traditional style with pepper and garlic.", "ingredients": ["Mussels", "Pepper", "Garlic", "Olive oil"], "allergens": ["Molluscs"] },
-"fr": { "name": "Moules Pepata", "description": "Moules préparées à l'ancienne avec du poivre et de l'ail.", "ingredients": ["Moules", "Poivre", "Ail", "Huile d'olive"], "allergens": ["Mollusques"] }
-}
-},
-{
-"imageNumber": 11,
-"name": "Colas de gambón al ajillo",
-"price": 16.00,
-"weight": "240 g",
-"kcal": 390,
-"description": "Colas de gambón salteadas con gambas, ajo, aceite y perejil.",
-"ingredients": ["Gambas", "ajo", "aceite", "perejil"],
-"allergens": ["Marisco"],
-"tags": ["entrante", "marisco", "tradicional"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Colas de gambón al ajillo", "description": "Colas de gambón salteadas con gambas, ajo, aceite y perejil.", "ingredients": ["Gambas", "Ajo", "Aceite", "Perejil"], "allergens": ["Marisco"] },
-"en": { "name": "Garlic Jumbo Prawn Tails", "description": "Jumbo prawn tails sautéed with shrimp, garlic, oil, and parsley.", "ingredients": ["Shrimp", "Garlic", "Oil", "Parsley"], "allergens": ["Shellfish"] },
-"fr": { "name": "Queues de Gambas à l'Ail", "description": "Queues de gambas sautées avec crevettes, ail, huile et persil.", "ingredients": ["Gambas", "Ail", "Huile", "Persil"], "allergens": ["Crustacés"] }
-}
-},
-{
-"imageNumber": 12,
-"name": "Colas de Gambón fra diávolo",
-"price": 16.50,
-"weight": "260 g",
-"kcal": 420,
-"description": "Colas de gambón con gambas, aceite, perejil, salsa de tomate, guindilla y nata.",
-"ingredients": ["Gambas", "aceite", "perejil", "salsa de tomate", "guindilla", "nata"],
-"allergens": ["Marisco", "Lácteos"],
-"tags": ["entrante", "marisco", "picante", "especialidad"],
-"sectiune": "Antipasti/ Entrantes",
-"translations": {
-"es": { "name": "Colas de Gambón fra diávolo", "description": "Colas de gambón con gambas, aceite, perejil, salsa de tomate, guindilla y nata.", "ingredients": ["Gambas", "Aceite", "Perejil", "Salsa de tomate", "Guindilla", "Nata"], "allergens": ["Marisco", "Lácteos"] },
-"en": { "name": "Fra Diavolo Jumbo Prawn Tails", "description": "Prawn tails with shrimp, oil, parsley, tomato sauce, chili, and cream.", "ingredients": ["Shrimp", "Oil", "Parsley", "Tomato sauce", "Chili", "Cream"], "allergens": ["Shellfish", "Dairy"] },
-"fr": { "name": "Queues de Gambas Fra Diavolo", "description": "Queues de gambas avec crevettes, huile, persil, sauce tomate, piment et crème.", "ingredients": ["Gambas", "Huile", "Persil", "Sauce tomate", "Piment", "Crème"], "allergens": ["Crustacés", "Produits laitiers"] }
-}
-}
-],
-"Ensaladas": [
-{
-"imageNumber": 13,
-"name": "Mixta",
-"price": 14.00,
-"weight": "350 g",
-"kcal": 310,
-"description": "Lechuga mixta, tomate, cebolla, zanahoria, huevo duro, atún, aceitunas.",
-"ingredients": ["Lechuga mixta", "tomate", "cebolla", "zanahoria", "huevo duro", "atún", "aceitunas"],
-"allergens": ["Pescado", "Huevo"],
-"tags": ["ensalada", "fresco", "saludable"],
-"sectiune": "Ensaladas",
-"translations": {
-"es": { "name": "Mixta", "description": "Lechuga mixta, tomate, cebolla, zanahoria, huevo duro, atún, aceitunas.", "ingredients": ["Lechuga mixta", "Tomate", "Cebolla", "Zanahoria", "Huevo duro", "Atún", "Aceitunas"], "allergens": ["Pescado", "Huevo"] },
-"en": { "name": "Mixed Salad", "description": "Mixed lettuce, tomato, onion, carrot, hard-boiled egg, tuna, olives.", "ingredients": ["Mixed lettuce", "Tomato", "Onion", "Carrot", "Egg", "Tuna", "Olives"], "allergens": ["Fish", "Egg"] },
-"fr": { "name": "Salade Mixte", "description": "Laitue mixte, tomate, oignon, carotte, œuf dur, thon, olives.", "ingredients": ["Laitue", "Tomate", "Oignon", "Carotte", "Œuf dur", "Thon", "Olives"], "allergens": ["Poisson", "Œuf"] }
-}
-},
-{
-"imageNumber": 14,
-"name": "Griega",
-"price": 15.00,
-"weight": "340 g",
-"kcal": 390,
-"description": "Iceberg, pimientos tricolor, aceitunas Kalamata, cebolla morada, tomate, orégano, queso feta, pepino, AOVE.",
-"ingredients": ["Iceberg", "pimientos tricolor", "aceitunas Kalamata", "cebolla morada", "tomate", "orégano", "queso feta", "pepino", "AOVE"],
-"allergens": ["Lácteos"],
-"tags": ["ensalada", "vegetariano", "fresco"],
-"sectiune": "Ensaladas",
-"translations": {
-"es": { "name": "Griega", "description": "Iceberg, pimientos tricolor, aceitunas Kalamata, cebolla morada, tomate, orégano, queso feta, pepino, AOVE.", "ingredients": ["Iceberg", "Pimientos tricolor", "Aceitunas Kalamata", "Cebolla morada", "Tomate", "Orégano", "Queso feta", "Pepino", "AOVE"], "allergens": ["Lácteos"] },
-"en": { "name": "Greek Salad", "description": "Iceberg lettuce, tri-color peppers, Kalamata olives, red onion, tomato, oregano, feta cheese, cucumber, EVOO.", "ingredients": ["Iceberg", "Bell peppers", "Kalamata olives", "Red onion", "Tomato", "Oregano", "Feta cheese", "Cucumber", "EVOO"], "allergens": ["Dairy"] },
-"fr": { "name": "Salade Grecque", "description": "Laitue iceberg, poivrons tricolores, olives Kalamata, oignon rouge, tomate, origan, feta, concombre, huile d'olive.", "ingredients": ["Iceberg", "Poivrons", "Olives Kalamata", "Oignon rouge", "Tomate", "Origan", "Feta", "Concombre", "Huile d'olive"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 15,
-"name": "Caprese",
-"price": 14.00,
-"weight": "300 g",
-"kcal": 410,
-"description": "Tomate, mozzarella, orégano, albahaca, AOVE.",
-"ingredients": ["tomate", "mozzarella", "orégano", "albahaca", "AOVE"],
-"allergens": ["Lácteos"],
-"tags": ["ensalada", "vegetariano", "fresco"],
-"sectiune": "Ensaladas",
-"translations": {
-"es": { "name": "Caprese", "description": "Tomate, mozzarella, orégano, albahaca, AOVE.", "ingredients": ["Tomate", "Mozzarella", "Orégano", "Albahaca", "AOVE"], "allergens": ["Lácteos"] },
-"en": { "name": "Caprese Salad", "description": "Tomato, mozzarella, oregano, basil, EVOO.", "ingredients": ["Tomato", "Mozzarella", "Oregano", "Basil", "EVOO"], "allergens": ["Dairy"] },
-"fr": { "name": "Salade Caprese", "description": "Tomate, mozzarella, origan, basilic, huile d'olive.", "ingredients": ["Tomate", "Mozzarella", "Origan", "Basilic", "Huile d'olive"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 16,
-"name": "Ensalada de tomate variado",
-"price": 0.00,
-"weight": "320 g",
-"kcal": 150,
-"description": "Tomates seleccionados de temporada. (Precio según temporada S/T)",
-"ingredients": ["tomates seleccionados de temporada"],
-"allergens": [],
-"tags": ["ensalada", "fresco", "vegetariano", "vegano"],
-"sectiune": "Ensaladas",
-"translations": {
-"es": { "name": "Ensalada de tomate variado", "description": "Tomates seleccionados de temporada. (Precio según temporada S/T)", "ingredients": ["Tomates de temporada"], "allergens": [] },
-"en": { "name": "Assorted Tomato Salad", "description": "Selected seasonal tomatoes. (Price according to season S/T)", "ingredients": ["Seasonal tomatoes"], "allergens": [] },
-"fr": { "name": "Salade de Tomates Variées", "description": "Tomates de saison sélectionnées. (Prix selon saison S/T)", "ingredients": ["Tomates de saison"], "allergens": [] }
-}
-}
-],
-"Pastas": [
-{
-"imageNumber": 17,
-"name": "Spaghetti frutti di mare",
-"price": 17.50,
-"weight": "420 g",
-"kcal": 680,
-"description": "Spaghetti con gambon, cola de gamba, marisco del dia, salsa de tomate.",
-"ingredients": ["Gambon", "cola de gamba", "marisco del dia", "salsa de tomate", "spaghetti"],
-"allergens": ["Gluten", "Marisco", "Moluscos", "Pescado"],
-"tags": ["principal", "pasta", "marisco"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Spaghetti frutti di mare", "description": "Spaghetti con gambon, cola de gamba, marisco del dia, salsa de tomate.", "ingredients": ["Gambón", "Cola de gamba", "Marisco del día", "Salsa de tomate", "Spaghetti"], "allergens": ["Gluten", "Marisco", "Moluscos", "Pescado"] },
-"en": { "name": "Spaghetti Frutti di Mare", "description": "Spaghetti with jumbo prawn, prawn tail, catch of the day seafood, tomato sauce.", "ingredients": ["Jumbo prawn", "Prawn tail", "Daily seafood", "Tomato sauce", "Spaghetti"], "allergens": ["Gluten", "Shellfish", "Molluscs", "Fish"] },
-"fr": { "name": "Spaghetti Frutti di Mare", "description": "Spaghetti aux gambas, queue de crevette, fruits de mer du jour, sauce tomate.", "ingredients": ["Gambas", "Queue de crevette", "Fruits de mer", "Sauce tomate", "Spaghetti"], "allergens": ["Gluten", "Crustacés", "Mollusques", "Poisson"] }
-}
-},
-{
-"imageNumber": 18,
-"name": "Fettuccine capesante",
-"price": 17.50,
-"weight": "410 g",
-"kcal": 650,
-"description": "Fettuccine con gambon, cola de gamba, zamburiña, salsa de tomate.",
-"ingredients": ["Gambon", "cola de gamba", "zamburiña", "salsa de tomate", "fettuccine"],
-"allergens": ["Gluten", "Marisco", "Moluscos"],
-"tags": ["principal", "pasta", "marisco"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Fettuccine capesante", "description": "Fettuccine con gambon, cola de gamba, zamburiña, salsa de tomate.", "ingredients": ["Gambón", "Cola de gamba", "Zamburiña", "Salsa de tomate", "Fettuccine"], "allergens": ["Gluten", "Marisco", "Moluscos"] },
-"en": { "name": "Fettuccine Capesante", "description": "Fettuccine with jumbo prawn, prawn tail, variegated scallop, tomato sauce.", "ingredients": ["Jumbo prawn", "Prawn tail", "Scallop", "Tomato sauce", "Fettuccine"], "allergens": ["Gluten", "Shellfish", "Molluscs"] },
-"fr": { "name": "Fettuccine Capesante", "description": "Fettuccine aux gambas, queue de crevette, pétoncles, sauce tomate.", "ingredients": ["Gambas", "Queue de crevette", "Pétoncle", "Sauce tomate", "Fettuccine"], "allergens": ["Gluten", "Crustacés", "Mollusques"] }
-}
-},
-{
-"imageNumber": 19,
-"name": "Linguine gambero",
-"price": 16.50,
-"weight": "400 g",
-"kcal": 610,
-"description": "Linguine con tomate y gambones frescos.",
-"ingredients": ["Linguine", "Tomate", "Gambones"],
-"allergens": ["Gluten", "Marisco"],
-"tags": ["principal", "pasta", "marisco"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Linguine gambero", "description": "Linguine con tomate y gambones frescos.", "ingredients": ["Linguine", "Tomate", "Gambones"], "allergens": ["Gluten", "Marisco"] },
-"en": { "name": "Linguine Gambero", "description": "Linguine with tomato and fresh jumbo prawns.", "ingredients": ["Linguine", "Tomato", "Jumbo prawns"], "allergens": ["Gluten", "Shellfish"] },
-"fr": { "name": "Linguine Gambero", "description": "Linguine à la tomate et gambas fraîches.", "ingredients": ["Linguine", "Tomate", "Gambas"], "allergens": ["Gluten", "Crustacés"] }
-}
-},
-{
-"imageNumber": 20,
-"name": "Spaghetti con ragú boloñesa",
-"price": 14.00,
-"weight": "410 g",
-"kcal": 710,
-"description": "Spaghetti con salsa tomate, ragu boloñesa y parmesano.",
-"ingredients": ["salsa tomate", "ragu boloñesa", "parmesano", "spaghetti"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["principal", "pasta", "tradicional"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Spaghetti con ragú boloñesa", "description": "Spaghetti con salsa tomate, ragu boloñesa y parmesano.", "ingredients": ["Salsa de tomate", "Ragú boloñesa", "Parmesano", "Spaghetti"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Spaghetti Bolognese", "description": "Spaghetti with tomato sauce, meat ragù, and parmesan.", "ingredients": ["Tomato sauce", "Bolognese ragù", "Parmesan", "Spaghetti"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Spaghetti Bolognaise", "description": "Spaghetti à la sauce tomate, ragout bolognaise et parmesan.", "ingredients": ["Sauce tomate", "Ragout bolognaise", "Parmesan", "Spaghetti"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 21,
-"name": "Fettuccine Amatriciana",
-"price": 13.00,
-"weight": "390 g",
-"kcal": 690,
-"description": "Fettuccine con salsa de tomate, cebolla, guanciale, guindillas, parmesano.",
-"ingredients": ["Salsa de tomate", "cebolla", "guanciale", "guindillas", "parmesano", "fettuccine"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["principal", "pasta", "tradicional", "picante"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Fettuccine Amatriciana", "description": "Fettuccine con salsa de tomate, cebolla, guanciale, guindillas, parmesano.", "ingredients": ["Salsa de tomate", "Cebolla", "Guanciale", "Guindillas", "Parmesano", "Fettuccine"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Fettuccine Amatriciana", "description": "Fettuccine with tomato sauce, onion, guanciale, chili peppers, parmesan.", "ingredients": ["Tomato sauce", "Onion", "Guanciale", "Chili peppers", "Parmesan", "Fettuccine"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Fettuccine Amatriciana", "description": "Fettuccine avec sauce tomate, oignon, guanciale, piments, parmesan.", "ingredients": ["Sauce tomate", "Oignon", "Guanciale", "Piments", "Parmesan", "Fettuccine"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 22,
-"name": "Spaghetti Carbonara",
-"price": 12.00,
-"weight": "380 g",
-"kcal": 740,
-"description": "Receta original o con nata: huevo, pimienta, parmesano [nata].",
-"ingredients": ["huevo", "pimienta", "parmesano", "nata", "spaghetti"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["principal", "pasta", "tradicional"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Spaghetti Carbonara", "description": "Receta original o con nata: huevo, pimienta, parmesano [nata].", "ingredients": ["Huevo", "Pimienta", "Parmesano", "Nata", "Spaghetti"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Spaghetti Carbonara", "description": "Original recipe or with cream: egg, pepper, parmesan [cream].", "ingredients": ["Egg", "Pepper", "Parmesan", "Cream", "Spaghetti"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Spaghetti Carbonara", "description": "Recette originale ou avec crème : œuf, poivre, parmesan [crème].", "ingredients": ["Œuf", "Poivre", "Parmesan", "Crème", "Spaghetti"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 23,
-"name": "Linguine al pesto (casero)",
-"price": 14.00,
-"weight": "370 g",
-"kcal": 660,
-"description": "Linguine con albahaca, fruto seco, aceite, parmesano.",
-"ingredients": ["albahaca", "fruto seco", "aceite", "parmesano", "linguine"],
-"allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
-"tags": ["principal", "pasta", "vegetariano"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Linguine al pesto (casero)", "description": "Linguine con albahaca, fruto seco, aceite, parmesano.", "ingredients": ["Albahaca", "Frutos secos", "Aceite", "Parmesano", "Linguine"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
-"en": { "name": "Linguine al Pesto (Homemade)", "description": "Linguine with basil, nuts, oil, parmesan.", "ingredients": ["Basil", "Nuts", "Oil", "Parmesan", "Linguine"], "allergens": ["Gluten", "Dairy", "Nuts"] },
-"fr": { "name": "Linguine au Pesto (Maison)", "description": "Linguine au basilic, fruits à coque, huile, parmesan.", "ingredients": ["Basilic", "Fruits à coque", "Huile", "Parmesan", "Linguine"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
-}
-},
-{
-"imageNumber": 24,
-"name": "Spaghetti al ajillo",
-"price": 11.00,
-"weight": "350 g",
-"kcal": 530,
-"description": "Spaghetti con guindilla, ajo, AOVE.",
-"ingredients": ["guindilla", "ajo", "AOVE", "spaghetti"],
-"allergens": ["Gluten"],
-"tags": ["principal", "pasta", "vegetariano", "vegano"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Spaghetti al ajillo", "description": "Spaghetti con guindilla, ajo, AOVE.", "ingredients": ["Guindilla", "Ajo", "AOVE", "Spaghetti"], "allergens": ["Gluten"] },
-"en": { "name": "Spaghetti al Ajillo", "description": "Spaghetti with chili, garlic, EVOO.", "ingredients": ["Chili", "Garlic", "EVOO", "Spaghetti"], "allergens": ["Gluten"] },
-"fr": { "name": "Spaghetti à l'Ail et Piment", "description": "Spaghetti au piment, ail, huile d'olive vierge extra.", "ingredients": ["Piment", "Ail", "Huile d'olive", "Spaghetti"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 25,
-"name": "Tortellini rellenos de carne Á Libretto",
-"price": 14.00,
-"weight": "400 g",
-"kcal": 720,
-"description": "Tortellini rellenos de carne con tomate nata, guisante y crujiente de jamón.",
-"ingredients": ["tortellini rellenos de carne", "tomate nata", "guisante", "crujiente de jamón"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["principal", "pasta", "especialidad"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Tortellini rellenos de carne Á Libretto", "description": "Tortellini rellenos de carne con tomate nata, guisante y crujiente de jamón.", "ingredients": ["Tortellini de carne", "Tomate y nata", "Guisante", "Crujiente de jamón"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Meat Stuffed Tortellini Á Libretto", "description": "Meat-stuffed tortellini with tomato cream, peas, and crispy ham.", "ingredients": ["Meat tortellini", "Tomato cream", "Peas", "Crispy ham"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Tortellini Farcis à la Viande Á Libretto", "description": "Tortellini à la viande avec crème de tomate, petits pois et chips de jambon.", "ingredients": ["Tortellini à la viande", "Crème de tomate", "Petits pois", "Jambon croustillant"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 26,
-"name": "Tortellini rellenos de carne con salsa gorgonzola",
-"price": 13.50,
-"weight": "390 g",
-"kcal": 750,
-"description": "Tortellini rellenos de carne bañados en cremosa salsa gorgonzola.",
-"ingredients": ["tortellini rellenos de carne", "salsa gorgonzola", "nata"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["principal", "pasta"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Tortellini rellenos de carne con salsa gorgonzola", "description": "Tortellini rellenos de carne bañados en cremosa salsa gorgonzola.", "ingredients": ["Tortellini de carne", "Salsa gorgonzola", "Nata"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Meat Tortellini with Gorgonzola Sauce", "description": "Meat-stuffed tortellini bathed in creamy gorgonzola sauce.", "ingredients": ["Meat tortellini", "Gorgonzola sauce", "Cream"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Tortellini à la Viande et Sauce Gorgonzola", "description": "Tortellini à la viande nappés d'une sauce gorgonzola crémeuse.", "ingredients": ["Tortellini à la viande", "Sauce gorgonzola", "Crème"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 27,
-"name": "Rigatoni Setas",
-"price": 16.00,
-"weight": "410 g",
-"kcal": 730,
-"description": "Rigatoni con nata, guanciale [bacón italiano], setas y champiñones, queso parmesano.",
-"ingredients": ["Nata", "guanciale", "setas", "champiñones", "queso parmesano", "rigatoni"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["principal", "pasta"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Rigatoni Setas", "description": "Rigatoni con nata, guanciale, setas y champiñones, queso parmesano.", "ingredients": ["Nata", "Guanciale", "Setas", "Champiñones", "Parmesano", "Rigatoni"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Rigatoni with Mushrooms", "description": "Rigatoni with cream, guanciale, wild mushrooms and button mushrooms, parmesan cheese.", "ingredients": ["Cream", "Guanciale", "Mushrooms", "Parmesan", "Rigatoni"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Rigatoni aux Champignons", "description": "Rigatoni à la crème, guanciale, champignons sauvages et de Paris, parmesan.", "ingredients": ["Crème", "Guanciale", "Champignons", "Parmesan", "Rigatoni"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 28,
-"name": "Fettuccine Fungi Porcini",
-"price": 16.50,
-"weight": "390 g",
-"kcal": 680,
-"description": "Deliciosos fettuccine con auténticos hongos porcini salteados y crema.",
-"ingredients": ["Fettuccine", "hongos porcini", "nata", "mantequilla", "parmesano"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["principal", "pasta", "vegetariano"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Fettuccine Fungi Porcini", "description": "Deliciosos fettuccine con auténticos hongos porcini salteados y crema.", "ingredients": ["Fettuccine", "Hongos porcini", "Nata", "Mantequilla", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Fettuccine Porcini Mushrooms", "description": "Delicious fettuccine with authentic sautéed porcini mushrooms and cream.", "ingredients": ["Fettuccine", "Porcini mushrooms", "Cream", "Butter", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Fettuccine aux Cèpes Porcini", "description": "Délicieuses fettuccine aux authentiques cèpes porcini sautés et crème.", "ingredients": ["Fettuccine", "Champignons porcini", "Crème", "Beurre", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 29,
-"name": "Pasta con Bogavante azul",
-"price": 0.00,
-"weight": "550 g",
-"kcal": 790,
-"description": "Exquisita pasta fresca con bogavante azul fresco. (Solo por encargo S/M)",
-"ingredients": ["Pasta fresca", "bogavante azul", "tomate", "caldo de marisco"],
-"allergens": ["Gluten", "Marisco"],
-"tags": ["principal", "pasta", "marisco", "especialidad"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Pasta con Bogavante azul", "description": "Exquisita pasta fresca con bogavante azul fresco. (Solo por encargo S/M)", "ingredients": ["Pasta fresca", "Bogavante azul", "Tomate", "Caldo de marisco"], "allergens": ["Gluten", "Marisco"] },
-"en": { "name": "Blue Lobster Pasta", "description": "Exquisite fresh pasta with fresh blue lobster. (By order only S/M)", "ingredients": ["Fresh pasta", "Blue lobster", "Tomato", "Seafood broth"], "allergens": ["Gluten", "Shellfish"] },
-"fr": { "name": "Pâtes au Homard Bleu", "description": "Exquises pâtes fraîches au homard bleu frais. (Uniquement sur commande S/M)", "ingredients": ["Pâtes fraîches", "Homard bleu", "Tomate", "Bouillon de fruits de mer"], "allergens": ["Gluten", "Crustacés"] }
-}
-},
-{
-"imageNumber": 30,
-"name": "Lasaña boloñese",
-"price": 14.50,
-"weight": "450 g",
-"kcal": 820,
-"description": "Lasaña tradicional al horno con jugosa carne boloñesa y bechamel.",
-"ingredients": ["Placas de lasaña", "carne boloñesa", "bechamel", "queso mozzarella", "salsa de tomate"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["principal", "al horno", "tradicional"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Lasaña boloñese", "description": "Lasaña tradicional al horno con jugosa carne boloñesa y bechamel.", "ingredients": ["Placas de lasaña", "Carne boloñesa", "Bechamel", "Mozzarella", "Salsa de tomate"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Bolognese Lasagna", "description": "Traditional baked lasagna with juicy bolognese meat and béchamel.", "ingredients": ["Lasagna sheets", "Bolognese meat", "Béchamel", "Mozzarella", "Tomato sauce"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Lasagne Bolognaise", "description": "Lasagne traditionnelle au four avec viande bolognaise juteuse et béchamel.", "ingredients": ["Plaques de lasagne", "Viande bolognaise", "Béchamel", "Mozzarella", "Sauce tomate"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 31,
-"name": "Parmigiana de berenjena",
-"price": 14.00,
-"weight": "380 g",
-"kcal": 540,
-"description": "Berenjena fritas, salsa de tomate, mozzarella, parmesano.",
-"ingredients": ["Berenjena fritas", "salsa de tomate", "mozzarella", "parmesano"],
-"allergens": ["Lácteos"],
-"tags": ["principal", "al horno", "vegetariano", "tradicional"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Parmigiana de berenjena", "description": "Berenjena fritas, salsa de tomate, mozzarella, parmesano.", "ingredients": ["Berenjena frita", "Salsa de tomate", "Mozzarella", "Parmesano"], "allergens": ["Lácteos"] },
-"en": { "name": "Eggplant Parmigiana", "description": "Fried eggplant, tomato sauce, mozzarella, parmesan.", "ingredients": ["Fried eggplant", "Tomato sauce", "Mozzarella", "Parmesan"], "allergens": ["Dairy"] },
-"fr": { "name": "Parmigiana d'Aubergine", "description": "Aubergines frites, sauce tomate, mozzarella, parmesan.", "ingredients": ["Aubergine frite", "Sauce tomate", "Mozzarella", "Parmesan"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 32,
-"name": "Gnocchi alla sorrentina",
-"price": 14.00,
-"weight": "400 g",
-"kcal": 670,
-"description": "Ñoquis gratinados al horno con salsa de tomate, mozzarella y parmesano.",
-"ingredients": ["ñoquis", "salsa de tomate", "mozzarella", "parmesano"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["principal", "al horno", "vegetariano", "tradicional"],
-"sectiune": "Pastas",
-"translations": {
-"es": { "name": "Gnocchi alla sorrentina", "description": "Ñoquis gratinados al horno con salsa de tomate, mozzarella y parmesano.", "ingredients": ["Ñoquis", "Salsa de tomate", "Mozzarella", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Gnocchi alla Sorrentina", "description": "Oven-baked gratin gnocchi with tomato sauce, mozzarella, and parmesan.", "ingredients": ["Gnocchi", "Tomato sauce", "Mozzarella", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Gnocchi alla Sorrentina", "description": "Gnocchi gratinés au four avec sauce tomate, mozzarella et parmesan.", "ingredients": ["Gnocchi", "Sauce tomate", "Mozzarella", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-}
-],
-"Carnes": [
-{
-"imageNumber": 33,
-"name": "Pixin plancha",
-"price": 30.00,
-"weight": "350 g",
-"kcal": 410,
-"description": "Pescado de rape (pixín) fresco cocinado a la plancha. (Precio según mercado S/P)",
-"ingredients": ["Rape (pixín)", "aceite de oliva", "ajo", "perejil"],
-"allergens": ["Pescado"],
-"tags": ["principal", "pescado", "especialidad", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Pixin plancha", "description": "Pescado de rape (pixín) fresco cocinado a la plancha. (Precio según mercado S/P)", "ingredients": ["Rape", "Aceite de oliva", "Ajo", "Perejil"], "allergens": ["Pescado"] },
-"en": { "name": "Grilled Monkfish (Pixín)", "description": "Fresh monkfish cooked on the griddle. (Price according to market S/P)", "ingredients": ["Monkfish", "Olive oil", "Garlic", "Parsley"], "allergens": ["Fish"] },
-"fr": { "name": "Lotte à la Plancha (Pixín)", "description": "Lotte fraîche cuite à la plancha. (Prix selon le marché S/P)", "ingredients": ["Lotte", "Huile d'olive", "Ail", "Persil"], "allergens": ["Poisson"] }
-}
-},
-{
-"imageNumber": 34,
-"name": "Bacalao",
-"price": 25.00,
-"weight": "380 g",
-"kcal": 460,
-"description": "Lomo de bacalao preparado al gusto: plancha, horno o pizzaiola.",
-"ingredients": ["Bacalao", "aceite de oliva", "salsa de tomate (opcional en pizzaiola)"],
-"allergens": ["Pescado"],
-"tags": ["principal", "pescado", "tradicional", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Bacalao", "description": "Lomo de bacalao preparado al gusto: plancha, horno o pizzaiola.", "ingredients": ["Bacalao", "Aceite de oliva", "Salsa de tomate"], "allergens": ["Pescado"] },
-"en": { "name": "Cod", "description": "Cod loin prepared to taste: grilled, baked, or pizzaiola.", "ingredients": ["Cod", "Olive oil", "Tomato sauce"], "allergens": ["Fish"] },
-"fr": { "name": "Morue", "description": "Dos de morue préparé au choix : plancha, four ou pizzaiola.", "ingredients": ["Morue", "Huile d'olive", "Sauce tomate"], "allergens": ["Poisson"] }
-}
-},
-{
-"imageNumber": 35,
-"name": "Lomo a la plancha",
-"price": 0.00,
-"weight": "300 g",
-"kcal": 510,
-"description": "Lomo tierno de carne cocinado a la plancha. (Según mercado S/M)",
-"ingredients": ["Lomo de carne", "aceite de oliva", "sal"],
-"allergens": [],
-"tags": ["principal", "carne", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Lomo a la plancha", "description": "Lomo tierno de carne cocinado a la plancha. (Según mercado S/M)", "ingredients": ["Lomo de carne", "Aceite de oliva", "Sal"], "allergens": [] },
-"en": { "name": "Grilled Loin", "description": "Tender meat loin cooked on the griddle. (According to market S/M)", "ingredients": ["Meat loin", "Olive oil", "Salt"], "allergens": [] },
-"fr": { "name": "Longe de Viande à la Plancha", "description": "Longe de viande tendre cuite à la plancha. (Selon le marché S/M)", "ingredients": ["Longe de viande", "Huile d'olive", "Sel"], "allergens": [] }
-}
-},
-{
-"imageNumber": 36,
-"name": "Escalopines de ternera a limón",
-"price": 15.00,
-"weight": "320 g",
-"kcal": 490,
-"description": "Filete de ternera con jugo de limón y salsa demi glace.",
-"ingredients": ["Filete de ternera", "jugo de limón", "salsa demi glace"],
-"allergens": [],
-"tags": ["principal", "carne", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Escalopines de ternera a limón", "description": "Filete de ternera con jugo de limón y salsa demi glace.", "ingredients": ["Filete de ternera", "Jugo de limón", "Salsa demi glace"], "allergens": [] },
-"en": { "name": "Lemon Beef Scallopini", "description": "Veal fillet with lemon juice and demi-glace sauce.", "ingredients": ["Veal fillet", "Lemon juice", "Demi-glace sauce"], "allergens": [] },
-"fr": { "name": "Escalopes de Veau au Citron", "description": "Filet de veau au jus de citron et sauce demi-glace.", "ingredients": ["Filet de veau", "Jus de citron", "Sauce demi-glace"], "allergens": [] }
-}
-},
-{
-"imageNumber": 37,
-"name": "Escalopines de ternera gorgonzola",
-"price": 15.50,
-"weight": "340 g",
-"kcal": 580,
-"description": "Filete de ternera bañado en cremosa salsa de gorgonzola.",
-"ingredients": ["Filete de ternera", "salsa de gorgonzola", "nata"],
-"allergens": ["Lácteos"],
-"tags": ["principal", "carne", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Escalopines de ternera gorgonzola", "description": "Filete de ternera bañado en cremosa salsa de gorgonzola.", "ingredients": ["Filete de ternera", "Salsa de gorgonzola", "Nata"], "allergens": ["Lácteos"] },
-"en": { "name": "Gorgonzola Beef Scallopini", "description": "Veal fillet bathed in creamy gorgonzola sauce.", "ingredients": ["Veal fillet", "Gorgonzola sauce", "Cream"], "allergens": ["Dairy"] },
-"fr": { "name": "Escalopes de Veau au Gorgonzola", "description": "Filet de veau baigné dans une sauce gorgonzola crémeuse.", "ingredients": ["Filet de veau", "Sauce gorgonzola", "Crème"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 38,
-"name": "Escalopines de ternera con boletus",
-"price": 16.50,
-"weight": "350 g",
-"kcal": 530,
-"description": "Filete de ternera, setas boletus, salsa demi glace.",
-"ingredients": ["filete de ternera", "setas boletus", "salsa demi glace"],
-"allergens": [],
-"tags": ["principal", "carne", "especialidad", "sin gluten"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Escalopines de ternera con boletus", "description": "Filete de ternera, setas boletus, salsa demi glace.", "ingredients": ["Filete de ternera", "Setas boletus", "Salsa demi glace"], "allergens": [] },
-"en": { "name": "Beef Scallopini with Boletus", "description": "Veal fillet, boletus mushrooms, demi-glace sauce.", "ingredients": ["Veal fillet", "Boletus mushrooms", "Demi-glace sauce"], "allergens": [] },
-"fr": { "name": "Escalopes de Veau aux Cèpes", "description": "Filet de veau, champignons cèpes, sauce demi-glace.", "ingredients": ["Filet de veau", "Champignons boletus", "Sauce demi-glace"], "allergens": [] }
-}
-},
-{
-"imageNumber": 39,
-"name": "Escalopines a la parmesana con pasta o patata",
-"price": 16.50,
-"weight": "420 g",
-"kcal": 780,
-"description": "Filete de ternera empanado y frito, salsa de tomate, queso mozzarella y parmesano con guarnición.",
-"ingredients": ["filete de ternera empanado y frito", "salsa de tomate", "queso mozzarella", "parmesano", "pasta o patata"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["principal", "carne", "tradicional"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Escalopines a la parmesana con pasta o patata", "description": "Filete de ternera empanado y frito, salsa de tomate, queso mozzarella y parmesano con guarnición.", "ingredients": ["Filete de ternera empanado", "Salsa de tomate", "Mozzarella", "Parmesano", "Pasta o patata"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Parmigiana Scallopini with Pasta or Potato", "description": "Breaded and fried veal fillet, tomato sauce, mozzarella, and parmesan cheese with side dish.", "ingredients": ["Breaded veal fillet", "Tomato sauce", "Mozzarella", "Parmesan", "Pasta or potato"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Escalopes à la Parmesana avec Pâtes ou Pomme de Terre", "description": "Filet de veau pané et frit, sauce tomate, mozzarella et parmesan avec garniture.", "ingredients": ["Filet de veau pané", "Sauce tomate", "Mozzarella", "Parmesan", "Pâtes ou pomme de terre"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 40,
-"name": "Milanese",
-"price": 16.00,
-"weight": "380 g",
-"kcal": 710,
-"description": "Filete de ternera empanado y frito, acompañado con patata.",
-"ingredients": ["filete de ternera empanado y frito", "patata"],
-"allergens": ["Gluten", "Huevo"],
-"tags": ["principal", "carne", "tradicional"],
-"sectiune": "Carnes",
-"translations": {
-"es": { "name": "Milanese", "description": "Filete de ternera empanado y frito, acompañado con patata.", "ingredients": ["Filete de ternera empanado", "Patata"], "allergens": ["Gluten", "Huevo"] },
-"en": { "name": "Milanese", "description": "Breaded and fried veal fillet, served with potatoes.", "ingredients": ["Breaded veal fillet", "Potato"], "allergens": ["Gluten", "Egg"] },
-"fr": { "name": "Milanese", "description": "Filet de veau pané et frit, accompagné de pommes de terre.", "ingredients": ["Filet de veau pané", "Pomme de terre"], "allergens": ["Gluten", "Œuf"] }
-}
-}
-],
-"Pizzas": [
-{
-"imageNumber": 41,
-"name": "Pizza Margherita",
-"price": 11.50,
-"weight": "400 g",
-"kcal": 750,
-"description": "Clásica pizza con tomate, mozzarella y albahaca.",
-"ingredients": ["tomate", "mozzarella", "albahaca", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "tradicional", "vegetariano"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Margherita", "description": "Clásica pizza con tomate, mozzarella y albahaca.", "ingredients": ["Tomate", "Mozzarella", "Albahaca", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Pizza Margherita", "description": "Classic pizza with tomato, mozzarella, and basil.", "ingredients": ["Tomato", "Mozzarella", "Basil", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Margherita", "description": "Pizza classique à la tomate, mozzarella et basilic.", "ingredients": ["Tomate", "Mozzarella", "Basilic", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 42,
-"name": "Calzone (Cerrada)",
-"price": 12.50,
-"weight": "420 g",
-"kcal": 830,
-"description": "Pizza cerrada rellena de tomate, jamon york y queso.",
-"ingredients": ["tomate", "jamon york", "queso", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "tradicional"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Calzone (Cerrada)", "description": "Pizza cerrada rellena de tomate, jamon york y queso.", "ingredients": ["Tomate", "Jamón york", "Queso", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Calzone (Closed)", "description": "Closed pizza stuffed with tomato, ham, and cheese.", "ingredients": ["Tomato", "Ham", "Cheese", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Calzone (Fermée)", "description": "Pizza fermée farcie à la tomate, jambon et fromage.", "ingredients": ["Tomate", "Jambon", "Fromage", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 43,
-"name": "Pizza Marinara",
-"price": 14.00,
-"weight": "390 g",
-"kcal": 710,
-"description": "Pizza con tomate, ajo, anchoas, oregano.",
-"ingredients": ["tomate", "ajo", "anchoas", "oregano", "masa de pizza"],
-"allergens": ["Gluten", "Pescado"],
-"tags": ["pizza", "principal", "tradicional"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Marinara", "description": "Pizza con tomate, ajo, anchoas, oregano.", "ingredients": ["Tomate", "Ajo", "Anchoas", "Orégano", "Masa de pizza"], "allergens": ["Gluten", "Pescado"] },
-"en": { "name": "Pizza Marinara", "description": "Pizza with tomato, garlic, anchovies, oregano.", "ingredients": ["Tomato", "Garlic", "Anchovies", "Oregano", "Pizza dough"], "allergens": ["Gluten", "Fish"] },
-"fr": { "name": "Pizza Marinara", "description": "Pizza à la tomate, ail, anchois, origan.", "ingredients": ["Tomate", "Ail", "Anchois", "Origan", "Pâte à pizza"], "allergens": ["Gluten", "Poisson"] }
-}
-},
-{
-"imageNumber": 44,
-"name": "Pizza Cuatro Quesos",
-"price": 13.50,
-"weight": "430 g",
-"kcal": 890,
-"description": "Pizza con mozzarella, tomate, queso azul, Gouda y parmesano.",
-"ingredients": ["mozzarella", "tomate", "queso azul", "Gouda", "parmesano", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "vegetariano"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Cuatro Quesos", "description": "Pizza con mozzarella, tomate, queso azul, Gouda y parmesano.", "ingredients": ["Mozzarella", "Tomate", "Queso azul", "Gouda", "Parmesano", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Four Cheese Pizza", "description": "Pizza with mozzarella, tomato, blue cheese, Gouda, and parmesan.", "ingredients": ["Mozzarella", "Tomato", "Blue cheese", "Gouda", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Quatre Fromages", "description": "Pizza à la mozzarella, tomate, fromage bleu, Gouda et parmesan.", "ingredients": ["Mozzarella", "Tomate", "Fromage bleu", "Gouda", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 45,
-"name": "Pizza Prosciutto",
-"price": 12.50,
-"weight": "410 g",
-"kcal": 780,
-"description": "Pizza con tomate, mozzarella, jamon york.",
-"ingredients": ["tomate", "mozzarella", "jamon york", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "tradicional"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Prosciutto", "description": "Pizza con tomate, mozzarella, jamon york.", "ingredients": ["Tomate", "Mozzarella", "Jamón york", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Pizza Prosciutto", "description": "Pizza with tomato, mozzarella, ham.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Prosciutto", "description": "Pizza à la tomate, mozzarella, jambon blanc.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 46,
-"name": "Pizza 4 Stagioni",
-"price": 14.00,
-"weight": "430 g",
-"kcal": 810,
-"description": "Pizza con tomate, mozzarella, jamon york, champiñones y anchoas.",
-"ingredients": ["tomate", "mozzarella", "jamon york", "champiñones", "anchoas", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos", "Pescado"],
-"tags": ["pizza", "principal", "tradicional"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza 4 Stagioni", "description": "Pizza con tomate, mozzarella, jamon york, champiñones y anchoas.", "ingredients": ["Tomate", "Mozzarella", "Jamón york", "Champiñones", "Anchoas", "Masa de pizza"], "allergens": ["Gluten", "Lácteos", "Pescado"] },
-"en": { "name": "Pizza 4 Stagioni", "description": "Pizza with tomato, mozzarella, ham, mushrooms, and anchovies.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Mushrooms", "Anchovies", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Fish"] },
-"fr": { "name": "Pizza 4 Saisons", "description": "Pizza à la tomate, mozzarella, jambon, champignons et anchois.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Champignons", "Anchois", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Poisson"] }
-}
-},
-{
-"imageNumber": 47,
-"name": "Pizza Á Libretto",
-"price": 15.00,
-"weight": "420 g",
-"kcal": 850,
-"description": "Pizza especial con Provola, Boletus, trufa, pecorino romano.",
-"ingredients": ["Provola", "Boletus", "trufa", "pecorino romano", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "especialidad"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Á Libretto", "description": "Pizza especial con Provola, Boletus, trufa, pecorino romano.", "ingredients": ["Provola", "Boletus", "Trufa", "Pecorino romano", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Pizza Á Libretto", "description": "Special pizza with Provola cheese, Boletus mushrooms, truffle, pecorino romano.", "ingredients": ["Provola", "Boletus", "Truffle", "Pecorino romano", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Á Libretto", "description": "Pizza spéciale au provola, cèpes, truffe, pecorino romano.", "ingredients": ["Provola", "Boletus", "Truffe", "Pecorino romano", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 48,
-"name": "Pizza Bianka",
-"price": 15.00,
-"weight": "440 g",
-"kcal": 880,
-"description": "Pizza blanca con tomate, queso, mortadela, migas de pistacho, stracciatella de burrata, rúcula.",
-"ingredients": ["tomate", "queso", "mortadela", "migas de pistacho", "stracciatella de burrata", "rúcula", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
-"tags": ["pizza", "principal", "especialidad"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Bianka", "description": "Pizza blanca con tomate, queso, mortadela, migas de pistacho, stracciatella de burrata, rúcula.", "ingredients": ["Tomate", "Queso", "Mortadela", "Pistacho", "Stracciatella de burrata", "Rúcula", "Masa de pizza"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
-"en": { "name": "Pizza Bianka", "description": "White pizza with tomato, cheese, mortadella, pistachio crumbs, burrata stracciatella, arugula.", "ingredients": ["Tomato", "Cheese", "Mortadella", "Pistachio", "Burrata stracciatella", "Arugula", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Nuts"] },
-"fr": { "name": "Pizza Bianka", "description": "Pizza blanche à la tomate, fromage, mortadelle, brisures de pistache, stracciatella de burrata, roquette.", "ingredients": ["Tomate", "Fromage", "Mortadelle", "Pistache", "Stracciatella de burrata", "Roquette", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
-}
-},
-{
-"imageNumber": 49,
-"name": "Pizza Selena",
-"price": 14.50,
-"weight": "430 g",
-"kcal": 820,
-"description": "Pizza con tomate, mozzarella, jamon york, setas y gambas.",
-"ingredients": ["tomate", "mozzarella", "jamon york", "setas", "gambas", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos", "Marisco"],
-"tags": ["pizza", "principal"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Selena", "description": "Pizza con tomate, mozzarella, jamon york, setas y gambas.", "ingredients": ["Tomate", "Mozzarella", "Jamón york", "Setas", "Gambas", "Masa de pizza"], "allergens": ["Gluten", "Lácteos", "Marisco"] },
-"en": { "name": "Pizza Selena", "description": "Pizza with tomato, mozzarella, ham, mushrooms, and prawns.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Mushrooms", "Prawns", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Shellfish"] },
-"fr": { "name": "Pizza Selena", "description": "Pizza à la tomate, mozzarella, jambon, champignons et crevettes.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Champignons", "Crevettes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Crustacés"] }
-}
-},
-{
-"imageNumber": 50,
-"name": "Pizza Peperoni",
-"price": 12.50,
-"weight": "410 g",
-"kcal": 810,
-"description": "Pizza con tomate, mozzarella, salame picante.",
-"ingredients": ["tomate", "mozzarella", "salame picante", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "picante"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Peperoni", "description": "Pizza con tomate, mozzarella, salame picante.", "ingredients": ["Tomate", "Mozzarella", "Salame picante", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Pizza Peperoni", "description": "Pizza with tomato, mozzarella, spicy salami.", "ingredients": ["Tomato", "Mozzarella", "Spicy salami", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Peperoni", "description": "Pizza à la tomate, mozzarella, salami piquant.", "ingredients": ["Tomate", "Mozzarella", "Salami piquant", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 51,
-"name": "Pizza Tonno",
-"price": 12.50,
-"weight": "420 g",
-"kcal": 780,
-"description": "Pizza con salsa de tomate, tonno (atún), mozzarella.",
-"ingredients": ["Salsa de tomate", "tonno", "mozzarella", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos", "Pescado"],
-"tags": ["pizza", "principal"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Tonno", "description": "Pizza con salsa de tomate, tonno (atún), mozzarella.", "ingredients": ["Salsa de tomate", "Atún", "Mozzarella", "Masa de pizza"], "allergens": ["Gluten", "Lácteos", "Pescado"] },
-"en": { "name": "Pizza Tonno", "description": "Pizza with tomato sauce, tuna, mozzarella.", "ingredients": ["Tomato sauce", "Tuna", "Mozzarella", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Fish"] },
-"fr": { "name": "Pizza Tonno", "description": "Pizza à la sauce tomate, thon, mozzarella.", "ingredients": ["Sauce tomate", "Thon", "Mozzarella", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Poisson"] }
-}
-},
-{
-"imageNumber": 52,
-"name": "Pizza Vegetal",
-"price": 14.00,
-"weight": "410 g",
-"kcal": 680,
-"description": "Pizza con tomate, mozzarella, verduras a la plancha o salteada.",
-"ingredients": ["tomate", "mozzarella", "verduras a la plancha o salteada", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "vegetariano"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Vegetal", "description": "Pizza con tomate, mozzarella, verduras a la plancha o salteada.", "ingredients": ["Tomate", "Mozzarella", "Verduras", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Vegetable Pizza", "description": "Pizza with tomato, mozzarella, grilled or sautéed vegetables.", "ingredients": ["Tomato", "Mozzarella", "Vegetables", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Végétale", "description": "Pizza à la tomate, mozzarella, légumes grillés ou sautés.", "ingredients": ["Tomate", "Mozzarella", "Légumes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 53,
-"name": "Pizza Parma",
-"price": 15.00,
-"weight": "430 g",
-"kcal": 830,
-"description": "Pizza con tomate, mozzarella, jamon de parma, rucula, cherry, lasca de parmesano.",
-"ingredients": ["tomate", "mozzarella", "jamon de parma", "rucula", "cherry", "lasca de parmesano", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal", "especialidad"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Parma", "description": "Pizza con tomate, mozzarella, jamon de parma, rucula, cherry, lasca de parmesano.", "ingredients": ["Tomate", "Mozzarella", "Jamón de Parma", "Rúcula", "Tomate cherry", "Parmesano", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Pizza Parma", "description": "Pizza with tomato, mozzarella, Parma ham, arugula, cherry tomatoes, parmesan shavings.", "ingredients": ["Tomato", "Mozzarella", "Parma ham", "Arugula", "Cherry tomatoes", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Parma", "description": "Pizza à la tomate, mozzarella, jambon de Parme, roquette, tomates cerises, copeaux de parmesan.", "ingredients": ["Tomate", "Mozzarella", "Jambon de Parme", "Roquette", "Tomates cerises", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 54,
-"name": "Pizza Boloñesa",
-"price": 14.00,
-"weight": "430 g",
-"kcal": 840,
-"description": "Pizza con ragu boloñesa, mozzarella, parmesano.",
-"ingredients": ["ragu boloñesa", "mozzarella", "parmesano", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Boloñesa", "description": "Pizza con ragu boloñesa, mozzarella, parmesano.", "ingredients": ["Ragú boloñesa", "Mozzarella", "Parmesano", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "Bolognese Pizza", "description": "Pizza with bolognese ragù, mozzarella, parmesan.", "ingredients": ["Bolognese ragù", "Mozzarella", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Bolognaise", "description": "Pizza au ragout bolognaise, mozzarella, parmesan.", "ingredients": ["Ragout bolognaise", "Mozzarella", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-},
-{
-"imageNumber": 55,
-"name": "Pizza Gambas",
-"price": 15.00,
-"weight": "420 g",
-"kcal": 790,
-"description": "Pizza con Tomate, mozzarella y gambas.",
-"ingredients": ["Tomate", "mozzarella", "gambas", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos", "Marisco"],
-"tags": ["pizza", "principal", "marisco"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Gambas", "description": "Pizza con Tomate, mozzarella y gambas.", "ingredients": ["Tomate", "Mozzarella", "Gambas", "Masa de pizza"], "allergens": ["Gluten", "Lácteos", "Marisco"] },
-"en": { "name": "Shrimp Pizza", "description": "Pizza with tomato, mozzarella, and shrimp.", "ingredients": ["Tomato", "Mozzarella", "Shrimp", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Shellfish"] },
-"fr": { "name": "Pizza aux Crevettes", "description": "Pizza à la tomate, mozzarella et crevettes.", "ingredients": ["Tomate", "Mozzarella", "Crevettes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Crustacés"] }
-}
-},
-{
-"imageNumber": 56,
-"name": "Pizza Barbacoa",
-"price": 14.50,
-"weight": "440 g",
-"kcal": 860,
-"description": "Pizza con salsa boloñesa, mozzarella, bacón, salsa barbacoa.",
-"ingredients": ["salsa boloñesa", "mozzarella", "bacón", "salsa barbacoa", "masa de pizza"],
-"allergens": ["Gluten", "Lácteos"],
-"tags": ["pizza", "principal"],
-"sectiune": "Pizzas",
-"translations": {
-"es": { "name": "Pizza Barbacoa", "description": "Pizza con salsa boloñesa, mozzarella, bacón, salsa barbacoa.", "ingredients": ["Salsa boloñesa", "Mozzarella", "Bacón", "Salsa barbacoa", "Masa de pizza"], "allergens": ["Gluten", "Lácteos"] },
-"en": { "name": "BBQ Pizza", "description": "Pizza with bolognese sauce, mozzarella, bacon, BBQ sauce.", "ingredients": ["Bolognese sauce", "Mozzarella", "Bacon", "BBQ sauce", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
-"fr": { "name": "Pizza Barbecue", "description": "Pizza à la sauce bolognaise, mozzarella, bacon, sauce barbecue.", "ingredients": ["Sauce bolognaise", "Mozzarella", "Bacon", "Sauce BBQ", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
-}
-}
-],
-"Postres": [
-{
-"imageNumber": 57,
-"name": "Tiramisú de café",
-"price": 5.50,
-"weight": "180 g",
-"kcal": 420,
-"description": "Todos los Postres son Caseros!!! Clásico tiramisú italiano de café.",
-"ingredients": ["bizcochos", "café", "mascarpone", "cacao", "huevo"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["postre", "casero", "tradicional"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Tiramisú de café", "description": "Clásico tiramisú italiano de café. (Todos los Postres son Caseros!)", "ingredients": ["Bizcochos", "Café", "Mascarpone", "Cacao", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Coffee Tiramisu", "description": "Classic Italian coffee tiramisu. (All desserts are homemade!)", "ingredients": ["Ladyfingers", "Coffee", "Mascarpone", "Cocoa", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Tiramisu au Café", "description": "Tiramisu classique italien au café. (Tous les desserts sont faits maison!)", "ingredients": ["Biscuits", "Café", "Mascarpone", "Cacao", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 58,
-"name": "Tiramisú de fresa",
-"price": 6.50,
-"weight": "190 g",
-"kcal": 410,
-"description": "Todos los Postres son Caseros!!! Tiramisú casero con toque de fresa.",
-"ingredients": ["bizcochos", "fresas", "mascarpone", "huevo", "azúcar"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["postre", "casero", "fresco"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Tiramisú de fresa", "description": "Tiramisú casero con toque de fresa. (Todos los Postres son Caseros!)", "ingredients": ["Bizcochos", "Fresas", "Mascarpone", "Huevo", "Azúcar"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Strawberry Tiramisu", "description": "Homemade tiramisu with a touch of strawberry. (All desserts are homemade!)", "ingredients": ["Ladyfingers", "Strawberries", "Mascarpone", "Egg", "Sugar"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Tiramisu à la Fraise", "description": "Tiramisu maison avec une touche de fraise. (Tous les desserts sont faits maison!)", "ingredients": ["Biscuits", "Fraises", "Mascarpone", "Œuf", "Sucre"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 59,
-"name": "Tarta de Nutella",
-"price": 6.00,
-"weight": "190 g",
-"kcal": 550,
-"description": "Todos los Postres son Caseros!!! Tarta casera cremosa de Nutella.",
-"ingredients": ["Nutella", "galleta", "mantequilla", "queso crema"],
-"allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
-"tags": ["postre", "casero", "dulce"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Tarta de Nutella", "description": "Tarta casera cremosa de Nutella. (Todos los Postres son Caseros!)", "ingredients": ["Nutella", "Galleta", "Mantequilla", "Queso crema"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
-"en": { "name": "Nutella Cake", "description": "Homemade creamy Nutella cake. (All desserts are homemade!)", "ingredients": ["Nutella", "Biscuit", "Butter", "Cream cheese"], "allergens": ["Gluten", "Dairy", "Nuts"] },
-"fr": { "name": "Gâteau au Nutella", "description": "Gâteau maison crémeux au Nutella. (Tous les desserts sont faits maison!)", "ingredients": ["Nutella", "Biscuit", "Beurre", "Fromage frais"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
-}
-},
-{
-"imageNumber": 60,
-"name": "Bolas de Helado",
-"price": 2.50,
-"weight": "120 g",
-"kcal": 210,
-"description": "Todos los Postres son Caseros!!! Bolas de helado artesanal.",
-"ingredients": ["Helado artesanal"],
-"allergens": ["Lácteos"],
-"tags": ["postre", "casero", "fresco"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Bolas de Helado", "description": "Bolas de helado artesanal. (Todos los Postres son Caseros!)", "ingredients": ["Helado artesanal"], "allergens": ["Lácteos"] },
-"en": { "name": "Ice Cream Scoops", "description": "Artisanal ice cream scoops. (All desserts are homemade!)", "ingredients": ["Artisanal ice cream"], "allergens": ["Dairy"] },
-"fr": { "name": "Boules de Glace", "description": "Boules de glace artisanale. (Tous les desserts sont faits maison!)", "ingredients": ["Glace artisanale"], "allergens": ["Produits laitiers"] }
-}
-},
-{
-"imageNumber": 61,
-"name": "Tarta de Queso",
-"price": 6.00,
-"weight": "200 g",
-"kcal": 510,
-"description": "Todos los Postres son Caseros!!! Tarta de queso casera cremosa.",
-"ingredients": ["Queso crema", "nata", "huevo", "azúcar", "galleta"],
-"allergens": ["Gluten", "Lácteos", "Huevo"],
-"tags": ["postre", "casero", "especialidad"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Tarta de Queso", "description": "Tarta de queso casera cremosa. (Todos los Postres son Caseros!)", "ingredients": ["Queso crema", "Nata", "Huevo", "Azúcar", "Galleta"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
-"en": { "name": "Cheesecake", "description": "Creamy homemade cheesecake. (All desserts are homemade!)", "ingredients": ["Cream cheese", "Cream", "Egg", "Sugar", "Biscuit"], "allergens": ["Gluten", "Dairy", "Egg"] },
-"fr": { "name": "Cheesecake", "description": "Gâteau au fromage maison crémeux. (Tous les desserts sont faits maison!)", "ingredients": ["Fromage frais", "Crème", "Œuf", "Sucre", "Biscuit"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
-}
-},
-{
-"imageNumber": 62,
-"name": "Servicio de pan",
-"price": 1.30,
-"weight": "80 g",
-"kcal": 200,
-"description": "Servicio de pan de la casa por comensal.",
-"ingredients": ["Pan artesano"],
-"allergens": ["Gluten"],
-"tags": ["extra", "pan"],
-"sectiune": "Postres",
-"translations": {
-"es": { "name": "Servicio de pan", "description": "Servicio de pan de la casa por comensal.", "ingredients": ["Pan artesano"], "allergens": ["Gluten"] },
-"en": { "name": "Bread Service", "description": "House bread service per diner.", "ingredients": ["Artisan bread"], "allergens": ["Gluten"] },
-"fr": { "name": "Service de Pain", "description": "Service de pain de la maison par convive.", "ingredients": ["Pain artisan"], "allergens": ["Gluten"] }
-}
-}
-],
-"Bebidas": [
-{
-"imageNumber": 63,
-"name": "Caña 1906",
-"price": 2.90,
-"weight": "250 ml",
-"kcal": 120,
-"description": "Cerveza de barril 1906 bien fría.",
-"ingredients": ["Agua", "malta de cebada", "lúpulo", "levadura"],
-"allergens": ["Gluten"],
-"tags": ["bebida", "cerveza"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Caña 1906", "description": "Cerveza de barril 1906 bien fría.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Levadura"], "allergens": ["Gluten"] },
-"en": { "name": "1906 Draft Beer (Caña)", "description": "Very cold 1906 draft beer.", "ingredients": ["Water", "Barley malt", "Hops", "Yeast"], "allergens": ["Gluten"] },
-"fr": { "name": "Demi Pression 1906", "description": "Bière pression 1906 bien fraîche.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Levure"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 64,
-"name": "Estrella Galicia",
-"price": 3.10,
-"weight": "330 ml",
-"kcal": 150,
-"description": "Botellín de cerveza Estrella Galicia.",
-"ingredients": ["Agua", "malta de cebada", "lúpulo", "levadura"],
-"allergens": ["Gluten"],
-"tags": ["bebida", "cerveza"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Estrella Galicia", "description": "Botellín de cerveza Estrella Galicia.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Levadura"], "allergens": ["Gluten"] },
-"en": { "name": "Estrella Galicia", "description": "Bottle of Estrella Galicia beer.", "ingredients": ["Water", "Barley malt", "Hops", "Yeast"], "allergens": ["Gluten"] },
-"fr": { "name": "Estrella Galicia", "description": "Bouteille de bière Estrella Galicia.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Levure"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 65,
-"name": "Estrella Galicia 0,0 tostada",
-"price": 3.10,
-"weight": "330 ml",
-"kcal": 70,
-"description": "Cerveza sin alcohol tostada Estrella Galicia 0,0.",
-"ingredients": ["Agua", "malta de cebada", "lúpulo", "aroma"],
-"allergens": ["Gluten"],
-"tags": ["bebida", "cerveza", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Estrella Galicia 0,0 tostada", "description": "Cerveza sin alcohol tostada Estrella Galicia 0,0.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Aroma"], "allergens": ["Gluten"] },
-"en": { "name": "Estrella Galicia 0.0 Dark", "description": "Estrella Galicia 0.0 alcohol-free dark beer.", "ingredients": ["Water", "Barley malt", "Hops", "Flavoring"], "allergens": ["Gluten"] },
-"fr": { "name": "Estrella Galicia 0,0 Sans Alcool Ambrée", "description": "Bière sans alcool ambrée Estrella Galicia 0,0.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Arôme"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 66,
-"name": "Estrella Galicia sin gluten",
-"price": 3.10,
-"weight": "330 ml",
-"kcal": 150,
-"description": "Cerveza apta para celiacos Estrella Galicia sin gluten.",
-"ingredients": ["Agua", "malta de cebada (con gluten tratado)", "lúpulo", "levadura"],
-"allergens": [],
-"tags": ["bebida", "cerveza", "sin gluten"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Estrella Galicia sin gluten", "description": "Cerveza apta para celiacos Estrella Galicia sin gluten.", "ingredients": ["Agua", "Malta de cebada tratada", "Lúpulo", "Levadura"], "allergens": [] },
-"en": { "name": "Estrella Galicia Gluten-Free", "description": "Gluten-free beer suitable for celiacs Estrella Galicia.", "ingredients": ["Water", "Treated barley malt", "Hops", "Yeast"], "allergens": [] },
-"fr": { "name": "Estrella Galicia Sans Gluten", "description": "Bière sans gluten adaptée aux cœliaques Estrella Galicia.", "ingredients": ["Eau", "Malt d'orge traité", "Houblon", "Levure"], "allergens": [] }
-}
-},
-{
-"imageNumber": 67,
-"name": "1906 Red Vintage",
-"price": 3.00,
-"weight": "330 ml",
-"kcal": 175,
-"description": "Cerveza especial 1906 Red Vintage (La Hija de Galicia).",
-"ingredients": ["Agua", "malta de cebada", "maíz", "lúpulo"],
-"allergens": ["Gluten"],
-"tags": ["bebida", "cerveza", "especialidad"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "1906 Red Vintage", "description": "Cerveza especial 1906 Red Vintage (La Hija de Galicia).", "ingredients": ["Agua", "Malta de cebada", "Maíz", "Lúpulo"], "allergens": ["Gluten"] },
-"en": { "name": "1906 Red Vintage", "description": "Special 1906 Red Vintage beer (La Hija de Galicia).", "ingredients": ["Water", "Barley malt", "Corn", "Hops"], "allergens": ["Gluten"] },
-"fr": { "name": "1906 Red Vintage", "description": "Bière spéciale 1906 Red Vintage (La Hija de Galicia).", "ingredients": ["Eau", "Malt d'orge", "Maïs", "Houblon"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 68,
-"name": "Caña Peroni",
-"price": 2.90,
-"weight": "250 ml",
-"kcal": 110,
-"description": "Cerveza de barril italiana Peroni.",
-"ingredients": ["Agua", "malta de cebada", "maíz", "lúpulo"],
-"allergens": ["Gluten"],
-"tags": ["bebida", "cerveza"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Caña Peroni", "description": "Cerveza de barril italiana Peroni.", "ingredients": ["Agua", "Malta de cebada", "Maíz", "Lúpulo"], "allergens": ["Gluten"] },
-"en": { "name": "Peroni Draft Beer (Caña)", "description": "Italian Peroni draft beer.", "ingredients": ["Water", "Barley malt", "Corn", "Hops"], "allergens": ["Gluten"] },
-"fr": { "name": "Demi Pression Peroni", "description": "Bière pression italienne Peroni.", "ingredients": ["Eau", "Malt d'orge", "Maïs", "Houblon"], "allergens": ["Gluten"] }
-}
-},
-{
-"imageNumber": 69,
-"name": "Aquarius Limón",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 130,
-"description": "Bebida refrescante sabor limón con zumo.",
-"ingredients": ["Agua carbonatada", "zumo de limón", "azúcar"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Aquarius Limón", "description": "Bebida refrescante sabor limón con zumo.", "ingredients": ["Agua carbonatada", "Zumo de limón", "Azúcar"], "allergens": [] },
-"en": { "name": "Aquarius Lemon", "description": "Refreshing lemon flavored drink with juice.", "ingredients": ["Carbonated water", "Lemon juice", "Sugar"], "allergens": [] },
-"fr": { "name": "Aquarius Citron", "description": "Boisson rafraîchissante au goût de citron avec jus.", "ingredients": ["Eau gazéifiée", "Jus de citron", "Sucre"], "allergens": [] }
-}
-},
-{
-"imageNumber": 70,
-"name": "Coca Cola",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 140,
-"description": "Refresco clásico de cola.",
-"ingredients": ["Agua carbonatada", "azúcar", "colorante", "cafeína"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Coca Cola", "description": "Refresco clásico de cola.", "ingredients": ["Agua carbonatada", "Azúcar", "Colorante", "Cafeína"], "allergens": [] },
-"en": { "name": "Coca Cola", "description": "Classic cola soft drink.", "ingredients": ["Carbonated water", "Sugar", "Coloring", "Caffeine"], "allergens": [] },
-"fr": { "name": "Coca-Cola", "description": "Boisson gazeuse classique au cola.", "ingredients": ["Eau gazéifiée", "Sucre", "Colorant", "Caféine"], "allergens": [] }
-}
-},
-{
-"imageNumber": 71,
-"name": "Coca Cola Zero Zero",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 1,
-"description": "Refresco de cola sin azúcar y sin cafeína.",
-"ingredients": ["Agua carbonatada", "edulcorantes", "colorante"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol", "sin azúcar"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Coca Cola Zero Zero", "description": "Refresco de cola sin azúcar y sin cafeína.", "ingredients": ["Agua carbonatada", "Edulcorantes", "Colorante"], "allergens": [] },
-"en": { "name": "Coca Cola Zero Zero", "description": "Sugar-free and caffeine-free cola soft drink.", "ingredients": ["Carbonated water", "Sweeteners", "Coloring"], "allergens": [] },
-"fr": { "name": "Coca-Cola Zero Zero", "description": "Boisson au cola sans sucre et sans caféine.", "ingredients": ["Eau gazéifiée", "Édulcorants", "Colorant"], "allergens": [] }
-}
-},
-{
-"imageNumber": 72,
-"name": "Coca Cola Zero",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 1,
-"description": "Refresco de cola sin azúcar con cafeína.",
-"ingredients": ["Agua carbonatada", "edulcorantes", "cafeína"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol", "sin azúcar"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Coca Cola Zero", "description": "Refresco de cola sin azúcar con cafeína.", "ingredients": ["Agua carbonatada", "Edulcorantes", "Cafeína"], "allergens": [] },
-"en": { "name": "Coca Cola Zero", "description": "Sugar-free cola soft drink with caffeine.", "ingredients": ["Carbonated water", "Sweeteners", "Caffeine"], "allergens": [] },
-"fr": { "name": "Coca-Cola Zéro", "description": "Boisson au cola sans sucre avec caféine.", "ingredients": ["Eau gazéifiée", "Édulcorants", "Caféine"], "allergens": [] }
-}
-},
-{
-"imageNumber": 73,
-"name": "Fanta Naranja",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 130,
-"description": "Refresco sabor naranja.",
-"ingredients": ["Agua carbonatada", "zumo de naranja", "azúcar"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Fanta Naranja", "description": "Refresco sabor naranja.", "ingredients": ["Agua carbonatada", "Zumo de naranja", "Azúcar"], "allergens": [] },
-"en": { "name": "Fanta Orange", "description": "Orange flavored soft drink.", "ingredients": ["Carbonated water", "Orange juice", "Sugar"], "allergens": [] },
-"fr": { "name": "Fanta Orange", "description": "Boisson gazeuse à l'orange.", "ingredients": ["Eau gazéifiée", "Jus d'orange", "Sucre"], "allergens": [] }
-}
-},
-{
-"imageNumber": 74,
-"name": "Nestea",
-"price": 2.90,
-"weight": "330 ml",
-"kcal": 90,
-"description": "Bebida de té helado sabor limón.",
-"ingredients": ["Extracto de té", "zumo de limón", "azúcar", "agua"],
-"allergens": [],
-"tags": ["bebida", "refresco", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Nestea", "description": "Bebida de té helado sabor limón.", "ingredients": ["Extracto de té", "Zumo de limón", "Azúcar", "Agua"], "allergens": [] },
-"en": { "name": "Nestea", "description": "Lemon flavored iced tea drink.", "ingredients": ["Tea extract", "Lemon juice", "Sugar", "Water"], "allergens": [] },
-"fr": { "name": "Nestea", "description": "Thé glacé saveur citron.", "ingredients": ["Extrait de thé", "Jus de citron", "Sucre", "Eau"], "allergens": [] }
-}
-},
-{
-"imageNumber": 75,
-"name": "Agua Cabreiroa 1/2 L",
-"price": 2.20,
-"weight": "500 ml",
-"kcal": 0,
-"description": "Agua mineral natural sin gas en formato 0.5L.",
-"ingredients": ["Agua mineral natural"],
-"allergens": [],
-"tags": ["bebida", "agua", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Agua Cabreiroa 1/2 L", "description": "Agua mineral natural sin gas en formato 0.5L.", "ingredients": ["Agua mineral natural"], "allergens": [] },
-"en": { "name": "Cabreiroa Water 1/2 L", "description": "Still natural mineral water in 0.5L format.", "ingredients": ["Natural mineral water"], "allergens": [] },
-"fr": { "name": "Eau Cabreiroa 1/2 L", "description": "Eau minérale naturelle plate au format 0,5L.", "ingredients": ["Eau minérale naturelle"], "allergens": [] }
-}
-},
-{
-"imageNumber": 76,
-"name": "Agua Cabreiroa 1 L",
-"price": 3.00,
-"weight": "1000 ml",
-"kcal": 0,
-"description": "Agua mineral natural sin gas en formato grande de 1L.",
-"ingredients": ["Agua mineral natural"],
-"allergens": [],
-"tags": ["bebida", "agua", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Agua Cabreiroa 1 L", "description": "Agua mineral natural sin gas en formato grande de 1L.", "ingredients": ["Agua mineral natural"], "allergens": [] },
-"en": { "name": "Cabreiroa Water 1 L", "description": "Still natural mineral water in large 1L format.", "ingredients": ["Natural mineral water"], "allergens": [] },
-"fr": { "name": "Eau Cabreiroa 1 L", "description": "Eau minérale naturelle plate en grand format 1L.", "ingredients": ["Eau minérale naturelle"], "allergens": [] }
-}
-},
-{
-"imageNumber": 77,
-"name": "Magma (con gas)",
-"price": 2.40,
-"weight": "500 ml",
-"kcal": 0,
-"description": "Agua mineral natural con gas.",
-"ingredients": ["Agua mineral natural con gas"],
-"allergens": [],
-"tags": ["bebida", "agua", "sin alcohol"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Magma (con gas)", "description": "Agua mineral natural con gas.", "ingredients": ["Agua mineral con gas"], "allergens": [] },
-"en": { "name": "Magma (Sparkling)", "description": "Natural sparkling mineral water.", "ingredients": ["Sparkling natural mineral water"], "allergens": [] },
-"fr": { "name": "Magma (Gazeuse)", "description": "Eau minérale naturelle gazeuse.", "ingredients": ["Eau minérale naturelle gazeuse"], "allergens": [] }
-}
-},
-{
-"imageNumber": 78,
-"name": "Sangria Casera",
-"price": 16.00,
-"weight": "1000 ml",
-"kcal": 650,
-"description": "Jarra de sangría casera elaborada con vino tinto y fruta fresca.",
-"ingredients": ["Vino tinto", "fruta fresca", "licor", "refresco de naranja"],
-"allergens": ["Sulfitos"],
-"tags": ["bebida", "coctel", "tradicional", "para compartir"],
-"sectiune": "Bebidas",
-"translations": {
-"es": { "name": "Sangria Casera", "description": "Jarra de sangría casera elaborada con vino tinto y fruta fresca.", "ingredients": ["Vino tinto", "Fruta fresca", "Licor", "Refresco de naranja"], "allergens": ["Sulfitos"] },
-"en": { "name": "Homemade Sangria", "description": "Pitcher of homemade sangria made with red wine and fresh fruit.", "ingredients": ["Red wine", "Fresh fruit", "Liqueur", "Orange soda"], "allergens": ["Sulfites"] },
-"fr": { "name": "Sangria Maison", "description": "Pichet de sangria maison élaboré avec du vin rouge et des fruits frais.", "ingredients": ["Vin rouge", "Fruits frais", "Liqueur", "Soda à l'orange"], "allergens": ["Sulfites"] }
-}
-}
+[
+  {
+    "imageNumber": 1,
+    "name": "Pimientos asados al horno de leña",
+    "price": 7.50,
+    "weight": "250 g",
+    "kcal": 180,
+    "description": "Pimientos rojos y verdes asados lentamente al horno de leña con aceite de oliva virgen extra y ajo.",
+    "ingredients": ["Pimientos asados", "Aceite de oliva virgen extra", "Ajo", "Sal"],
+    "allergens": [],
+    "tags": ["Antipasti/ Entrantes", "tradicional", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pimientos asados al horno de leña", "description": "Pimientos asados lentamente al horno de leña con aceite de oliva y ajo.", "ingredients": ["Pimientos asados", "AOVE", "Ajo", "Sal"], "allergens": [] },
+      "en": { "name": "Wood-oven Roasted Peppers", "description": "Slow-roasted peppers in a wood-fired oven with extra virgin olive oil and garlic.", "ingredients": ["Roasted peppers", "Extra virgin olive oil", "Garlic", "Salt"], "allergens": [] },
+      "fr": { "name": "Poivrons rôtis au feu de bois", "description": "Poivrons rôtis lentement au feu de bois avec huile d'olive et ail.", "ingredients": ["Poivrons rôtis", "Huile d'olive", "Ail", "Sel"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 2,
+    "name": "Pisto de berenjena",
+    "price": 7.50,
+    "weight": "280 g",
+    "kcal": 220,
+    "description": "Guiso tradicional de berenjenas, tomates, pimientos y cebolla pochados a fuego lento.",
+    "ingredients": ["Berenjena", "Tomate", "Pimiento", "Cebolla", "Aceite de oliva"],
+    "allergens": [],
+    "tags": ["Antipasti/ Entrantes", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pisto de berenjena", "description": "Guiso tradicional de berenjenas, tomates, pimientos y cebolla.", "ingredients": ["Berenjena", "Tomate", "Pimiento", "Cebolla", "Aceite de oliva"], "allergens": [] },
+      "en": { "name": "Eggplant Pisto", "description": "Traditional stew of slow-cooked eggplants, tomatoes, peppers, and onions.", "ingredients": ["Eggplant", "Tomato", "Pepper", "Onion", "Olive oil"], "allergens": [] },
+      "fr": { "name": "Pisto d'aubergine", "description": "Poêlée traditionnelle d'aubergines, tomates, poivrons et oignons mijotés.", "ingredients": ["Aubergine", "Tomate", "Poivron", "Oignon", "Huile d'olive"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 3,
+    "name": "Berenjena plancha",
+    "price": 8.00,
+    "weight": "220 g",
+    "kcal": 150,
+    "description": "Rodajas de berenjena fresca cocinadas a la plancha con un toque de aceite de oliva y hierbas.",
+    "ingredients": ["Berenjena", "Aceite de oliva", "Perejil", "Sal"],
+    "allergens": [],
+    "tags": ["Antipasti/ Entrantes", "vegetariano", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Berenjena plancha", "description": "Rodajas de berenjena fresca a la plancha.", "ingredients": ["Berenjena", "Aceite de oliva", "Perejil", "Sal"], "allergens": [] },
+      "en": { "name": "Grilled Eggplant", "description": "Fresh eggplant slices grilled with a touch of olive oil and herbs.", "ingredients": ["Eggplant", "Olive oil", "Parsley", "Salt"], "allergens": [] },
+      "fr": { "name": "Aubergine grillée", "description": "Tranches d'aubergine fraîche grillées avec un filet d'huile d'olive.", "ingredients": ["Aubergine", "Huile d'olive", "Persil", "Sel"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 4,
+    "name": "Champiñones trifolato",
+    "price": 7.00,
+    "weight": "200 g",
+    "kcal": 190,
+    "description": "Champiñones salteados al estilo italiano con ajo, perejil y vino blanco.",
+    "ingredients": ["Champiñones", "Ajo", "Perejil", "Vino blanco", "Aceite de oliva"],
+    "allergens": [],
+    "tags": ["Antipasti/ Entrantes", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Champiñones trifolato", "description": "Champiñones salteados al estilo italiano con ajo, perejil y vino blanco.", "ingredients": ["Champiñones", "Ajo", "Perejil", "Vino blanco", "Aceite de oliva"], "allergens": [] },
+      "en": { "name": "Trifolato Mushrooms", "description": "Mushrooms sautéed Italian-style with garlic, parsley, and white wine.", "ingredients": ["Mushrooms", "Garlic", "Parsley", "White wine", "Olive oil"], "allergens": [] },
+      "fr": { "name": "Champignons trifolato", "description": "Champignons sautés à l'italienne avec ail, persil et vin blanc.", "ingredients": ["Champignons", "Ail", "Persil", "Vin blanc", "Huile d'olive"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 5,
+    "name": "Rollito de berenjena",
+    "price": 14.00,
+    "weight": "320 g",
+    "kcal": 450,
+    "description": "Rollito de berenjena a la plancha, crema de queso, salsa de tomate, parmesano, albahaca, gotas de pesto.",
+    "ingredients": ["Rollito de berenjena a la plancha", "Crema de queso", "Salsa de tomate", "Parmesano", "Albahaca", "Gotas de pesto"],
+    "allergens": ["Lácteos", "Frutos de cáscara"],
+    "tags": ["Antipasti/ Entrantes", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Rollito de berenjena", "description": "Rollito de berenjena a la plancha, crema de queso, salsa de tomate, parmesano, albahaca, gotas de pesto.", "ingredients": ["Rollito de berenjena a la plancha", "Crema de queso", "Salsa de tomate", "Parmesano", "Albahaca", "Gotas de pesto"], "allergens": ["Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Eggplant Rollatini", "description": "Grilled eggplant roll stuffed with cheese cream, tomato sauce, parmesan, basil, and pesto drops.", "ingredients": ["Grilled eggplant roll", "Cheese cream", "Tomato sauce", "Parmesan", "Basil", "Pesto drops"], "allergens": ["Dairy", "Nuts"] },
+      "fr": { "name": "Roulé d'aubergine", "description": "Roulé d'aubergine grillée, crème de fromage, sauce tomate, parmesan, basilic, pesto.", "ingredients": ["Roulé d'aubergine grillée", "Crème de fromage", "Sauce tomate", "Parmesan", "Basilic", "Pesto"], "allergens": ["Produits laitiers", "Fruits à coque"] }
+    }
+  },
+  {
+    "imageNumber": 6,
+    "name": "Carpaccio de ternera",
+    "price": 15.00,
+    "weight": "200 g",
+    "kcal": 310,
+    "description": "Finas lonchas de carne de ternera con lascas de parmesano, rúcula fresca y aceite de oliva virgen extra.",
+    "ingredients": ["Carne de ternera", "Lasca de parmesano", "Rúcula", "AOVE"],
+    "allergens": ["Lácteos"],
+    "tags": ["Antipasti/ Entrantes", "especialidad", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Carpaccio de ternera", "description": "Finas lonchas de carne de ternera con lascas de parmesano, rúcula y AOVE.", "ingredients": ["Carne de ternera", "Lasca de parmesano", "Rúcula", "AOVE"], "allergens": ["Lácteos"] },
+      "en": { "name": "Beef Carpaccio", "description": "Thin slices of beef with parmesan shavings, arugula, and extra virgin olive oil.", "ingredients": ["Beef", "Parmesan shavings", "Arugula", "EVOO"], "allergens": ["Dairy"] },
+      "fr": { "name": "Carpaccio de bœuf", "description": "Fines tranches de bœuf avec copeaux de parmesan, roquette et huile d'olive vierge extra.", "ingredients": ["Bœuf", "Copeaux de parmesan", "Roquette", "Huile d'olive"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 7,
+    "name": "Burrata con jamón",
+    "price": 15.00,
+    "weight": "280 g",
+    "kcal": 510,
+    "description": "Burrata fresca cremosa acompañada de auténtico jamón de Parma y aceite de oliva virgen extra.",
+    "ingredients": ["Burrata", "Jamón de Parma", "AOVE"],
+    "allergens": ["Lácteos"],
+    "tags": ["Antipasti/ Entrantes", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Burrata con jamón", "description": "Burrata, jamón de Parma, AOVE.", "ingredients": ["Burrata", "Jamón de Parma", "AOVE"], "allergens": ["Lácteos"] },
+      "en": { "name": "Burrata with Prosciutto", "description": "Creamy fresh burrata served with authentic Parma ham and extra virgin olive oil.", "ingredients": ["Burrata", "Parma ham", "EVOO"], "allergens": ["Dairy"] },
+      "fr": { "name": "Burrata au jambon", "description": "Burrata fraîche crémeuse accompagnée de jambon de Parma et huile d'olive.", "ingredients": ["Burrata", "Jambon de Parma", "Huile d'olive"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 8,
+    "name": "Mejillones napolitano",
+    "price": 15.00,
+    "weight": "450 g",
+    "kcal": 380,
+    "description": "Mejillones frescos cocinados en salsa de tomate casera con un toque picante de guindilla.",
+    "ingredients": ["Mejillones", "Salsa de tomate", "Guindilla"],
+    "allergens": ["Moluscos"],
+    "tags": ["Antipasti/ Entrantes", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Mejillones napolitano", "description": "Mejillones, salsa de tomate, guindilla.", "ingredients": ["Mejillones", "Salsa de tomate", "Guindilla"], "allergens": ["Moluscos"] },
+      "en": { "name": "Neapolitan Mussels", "description": "Fresh mussels cooked in homemade tomato sauce with a spicy chili kick.", "ingredients": ["Mussels", "Tomato sauce", "Chili pepper"], "allergens": ["Molluscs"] },
+      "fr": { "name": "Moules napolitaines", "description": "Moules fraîches cuisinées dans une sauce tomate maison légèrement piquante.", "ingredients": ["Moules", "Sauce tomate", "Piment"], "allergens": ["Mollusques"] }
+    }
+  },
+  {
+    "imageNumber": 9,
+    "name": "Mejillones al vapor con limón",
+    "price": 14.00,
+    "weight": "450 g",
+    "kcal": 320,
+    "description": "Mejillones frescos cocinados al vapor con rodajas de limón natural.",
+    "ingredients": ["Mejillones", "Limón", "Agua"],
+    "allergens": ["Moluscos"],
+    "tags": ["Antipasti/ Entrantes", "marisco", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Mejillones al vapor con limón", "description": "Mejillones frescos al vapor con limón.", "ingredients": ["Mejillones", "Limón"], "allergens": ["Moluscos"] },
+      "en": { "name": "Steamed Mussels with Lemon", "description": "Fresh steamed mussels served with natural lemon slices.", "ingredients": ["Mussels", "Lemon"], "allergens": ["Molluscs"] },
+      "fr": { "name": "Moules cuites à la vapeur au citron", "description": "Moules fraîches cuites à la vapeur avec des tranches de citron.", "ingredients": ["Moules", "Citron"], "allergens": ["Mollusques"] }
+    }
+  },
+  {
+    "imageNumber": 10,
+    "name": "Mejillones pepata",
+    "price": 14.00,
+    "weight": "450 g",
+    "kcal": 340,
+    "description": "Mejillones preparados al estilo tradicional italiano con abundante pimienta negra y ajos.",
+    "ingredients": ["Mejillones", "Pimienta negra", "Ajos", "Aceite de oliva"],
+    "allergens": ["Moluscos"],
+    "tags": ["Antipasti/ Entrantes", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Mejillones pepata", "description": "Mejillones con pimienta y ajos.", "ingredients": ["Mejillones", "Pimienta negra", "Ajos"], "allergens": ["Moluscos"] },
+      "en": { "name": "Pepata Mussels", "description": "Mussels prepared in traditional Italian style with abundant black pepper and garlic.", "ingredients": ["Mussels", "Black pepper", "Garlic"], "allergens": ["Molluscs"] },
+      "fr": { "name": "Moules 'pepata'", "description": "Moules préparées à l'italienne avec beaucoup de poivre noir et d'ail.", "ingredients": ["Moules", "Poivre noir", "Ail"], "allergens": ["Mollusques"] }
+    }
+  },
+  {
+    "imageNumber": 11,
+    "name": "Colas de gambón al ajillo",
+    "price": 16.00,
+    "weight": "250 g",
+    "kcal": 410,
+    "description": "Colas de gambón salteadas en aceite de oliva con láminas de ajo y perejil fresco.",
+    "ingredients": ["Gambas", "Ajo", "Aceite", "Perejil"],
+    "allergens": ["Marisco"],
+    "tags": ["Antipasti/ Entrantes", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Colas de gambón al ajillo", "description": "Gambas, ajo, aceite, perejil.", "ingredients": ["Gambas", "Ajo", "Aceite", "Perejil"], "allergens": ["Marisco"] },
+      "en": { "name": "Garlic Jumbo Prawn Tails", "description": "Jumbo prawn tails sautéed in olive oil with sliced garlic and fresh parsley.", "ingredients": ["Prawns", "Garlic", "Oil", "Parsley"], "allergens": ["Shellfish"] },
+      "fr": { "name": "Queues de gambas à l'ail", "description": "Queues de gambas sautées à l'huile d'olive avec de l'ail émincé et du persil frais.", "ingredients": ["Gambas", "Ail", "Huile", "Persil"], "allergens": ["Crustacés"] }
+    }
+  },
+  {
+    "imageNumber": 12,
+    "name": "Colas de Gambón fra diávolo",
+    "price": 16.50,
+    "weight": "280 g",
+    "kcal": 460,
+    "description": "Colas de gambón cocinadas con aceite, perejil, salsa de tomate, guindilla y un toque de nata.",
+    "ingredients": ["Gambas", "Aceite", "Perejil", "Salsa de tomate", "Guindilla", "Nata"],
+    "allergens": ["Marisco", "Lácteos"],
+    "tags": ["Antipasti/ Entrantes", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Colas de Gambón fra diávolo", "description": "Gambas, aceite, perejil, salsa de tomate, guindilla, nata.", "ingredients": ["Gambas", "Aceite", "Perejil", "Salsa de tomate", "Guindilla", "Nata"], "allergens": ["Marisco", "Lácteos"] },
+      "en": { "name": "Fra Diavolo Jumbo Prawn Tails", "description": "Jumbo prawn tails cooked with oil, parsley, tomato sauce, chili pepper, and cream.", "ingredients": ["Prawns", "Oil", "Parsley", "Tomato sauce", "Chili pepper", "Cream"], "allergens": ["Shellfish", "Dairy"] },
+      "fr": { "name": "Queues de gambas 'fra diávolo'", "description": "Queues de gambas cuisinées avec huile, persil, sauce tomate, piment et crème.", "ingredients": ["Gambas", "Huile", "Persil", "Sauce tomate", "Piment", "Crème"], "allergens": ["Crustacés", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 13,
+    "name": "Ensalada Mixta",
+    "price": 14.00,
+    "weight": "350 g",
+    "kcal": 310,
+    "description": "Lechuga mixta, tomate, cebolla, zanahoria, huevo duro, atún y aceitunas.",
+    "ingredients": ["Lechuga mixta", "Tomate", "Cebolla", "Zanahoria", "Huevo duro", "Atún", "Aceitunas"],
+    "allergens": ["Pescado", "Huevo"],
+    "tags": ["Ensaladas", "fresco", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada Mixta", "description": "Lechuga mixta, tomate, cebolla, zanahoria, huevo duro, atún, aceitunas.", "ingredients": ["Lechuga mixta", "Tomate", "Cebolla", "Zanahoria", "Huevo duro", "Atún", "Aceitunas"], "allergens": ["Pescado", "Huevo"] },
+      "en": { "name": "Mixed Salad", "description": "Mixed lettuce, tomato, onion, carrot, boiled egg, tuna, and olives.", "ingredients": ["Mixed lettuce", "Tomato", "Onion", "Carrot", "Boiled egg", "Tuna", "Olives"], "allergens": ["Fish", "Egg"] },
+      "fr": { "name": "Salade Mixte", "description": "Laitue mélangée, tomate, oignon, carotte, œuf dur, thon et olives.", "ingredients": ["Laitue mélangée", "Tomate", "Oignon", "Carotte", "Œuf dur", "Thon", "Olives"], "allergens": ["Poisson", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 14,
+    "name": "Ensalada Griega",
+    "price": 15.00,
+    "weight": "380 g",
+    "kcal": 410,
+    "description": "Iceberg, pimientos tricolor, aceitunas Kalamata, cebolla morada, tomate, orégano, queso feta, pepino y AOVE.",
+    "ingredients": ["Iceberg", "Pimientos tricolor", "Aceitunas Kalamata", "Cebolla morada", "Tomate", "Orégano", "Queso feta", "Pepino", "AOVE"],
+    "allergens": ["Lácteos"],
+    "tags": ["Ensaladas", "fresco", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada Griega", "description": "Iceberg, pimientos tricolor, aceitunas Kalamata, cebolla morada, tomate, orégano, queso feta, pepino, AOVE.", "ingredients": ["Iceberg", "Pimientos", "Aceitunas Kalamata", "Cebolla morada", "Tomate", "Orégano", "Queso feta", "Pepino", "AOVE"], "allergens": ["Lácteos"] },
+      "en": { "name": "Greek Salad", "description": "Iceberg lettuce, tri-color peppers, Kalamata olives, red onion, tomato, oregano, feta cheese, cucumber, and EVOO.", "ingredients": ["Iceberg", "Peppers", "Kalamata olives", "Red onion", "Tomato", "Oregano", "Feta cheese", "Cucumber", "EVOO"], "allergens": ["Dairy"] },
+      "fr": { "name": "Salade Grecque", "description": "Iceberg, poivrons tricolores, olives Kalamata, oignon rouge, tomate, origan, feta, concombre et huile d'olive.", "ingredients": ["Iceberg", "Poivrons", "Olives Kalamata", "Oignon rouge", "Tomate", "Origan", "Feta", "Concombre", "Huile d'olive"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 15,
+    "name": "Ensalada Caprese",
+    "price": 14.00,
+    "weight": "300 g",
+    "kcal": 380,
+    "description": "Rodajas de tomate fresco, mozzarella, orégano, albahaca y aceite de oliva virgen extra.",
+    "ingredients": ["Tomate", "Mozzarella", "Orégano", "Albahaca", "AOVE"],
+    "allergens": ["Lácteos"],
+    "tags": ["Ensaladas", "fresco", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada Caprese", "description": "Tomate, mozzarella, orégano, albahaca, AOVE.", "ingredients": ["Tomate", "Mozzarella", "Orégano", "Albahaca", "AOVE"], "allergens": ["Lácteos"] },
+      "en": { "name": "Caprese Salad", "description": "Fresh tomato slices, mozzarella, oregano, basil, and extra virgin olive oil.", "ingredients": ["Tomato", "Mozzarella", "Oregano", "Basil", "EVOO"], "allergens": ["Dairy"] },
+      "fr": { "name": "Salade Caprese", "description": "Tranches de tomates fraîches, mozzarella, origan, basilic et huile d'olive.", "ingredients": ["Tomate", "Mozzarella", "Origan", "Basilic", "Huile d'olive"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 16,
+    "name": "Ensalada de tomate variado",
+    "price": 0.00,
+    "weight": "320 g",
+    "kcal": 210,
+    "description": "Tomates seleccionados de temporada con aceite de oliva y sal (Precio según temporada / S/T).",
+    "ingredients": ["Tomates seleccionados de temporada", "AOVE", "Sal"],
+    "allergens": [],
+    "tags": ["Ensaladas", "fresco", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada de tomate variado", "description": "Tomates seleccionados de temporada.", "ingredients": ["Tomates de temporada", "AOVE", "Sal"], "allergens": [] },
+      "en": { "name": "Assorted Tomato Salad", "description": "Selected seasonal tomatoes with olive oil and salt.", "ingredients": ["Seasonal tomatoes", "EVOO", "Salt"], "allergens": [] },
+      "fr": { "name": "Salade de tomates variées", "description": "Tomates de saison sélectionnées avec huile d'olive et sel.", "ingredients": ["Tomates de saison", "Huile d'olive", "Sel"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 17,
+    "name": "Spaghetti frutti di mare",
+    "price": 17.50,
+    "weight": "420 g",
+    "kcal": 680,
+    "description": "Spaghetti con gambón, cola de gamba, marisco del día y salsa de tomate.",
+    "ingredients": ["Spaghetti", "Gambon", "Cola de gamba", "Marisco del dia", "Salsa de tomate"],
+    "allergens": ["Gluten", "Marisco", "Moluscos", "Pescado"],
+    "tags": ["Pastas", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Spaghetti frutti di mare", "description": "Gambon, cola de gamba, marisco del dia, salsa de tomate.", "ingredients": ["Spaghetti", "Gambon", "Cola de gamba", "Marisco", "Salsa de tomate"], "allergens": ["Gluten", "Marisco", "Moluscos", "Pescado"] },
+      "en": { "name": "Spaghetti Frutti di Mare", "description": "Spaghetti with jumbo prawn, prawn tail, catch of the day seafood, and tomato sauce.", "ingredients": ["Spaghetti", "Jumbo prawn", "Prawn tail", "Fresh seafood", "Tomato sauce"], "allergens": ["Gluten", "Shellfish", "Molluscs", "Fish"] },
+      "fr": { "name": "Spaghetti Frutti di Mare", "description": "Spaghetti avec gambas, queue de gambas, fruits de mer du jour et sauce tomate.", "ingredients": ["Spaghetti", "Gambas", "Queue de gambas", "Fruits de mer", "Sauce tomate"], "allergens": ["Gluten", "Crustacés", "Mollusques", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 18,
+    "name": "Fettuccine capesante",
+    "price": 17.50,
+    "weight": "410 g",
+    "kcal": 660,
+    "description": "Fettuccine con gambón, cola de gamba, zamburiña y salsa de tomate.",
+    "ingredients": ["Fettuccine", "Gambon", "Cola de gamba", "Zamburiña", "Salsa de tomate"],
+    "allergens": ["Gluten", "Marisco", "Moluscos"],
+    "tags": ["Pastas", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Fettuccine capesante", "description": "Gambon, cola de gamba, zamburiña, salsa de tomate.", "ingredients": ["Fettuccine", "Gambon", "Cola de gamba", "Zamburiña", "Salsa de tomate"], "allergens": ["Gluten", "Marisco", "Moluscos"] },
+      "en": { "name": "Fettuccine Capesante", "description": "Fettuccine with jumbo prawn, prawn tail, scallops/zamburiña, and tomato sauce.", "ingredients": ["Fettuccine", "Jumbo prawn", "Prawn tail", "Scallops", "Tomato sauce"], "allergens": ["Gluten", "Shellfish", "Molluscs"] },
+      "fr": { "name": "Fettuccine Capesante", "description": "Fettuccine avec gambas, queue de gambas, pétoncles/zamburiñas et sauce tomate.", "ingredients": ["Fettuccine", "Gambas", "Queue de gambas", "Pétoncles", "Sauce tomate"], "allergens": ["Gluten", "Crustacés", "Mollusques"] }
+    }
+  },
+  {
+    "imageNumber": 19,
+    "name": "Linguine gambero",
+    "price": 16.50,
+    "weight": "390 g",
+    "kcal": 610,
+    "description": "Linguine frescos con tomate y jugosos gambones.",
+    "ingredients": ["Linguine", "Tomate", "Gambones"],
+    "allergens": ["Gluten", "Marisco"],
+    "tags": ["Pastas", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Linguine gambero", "description": "Tomate y Gambones.", "ingredients": ["Linguine", "Tomate", "Gambones"], "allergens": ["Gluten", "Marisco"] },
+      "en": { "name": "Linguine Gambero", "description": "Fresh linguine with tomato and juicy jumbo prawns.", "ingredients": ["Linguine", "Tomato", "Jumbo prawns"], "allergens": ["Gluten", "Shellfish"] },
+      "fr": { "name": "Linguine Gambero", "description": "Linguine fraîches avec tomate et gambas juteuses.", "ingredients": ["Linguine", "Tomate", "Gambas"], "allergens": ["Gluten", "Crustacés"] }
+    }
+  },
+  {
+    "imageNumber": 20,
+    "name": "Spaghetti con ragú boloñesa",
+    "price": 14.00,
+    "weight": "400 g",
+    "kcal": 720,
+    "description": "Spaghetti tradicionales con salsa de tomate, ragú de carne boloñesa y queso parmesano.",
+    "ingredients": ["Spaghetti", "Salsa tomate", "Ragu boloñesa", "Parmesano"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pastas", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Spaghetti con ragú boloñesa", "description": "Salsa tomate, ragu boloñesa, parmesano.", "ingredients": ["Spaghetti", "Salsa tomate", "Ragu boloñesa", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Spaghetti Bolognese", "description": "Traditional spaghetti with tomato sauce, beef Bolognese ragù, and parmesan cheese.", "ingredients": ["Spaghetti", "Tomato sauce", "Bolognese ragù", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Spaghetti Bolognaise", "description": "Spaghetti traditionnels avec sauce tomate, ragout de viande bolognaise et parmesan.", "ingredients": ["Spaghetti", "Sauce tomate", "Ragout bolognaise", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 21,
+    "name": "Fettuccine Amatriciana",
+    "price": 13.00,
+    "weight": "380 g",
+    "kcal": 690,
+    "description": "Fettuccine con salsa de tomate, cebolla, guanciale crujiente, guindillas y queso parmesano.",
+    "ingredients": ["Fettuccine", "Salsa de tomate", "Cebolla", "Guanciale", "Guindillas", "Parmesano"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pastas", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Fettuccine Amatriciana", "description": "Salsa de tomate, cebolla, guanciale, guindillas, parmesano.", "ingredients": ["Fettuccine", "Salsa de tomate", "Cebolla", "Guanciale", "Guindillas", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Fettuccine Amatriciana", "description": "Fettuccine with tomato sauce, onion, crispy guanciale, chili peppers, and parmesan cheese.", "ingredients": ["Fettuccine", "Tomato sauce", "Onion", "Guanciale", "Chili peppers", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Fettuccine Amatriciana", "description": "Fettuccine avec sauce tomate, oignon, guanciale croustillant, piments et parmesan.", "ingredients": ["Fettuccine", "Sauce tomate", "Oignon", "Guanciale", "Piments", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 22,
+    "name": "Spaghetti Carbonara",
+    "price": 12.00,
+    "weight": "380 g",
+    "kcal": 740,
+    "description": "Spaghetti con huevo, pimienta, parmesano (receta original o con nata a elegir).",
+    "ingredients": ["Spaghetti", "Huevo", "Pimienta", "Parmesano", "Nata"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Pastas", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Spaghetti Carbonara", "description": "Huevo, pimienta, parmesano [nata].", "ingredients": ["Spaghetti", "Huevo", "Pimienta", "Parmesano", "Nata"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Spaghetti Carbonara", "description": "Spaghetti with egg, pepper, parmesan (original recipe or with cream).", "ingredients": ["Spaghetti", "Egg", "Pepper", "Parmesan", "Cream"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Spaghetti Carbonara", "description": "Spaghetti avec œuf, poivre, parmesan (recette originale ou avec crème).", "ingredients": ["Spaghetti", "Œuf", "Poivre", "Parmesan", "Crème"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 23,
+    "name": "Linguine al pesto",
+    "price": 14.00,
+    "weight": "360 g",
+    "kcal": 650,
+    "description": "Linguine con salsa pesto casera elaborada con albahaca fresca, frutos secos, aceite y parmesano.",
+    "ingredients": ["Linguine", "Albahaca", "Fruto seco", "Aceite", "Parmesano"],
+    "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
+    "tags": ["Pastas", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Linguine al pesto", "description": "Albahaca, fruto seco, aceite, parmesano.", "ingredients": ["Linguine", "Albahaca", "Frutos secos", "Aceite", "Parmesano"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Linguine al Pesto", "description": "Linguine with homemade pesto sauce made of fresh basil, nuts, oil, and parmesan.", "ingredients": ["Linguine", "Basil", "Nuts", "Oil", "Parmesan"], "allergens": ["Gluten", "Dairy", "Nuts"] },
+      "fr": { "name": "Linguine au Pesto", "description": "Linguine au pesto maison à base de basilic frais, fruits à coque, huile et parmesan.", "ingredients": ["Linguine", "Basilic", "Fruits à coque", "Huile", "Parmesan"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
+    }
+  },
+  {
+    "imageNumber": 24,
+    "name": "Spaghetti al ajillo",
+    "price": 11.00,
+    "weight": "340 g",
+    "kcal": 530,
+    "description": "Spaghetti salteados con guindilla, láminas de ajo y aceite de oliva virgen extra.",
+    "ingredients": ["Spaghetti", "Guindilla", "Ajo", "AOVE"],
+    "allergens": ["Gluten"],
+    "tags": ["Pastas", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Spaghetti al ajillo", "description": "Guindilla, ajo, AOVE.", "ingredients": ["Spaghetti", "Guindilla", "Ajo", "AOVE"], "allergens": ["Gluten"] },
+      "en": { "name": "Spaghetti al Ajillo", "description": "Spaghetti tossed with chili, sliced garlic, and extra virgin olive oil.", "ingredients": ["Spaghetti", "Chili", "Garlic", "EVOO"], "allergens": ["Gluten"] },
+      "fr": { "name": "Spaghetti à l'ail et piment", "description": "Spaghetti sautés au piment, ail émincé et huile d'olive vierge extra.", "ingredients": ["Spaghetti", "Piment", "Ail", "Huile d'olive"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 25,
+    "name": "Tortellini rellenos de carne Á Libretto",
+    "price": 14.00,
+    "weight": "390 g",
+    "kcal": 670,
+    "description": "Tortellini rellenos de carne con salsa de tomate y nata, guisantes y crujiente de jamón.",
+    "ingredients": ["Tortellini rellenos de carne", "Tomate", "Nata", "Guisante", "Crujiente de jamón"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Pastas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tortellini rellenos de carne Á Libretto", "description": "Tomate nata, guisante y crujiente de jamón.", "ingredients": ["Tortellini", "Tomate", "Nata", "Guisantes", "Jamón"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Meat-filled Tortellini À Libretto", "description": "Meat-stuffed tortellini with tomato cream sauce, green peas, and crispy ham crunch.", "ingredients": ["Tortellini", "Tomato", "Cream", "Green peas", "Ham"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Tortellini farcis à la viande Á Libretto", "description": "Tortellini à la viande avec sauce tomate-crème, petits pois et copeaux de jambon croustillant.", "ingredients": ["Tortellini", "Tomate", "Crème", "Petits pois", "Jambon"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 26,
+    "name": "Tortellini rellenos de carne con salsa gorgonzola",
+    "price": 13.50,
+    "weight": "380 g",
+    "kcal": 710,
+    "description": "Tortellini rellenos de carne bañados en una cremosa y sabrosa salsa de queso gorgonzola.",
+    "ingredients": ["Tortellini rellenos de carne", "Queso gorgonzola", "Nata", "Mantequilla"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Pastas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tortellini rellenos de carne con salsa gorgonzola", "description": "Tortellini de carne con salsa de gorgonzola.", "ingredients": ["Tortellini", "Gorgonzola", "Nata", "Mantequilla"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Meat Tortellini with Gorgonzola Sauce", "description": "Meat-filled tortellini bathed in a creamy and rich gorgonzola cheese sauce.", "ingredients": ["Tortellini", "Gorgonzola cheese", "Cream", "Butter"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Tortellini à la viande et sauce gorgonzola", "description": "Tortellini farcis à la viande nappés d'une sauce crémeuse au gorgonzola.", "ingredients": ["Tortellini", "Gorgonzola", "Crème", "Beurre"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 27,
+    "name": "Rigatoni Setas",
+    "price": 16.00,
+    "weight": "410 g",
+    "kcal": 750,
+    "description": "Rigatoni con nata, guanciale (bacón italiano), setas, champiñones y queso parmesano.",
+    "ingredients": ["Rigatoni", "Nata", "Guanciale", "Setas", "Champiñones", "Queso parmesano"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pastas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Rigatoni Setas", "description": "Nata, gunciale, setas y champiñones, queso parmesano.", "ingredients": ["Rigatoni", "Nata", "Guanciale", "Setas", "Champiñones", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Rigatoni Setas", "description": "Rigatoni with cream, guanciale, wild mushrooms, button mushrooms, and parmesan cheese.", "ingredients": ["Rigatoni", "Cream", "Guanciale", "Mushrooms", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Rigatoni aux Champignons", "description": "Rigatoni avec crème, guanciale, champignons sauvages et parmesan.", "ingredients": ["Rigatoni", "Crème", "Guanciale", "Champignons", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 28,
+    "name": "Fettuccine Fungi Porcini",
+    "price": 16.50,
+    "weight": "400 g",
+    "kcal": 690,
+    "description": "Fettuccine frescos elaborados con exquisitos hongos porcini silvestres.",
+    "ingredients": ["Fettuccine", "Hongos Porcini", "Ajo", "Aceite de oliva", "Perejil", "Parmesano"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pastas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Fettuccine Fungi Porcini", "description": "Fettuccine con setas porcini.", "ingredients": ["Fettuccine", "Porcini", "Ajo", "Aceite", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Fettuccine Funghi Porcini", "description": "Fresh fettuccine tossed with exquisite wild porcini mushrooms.", "ingredients": ["Fettuccine", "Porcini mushrooms", "Garlic", "Oil", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Fettuccine aux Cèpes (Porcini)", "description": "Fettuccine fraîches cuisinées avec de délicieux cèpes sauvages.", "ingredients": ["Fettuccine", "Cèpes", "Ail", "Huile", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 29,
+    "name": "Pasta con Bogavante azul",
+    "price": 0.00,
+    "weight": "550 g",
+    "kcal": 780,
+    "description": "Pasta especial con bogavante azul fresco (Solo por encargo / S/M - Según Mercado).",
+    "ingredients": ["Pasta fresca", "Bogavante azul", "Tomate cherry", "Ajo", "Vino blanco"],
+    "allergens": ["Gluten", "Marisco"],
+    "tags": ["Pastas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pasta con Bogavante azul", "description": "Solo por encargo (Según Mercado).", "ingredients": ["Pasta", "Bogavante azul", "Tomate", "Ajo"], "allergens": ["Gluten", "Marisco"] },
+      "en": { "name": "Blue Lobster Pasta", "description": "Special pasta with fresh blue lobster (By order only / Market price).", "ingredients": ["Fresh pasta", "Blue lobster", "Cherry tomato", "Garlic"], "allergens": ["Gluten", "Shellfish"] },
+      "fr": { "name": "Pâtes au Homard Bleu", "description": "Pâtes spéciales au homard bleu frais (Sur commande / Selon marché).", "ingredients": ["Pâtes fraîches", "Homard bleu", "Tomate cerise", "Ail"], "allergens": ["Gluten", "Crustacés"] }
+    }
+  },
+  {
+    "imageNumber": 30,
+    "name": "Lasaña boloñese",
+    "price": 14.50,
+    "weight": "450 g",
+    "kcal": 820,
+    "description": "Lasaña casera al horno con jugosa carne boloñesa, bechamel y queso gratinado.",
+    "ingredients": ["Placas de lasaña", "Carne boloñesa", "Salsa bechamel", "Queso mozzarella", "Parmesano"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Pastas", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Lasaña boloñese", "description": "Lasaña casera de carne boloñesa al horno.", "ingredients": ["Pasta", "Boloñesa", "Bechamel", "Mozzarella"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Bolognese Lasagna", "description": "Baked homemade lasagna with rich meat bolognese, béchamel, and melted cheese.", "ingredients": ["Lasagna sheets", "Bolognese meat", "Béchamel", "Mozzarella cheese"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Lasagne bolognaise", "description": "Lasagne maison cuite au four avec ragout de viande bolognaise et béchamel.", "ingredients": ["Pâtes à lasagne", "Viande bolognaise", "Béchamel", "Mozzarella"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 31,
+    "name": "Parmigiana de berenjena",
+    "price": 14.00,
+    "weight": "400 g",
+    "kcal": 610,
+    "description": "Berenjenas fritas en capas con salsa de tomate, mozzarella fundida y queso parmesano.",
+    "ingredients": ["Berenjena fritas", "Salsa de tomate", "Mozzarella", "Parmesano"],
+    "allergens": ["Lácteos", "Huevo"],
+    "tags": ["Pastas", "vegetariano", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Parmigiana de berenjena", "description": "Berenjena fritas, salsa de tomate, mozzarella, parmesano.", "ingredients": ["Berenjena", "Salsa de tomate", "Mozzarella", "Parmesano"], "allergens": ["Lácteos", "Huevo"] },
+      "en": { "name": "Eggplant Parmigiana", "description": "Layered fried eggplants with tomato sauce, melted mozzarella, and parmesan cheese.", "ingredients": ["Fried eggplant", "Tomato sauce", "Mozzarella", "Parmesan"], "allergens": ["Dairy", "Egg"] },
+      "fr": { "name": "Parmigiana d'aubergine", "description": "Tranches d'aubergines frites en couches avec sauce tomate, mozzarella et parmesan.", "ingredients": ["Aubergine frite", "Sauce tomate", "Mozzarella", "Parmesan"], "allergens": ["Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 32,
+    "name": "Gnocchi alla sorrentina",
+    "price": 14.00,
+    "weight": "390 g",
+    "kcal": 640,
+    "description": "Ñoquis de patata gratinados al horno con salsa de tomate, mozzarella y queso parmesano.",
+    "ingredients": ["Ñoquis", "Salsa de tomate", "Mozzarella", "Parmesano", "Albahaca"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pastas", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Gnocchi alla sorrentina", "description": "Ñoquis gratinados al horno con salsa de tomate, mozzarella y parmesano.", "ingredients": ["Ñoquis", "Salsa de tomate", "Mozzarella", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Gnocchi alla Sorrentina", "description": "Oven-baked potato gnocchi gratin with tomato sauce, mozzarella, and parmesan cheese.", "ingredients": ["Gnocchi", "Tomato sauce", "Mozzarella", "Parmesan"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Gnocchi à la sorrentine", "description": "Gnocchis de pomme de terre gratinés au four avec sauce tomate, mozzarella et parmesan.", "ingredients": ["Gnocchis", "Sauce tomate", "Mozzarella", "Parmesan"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 33,
+    "name": "Pixin plancha",
+    "price": 30.00,
+    "weight": "380 g",
+    "kcal": 420,
+    "description": "Lomo de pixín (rape) fresco cocinado a la plancha (S/P - Según Pesces / Disponibilidad).",
+    "ingredients": ["Pixin (rape)", "Aceite de oliva", "Ajo", "Perejil", "Sal"],
+    "allergens": ["Pescado"],
+    "tags": ["Carnes", "pescado", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pixin plancha", "description": "Rape fresco a la plancha (S/P).", "ingredients": ["Pixin", "Aceite", "Ajo", "Perejil"], "allergens": ["Pescado"] },
+      "en": { "name": "Grilled Monkfish (Pixín)", "description": "Fresh monkfish fillet cooked on the grill (Market availability).", "ingredients": ["Monkfish", "Olive oil", "Garlic", "Parsley"], "allergens": ["Fish"] },
+      "fr": { "name": "Lotte (Pixin) grillée", "description": "Filet de lotte frais cuit à la plancha.", "ingredients": ["Lotte", "Huile d'olive", "Ail", "Persil"], "allergens": ["Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 34,
+    "name": "Bacalao",
+    "price": 25.00,
+    "weight": "400 g",
+    "kcal": 490,
+    "description": "Lomo de bacalao preparado a elegir entre: a la plancha, al horno o a la pizzaiola.",
+    "ingredients": ["Bacalao", "Aceite de oliva", "Tomate", "Ajo", "Orégano"],
+    "allergens": ["Pescado"],
+    "tags": ["Carnes", "pescado", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Bacalao (plancha, horno, pizzaiola)", "description": "Bacalao fresco preparado al gusto.", "ingredients": ["Bacalao", "Aceite", "Tomate", "Ajo"], "allergens": ["Pescado"] },
+      "en": { "name": "Cod (Grilled, Baked, or Pizzaiola)", "description": "Cod loin prepared your choice of style: grilled, baked, or pizzaiola.", "ingredients": ["Cod", "Olive oil", "Tomato", "Garlic", "Oregano"], "allergens": ["Fish"] },
+      "fr": { "name": "Morue (grillée, au four ou pizzaiola)", "description": "Dos de morue préparé selon votre choix.", "ingredients": ["Morue", "Huile d'olive", "Tomate", "Ail", "Origan"], "allergens": ["Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 35,
+    "name": "Lomo a la plancha",
+    "price": 0.00,
+    "weight": "350 g",
+    "kcal": 520,
+    "description": "Lomo tierno de carne a la plancha (S/M - Según Mercado / Precio variable).",
+    "ingredients": ["Lomo de carne", "Aceite de oliva", "Sal", "Guarnición"],
+    "allergens": [],
+    "tags": ["Carnes"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Lomo a la plancha", "description": "Según Mercado.", "ingredients": ["Lomo", "Aceite", "Sal"], "allergens": [] },
+      "en": { "name": "Grilled Loin", "description": "Tender grilled meat loin (Market price).", "ingredients": ["Meat loin", "Olive oil", "Salt"], "allergens": [] },
+      "fr": { "name": "Longe de viande grillée", "description": "Longe de viande tendre cuite à la plancha (Selon marché).", "ingredients": ["Longe", "Huile d'olive", "Sel"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 36,
+    "name": "Escalopines de ternera a limón",
+    "price": 15.00,
+    "weight": "320 g",
+    "kcal": 510,
+    "description": "Filete de ternera tierno con jugo de limón natural y salsa demi glace.",
+    "ingredients": ["Filete de ternera", "Zumo de limón", "Salsa demi glace", "Mantequilla"],
+    "allergens": ["Lácteos"],
+    "tags": ["Carnes", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Escalopines de ternera a limón", "description": "Filete de ternera con jugo de limón y salsa demi glace.", "ingredients": ["Ternera", "Zumo de limón", "Salsa demi glace"], "allergens": ["Lácteos"] },
+      "en": { "name": "Veal Scaloppine with Lemon", "description": "Tender veal cutlet with natural lemon juice and demi-glace sauce.", "ingredients": ["Veal fillet", "Lemon juice", "Demi-glace sauce", "Butter"], "allergens": ["Dairy"] },
+      "fr": { "name": "Escalopes de veau au citron", "description": "Escalope de veau tendre au jus de citron naturel et sauce demi-glace.", "ingredients": ["Veau", "Jus de citron", "Sauce demi-glace", "Beurre"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 37,
+    "name": "Escalopines de ternera gorgonzola",
+    "price": 15.50,
+    "weight": "330 g",
+    "kcal": 590,
+    "description": "Filetes finos de ternera bañados en una suave y cremosa salsa de queso gorgonzola.",
+    "ingredients": ["Filete de ternera", "Salsa de gorgonzola", "Nata", "Mantequilla"],
+    "allergens": ["Lácteos"],
+    "tags": ["Carnes", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Escalopines de ternera gorgonzola", "description": "Filete de ternera, salsa de gorgonzola.", "ingredients": ["Ternera", "Salsa gorgonzola", "Nata"], "allergens": ["Lácteos"] },
+      "en": { "name": "Veal Scaloppine with Gorgonzola", "description": "Thin veal fillets bathed in a smooth and creamy gorgonzola cheese sauce.", "ingredients": ["Veal fillet", "Gorgonzola sauce", "Cream", "Butter"], "allergens": ["Dairy"] },
+      "fr": { "name": "Escalopes de veau au gorgonzola", "description": "Fines escalopes de veau nappées d'une sauce onctueuse au gorgonzola.", "ingredients": ["Veau", "Sauce gorgonzola", "Crème", "Beurre"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 38,
+    "name": "Escalopines de ternera con boletus",
+    "price": 16.50,
+    "weight": "340 g",
+    "kcal": 560,
+    "description": "Filetes de ternera salteados con setas boletus silvestres y salsa demi glace.",
+    "ingredients": ["Filete de ternera", "Setas boletus", "Salsa demi glace", "Mantequilla", "Ajo"],
+    "allergens": ["Lácteos"],
+    "tags": ["Carnes", "carne", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Escalopines de ternera con boletus", "description": "Filete de ternera, setas boletus, salsa demi glace.", "ingredients": ["Ternera", "Setas boletus", "Salsa demi glace"], "allergens": ["Lácteos"] },
+      "en": { "name": "Veal Scaloppine with Porcini Mushrooms", "description": "Veal fillets sautéed with wild porcini mushrooms and demi-glace sauce.", "ingredients": ["Veal fillet", "Porcini mushrooms", "Demi-glace sauce", "Butter"], "allergens": ["Dairy"] },
+      "fr": { "name": "Escalopes de veau aux cèpes", "description": "Escalopes de veau sautées aux cèpes sauvages et sauce demi-glace.", "ingredients": ["Veau", "Cèpes", "Sauce demi-glace", "Beurre"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 39,
+    "name": "Escalopines a la parmesana con pasta o patata",
+    "price": 16.50,
+    "weight": "420 g",
+    "kcal": 750,
+    "description": "Filete de ternera empanado y frito, salsa de tomate, queso mozzarella y parmesano (con guarnición).",
+    "ingredients": ["Filete de ternera empanado y frito", "Salsa de tomate", "Queso mozzarella", "Parmesano", "Pasta o patata"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Carnes", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Escalopines a la parmesana con pasta o patata", "description": "Filete de ternera empanado y frito, salsa de tomate, queso mozzarella y parmesano.", "ingredients": ["Ternera empanada", "Salsa de tomate", "Mozzarella", "Parmesano", "Guarnición"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Parmesan Veal Scaloppine with Pasta or Potato", "description": "Breaded and fried veal cutlet with tomato sauce, mozzarella, and parmesan cheese.", "ingredients": ["Breaded veal", "Tomato sauce", "Mozzarella", "Parmesan", "Pasta or potato"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Escalopes de veau à la parmigiana", "description": "Escalope de veau panée et frite, sauce tomate, mozzarella et parmesan.", "ingredients": ["Veau pané", "Sauce tomate", "Mozzarella", "Parmesan", "Accompagnement"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 40,
+    "name": "Milanese",
+    "price": 16.00,
+    "weight": "380 g",
+    "kcal": 680,
+    "description": "Clásico filete de ternera empanado y crujiente, acompañado con patatas.",
+    "ingredients": ["Filete de ternera empanado y frito", "Patata", "Aceite", "Sal"],
+    "allergens": ["Gluten", "Huevo"],
+    "tags": ["Carnes", "carne", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Milanese", "description": "Filete de ternera empanado y frito, acompañado con patata.", "ingredients": ["Ternera empanada", "Patata"], "allergens": ["Gluten", "Huevo"] },
+      "en": { "name": "Veal Milanese", "description": "Classic crispy breaded veal cutlet served with potatoes.", "ingredients": ["Breaded veal fillet", "Potato", "Oil", "Salt"], "allergens": ["Gluten", "Egg"] },
+      "fr": { "name": "Veau à la milanaise", "description": "Escalope de veau panée et croustillante, servie avec des pommes de terre.", "ingredients": ["Escalope de veau panée", "Pomme de terre"], "allergens": ["Gluten", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 41,
+    "name": "Margherita",
+    "price": 11.50,
+    "weight": "420 g",
+    "kcal": 800,
+    "description": "Pizza clásica napolitana con salsa de tomate, mozzarella fresca y albahaca.",
+    "ingredients": ["Tomate", "Mozzarella", "Albahaca", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas", "tradicional", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Margherita", "description": "Tomate, mozzarella, albahaca.", "ingredients": ["Tomate", "Mozzarella", "Albahaca"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Margherita Pizza", "description": "Classic Neapolitan pizza with tomato sauce, fresh mozzarella, and basil.", "ingredients": ["Tomato", "Mozzarella", "Basil", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Margherita", "description": "Pizza classique napolitaine avec sauce tomate, mozzarella fraîche et basilic.", "ingredients": ["Tomate", "Mozzarella", "Basilic", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 42,
+    "name": "Calzone (Cerrada)",
+    "price": 12.50,
+    "weight": "440 g",
+    "kcal": 850,
+    "description": "Pizza cerrada y rellena de salsa de tomate, jamón york y queso fundido.",
+    "ingredients": ["Tomate", "Jamon york", "Queso", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Calzone (Cerrada)", "description": "Tomate, jamon york y queso.", "ingredients": ["Tomate", "Jamón york", "Queso"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Calzone (Folded)", "description": "Folded pizza stuffed with tomato sauce, cooked ham, and melted cheese.", "ingredients": ["Tomato", "Ham", "Cheese", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Calzone (Pizza fermée)", "description": "Pizza pliée et farcie de sauce tomate, jambon cuit et fromage fondu.", "ingredients": ["Tomate", "Jambon", "Fromage", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 43,
+    "name": "Marinara",
+    "price": 14.00,
+    "weight": "400 g",
+    "kcal": 740,
+    "description": "Pizza con salsa de tomate, láminas de ajo, anchoas seleccionadas y orégano.",
+    "ingredients": ["Tomate", "Ajo", "Anchoas", "Oregano", "Masa de pizza"],
+    "allergens": ["Gluten", "Pescado"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Marinara", "description": "Tomate, ajo, anchoas, oregano.", "ingredients": ["Tomate", "Ajo", "Anchoas", "Orégano"], "allergens": ["Gluten", "Pescado"] },
+      "en": { "name": "Marinara Pizza", "description": "Pizza with tomato sauce, garlic, selected anchovies, and oregano.", "ingredients": ["Tomato", "Garlic", "Anchovies", "Oregano", "Pizza dough"], "allergens": ["Gluten", "Fish"] },
+      "fr": { "name": "Pizza Marinara", "description": "Pizza avec sauce tomate, ail, anchois sélectionnés et origan.", "ingredients": ["Tomate", "Ail", "Anchois", "Origan", "Pâte à pizza"], "allergens": ["Gluten", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 44,
+    "name": "Cuatro Quesos",
+    "price": 13.50,
+    "weight": "430 g",
+    "kcal": 890,
+    "description": "Pizza elaborada con mozzarella, tomate, queso azul, Gouda y queso parmesano.",
+    "ingredients": ["Mozzarella", "Tomate", "Queso azul", "Gouda", "Parmesano", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Cuatro Quesos", "description": "Mozzarella, tomate, queso azul, Gouda y parmesano.", "ingredients": ["Mozzarella", "Tomate", "Queso azul", "Gouda", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Four Cheese Pizza", "description": "Pizza made with mozzarella, tomato, blue cheese, Gouda, and parmesan cheese.", "ingredients": ["Mozzarella", "Tomato", "Blue cheese", "Gouda", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Quatre Fromages", "description": "Pizza préparée avec mozzarella, tomate, fromage bleu, Gouda et parmesan.", "ingredients": ["Mozzarella", "Tomate", "Fromage bleu", "Gouda", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 45,
+    "name": "Prosciutto",
+    "price": 12.50,
+    "weight": "420 g",
+    "kcal": 810,
+    "description": "Pizza clásica con base de tomate, mozzarella fundida y jamón york.",
+    "ingredients": ["Tomate", "Mozzarella", "Jamon york", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Prosciutto", "description": "Tomate, mozzarella, jamon york.", "ingredients": ["Tomate", "Mozzarella", "Jamón york"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Prosciutto Pizza", "description": "Classic pizza with tomato sauce, melted mozzarella, and cooked ham.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Prosciutto", "description": "Pizza classique avec base de tomate, mozzarella fondue et jambon cuit.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 46,
+    "name": "4 Stagioni",
+    "price": 14.00,
+    "weight": "440 g",
+    "kcal": 860,
+    "description": "Pizza dividida en cuatro estaciones con tomate, mozzarella, jamón york, champiñones y anchoas.",
+    "ingredients": ["Tomate", "Mozzarella", "Jamon york", "Champiñones", "Anchoas", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos", "Pescado"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "4 Stagioni", "description": "Tomate, mozzarella, jamon york, champiñones y anchoas.", "ingredients": ["Tomate", "Mozzarella", "Jamón york", "Champiñones", "Anchoas"], "allergens": ["Gluten", "Lácteos", "Pescado"] },
+      "en": { "name": "Four Seasons Pizza", "description": "Pizza divided into four sections with tomato, mozzarella, ham, mushrooms, and anchovies.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Mushrooms", "Anchovies", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Fish"] },
+      "fr": { "name": "Pizza 4 Saisons", "description": "Pizza garnie de tomate, mozzarella, jambon cuit, champignons et anchois.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Champignons", "Anchois", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 47,
+    "name": "Á Libretto",
+    "price": 15.00,
+    "weight": "430 g",
+    "kcal": 880,
+    "description": "Pizza especial de la casa con provola, setas boletus, trufa y pecorino romano.",
+    "ingredients": ["Provola", "Boletus", "Trufa", "Pecorino romano", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Á Libretto", "description": "Provola, Boletus, trufa, pecorino romano.", "ingredients": ["Provola", "Boletus", "Trufa", "Pecorino romano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Á Libretto Pizza", "description": "Special house pizza with provola cheese, porcini mushrooms, truffle, and pecorino romano.", "ingredients": ["Provola cheese", "Porcini", "Truffle", "Pecorino romano", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Á Libretto", "description": "Pizza spéciale de la maison au provola, cèpes, truffe et pecorino romano.", "ingredients": ["Provola", "Cèpes", "Truffe", "Pecorino romano", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 48,
+    "name": "Bianka",
+    "price": 15.00,
+    "weight": "450 g",
+    "kcal": 910,
+    "description": "Pizza blanca con tomate, queso, mortadela, migas de pistacho, stracciatella de burrata y rúcula.",
+    "ingredients": ["Tomate", "Queso", "Mortadela", "Migas de pistacho", "Stracciatella de burrata", "Rúcula", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
+    "tags": ["Pizzas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Bianka", "description": "Tomate, queso, mortadela, migas de pistacho, stracciatella de burrata, rúcula.", "ingredients": ["Tomate", "Queso", "Mortadela", "Pistacho", "Stracciatella de burrata", "Rúcula"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Bianka Pizza", "description": "White base pizza with tomato, cheese, mortadella, pistachio crumbs, burrata stracciatella, and arugula.", "ingredients": ["Tomato", "Cheese", "Mortadella", "Pistachio", "Burrata stracciatella", "Arugula", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Nuts"] },
+      "fr": { "name": "Pizza Bianka", "description": "Pizza base blanche avec tomate, fromage, mortadelle, éclats de pistache, stracciatella de burrata et roquette.", "ingredients": ["Tomate", "Fromage", "Mortadelle", "Pistache", "Stracciatella", "Roquette", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
+    }
+  },
+  {
+    "imageNumber": 49,
+    "name": "Selena",
+    "price": 14.50,
+    "weight": "440 g",
+    "kcal": 840,
+    "description": "Pizza con tomate, mozzarella, jamón york, setas variadas y gambas.",
+    "ingredients": ["Tomate", "Mozzarella", "Jamon york", "Setas", "Gambas", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos", "Marisco"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Selena", "description": "Tomate, mozzarella, jamon york, setas y gambas.", "ingredients": ["Tomate", "Mozzarella", "Jamón york", "Setas", "Gambas"], "allergens": ["Gluten", "Lácteos", "Marisco"] },
+      "en": { "name": "Selena Pizza", "description": "Pizza with tomato, mozzarella, cooked ham, assorted mushrooms, and prawns.", "ingredients": ["Tomato", "Mozzarella", "Ham", "Mushrooms", "Prawns", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Shellfish"] },
+      "fr": { "name": "Pizza Selena", "description": "Pizza avec tomate, mozzarella, jambon cuit, champignons assortis et crevettes.", "ingredients": ["Tomate", "Mozzarella", "Jambon", "Champignons", "Crevettes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Crustacés"] }
+    }
+  },
+  {
+    "imageNumber": 50,
+    "name": "Peperoni",
+    "price": 12.50,
+    "weight": "420 g",
+    "kcal": 850,
+    "description": "Pizza con base de tomate, mozzarella fundida y delicioso salame picante.",
+    "ingredients": ["Tomate", "Mozzarella", "Salame picante", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Peperoni", "description": "Tomate, mozzarella, salame picante.", "ingredients": ["Tomate", "Mozzarella", "Salame picante"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Pepperoni Pizza", "description": "Pizza with tomato sauce, melted mozzarella, and spicy salami pepperoni.", "ingredients": ["Tomato", "Mozzarella", "Spicy salami", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Pepperoni", "description": "Pizza avec sauce tomate, mozzarella fondue et salami piquant.", "ingredients": ["Tomate", "Mozzarella", "Salami piquant", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 51,
+    "name": "Tonno",
+    "price": 12.50,
+    "weight": "420 g",
+    "kcal": 810,
+    "description": "Pizza con salsa de tomate, atún de calidad y mozzarella fundida.",
+    "ingredients": ["Salsa de tomate", "Tonno (atún)", "Mozzarella", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos", "Pescado"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tonno", "description": "Salsa de tomate, tonno, mozzarella.", "ingredients": ["Salsa de tomate", "Atún", "Mozzarella"], "allergens": ["Gluten", "Lácteos", "Pescado"] },
+      "en": { "name": "Tonno Pizza", "description": "Pizza with tomato sauce, quality tuna, and melted mozzarella.", "ingredients": ["Tomato sauce", "Tuna", "Mozzarella", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Fish"] },
+      "fr": { "name": "Pizza Tonno", "description": "Pizza avec sauce tomate, thon de qualité et mozzarella fondue.", "ingredients": ["Sauce tomate", "Thon", "Mozzarella", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 52,
+    "name": "Vegetal",
+    "price": 14.00,
+    "weight": "410 g",
+    "kcal": 690,
+    "description": "Pizza ligera con tomate, mozzarella y verduras frescas a la plancha o salteadas.",
+    "ingredients": ["Tomate", "Mozzarella", "Verduras a la plancha o salteada", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas", "vegetariano", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Vegetal", "description": "Tomate, mozzarella, verduras a la plancha o salteada.", "ingredients": ["Tomate", "Mozzarella", "Verduras"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Vegetable Pizza", "description": "Light pizza with tomato, mozzarella, and grilled or sautéed fresh vegetables.", "ingredients": ["Tomato", "Mozzarella", "Vegetables", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Végétarienne", "description": "Pizza légère avec tomate, mozzarella et légumes frais grillés ou sautés.", "ingredients": ["Tomate", "Mozzarella", "Légumes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 53,
+    "name": "Parma",
+    "price": 15.00,
+    "weight": "450 g",
+    "kcal": 870,
+    "description": "Pizza con tomate, mozzarella, jamón de parma, rúcula fresca, tomates cherry y lascas de parmesano.",
+    "ingredients": ["Tomate", "Mozzarella", "Jamón de parma", "Rúcula", "Cherry", "Lasca de parmesano", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Parma", "description": "Tomate, mozzarella, jamon de parma, rucula, cherry, lasca de parmesano.", "ingredients": ["Tomate", "Mozzarella", "Jamón de parma", "Rúcula", "Cherry", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Parma Pizza", "description": "Pizza with tomato, mozzarella, Parma ham, fresh arugula, cherry tomatoes, and parmesan shavings.", "ingredients": ["Tomato", "Mozzarella", "Parma ham", "Arugula", "Cherry tomatoes", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Parma", "description": "Pizza avec tomate, mozzarella, jambon de parma, roquette fraîche, tomates cerises et copeaux de parmesan.", "ingredients": ["Tomate", "Mozzarella", "Jambon de parma", "Roquette", "Tomates cerises", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 54,
+    "name": "Boloñesa",
+    "price": 14.00,
+    "weight": "440 g",
+    "kcal": 860,
+    "description": "Pizza con ragú boloñesa de carne, mozzarella fundida y queso parmesano.",
+    "ingredients": ["Ragu boloñesa", "Mozzarella", "Parmesano", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Boloñesa", "description": "Ragu boloñesa, mozzarella, parmesano.", "ingredients": ["Ragú boloñesa", "Mozzarella", "Parmesano"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Bolognese Pizza", "description": "Pizza topped with meat bolognese ragù, melted mozzarella, and parmesan cheese.", "ingredients": ["Bolognese ragù", "Mozzarella", "Parmesan", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Bolognaise", "description": "Pizza garnie de ragout de viande bolognaise, mozzarella fondue et parmesan.", "ingredients": ["Ragout bolognaise", "Mozzarella", "Parmesan", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 55,
+    "name": "Gambas",
+    "price": 15.00,
+    "weight": "430 g",
+    "kcal": 810,
+    "description": "Pizza con base de tomate, mozzarella fundida y gambas seleccionadas.",
+    "ingredients": ["Tomate", "Mozzarella", "Gambas", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos", "Marisco"],
+    "tags": ["Pizzas", "marisco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Gambas", "description": "Tomate, mozzarella y gambas.", "ingredients": ["Tomate", "Mozzarella", "Gambas"], "allergens": ["Gluten", "Lácteos", "Marisco"] },
+      "en": { "name": "Shrimp Pizza", "description": "Pizza with tomato sauce, melted mozzarella, and selected prawns.", "ingredients": ["Tomato", "Mozzarella", "Shrimp", "Pizza dough"], "allergens": ["Gluten", "Dairy", "Shellfish"] },
+      "fr": { "name": "Pizza aux Crevettes", "description": "Pizza avec base de tomate, mozzarella fondue et crevettes sélectionnées.", "ingredients": ["Tomate", "Mozzarella", "Crevettes", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers", "Crustacés"] }
+    }
+  },
+  {
+    "imageNumber": 56,
+    "name": "Barbacoa",
+    "price": 14.50,
+    "weight": "450 g",
+    "kcal": 890,
+    "description": "Pizza con salsa boloñesa, mozzarella, tiras de bacón crujiente y salsa barbacoa.",
+    "ingredients": ["Salsa boloñesa", "Mozzarella", "Bacón", "Salsa barbacoa", "Masa de pizza"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["Pizzas"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Barbacoa", "description": "Salsa boloñesa, mozzarella, bacón, salsa barbacoa.", "ingredients": ["Salsa boloñesa", "Mozzarella", "Bacón", "Salsa barbacoa"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "BBQ Pizza", "description": "Pizza with bolognese sauce, mozzarella, crispy bacon strips, and BBQ sauce.", "ingredients": ["Bolognese sauce", "Mozzarella", "Bacon", "BBQ sauce", "Pizza dough"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Barbecue", "description": "Pizza avec sauce bolognaise, mozzarella, lanières de bacon croustillant et sauce BBQ.", "ingredients": ["Sauce bolognaise", "Mozzarella", "Bacon", "Sauce BBQ", "Pâte à pizza"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 57,
+    "name": "Tiramisú de café",
+    "price": 5.50,
+    "weight": "180 g",
+    "kcal": 410,
+    "description": "Postre casero tradicional italiano con bizcochos de soletilla, café espresso y crema mascarpone.",
+    "ingredients": ["Bizcochos de soletilla", "Café espresso", "Crema mascarpone", "Cacao en polvo", "Huevo"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Postres", "casero", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tiramisú de café", "description": "Postre casero tradicional italiano con café y mascarpone.", "ingredients": ["Bizcochos", "Café", "Mascarpone", "Cacao", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Coffee Tiramisu", "description": "Traditional homemade Italian dessert with ladyfingers, espresso coffee, and mascarpone cream.", "ingredients": ["Ladyfingers", "Espresso", "Mascarpone cream", "Cocoa powder", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Tiramisu au café", "description": "Dessert maison traditionnel italien aux biscuits, café espresso et crème mascarpone.", "ingredients": ["Biscuits", "Café espresso", "Mascarpone", "Cacao", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 58,
+    "name": "Tiramisú de fresa",
+    "price": 6.50,
+    "weight": "190 g",
+    "kcal": 430,
+    "description": "Variación casera del clásico tiramisú infusionado con puré y trozos de fresas frescas.",
+    "ingredients": ["Bizcochos", "Puré de fresa", "Fresas frescas", "Crema mascarpone", "Huevo"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Postres", "casero"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tiramisú de fresa", "description": "Tiramisú casero con fresas frescas.", "ingredients": ["Bizcochos", "Puré de fresa", "Fresas", "Mascarpone", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Strawberry Tiramisu", "description": "Homemade variation of classic tiramisu infused with fresh strawberry puree and chunks.", "ingredients": ["Ladyfingers", "Strawberry puree", "Fresh strawberries", "Mascarpone cream", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Tiramisu à la fraise", "description": "Variante maison du tiramisu classique parfumé à la purée et morceaux de fraises fraîches.", "ingredients": ["Biscuits", "Purée de fraise", "Fraises fraîches", "Mascarpone", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 59,
+    "name": "Tarta de Nutella",
+    "price": 6.00,
+    "weight": "170 g",
+    "kcal": 520,
+    "description": "Tarta casera cremosa elaborada con crema de avellanas y cacao Nutella.",
+    "ingredients": ["Crema de Nutella", "Galleta", "Mantequilla", "Queso crema", "Nata"],
+    "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"],
+    "tags": ["Postres", "casero", "dulce"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tarta de Nutella", "description": "Tarta casera con crema de Nutella.", "ingredients": ["Nutella", "Galleta", "Mantequilla", "Queso crema", "Nata"], "allergens": ["Gluten", "Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Nutella Cake", "description": "Homemade creamy cake made with delicious Nutella hazelnut cocoa spread.", "ingredients": ["Nutella", "Biscuit base", "Butter", "Cream cheese", "Cream"], "allergens": ["Gluten", "Dairy", "Nuts"] },
+      "fr": { "name": "Gâteau au Nutella", "description": "Gâteau maison crémeux préparé avec de la pâte à tartiner Nutella.", "ingredients": ["Nutella", "Biscuit", "Beurre", "Fromage frais", "Crème"], "allergens": ["Gluten", "Produits laitiers", "Fruits à coque"] }
+    }
+  },
+  {
+    "imageNumber": 60,
+    "name": "Bolas de Helado",
+    "price": 2.50,
+    "weight": "120 g",
+    "kcal": 210,
+    "description": "Selección de bolas de helado artesano (consultar sabores disponibles).",
+    "ingredients": ["Helado artesano"],
+    "allergens": ["Lácteos"],
+    "tags": ["Postres", "casero"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Bolas de Helado", "description": "Bolas de helado artesano.", "ingredients": ["Helado artesano"], "allergens": ["Lácteos"] },
+      "en": { "name": "Ice Cream Scoops", "description": "Selection of artisanal ice cream scoops (ask for available flavors).", "ingredients": ["Artisanal ice cream"], "allergens": ["Dairy"] },
+      "fr": { "name": "Boules de glace", "description": "Sélection de boules de glace artisanale (parfums du moment).", "ingredients": ["Glace artisanale"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 61,
+    "name": "Tarta de Queso",
+    "price": 6.00,
+    "weight": "180 g",
+    "kcal": 490,
+    "description": "Tarta de queso casera horneada con una textura cremosa y suave.",
+    "ingredients": ["Queso crema", "Nata", "Huevo", "Azúcar", "Galleta"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["Postres", "casero", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tarta de Queso", "description": "Tarta de queso casera cremosa.", "ingredients": ["Queso crema", "Nata", "Huevo", "Azúcar", "Galleta"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Cheesecake", "description": "Homemade baked cheesecake with a creamy and smooth texture.", "ingredients": ["Cream cheese", "Cream", "Egg", "Sugar", "Biscuit base"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Cheesecake", "description": "Gâteau au fromage maison cuit au four à la texture crémeuse.", "ingredients": ["Fromage frais", "Crème", "Œuf", "Sucre", "Biscuit"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 62,
+    "name": "Servicio de pan",
+    "price": 1.30,
+    "weight": "100 g",
+    "kcal": 260,
+    "description": "Pan fresco artesano de acompañamiento.",
+    "ingredients": ["Pan artesano"],
+    "allergens": ["Gluten"],
+    "tags": ["Postres", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Servicio de pan", "description": "Pan fresco artesano.", "ingredients": ["Pan artesano"], "allergens": ["Gluten"] },
+      "en": { "name": "Bread Service", "description": "Fresh artisan accompaniment bread.", "ingredients": ["Artisan bread"], "allergens": ["Gluten"] },
+      "fr": { "name": "Service de pain", "description": "Pain frais artisanal d'accompagnement.", "ingredients": ["Pain artisanal"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 63,
+    "name": "Caña 1906",
+    "price": 2.90,
+    "weight": "250 ml",
+    "kcal": 120,
+    "description": "Cerveza de barril 1906 Reserva Especial, equilibrada y tostada.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Maíz"],
+    "allergens": ["Gluten"],
+    "tags": ["Bebidas", "cerveza"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Caña 1906", "description": "Cerveza de barril 1906 Reserva Especial.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Maíz"], "allergens": ["Gluten"] },
+      "en": { "name": "Draft Beer 1906", "description": "Draft 1906 Reserva Especial beer, well-balanced and toasted.", "ingredients": ["Water", "Barley malt", "Hops", "Corn"], "allergens": ["Gluten"] },
+      "fr": { "name": "Pression 1906", "description": "Bière pression 1906 Reserva Especial, équilibrée et ambrée.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Maïs"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 64,
+    "name": "Estrella Galicia",
+    "price": 3.10,
+    "weight": "330 ml",
+    "kcal": 140,
+    "description": "Botellín de cerveza lager especial Estrella Galicia.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Maíz"],
+    "allergens": ["Gluten"],
+    "tags": ["Bebidas", "cerveza"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Estrella Galicia", "description": "Botellín de cerveza lager especial.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Maíz"], "allergens": ["Gluten"] },
+      "en": { "name": "Estrella Galicia Beer", "description": "Bottle of Estrella Galicia special lager beer.", "ingredients": ["Water", "Barley malt", "Hops", "Corn"], "allergens": ["Gluten"] },
+      "fr": { "name": "Bouteille Estrella Galicia", "description": "Bouteille de bière lager spéciale Estrella Galicia.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Maïs"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 65,
+    "name": "Estrella Galicia 0,0 tostada",
+    "price": 3.10,
+    "weight": "330 ml",
+    "kcal": 70,
+    "description": "Cerveza tostada sin alcohol con sabor intenso y notas de malta.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Extracto de malta"],
+    "allergens": ["Gluten"],
+    "tags": ["Bebidas", "cerveza", "sin alcohol"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Estrella Galicia 0,0 tostada", "description": "Cerveza tostada sin alcohol.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo"], "allergens": ["Gluten"] },
+      "en": { "name": "Estrella Galicia 0.0 Toasted Non-Alcoholic", "description": "Toasted alcohol-free beer with rich malt notes.", "ingredients": ["Water", "Barley malt", "Hops"], "allergens": ["Gluten"] },
+      "fr": { "name": "Estrella Galicia 0,0 Ambrée Sans Alcool", "description": "Bière ambrée sans alcool aux notes de malt riches.", "ingredients": ["Eau", "Malt d'orge", "Houblon"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 66,
+    "name": "Estrella Galicia sin gluten",
+    "price": 3.10,
+    "weight": "330 ml",
+    "kcal": 140,
+    "description": "Cerveza especial apta para celiacos, elaborada sin gluten manteniendo todo su sabor.",
+    "ingredients": ["Agua", "Malta de cebada específica sin gluten", "Lúpulo"],
+    "allergens": [],
+    "tags": ["Bebidas", "cerveza", "sin gluten"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Estrella Galicia sin gluten", "description": "Cerveza especial apta para celiacos.", "ingredients": ["Agua", "Malta", "Lúpulo"], "allergens": [] },
+      "en": { "name": "Estrella Galicia Gluten-Free", "description": "Special beer suitable for celiacs, brewed without gluten while keeping full flavor.", "ingredients": ["Water", "Gluten-free malt", "Hops"], "allergens": [] },
+      "fr": { "name": "Estrella Galicia Sans Gluten", "description": "Bière spéciale sans gluten adaptée aux coeliaques.", "ingredients": ["Eau", "Malt sans gluten", "Houblon"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 67,
+    "name": "1906 Red Vintage",
+    "price": 3.00,
+    "weight": "330 ml",
+    "kcal": 160,
+    "description": "Cerveza de alta graduación y cuerpo robusto, conocida como La Pelirroja.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo", "Maíz"],
+    "allergens": ["Gluten"],
+    "tags": ["Bebidas", "cerveza"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "1906 Red Vintage", "description": "Cerveza de alta graduación y cuerpo robusto.", "ingredients": ["Agua", "Malta", "Lúpulo"], "allergens": ["Gluten"] },
+      "en": { "name": "1906 Red Vintage Beer", "description": "High-alcohol content beer with a robust and deep body.", "ingredients": ["Water", "Barley malt", "Hops", "Corn"], "allergens": ["Gluten"] },
+      "fr": { "name": "1906 Red Vintage", "description": "Bière forte au corps robuste et profond.", "ingredients": ["Eau", "Malt d'orge", "Houblon", "Maïs"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 68,
+    "name": "Caña Peroni",
+    "price": 2.90,
+    "weight": "250 ml",
+    "kcal": 110,
+    "description": "Cerveza rubia de barril de origen italiano, refrescante y ligera.",
+    "ingredients": ["Agua", "Malta de cebada", "Maíz", "Lúpulo"],
+    "allergens": ["Gluten"],
+    "tags": ["Bebidas", "cerveza"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Caña Peroni", "description": "Cerveza rubia de barril italiana.", "ingredients": ["Agua", "Malta", "Maíz", "Lúpulo"], "allergens": ["Gluten"] },
+      "en": { "name": "Draft Peroni Beer", "description": "Refreshing and crisp Italian draft lager beer.", "ingredients": ["Water", "Barley malt", "Corn", "Hops"], "allergens": ["Gluten"] },
+      "fr": { "name": "Pression Peroni", "description": "Bière blonde pression d'origine italienne, rafraîchissante et légère.", "ingredients": ["Eau", "Malt d'orge", "Maïs", "Houblon"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 69,
+    "name": "Aquarius Limón",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 100,
+    "description": "Bebida isotónica con zumo de limón, refrescante y rehidratante.",
+    "ingredients": ["Agua carbonatada", "Azúcares", "Zumo de limón", "Sales minerales"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Aquarius Limón", "description": "Bebida isotónica con zumo de limón.", "ingredients": ["Agua", "Azúcares", "Zumo de limón"], "allergens": [] },
+      "en": { "name": "Aquarius Lemon", "description": "Isotonic sports drink with lemon juice, refreshing and hydrating.", "ingredients": ["Carbonated water", "Sugars", "Lemon juice", "Minerals"], "allergens": [] },
+      "fr": { "name": "Aquarius Citron", "description": "Boisson isotonique au jus de citron, rafraîchissante.", "ingredients": ["Eau gazéifiée", "Sucres", "Jus de citron", "Sels minéraux"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 70,
+    "name": "Coca Cola",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 140,
+    "description": "Refresco clásico de cola en lata bien fría.",
+    "ingredients": ["Agua carbonatada", "Azúcar", "Colorante E-150d", "Ácido fosfórico", "Aromas", "Cafeína"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Coca Cola", "description": "Refresco clásico de cola.", "ingredients": ["Agua carbonatada", "Azúcar", "Cafeína"], "allergens": [] },
+      "en": { "name": "Coca Cola", "description": "Classic cola soft drink in a cold can.", "ingredients": ["Carbonated water", "Sugar", "Caffeine"], "allergens": [] },
+      "fr": { "name": "Coca Cola", "description": "Boisson gazeuse classique au cola.", "ingredients": ["Eau gazéifiée", "Sucre", "Caféine"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 71,
+    "name": "Coca Cola Zero Zero",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 1,
+    "description": "Refresco de cola sin azúcar y sin cafeína.",
+    "ingredients": ["Agua carbonatada", "Edulcorantes", "Colorante E-150d", "Aromas"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco", "cero calorias"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Coca Cola Zero Zero", "description": "Refresco de cola sin azúcar y sin cafeína.", "ingredients": ["Agua carbonatada", "Edulcorantes"], "allergens": [] },
+      "en": { "name": "Coca Cola Zero Zero", "description": "Sugar-free and caffeine-free cola soft drink.", "ingredients": ["Carbonated water", "Sweeteners"], "allergens": [] },
+      "fr": { "name": "Coca Cola Zero Zero", "description": "Boisson au cola sans sucre et sans caféine.", "ingredients": ["Eau gazéifiée", "Édulcorants"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 72,
+    "name": "Coca Cola Zero",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 1,
+    "description": "Refresco de cola sin azúcar con todo el sabor clásico.",
+    "ingredients": ["Agua carbonatada", "Edulcorantes", "Colorante E-150d", "Cafeína"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco", "cero calorias"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Coca Cola Zero", "description": "Refresco de cola sin azúcar.", "ingredients": ["Agua carbonatada", "Edulcorantes"], "allergens": [] },
+      "en": { "name": "Coca Cola Zero", "description": "Zero sugar cola soft drink with full classic flavor.", "ingredients": ["Carbonated water", "Sweeteners", "Caffeine"], "allergens": [] },
+      "fr": { "name": "Coca Cola Zéro", "description": "Boisson au cola sans sucre avec toute la saveur classique.", "ingredients": ["Eau gazéifiée", "Édulcorants", "Caféine"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 73,
+    "name": "Fanta Naranja",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 130,
+    "description": "Refresco carbonatado con zumo de naranja.",
+    "ingredients": ["Agua carbonatada", "Zumo de naranja", "Azúcar", "Aromas"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Fanta Naranja", "description": "Refresco carbonatado con zumo de naranja.", "ingredients": ["Agua", "Zumo de naranja", "Azúcar"], "allergens": [] },
+      "en": { "name": "Fanta Orange", "description": "Carbonated soft drink with orange juice.", "ingredients": ["Carbonated water", "Orange juice", "Sugar"], "allergens": [] },
+      "fr": { "name": "Fanta Orange", "description": "Boisson gazeuse au jus d'orange.", "ingredients": ["Eau gazéifiée", "Jus d'orange", "Sucre"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 74,
+    "name": "Nestea",
+    "price": 2.90,
+    "weight": "330 ml",
+    "kcal": 90,
+    "description": "Té frío aromatizado al limón con extracto de té natural.",
+    "ingredients": ["Infusión de té negro", "Azúcar", "Zumo de limón a partir de concentrado", "Aromas"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Nestea", "description": "Té frío aromatizado al limón.", "ingredients": ["Té negro", "Azúcar", "Zumo de limón"], "allergens": [] },
+      "en": { "name": "Nestea", "description": "Lemon flavored iced tea infused with natural tea extract.", "ingredients": ["Black tea infusion", "Sugar", "Lemon juice"], "allergens": [] },
+      "fr": { "name": "Nestea", "description": "Thé glacé aromatisé au citron.", "ingredients": ["Infusion de thé noir", "Sucre", "Jus de citron"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 75,
+    "name": "Agua Cabreiroa 1/2 L",
+    "price": 2.20,
+    "weight": "500 ml",
+    "kcal": 0,
+    "description": "Botella de agua mineral natural Cabreiroá de medio litro.",
+    "ingredients": ["Agua mineral natural"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "agua"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Agua Cabreiroa 1/2 L", "description": "Agua mineral natural de medio litro.", "ingredients": ["Agua mineral"], "allergens": [] },
+      "en": { "name": "Cabreiroa Water 0.5L", "description": "Half-liter bottle of Cabreiroá natural mineral water.", "ingredients": ["Natural mineral water"], "allergens": [] },
+      "fr": { "name": "Eau Cabreiroa 1/2 L", "description": "Bouteille d'eau minérale naturelle Cabreiroá d'un demi-litre.", "ingredients": ["Eau minérale naturelle"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 76,
+    "name": "Agua Cabreiroa 1 L",
+    "price": 3.00,
+    "weight": "1000 ml",
+    "kcal": 0,
+    "description": "Botella grande de agua mineral natural Cabreiroá de un litro.",
+    "ingredients": ["Agua mineral natural"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "agua"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Agua Cabreiroa 1 L", "description": "Agua mineral natural de un litro.", "ingredients": ["Agua mineral"], "allergens": [] },
+      "en": { "name": "Cabreiroa Water 1L", "description": "One-liter bottle of Cabreiroá natural mineral water.", "ingredients": ["Natural mineral water"], "allergens": [] },
+      "fr": { "name": "Eau Cabreiroa 1 L", "description": "Grande bouteille d'eau minérale naturelle Cabreiroá d'un litre.", "ingredients": ["Eau minérale naturelle"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 77,
+    "name": "Magma (con gas)",
+    "price": 2.40,
+    "weight": "500 ml",
+    "kcal": 0,
+    "description": "Agua mineral natural carbónicas con gas de manantial.",
+    "ingredients": ["Agua mineral natural", "Gas carbónico"],
+    "allergens": [],
+    "tags": ["Bebidas", "sin alcohol", "agua"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Magma (con gas)", "description": "Agua mineral natural con gas.", "ingredients": ["Agua mineral", "Gas carbónico"], "allergens": [] },
+      "en": { "name": "Magma Sparkling Water", "description": "Natural mineral spring water with added carbonation.", "ingredients": ["Natural mineral water", "Carbonation"], "allergens": [] },
+      "fr": { "name": "Eau Magma (pétillante)", "description": "Eau minérale naturelle gazeuse de source.", "ingredients": ["Eau minérale naturelle", "Gaz carbonique"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 78,
+    "name": "Sangria Casera",
+    "price": 16.00,
+    "weight": "1000 ml",
+    "kcal": 650,
+    "description": "Jarra de sangría tradicional casera con vino, frutas troceadas y licores.",
+    "ingredients": ["Vino tinto", "Fruta variada", "Licor", "Refresco de naranja", "Azúcar"],
+    "allergens": ["Sulfitos"],
+    "tags": ["Bebidas", "coctel", "para compartir"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Sangria Casera", "description": "Jarra de sangría tradicional casera.", "ingredients": ["Vino tinto", "Fruta", "Licor", "Refresco"], "allergens": ["Sulfitos"] },
+      "en": { "name": "Homemade Sangria", "description": "Pitcher of traditional homemade sangria with wine, chopped fresh fruits, and liqueurs.", "ingredients": ["Red wine", "Assorted fruit", "Liqueur", "Orange soda", "Sugar"], "allergens": ["Sulfites"] },
+      "fr": { "name": "Sangria Maison", "description": "Pichet de sangria traditionnelle maison au vin, fruits frais coupés et liqueurs.", "ingredients": ["Vin rouge", "Fruits variés", "Liqueur", "Soda orange", "Sucre"], "allergens": ["Sulfites"] }
+    }
+  }
 ]
-}
