@@ -345,8 +345,8 @@
          <div class="sala-legend">
             <span><i style="background:var(--bg); border:2px solid var(--border);"></i> Libre</span>
             <span><i style="background:rgba(245,158,11,0.4); border:2px solid var(--warning);"></i> Ocupada</span>
-            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> +15 min / Alerta</span>
-            <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Pidió la cuenta</span>
+            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> Pidió la cuenta (se libera en 15 min) / sentada hace rato</span>
+            <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Necesita ayuda</span>
          </div>
        </div>
     </div>
@@ -859,7 +859,7 @@
       if(paymentAlertOrders.length > 0) {
           let lastPaymentTime = Math.max(...paymentAlertOrders.map(o => new Date(o.created_at).getTime()));
           let remainingMin = Math.max(0, Math.ceil(AUTO_FREE_MINUTES - (Date.now() - lastPaymentTime) / 60000));
-          return { status:'blue', label: remainingMin > 0 ? `Pidió la cuenta · se libera en ${remainingMin} min` : 'Pidió la cuenta · liberando...' };
+          return { status:'red', label: remainingMin > 0 ? `Pidió la cuenta · se libera en ${remainingMin} min` : 'Pidió la cuenta · liberando...' };
       }
 
       // Ocupada normal (comió/está sentada, aún no pidió la cuenta)
