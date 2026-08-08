@@ -6,7 +6,6 @@
 <title>Á Libretto &mdash; Menú digital</title>
 <meta name="description" content="Menú digital Á Libretto. Cócteles y platos deliciosos.">
 
-<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -17,7 +16,6 @@
     });
   }
 </script>
-<!-- ================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -220,7 +218,6 @@
         </div>
     </div>
     
-    <!-- WRAPPER BADGE MESE (acum dropdown la click) -->
     <div class="tables-badge-wrap">
         <button class="tables-badge" id="tablesBadge"></button>
         <div class="tables-badge-list" id="tablesBadgeList"></div>
@@ -270,7 +267,6 @@
   </div>
 </div>
 
-<!-- BUTONUL SMART (va afisa Textul de Pagar/Ayuda sau Cart-ul) -->
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
 <div class="modal-overlay" id="onboardingOverlay">
@@ -413,6 +409,9 @@
   let currentRating = 0;
   let pendingReviewPrompt = false;
   let validTableNumbers = null; 
+  let salaConfigClient = null;
+  let freedTablesClient = {};
+  let ordersForTablesClient = [];
 
   function showCustomAlert(title, text) {
     document.getElementById('customAlertTitle').textContent = title;
@@ -456,7 +455,6 @@
     saveFavorites();
   }
 
-  // --- I18N ACTUALIZAT (TEXTUL BUTONULUI) ---
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
@@ -590,8 +588,13 @@
     document.getElementById('fbGoogleText').textContent = t.fbGoogle;
     document.getElementById('fbGoogleBtn').textContent = t.fbGoogleBtn;
 
-    renderTagFilters(); render(); updateBottomBar();
-    if(typeof renderTablesBadge === 'function' && salaConfigClient) renderTablesBadge();
+    renderTagFilters(); 
+    render(); 
+    updateBottomBar();
+    
+    try {
+        if(typeof renderTablesBadge === 'function') renderTablesBadge();
+    } catch(e) { }
   }
 
   const langBtn = document.getElementById('langToggleBtn');
@@ -599,7 +602,6 @@
   langBtn.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('show'); });
   document.addEventListener('click', () => langDropdown.classList.remove('show'));
   
-  // EVENIMENT PENTRU DESCHIDERE DROPDOWN MESE LA CLICK
   const tablesBadge = document.getElementById('tablesBadge');
   const tablesBadgeList = document.getElementById('tablesBadgeList');
   tablesBadge.addEventListener('click', (e) => {
@@ -728,7 +730,6 @@
           smartBtn.style.background = 'var(--pink-main)';
           smartBtn.style.color = 'white';
       } else {
-          // --- BUTONUL SMART PENTRU PAGAR/AYUDA ---
           smartBtn.innerHTML = `<span>${t.smartWaiter}</span>`;
           smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
           smartBtn.style.background = 'rgba(18, 18, 18, 0.95)';
@@ -872,11 +873,6 @@
       document.getElementById('feedbackOverlay').classList.add('open');
   }
 
-  async function checkSettings() {
-      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
-      applyBusyState(data && data.length > 0 && data[0].detalii ? !!data[0].detalii.isBusy : false);
-  }
-
   function applyBusyState(isBusy) {
       document.getElementById('busyBanner').style.display = isBusy ? 'block' : 'none';
   }
@@ -1014,31 +1010,33 @@
 
   document.getElementById('searchInput').addEventListener('input', render);
 
-  // ------- Indicador de mesas libres -------
-  let salaConfigClient = null;
-  let freedTablesClient = {};
-  let ordersForTablesClient = [];
-
+  // Funcții Asincrone Decuplate pentru Supabase
   async function loadTablesConfigClient() {
-      const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1);
-      if(data && data.length > 0 && data[0].detalii && Array.isArray(data[0].detalii.zones)) {
-          salaConfigClient = data[0].detalii;
-          validTableNumbers = new Set();
-          salaConfigClient.zones.forEach(z => z.mese.forEach(m => validTableNumbers.add(String(m.numar))));
-      } else {
-          validTableNumbers = new Set();
-      }
+      try {
+          const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1);
+          if(data && data.length > 0 && data[0].detalii && Array.isArray(data[0].detalii.zones)) {
+              salaConfigClient = data[0].detalii;
+              validTableNumbers = new Set();
+              salaConfigClient.zones.forEach(z => {
+                  if(z.mese) z.mese.forEach(m => validTableNumbers.add(String(m.numar)));
+              });
+          }
+      } catch(e) {}
   }
 
   async function loadFreedTablesClient() {
-      const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'mesa_liberada').order('created_at', {ascending:false}).limit(300);
-      freedTablesClient = {};
-      if(data) data.forEach(log => { const mesa = log.detalii && log.detalii.mesa; if(mesa && !freedTablesClient[mesa]) freedTablesClient[mesa] = new Date(log.created_at).getTime(); });
+      try {
+          const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'mesa_liberada').order('created_at', {ascending:false}).limit(300);
+          freedTablesClient = {};
+          if(data) data.forEach(log => { const mesa = log.detalii && log.detalii.mesa; if(mesa && !freedTablesClient[mesa]) freedTablesClient[mesa] = new Date(log.created_at).getTime(); });
+      } catch(e) {}
   }
 
   async function loadActiveOrdersClient() {
-      const { data } = await _supabase.from('comenzi').select('mesa,status,created_at').neq('status', 'anulata').order('created_at', { ascending: false }).limit(500);
-      ordersForTablesClient = data || [];
+      try {
+          const { data } = await _supabase.from('comenzi').select('mesa,status,created_at').neq('status', 'anulata').order('created_at', { ascending: false }).limit(500);
+          ordersForTablesClient = data || [];
+      } catch(e) {}
   }
 
   function isTableFreeClient(tableNr) {
@@ -1051,10 +1049,13 @@
   }
 
   function renderTablesBadge() {
-      if(!salaConfigClient) return;
+      if(!salaConfigClient || !salaConfigClient.zones) return;
       const t = I18N[currentLang] || I18N.es;
       let allTables = [];
-      salaConfigClient.zones.forEach(z => z.mese.forEach(m => allTables.push(m)));
+      salaConfigClient.zones.forEach(z => {
+          if(z.mese) z.mese.forEach(m => allTables.push(m));
+      });
+      
       if(allTables.length === 0) { document.getElementById('tablesBadge').style.display = 'none'; return; }
 
       const freeTables = allTables.filter(m => isTableFreeClient(m.numar));
@@ -1069,8 +1070,6 @@
       } else {
           badge.textContent = `🪑 ${freeTables.length}/${allTables.length} ${t.tablesFree}`;
           badge.classList.add('badge-low');
-          
-          // GENERĂM LISTA ÎN DROPDOWN
           list.innerHTML = freeTables.map(m => `<span>Mesa #${m.numar} · ${m.scaune} ${t.tablesFor}</span>`).join('');
       }
       badge.style.display = 'flex';
@@ -1081,33 +1080,64 @@
       renderTablesBadge();
   }
 
-  /* --- FETCH-UL CĂTRE menu.json --- */
-  fetch('menu.json').then(r => r.json()).then(async menuData => {
-      allItems = menuData || [];
-      const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
-      if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
+  async function checkSettings() {
+      try {
+          const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
+          applyBusyState(data && data.length > 0 && data[0].detalii ? !!data[0].detalii.isBusy : false);
+      } catch(e) {}
+  }
 
-      _supabase.channel('stoc_live').on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, p => {
-          if(p.new.epuizat) outOfStockIds.add(p.new.id_produs); else outOfStockIds.delete(p.new.id_produs);
-          render(); 
-      }).subscribe();
+  // --- FETCH-UL COMPLET DECUPLAT ---
+  fetch('menu.json')
+    .then(r => r.json())
+    .then(menuData => {
+        // Punem array-ul imediat și randăm
+        allItems = Array.isArray(menuData) ? menuData : [];
+        if(currentLang) applyLanguage(currentLang);
+        else render();
 
-      checkSettings();
-      setInterval(checkSettings, 120000); 
+        // Inițializăm Supabase izolat pentru a nu periclita meniul la refresh
+        (async function initSupabase() {
+            try {
+                const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
+                if(stocData) {
+                    stocData.forEach(d => outOfStockIds.add(d.id_produs));
+                    render();
+                }
+            } catch(e) {}
 
-      refreshTablesStatus();
-      setInterval(refreshTablesStatus, 30000);
-      _supabase.channel('mesas_live_client').on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, () => refreshTablesStatus())
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
-            if(p.new.actiune === 'mesa_liberada' || p.new.actiune === 'config_mese') refreshTablesStatus();
-            if(p.new.actiune === 'setari_busy') applyBusyState(p.new.detalii && !!p.new.detalii.isBusy);
-        }).subscribe();
+            try {
+                _supabase.channel('stoc_live').on('postgres_changes', { event: '*', schema: 'public', table: 'stoc_produse' }, p => {
+                    if(p.new.epuizat) outOfStockIds.add(p.new.id_produs); else outOfStockIds.delete(p.new.id_produs);
+                    render(); 
+                }).subscribe();
+            } catch(e) {}
 
-      if(currentLang) applyLanguage(currentLang);
-  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
+            try {
+                checkSettings();
+                setInterval(checkSettings, 120000); 
+
+                refreshTablesStatus();
+                setInterval(refreshTablesStatus, 30000);
+                
+                _supabase.channel('mesas_live_client')
+                  .on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, () => refreshTablesStatus())
+                  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
+                      if(p.new.actiune === 'mesa_liberada' || p.new.actiune === 'config_mese') refreshTablesStatus();
+                      if(p.new.actiune === 'setari_busy') applyBusyState(p.new.detalii && !!p.new.detalii.isBusy);
+                  }).subscribe();
+            } catch(e) {}
+        })();
+    })
+    .catch((err) => { 
+        console.error("Eroare critica la citirea json:", err);
+        document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; 
+        document.getElementById('emptyState').style.display = 'block'; 
+    });
 
 })();
 </script>
 </body>
 </html>
+
 
