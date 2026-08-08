@@ -6,12 +6,18 @@
 <title>Á Libretto &mdash; Menú digital</title>
 <meta name="description" content="Menú digital Á Libretto. Cócteles y platos deliciosos.">
 
+<!-- ===== SETĂRI APLICAȚIE (PWA) ===== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <script>
-
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('Error SW: ', err));
+    });
+  }
 </script>
+<!-- ================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1076,7 +1082,7 @@
   }
 
   /* --- FETCH-UL CĂTRE menu.json --- */
-  fetch('menu.json?v=' + Date.now()).then(r => r.json()).then(async menuData => {
+  fetch('menu.json').then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
       if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
@@ -1098,7 +1104,7 @@
         }).subscribe();
 
       if(currentLang) applyLanguage(currentLang);
-  }).catch((err) => {     console.error('Menu fetch failed:', err);     document.getElementById('emptyState').textContent = 'DEBUG: ' + (err && err.message ? err.message : String(err));     document.getElementById('emptyState').style.display = 'block'; });
+  }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
 
 })();
 </script>
