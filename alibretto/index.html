@@ -413,6 +413,19 @@
   let freedTablesClient = {};
   let ordersForTablesClient = [];
 
+  // Categoriile principale sunt luate DIRECT din tag-urile prezente în menu.json
+  // (primul tag din array-ul "tags" al fiecărui produs este considerat categoria principală).
+  // Ordinea de mai jos controlează ordinea în care apar secțiunile pe pagină.
+  const CATEGORY_ORDER = [
+    'Antipasti/ Entrantes',
+    'Ensaladas',
+    'Pastas',
+    'Carnes',
+    'Pizzas',
+    'Postres',
+    'Bebidas'
+  ];
+
   function showCustomAlert(title, text) {
     document.getElementById('customAlertTitle').textContent = title;
     document.getElementById('customAlertText').textContent = text;
@@ -455,6 +468,16 @@
     saveFavorites();
   }
 
+  // Returnează categoria principală a unui produs, căutând în tags[] primul tag
+  // care se regăsește în CATEGORY_ORDER. Dacă niciun tag nu se potrivește -> 'otros'.
+  function getMainCategory(item){
+    const tags = item.tags || [];
+    for(const cat of CATEGORY_ORDER){
+      if(tags.includes(cat)) return cat;
+    }
+    return 'otros';
+  }
+
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
@@ -472,7 +495,16 @@
       callWaiterTitle:'¿Necesitas algo?', callWaiterDesc:'Selecciona el motivo por el que llamas al camarero.', 
       callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
       alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, 
-      catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, 
+      catNames:{
+        'Antipasti/ Entrantes':'Antipasti / Entrantes',
+        'Ensaladas':'Ensaladas',
+        'Pastas':'Pastas',
+        'Carnes':'Carnes y Pescados',
+        'Pizzas':'Pizzas',
+        'Postres':'Postres',
+        'Bebidas':'Bebidas',
+        'otros':'Otros'
+      }, 
       smartWaiter: '💳 Pagar / Ayuda 🙋‍♂️', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
       badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
@@ -496,7 +528,16 @@
       callWaiterTitle:'Need us?', callWaiterDesc:'Select the reason you are calling the waiter.', 
       callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
       alertSent:(m)=>`The waiter has been called to table ${m}!`, 
-      catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, 
+      catNames:{
+        'Antipasti/ Entrantes':'Starters',
+        'Ensaladas':'Salads',
+        'Pastas':'Pasta',
+        'Carnes':'Meat & Fish',
+        'Pizzas':'Pizzas',
+        'Postres':'Desserts',
+        'Bebidas':'Drinks',
+        'otros':'Other'
+      }, 
       smartWaiter: '💳 Pay / Help 🙋‍♂️', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
       badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
@@ -520,7 +561,16 @@
       callWaiterTitle:'Besoin de nous ?', callWaiterDesc:'Sélectionnez la raison de votre appel.', 
       callCash:'💵 Je veux payer (Espèces)', callCard:'💳 Je veux payer (Carte)', callHelp:"🙋‍♂️ J'ai besoin d'aide", 
       alertSent:(m)=>`Le serveur a été appelé à la table ${m} !`, 
-      catNames:{ entrante:'Entrées', principal:'Plat Principal', coctel:'Cocktails', bebida:'Boissons', postre:'Desserts', otros:'Autre' }, 
+      catNames:{
+        'Antipasti/ Entrantes':'Entrées',
+        'Ensaladas':'Salades',
+        'Pastas':'Pâtes',
+        'Carnes':'Viandes & Poissons',
+        'Pizzas':'Pizzas',
+        'Postres':'Desserts',
+        'Bebidas':'Boissons',
+        'otros':'Autre'
+      }, 
       smartWaiter: '💳 Payer / Aide 🙋‍♂️', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
@@ -529,7 +579,6 @@
       fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places'
     }
   };
-  const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
 
   function applyLanguage(lang){
     if(!I18N[lang]) lang = 'es';
@@ -626,7 +675,7 @@
     const t = I18N[currentLang];
     const tagsEl = document.getElementById('tagFilters');
     tagsEl.innerHTML = `<button class="chip active" data-filter="all">${t.allChip}</button>`;
-    CATEGORY_KEYS.forEach(key => { if(allItems.some(i => (i.tags || []).includes(key))) tagsEl.innerHTML += `<button class="chip" data-filter="${key}">${t.catNames[key]}</button>`; });
+    CATEGORY_ORDER.forEach(key => { if(allItems.some(i => (i.tags || []).includes(key))) tagsEl.innerHTML += `<button class="chip" data-filter="${key}">${t.catNames[key]}</button>`; });
     tagsEl.querySelectorAll('.chip').forEach(btn => {
       btn.addEventListener('click', (e) => {
         activeFilter = e.target.dataset.filter;
@@ -653,8 +702,8 @@
     }
     document.getElementById('emptyState').style.display = 'none';
 
-    [...CATEGORY_KEYS, 'otros'].forEach(catKey => {
-      const items = filtered.filter(i => { const mainCat = CATEGORY_KEYS.find(key => (i.tags||[]).includes(key)); return (mainCat || 'otros') === catKey; });
+    [...CATEGORY_ORDER, 'otros'].forEach(catKey => {
+      const items = filtered.filter(i => getMainCategory(i) === catKey);
       if(items.length === 0) return;
 
       const catName = t.catNames[catKey] || t.catNames.otros;
@@ -1139,5 +1188,3 @@
 </script>
 </body>
 </html>
-
-
