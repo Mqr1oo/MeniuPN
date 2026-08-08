@@ -1078,6 +1078,10 @@
   /* --- FETCH-UL CĂTRE menu.json --- */
   fetch('menu.json?v=' + Date.now()).then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
+      console.log('DEBUG items count:', allItems.length);
+      document.getElementById('emptyState').textContent = 'DEBUG count: ' + allItems.length;
+      document.getElementById('emptyState').style.display = 'block';
+    
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
       if(stocData) stocData.forEach(d => outOfStockIds.add(d.id_produs));
 
