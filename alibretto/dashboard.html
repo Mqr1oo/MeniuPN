@@ -421,6 +421,8 @@
       <div class="dash-panel">
         <h3>📋 Enviar Pedido Rápido</h3>
         <input type="text" id="meniuTableInput" class="table-filter" style="width:100%; margin-bottom:16px;" placeholder="Número de mesa (ej: 4)">
+        <input type="text" id="meniuNoteInput" class="table-filter" style="width:100%; margin-bottom:16px;" placeholder="Nota para cocina / barra (ej: sin cebolla)...">
+        
         <div class="stock-list" id="meniuListContainer">Cargando...</div>
         <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
           <div style="font-family:'Space Mono',monospace; font-weight:700;">Total: <span id="meniuTotal">0.00</span> €</div>
@@ -885,17 +887,6 @@
   }
 
   // Determina statusul actual al unei mese: 'free' | 'yellow' | 'red' | 'blue'
-  // Logica: Libre -> Ocupada (al comandar) -> Ocupada (llega la comida, sigue ocupada)
-  //         -> pide la cuenta (AZUL, esperando que el camarero la confirme)
-  //         -> el camarero confirma "Atendido" (ROJO, cuenta atrás de 15 min desde la confirmación)
-  //         -> 15 min -> Libre
-  // La mesa NO se libera sola por servir/finalizar un pedido normal. Solo se libera
-  // manualmente o 15 min después de que el CAMARERO confirme la petición de cuenta.
-  //
-  // IMPORTANTE: solo se tienen en cuenta los pedidos/alertas creados DESPUÉS de la
-  // última vez que la mesa fue liberada. Así, si la mesa se libera y luego entra un
-  // cliente nuevo, no quedan "restos" de la sesión anterior (alertas viejas, cuentas
-  // ya pedidas, etc.) confundiendo el color de la mesa.
   function getTableStatus(tableNr) {
       const strNr = String(tableNr);
       const lastFreed = freedTables[strNr] || 0;
@@ -919,7 +910,6 @@
       }
 
       // Cuenta YA confirmada por el camarero ("Atendido") -> ROJO, cuenta atrás de 15 min
-      // desde el momento de la CONFIRMACIÓN (confirmada_la), no desde que el cliente pidió.
       let confirmedPaymentOrders = ordersForTable.filter(o => o.status === 'finalizata' && o.confirmada_la && o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
       if(confirmedPaymentOrders.length > 0) {
           let lastConfirmTime = Math.max(...confirmedPaymentOrders.map(o => new Date(o.confirmada_la).getTime()));
@@ -932,8 +922,6 @@
       return isOld ? { status:'red', label:'Ocupada (sentada hace rato)' } : { status:'yellow', label:'Ocupada' };
   }
 
-  // Auto-liberare: la 15 min EXACT de la ULTIMA CONFIRMARE a ospatarului ("Atendido")
-  // pentru o alerta de cuenta (cash/card), masa se elibereaza singura.
   async function checkAutoFreeTables() {
       const strKeys = new Set();
       salaConfig.zones.forEach(z => z.mese.forEach(m => strKeys.add(String(m.numar))));
@@ -966,12 +954,6 @@
       cleanupTableAlerts(tableNr);
   }
 
-  // Elimina de Supabase los avisos "🔔 ALERTĂ OSPĂTAR: ..." de esa mesa que ya han
-  // quedado resueltos (atendidos o ya liberados). Estos avisos son solo BANDERAS
-  // (total 0€, no son comida/bebida real) usadas para pintar el color de la mesa,
-  // así que borrarlos no afecta ni a caja ni al historial de ventas — solo evita que
-  // se queden "restos" que luego confundan el cálculo del color/estado de la mesa
-  // cuando entra un cliente nuevo en la misma mesa.
   async function cleanupTableAlerts(tableNr) {
       const strNr = String(tableNr);
       const key = strNr + ':' + Date.now();
@@ -1294,10 +1276,6 @@
       const updatePayload = { status };
       if((status === 'finalizata') && userRole === 'ospatar') updatePayload.preluat_de = currentUserEmail;
 
-      // Cuando el CAMARERO confirma que ha atendido una alerta de "quiere pagar",
-      // guardamos el momento exacto de la confirmación (confirmada_la). A partir de
-      // aquí el chenar rojo y la cuenta atrás de 15 min empiezan a contar — NO desde
-      // que el cliente pulsó el botón, sino desde que el camarero lo confirmó.
       const isPaymentAlert = order && order.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume));
       if(status === 'finalizata' && userRole === 'ospatar' && isPaymentAlert) {
           updatePayload.confirmada_la = new Date().toISOString();
@@ -1371,7 +1349,6 @@
       e.target.classList.add('active'); statsMode = 'month'; calculateDirectorStats();
   });
 
-  // EXPORT COMANZI CSV
   window.exportCSV = function() {
       const now = new Date();
       const cutoff = statsMode === 'today'
@@ -1406,7 +1383,6 @@
       document.body.removeChild(link);
   };
 
-  // EXPORT LOGS CSV
   window.exportLogsCSV = async function() {
       const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(2000);
       if(error || !data) { alert('Error al descargar logs'); return; }
@@ -1574,6 +1550,8 @@
 
   document.getElementById('btnMeniuTrimite').addEventListener('click', async () => {
       const mesa = document.getElementById('meniuTableInput').value.trim();
+      const notaText = document.getElementById('meniuNoteInput').value.trim();
+      
       if(!mesa) { alert('Introduce el número de mesa.'); return; }
 
       const allValidTables = new Set();
@@ -1591,22 +1569,34 @@
       const kitchenItems = items.filter(x => x.item.sectiune === 'bucatarie');
 
       let payloads = [];
-      if(barItems.length > 0) payloads.push({
-          mesa, sectiune: 'bar', grup_comanda: grupId, creat_de: currentUserEmail,
-          total: barItems.reduce((a,x)=>a+x.item.price*x.q,0),
-          produse: barItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }))
-      });
-      if(kitchenItems.length > 0) payloads.push({
-          mesa, sectiune: 'bucatarie', grup_comanda: grupId, creat_de: currentUserEmail,
-          total: kitchenItems.reduce((a,x)=>a+x.item.price*x.q,0),
-          produse: kitchenItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }))
-      });
+      if(barItems.length > 0) {
+          let produseBar = barItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
+          if (notaText) produseBar.push({ nume: '📝 ' + notaText, cantitate: 0, pret_unitar: 0 });
+          
+          payloads.push({
+              mesa, sectiune: 'bar', grup_comanda: grupId, creat_de: currentUserEmail,
+              total: barItems.reduce((a,x)=>a+x.item.price*x.q,0),
+              produse: produseBar
+          });
+      }
+      if(kitchenItems.length > 0) {
+          let produseBuc = kitchenItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
+          if (notaText) produseBuc.push({ nume: '📝 ' + notaText, cantitate: 0, pret_unitar: 0 });
+          
+          payloads.push({
+              mesa, sectiune: 'bucatarie', grup_comanda: grupId, creat_de: currentUserEmail,
+              total: kitchenItems.reduce((a,x)=>a+x.item.price*x.q,0),
+              produse: produseBuc
+          });
+      }
 
       const { data, error } = await _supabase.from('comenzi').insert(payloads).select();
       if(error) { alert('Error: ' + error.message); return; }
       logActivity('pedido_creado_camarero', data && data[0] ? data[0].id : null, { mesa, productos: payloads.flatMap(p=>p.produse) });
+      
       meniuCart = {};
       document.getElementById('meniuTableInput').value = '';
+      document.getElementById('meniuNoteInput').value = '';
       loadMeniuForOspatar();
       alert('¡Pedido enviado a la mesa ' + mesa + '!');
   });
@@ -1677,9 +1667,6 @@
               if (currentTab === 'map') renderTablesGrid();
           }
 
-          // Si llega un pedido NUEVO normal (no alerta) a una mesa que tenía restos de
-          // alertas ya resueltas de una sesión anterior, los limpiamos para que no
-          // queden "restos" confundiendo el color de la mesa en esta nueva sesión.
           if(!isAlert) cleanupTableAlerts(p.new.mesa);
 
           updateMapBadge();
@@ -1699,8 +1686,6 @@
           updateMapBadge();
           updatePaymentAlertBadge();
 
-          // El camarero recibe vibración + notificación en cuanto cocina o barra
-          // marcan el pedido como "Listo" (gata), sin necesitar sonido activado.
           if (userRole === 'ospatar' && p.new.status === 'gata' && prevStatus !== 'gata') {
               if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 800]);
               const validItems = (p.new.produse || []).filter(x => x.cantitate > 0);
@@ -1718,7 +1703,6 @@
       })
       .subscribe();
 
-      // Canal separat pentru marcarea instant a meselor libere / config sala pe toate device-urile
       const salaChannel = _supabase.channel('public:jurnal_sala');
       salaChannel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
           if(p.new.actiune === 'mesa_liberada') {
@@ -1744,3 +1728,4 @@
 </script>
 </body>
 </html>
+
