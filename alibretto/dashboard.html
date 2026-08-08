@@ -876,14 +876,14 @@
               }
           }
 
-          // Verificăm și dacă au cerut nota și au stat peste 15 min fără a scoate bonul fizic (caz de rezervă)
+          // Verificăm și dacă au cerut nota (cash/card) și au stat peste 15 min fără a scoate bonul fizic
           let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && (o.status === 'noua' || o.status === 'gata'));
-          let alertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ')));
-          if(alertOrders.length > 0) {
-              let lastAlertTime = Math.max(...alertOrders.map(o => new Date(o.created_at).getTime()));
-              if (lastFreed < lastAlertTime && lastTicket < lastAlertTime) {
-                  const elapsedMin = (Date.now() - lastAlertTime) / 60000;
-                  const guardKey = 'alert:' + tableNr + ':' + lastAlertTime;
+          let billOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && (p.tip === 'cash' || p.tip === 'card')));
+          if(billOrders.length > 0) {
+              let lastBillTime = Math.max(...billOrders.map(o => new Date(o.created_at).getTime()));
+              if (lastFreed < lastBillTime && lastTicket < lastBillTime) {
+                  const elapsedMin = (Date.now() - lastBillTime) / 60000;
+                  const guardKey = 'bill:' + tableNr + ':' + lastBillTime;
                   if (elapsedMin >= 15 && !autoFreedGuard.has(guardKey)) {
                       autoFreedGuard.add(guardKey);
                       await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
@@ -1120,7 +1120,7 @@
           let statusColor = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
           let statusText = `<div class="status-text" style="color:${statusColor}; font-weight: 700;">${order.status.toUpperCase()}</div>`;
           
-          if(['bar', 'director'].includes(userRole) && !isAlert && order.status === 'finalizata') {
+          if(userRole === 'bar' && !isAlert && order.status === 'finalizata') {
               let isChecked = order.bon_scos ? 'checked' : '';
               let checkedClass = order.bon_scos ? 'checked' : '';
               let bonLabel = order.bon_scos ? '🧾 Ticket impreso' : '🧾 Confirmar Ticket';
@@ -1197,6 +1197,7 @@
   };
 
   window.toggleBon = async function(id, newState) {
+      if(userRole !== 'bar') return; // Solo el bar puede confirmar el ticket
       const order = allOrders.find(o => o.id === id);
       const ids = (order && order.grup_comanda) ? allOrders.filter(o => o.grup_comanda === order.grup_comanda).map(o => o.id) : [id];
       const { error } = await _supabase.from('comenzi').update({ bon_scos: newState }).in('id', ids);
@@ -1208,6 +1209,7 @@
   };
 
   async function loadFullMenuForStock() {
+      if(userRole === 'ospatar') return; // los camareros no gestionan stock
       try { 
           if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); 
       } catch(e) { return; }
@@ -1239,6 +1241,7 @@
   }
 
   window.toggleStock = async function(id, isEpuizat) { 
+      if(userRole === 'ospatar') return; // los camareros no gestionan stock
       await _supabase.from('stoc_produse').upsert({ id_produs: id.toString(), epuizat: isEpuizat });
       loadFullMenuForStock(); 
   };
@@ -1441,6 +1444,7 @@
   document.getElementById('btnMeniuTrimite').addEventListener('click', async () => {
       const mesa = document.getElementById('meniuTableInput').value.trim();
       if(!mesa) { alert('Introduce el número de mesa.'); return; }
+      if(!isValidTableNumber(mesa)) { alert('La mesa "' + mesa + '" no existe en el plano de la sala. Revisa el número.'); return; }
       const items = Object.entries(meniuCart).map(([id, q]) => ({ item: fullMenu.find(i => i.imageNumber == id), q })).filter(x => x.item);
       if(items.length === 0) { alert('Añade al menos un producto.'); return; }
 
@@ -1468,6 +1472,14 @@
       loadMeniuForOspatar();
       alert('¡Pedido enviado a la mesa ' + mesa + '!');
   });
+
+  // Valida un número de mesa contra la configuración real de la sala.
+  function isValidTableNumber(nr) {
+      let allTables = [];
+      salaConfig.zones.forEach(z => z.mese.forEach(m => allTables.push(String(m.numar))));
+      if(allTables.length === 0) return true; // sin config aún, no bloqueamos
+      return allTables.includes(String(nr).trim());
+  }
 
   async function loadJurnal() {
       const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(200);
