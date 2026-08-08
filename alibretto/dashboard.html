@@ -62,6 +62,9 @@
   .btn-sound-toggle { padding: 10px 20px; border-radius: 100px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: 0.3s; background: rgba(239, 68, 68, 0.15); color: var(--danger); display: none; }
   .btn-sound-toggle.on { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 
+  .payment-alert-banner { background: rgba(59, 130, 246, 0.15); color: var(--blue); border-bottom: 1px solid rgba(59,130,246,0.3); text-align: center; padding: 10px 16px; font-weight: 700; font-size: 13.5px; cursor: pointer; animation: pulseBanner 1.6s infinite; flex-shrink: 0; }
+  @keyframes pulseBanner { 0% { background: rgba(59, 130, 246, 0.15); } 50% { background: rgba(59, 130, 246, 0.3); } 100% { background: rgba(59, 130, 246, 0.15); } }
+
   .mobile-brand-area { display: none; flex-direction: column; }
   .mobile-brand { font-size: 16px; font-weight: 700; color: var(--accent); }
   .mobile-user { font-size: 11px; color: var(--text-muted); font-family: 'Space Mono', monospace; }
@@ -309,6 +312,10 @@
     </div>
     <button class="mobile-logout" id="btnMobileLogout">Salir</button>
   </header>
+
+  <div id="paymentAlertBanner" class="payment-alert-banner" style="display:none;">
+      💳 <span id="paymentAlertCount">0</span> mesa(s) quieren pagar — toca para ver
+  </div>
   
   <div class="mobile-search-container" id="mobileSearchWrap">
       <button id="btnToggleSoundMobile" class="btn-sound-toggle" style="width: 100%; margin-bottom: 10px;">🔇 Sonido: OFF</button>
@@ -337,8 +344,8 @@
          <div class="tables-grid" id="tablesGrid"></div>
          <div class="sala-legend">
             <span><i style="background:var(--bg); border:2px solid var(--border);"></i> Libre</span>
-            <span><i style="background:rgba(245,158,11,0.4); border:2px solid var(--warning);"></i> Ocupada / Pagando</span>
-            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> +15 min</span>
+            <span><i style="background:rgba(245,158,11,0.4); border:2px solid var(--warning);"></i> Ocupada</span>
+            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> +15 min / Alerta</span>
             <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Pidió la cuenta</span>
          </div>
        </div>
@@ -355,10 +362,9 @@
     <div id="adminView" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
           <div><h2 style="font-size: 24px; font-weight: 700;">Resumen Actividad</h2></div>
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap:wrap;">
-              <button class="btn-action" style="background:var(--danger); color:white; font-size:13px; padding: 10px 16px;" onclick="deleteAllHistory()">🗑️ Borrar Historial</button>
+          <div style="display: flex; gap: 10px; align-items: center;">
               <button class="btn-action" style="background:var(--accent); color:white; font-size:13px; padding: 10px 16px;" onclick="exportCSV()">📥 Descargar Excel</button>
-              <button class="btn-action" style="background:var(--blue); color:white; font-size:13px; padding: 10px 16px;" onclick="exportLogsCSV()">📥 Descargar Logs</button>
+              <button class="btn-action" style="background:var(--blue); color:white; font-size:13px; padding: 10px 16px;" onclick="exportLogsCSV()">📥 Descargar Logs (CSV)</button>
               <div class="time-toggle">
                   <button class="active" id="btnStatsToday">Hoy</button>
                   <button id="btnStatsMonth">Este mes</button>
@@ -402,6 +408,12 @@
           <h3>🚨 Tickets No Confirmados (Por Staff)</h3>
           <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Pedidos finalizados sin el ticket sacado, agrupados por el usuario responsable.</p>
           <ul class="top-list" id="pendingByStaffList"></ul>
+      </div>
+
+      <div class="dash-panel" style="border-color: var(--danger);">
+          <h3 style="color: var(--danger);">🗑️ Zona de Riesgo</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Elimina permanentemente todo el historial de comandas finalizadas y canceladas de Supabase. Esta acción no se puede deshacer. Los pedidos activos no se ven afectados.</p>
+          <button id="btnWipeHistory" class="btn-action" style="display:none; background:rgba(239,68,68,0.15); color:var(--danger); border:1px solid rgba(239,68,68,0.4); width:100%;">🗑️ Eliminar todo el historial</button>
       </div>
     </div>
 
@@ -478,11 +490,12 @@
   let salaConfig = { zones: [ { nume: "Salón Principal", mese: [] } ] };
   let currentZone = "Salón Principal";
   let isEditingMap = false;
-  
-  // Stocăm și evenimentele de liberare și pe cele de printare bon
   let freedTables = {}; // { "4": timestampMs }
-  let ticketTables = {}; // { "4": timestampMs }
   let autoFreedGuard = new Set(); // evita inserturi duplicate pt auto-liberare
+
+  const AUTO_FREE_MINUTES = 15; // dupa ce se cere nota (cash/card), masa se elibereaza automat in 15 min
+  const PAYMENT_ALERT_REGEX = /Efectivo|Tarjeta|Cash|Card|Esp[eè]ces|Carte/i;
+  const HELP_ALERT_REGEX = /Ayuda|Help|Aide/i;
 
   const searchDesc = document.getElementById('tableFilterInputDesc');
   const searchMob = document.getElementById('tableFilterInputMob');
@@ -633,18 +646,22 @@
     else if(emailLower.includes('ospatar') || emailLower.includes('camarero')) userRole = 'ospatar';
     else userRole = 'bar'; 
 
+    // Stock: los camareros ya NO pueden tocar el stock en vivo, solo bar/cocina/jefe
     if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'director') {
         document.getElementById('navStock').style.display = 'flex';
     }
-    // Sonido
+    // Sonido: SOLO bar y cocina lo necesitan (jefe y camareros no lo usan, así queda más limpio)
     const showSound = (userRole === 'bar' || userRole === 'bucatarie');
     document.getElementById('btnToggleSound').style.display = showSound ? 'inline-flex' : 'none';
     document.getElementById('btnToggleSoundMobile').style.display = showSound ? 'block' : 'none';
 
-    // Sala
+    // Sala: jefe, camareros Y barra pueden ver el plano y liberar mesas
     if(userRole === 'director' || userRole === 'ospatar' || userRole === 'bar') {
         document.getElementById('navMap').style.display = 'flex';
     }
+
+    // Historial: se elimina completamente para camareros (solo bar, cocina y jefe lo ven)
+    document.getElementById('navHistory').style.display = (userRole === 'ospatar') ? 'none' : 'flex';
     
     if(userRole === 'director') { 
         document.getElementById('navAdmin').style.display = 'flex'; 
@@ -652,18 +669,18 @@
         document.getElementById('btnEditMap').style.display = 'inline-flex';
         document.getElementById('btnAddZone').style.display = 'inline-flex';
         document.getElementById('btnDeleteZone').style.display = 'inline-flex';
+        document.getElementById('btnWipeHistory').style.display = 'inline-flex';
         document.getElementById('feedbackPanel').style.display = 'block';
     }
     
-    if(userRole === 'ospatar') { 
-        document.getElementById('navMeniu').style.display = 'flex'; 
-        document.getElementById('navHistory').style.display = 'none'; // Ospatarii nu au voie in istoric
-    }
+    if(userRole === 'ospatar') { document.getElementById('navMeniu').style.display = 'flex'; }
+
+    updatePaymentAlertBadge();
 
     ensureNotificationPermission();
     loadOrders(); 
     loadTablesConfig(); 
-    loadTableEvents();
+    loadFreedTables();
     loadBusyMode(); 
     if(userRole === 'director') loadFeedbacks();
     
@@ -678,8 +695,6 @@
   });
 
   function switchTab(tab) {
-    if (tab === 'history' && userRole === 'ospatar') return; // protectie dubla
-
     currentTab = tab;
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     
@@ -744,26 +759,24 @@
           currentZone = salaConfig.zones[0].nume;
       }
       updateMapBadge();
+      updatePaymentAlertBadge();
   }
 
   async function saveTablesConfig() {
       await logActivity('config_mese', null, salaConfig);
   }
 
-  async function loadTableEvents() {
-      const {data} = await _supabase.from('jurnal_activitate').select('*').in('actiune', ['mesa_liberada', 'ticket_confirmado']).order('created_at', {ascending:false}).limit(500);
+  async function loadFreedTables() {
+      const {data} = await _supabase.from('jurnal_activitate').select('*').eq('actiune', 'mesa_liberada').order('created_at', {ascending:false}).limit(300);
       freedTables = {};
-      ticketTables = {};
       if(data) {
           data.forEach(log => {
               const mesa = log.detalii && log.detalii.mesa;
-              if(!mesa) return;
-              const tm = new Date(log.created_at).getTime();
-              if(log.actiune === 'mesa_liberada' && !freedTables[mesa]) freedTables[mesa] = tm;
-              if(log.actiune === 'ticket_confirmado' && !ticketTables[mesa]) ticketTables[mesa] = tm;
+              if(mesa && !freedTables[mesa]) freedTables[mesa] = new Date(log.created_at).getTime();
           });
       }
       updateMapBadge();
+      updatePaymentAlertBadge();
       if(currentTab === 'map') renderTablesGrid();
   }
 
@@ -821,74 +834,56 @@
       });
   }
 
+  // Determina statusul actual al unei mese: 'free' | 'yellow' | 'red' | 'blue'
   function getTableStatus(tableNr) {
       const strNr = String(tableNr);
       let ordersForTable = allOrders.filter(o => String(o.mesa) === strNr && o.status !== 'anulata');
       let active = ordersForTable.filter(o => o.status === 'noua' || o.status === 'gata');
 
       let lastFreed = freedTables[strNr] || 0;
-      let lastTicket = ticketTables[strNr] || 0;
 
+      // Cea mai recentă comandă (activă sau nu) folosită ca referință de timp
       let lastOrderTime = 0;
       ordersForTable.forEach(o => { const t = new Date(o.created_at).getTime(); if(t > lastOrderTime) lastOrderTime = t; });
 
-      // Dacă a fost eliberată manual sau automat DUPĂ ultima comandă SAU ultimul bon scos, masa e liberă.
-      if(lastFreed > lastOrderTime && lastFreed > lastTicket) {
-          return { status:'free', label:'Libre' };
-      }
+      if(active.length === 0) return { status:'free', label:'Libre' };
+      // Daca a fost liberata manual/automat DUPA ultima comanda -> libera
+      if(lastFreed > lastOrderTime) return { status:'free', label:'Libre' };
 
-      // Nu există comenzi active, dar verificăm fereastra de 15 min de la scoaterea bonului
-      if(active.length === 0) {
-          if (lastTicket > lastFreed && lastTicket >= lastOrderTime) {
-              if ((Date.now() - lastTicket) < 15 * 60000) {
-                  return { status:'yellow', label:'Pagado (saliendo)' };
-              } else {
-                  return { status:'free', label:'Libre' };
-              }
-          }
-          return { status:'free', label:'Libre' };
-      }
-
-      let hasAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ')));
-      let hasBillRequest = active.some(o => o.produse.some(p => p.nume.includes('Cuenta') || p.nume.includes('ALERTĂ')));
+      let hasHelpAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ') && HELP_ALERT_REGEX.test(p.nume)));
+      let hasPaymentAlert = active.some(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
       let isOld = active.some(o => (Date.now() - new Date(o.created_at).getTime()) > 15 * 60000);
 
-      if(hasAlert) return { status:'blue', label:'Pidió la cuenta / ayuda' };
-      if(hasBillRequest || isOld) return { status:'red', label:'Ocupada (+15 min)' };
+      if(hasHelpAlert) {
+          return { status:'blue', label:'Necesita ayuda' };
+      }
+      if(hasPaymentAlert) {
+          // pidió la cuenta -> mesa marcada especial (azul), se libera sola en 15 min
+          return { status:'blue', label:'Pidió la cuenta' };
+      }
+      if(isOld) return { status:'red', label:'Ocupada (+15 min)' };
       return { status:'yellow', label:'Ocupada' };
   }
 
+  // Auto-liberare: la 15 min de la ultima cerere de "cuenta" (cash/card), masa se elibereaza singura
   async function checkAutoFreeTables() {
       const strKeys = new Set();
       salaConfig.zones.forEach(z => z.mese.forEach(m => strKeys.add(String(m.numar))));
 
       for(const tableNr of strKeys) {
-          let lastFreed = freedTables[tableNr] || 0;
-          let lastTicket = ticketTables[tableNr] || 0;
-
-          // Autoliberare la 15 minute după ce bonul a fost confirmat (scos) de la bar
-          if (lastTicket > lastFreed) {
-              const elapsedMin = (Date.now() - lastTicket) / 60000;
-              const guardKey = 'ticket:' + tableNr + ':' + lastTicket;
-              if (elapsedMin >= 15 && !autoFreedGuard.has(guardKey)) {
-                  autoFreedGuard.add(guardKey);
-                  await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
-              }
-          }
-
-          // Verificăm și dacă au cerut nota (cash/card) și au stat peste 15 min fără a scoate bonul fizic
           let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && (o.status === 'noua' || o.status === 'gata'));
-          let billOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && (p.tip === 'cash' || p.tip === 'card')));
-          if(billOrders.length > 0) {
-              let lastBillTime = Math.max(...billOrders.map(o => new Date(o.created_at).getTime()));
-              if (lastFreed < lastBillTime && lastTicket < lastBillTime) {
-                  const elapsedMin = (Date.now() - lastBillTime) / 60000;
-                  const guardKey = 'bill:' + tableNr + ':' + lastBillTime;
-                  if (elapsedMin >= 15 && !autoFreedGuard.has(guardKey)) {
-                      autoFreedGuard.add(guardKey);
-                      await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
-                  }
-              }
+          let alertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
+          if(alertOrders.length === 0) continue;
+
+          let lastAlertTime = Math.max(...alertOrders.map(o => new Date(o.created_at).getTime()));
+          let lastFreed = freedTables[tableNr] || 0;
+          if(lastFreed > lastAlertTime) continue; // ya liberada
+
+          const elapsedMin = (Date.now() - lastAlertTime) / 60000;
+          const guardKey = tableNr + ':' + lastAlertTime;
+          if(elapsedMin >= AUTO_FREE_MINUTES && !autoFreedGuard.has(guardKey)) {
+              autoFreedGuard.add(guardKey);
+              await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
           }
       }
   }
@@ -898,6 +893,22 @@
       freedTables[String(tableNr)] = Date.now();
       renderTablesGrid();
       updateMapBadge();
+      updatePaymentAlertBadge();
+  }
+
+  document.getElementById('paymentAlertBanner').addEventListener('click', () => { switchTab('active'); });
+
+  function updatePaymentAlertBadge() {
+      const banner = document.getElementById('paymentAlertBanner');
+      if(!banner) return;
+      if(!(userRole === 'bar' || userRole === 'ospatar' || userRole === 'director')) { banner.style.display = 'none'; return; }
+      const count = allOrders.filter(o => o.status === 'noua' && o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume))).length;
+      if(count > 0) {
+          document.getElementById('paymentAlertCount').textContent = count;
+          banner.style.display = 'block';
+      } else {
+          banner.style.display = 'none';
+      }
   }
 
   function updateMapBadge() {
@@ -970,6 +981,7 @@
       }
 
       updateMapBadge();
+      updatePaymentAlertBadge();
   }
 
   function openTableAction(tableNr, statusInfo) {
@@ -1037,6 +1049,7 @@
     const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
     if(error) console.error("Error loading orders:", error);
     if(data) { allOrders = data; renderOrders(); if (currentTab === 'map') renderTablesGrid(); updateMapBadge(); }
+    updatePaymentAlertBadge();
   }
 
   function renderOrders() {
@@ -1119,7 +1132,8 @@
       } else if (currentTab === 'history') {
           let statusColor = order.status === 'finalizata' ? 'var(--success)' : (order.status === 'anulata' ? 'var(--danger)' : 'var(--warning)');
           let statusText = `<div class="status-text" style="color:${statusColor}; font-weight: 700;">${order.status.toUpperCase()}</div>`;
-          
+
+          // La confirmación del ticket es exclusiva de barra
           if(userRole === 'bar' && !isAlert && order.status === 'finalizata') {
               let isChecked = order.bon_scos ? 'checked' : '';
               let checkedClass = order.bon_scos ? 'checked' : '';
@@ -1130,6 +1144,9 @@
                    ${bonLabel}
                 </label>
               `;
+          } else if (userRole === 'director' && !isAlert && order.status === 'finalizata') {
+              // El jefe solo visualiza el estado, no puede marcarlo (exclusivo de barra)
+              footerHtml = `<div class="status-text" style="color:${order.bon_scos ? 'var(--success)' : 'var(--warning)'}; font-weight: 700;">${order.bon_scos ? '🧾 Ticket impreso' : '⚠️ Ticket pendiente (barra)'}</div>`;
           } else {
               footerHtml = statusText;
           }
@@ -1178,6 +1195,7 @@
       }
       checkAutoFreeTables();
       updateMapBadge();
+      updatePaymentAlertBadge();
       if(currentTab === 'map') renderTablesGrid();
   }
 
@@ -1192,12 +1210,13 @@
           if(index !== -1) Object.assign(allOrders[index], updatePayload);
           renderOrders();
           updateMapBadge();
+          updatePaymentAlertBadge();
           logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null });
       }
   };
 
   window.toggleBon = async function(id, newState) {
-      if(userRole !== 'bar') return; // Solo el bar puede confirmar el ticket
+      if(userRole !== 'bar') return; // marcarea bonului es exclusiva de barra
       const order = allOrders.find(o => o.id === id);
       const ids = (order && order.grup_comanda) ? allOrders.filter(o => o.grup_comanda === order.grup_comanda).map(o => o.id) : [id];
       const { error } = await _supabase.from('comenzi').update({ bon_scos: newState }).in('id', ids);
@@ -1209,7 +1228,6 @@
   };
 
   async function loadFullMenuForStock() {
-      if(userRole === 'ospatar') return; // los camareros no gestionan stock
       try { 
           if(fullMenu.length === 0) fullMenu = await (await fetch('menu.json')).json(); 
       } catch(e) { return; }
@@ -1241,7 +1259,6 @@
   }
 
   window.toggleStock = async function(id, isEpuizat) { 
-      if(userRole === 'ospatar') return; // los camareros no gestionan stock
       await _supabase.from('stoc_produse').upsert({ id_produs: id.toString(), epuizat: isEpuizat });
       loadFullMenuForStock(); 
   };
@@ -1255,19 +1272,6 @@
       e.target.classList.add('active'); statsMode = 'month'; calculateDirectorStats();
   });
 
-  window.deleteAllHistory = async function() {
-      if(!confirm("⚠️ ¿Estás seguro de borrar TODO el historial de pedidos finalizados y anulados? Esta acción es irreversible.")) return;
-      const { error } = await _supabase.from('comenzi').delete().in('status', ['finalizata', 'anulata']);
-      if(!error) {
-          alert("Historial limpiado exitosamente.");
-          allOrders = allOrders.filter(o => o.status !== 'finalizata' && o.status !== 'anulata');
-          renderOrders();
-          calculateDirectorStats();
-      } else {
-          alert("Error: " + error.message);
-      }
-  };
-
   // EXPORT COMANZI CSV
   window.exportCSV = function() {
       const now = new Date();
@@ -1278,7 +1282,7 @@
       const filteredOrders = allOrders.filter(o => new Date(o.created_at).getTime() >= cutoff);
       
       let csvContent = '\uFEFF'; 
-      csvContent += "ID,Fecha,Hora,Mesa,Estado,Total (€),Ticket Scos,Productos,Responsable\n";
+      csvContent += "ID,Fecha,Hora,Mesa,Estado,Total (€),Ticket Scos,Ticket Gratis,Productos,Responsable\n";
 
       filteredOrders.forEach(o => {
           const dt = new Date(o.created_at);
@@ -1287,9 +1291,10 @@
           
           const cleanProds = o.produse.filter(p=>p.cantitate>0).map(p=>`${p.cantitate}x ${p.nume}`).join(' + ');
           const ticketStat = o.bon_scos ? 'Si' : 'No';
+          const gratisStat = o.comp_motiv ? o.comp_motiv : '-';
           const resp = o.preluat_de || o.creat_de || 'N/A';
           
-          csvContent += `"${o.id}","${fDate}","${fTime}","${o.mesa}","${o.status}","${o.total}","${ticketStat}","${cleanProds}","${resp}"\n`;
+          csvContent += `"${o.id}","${fDate}","${fTime}","${o.mesa}","${o.status}","${o.total}","${ticketStat}","${gratisStat}","${cleanProds}","${resp}"\n`;
       });
 
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1327,6 +1332,31 @@
       document.body.removeChild(link);
   };
 
+  const btnWipeHistoryEl = document.getElementById('btnWipeHistory');
+  if(btnWipeHistoryEl) {
+      btnWipeHistoryEl.addEventListener('click', async () => {
+          if(userRole !== 'director') return;
+          const typed = prompt('Esta acción borrará PERMANENTEMENTE todo el historial de comandas (finalizadas y canceladas) de Supabase.\n\nEscribe ELIMINAR para confirmar:');
+          if(typed !== 'ELIMINAR') { if(typed !== null) alert('Cancelado. No se ha escrito "ELIMINAR" exactamente.'); return; }
+
+          btnWipeHistoryEl.disabled = true;
+          btnWipeHistoryEl.textContent = 'Eliminando...';
+          const { error } = await _supabase.from('comenzi').delete().in('status', ['finalizata', 'anulata']);
+          btnWipeHistoryEl.disabled = false;
+          btnWipeHistoryEl.textContent = '🗑️ Eliminar todo el historial';
+
+          if(error) {
+              alert('Error al eliminar el historial: ' + error.message + '\n\n(Puede que falte el permiso DELETE en la política RLS de Supabase para la tabla "comenzi".)');
+              return;
+          }
+          await logActivity('historial_eliminado', null, { por: currentUserEmail });
+          allOrders = allOrders.filter(o => o.status !== 'finalizata' && o.status !== 'anulata');
+          renderOrders();
+          calculateDirectorStats();
+          alert('Historial eliminado correctamente.');
+      });
+  }
+
   function calculateDirectorStats() {
       const istoric = allOrders.filter(o => o.status === 'finalizata' && !o.produse.some(p => p.nume.includes('ALERTĂ')));
       let total = 0, kitchenTotal = 0, pendingBonCount = 0, productCounts = {}, pendingByStaff = {};
@@ -1345,13 +1375,15 @@
               const val = Number(order.total);
               
               if (order.bon_scos) {
-                  total += val; 
-                  kitchenTotal += val; 
+                  if(!order.comp_motiv) { 
+                      total += val; 
+                      kitchenTotal += val; 
 
-                  let dKey = statsMode === 'today' 
-                      ? new Date(order.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})
-                      : new Date(order.created_at).toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
-                  chartData[dKey] = (chartData[dKey] || 0) + val;
+                      let dKey = statsMode === 'today' 
+                          ? new Date(order.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})
+                          : new Date(order.created_at).toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit'});
+                      chartData[dKey] = (chartData[dKey] || 0) + val;
+                  }
               } else {
                   pendingBonCount++; 
                   const responsabil = order.creat_de || order.preluat_de || 'desconocido';
@@ -1444,7 +1476,14 @@
   document.getElementById('btnMeniuTrimite').addEventListener('click', async () => {
       const mesa = document.getElementById('meniuTableInput').value.trim();
       if(!mesa) { alert('Introduce el número de mesa.'); return; }
-      if(!isValidTableNumber(mesa)) { alert('La mesa "' + mesa + '" no existe en el plano de la sala. Revisa el número.'); return; }
+
+      const allValidTables = new Set();
+      salaConfig.zones.forEach(z => z.mese.forEach(m => allValidTables.add(String(m.numar))));
+      if(allValidTables.size > 0 && !allValidTables.has(mesa)) {
+          alert(`La mesa "${mesa}" no existe en el plano de la sala. Revisa el número.`);
+          return;
+      }
+
       const items = Object.entries(meniuCart).map(([id, q]) => ({ item: fullMenu.find(i => i.imageNumber == id), q })).filter(x => x.item);
       if(items.length === 0) { alert('Añade al menos un producto.'); return; }
 
@@ -1473,14 +1512,6 @@
       alert('¡Pedido enviado a la mesa ' + mesa + '!');
   });
 
-  // Valida un número de mesa contra la configuración real de la sala.
-  function isValidTableNumber(nr) {
-      let allTables = [];
-      salaConfig.zones.forEach(z => z.mese.forEach(m => allTables.push(String(m.numar))));
-      if(allTables.length === 0) return true; // sin config aún, no bloqueamos
-      return allTables.includes(String(nr).trim());
-  }
-
   async function loadJurnal() {
       const { data, error } = await _supabase.from('jurnal_activitate').select('*').order('created_at', { ascending: false }).limit(200);
       const listEl = document.getElementById('jurnalList');
@@ -1496,12 +1527,14 @@
       const actionLabels = { 
           pedido_cancelado: '<span style="color:var(--danger)">❌ Cancelado</span>', 
           estado_cambiado: '<span style="color:var(--success)">🔄 Estado</span>', 
-          ticket_confirmado: '<span style="color:var(--text)">🧾 Confirmado</span>',
+          ticket_confirmado: '<span style="color:var(--text)">🧾 Confirmado</span>', 
+          pedido_gratis: '<span style="color:var(--warning)">🎁 Gratis</span>', 
           pedido_creado_camarero: '<span style="color:var(--blue)">📋 Nuevo Menu</span>',
           config_mese: '<span style="color:var(--warning)">🗺️ Edit Sala</span>',
           mesa_liberada: '<span style="color:var(--success)">🔓 Mesa Liberada</span>',
           setari_busy: '<span style="color:var(--warning)">🔥 Modo Punta</span>',
-          feedback_client: '<span style="color:var(--success)">💬 Feedback</span>'
+          feedback_client: '<span style="color:var(--success)">💬 Feedback</span>',
+          historial_eliminado: '<span style="color:var(--danger)">🗑️ Historial Eliminado</span>'
       };
       
       listEl.innerHTML = data.map(log => {
@@ -1545,6 +1578,7 @@
               if (currentTab === 'map') renderTablesGrid();
           }
           updateMapBadge();
+          updatePaymentAlertBadge();
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
           const idx = allOrders.findIndex(o => o.id === p.new.id);
@@ -1555,29 +1589,17 @@
               if (currentTab === 'admin') calculateDirectorStats(); 
           }
           updateMapBadge();
-      })
-      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'comenzi' }, p => {
-          allOrders = allOrders.filter(o => o.id !== p.old.id);
-          renderOrders();
-          updateMapBadge();
-          if (currentTab === 'map') renderTablesGrid();
-          if (currentTab === 'admin') calculateDirectorStats();
+          updatePaymentAlertBadge();
       })
       .subscribe();
 
+      // Canal separat pentru marcarea instant a meselor libere / config sala pe toate device-urile
       const salaChannel = _supabase.channel('public:jurnal_sala');
       salaChannel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
           if(p.new.actiune === 'mesa_liberada') {
               const mesa = p.new.detalii && p.new.detalii.mesa;
               if(mesa) {
                   freedTables[String(mesa)] = new Date(p.new.created_at).getTime();
-                  updateMapBadge();
-                  if(currentTab === 'map') renderTablesGrid();
-              }
-          } else if(p.new.actiune === 'ticket_confirmado') {
-              const mesa = p.new.detalii && p.new.detalii.mesa;
-              if(mesa) {
-                  ticketTables[String(mesa)] = new Date(p.new.created_at).getTime();
                   updateMapBadge();
                   if(currentTab === 'map') renderTablesGrid();
               }
