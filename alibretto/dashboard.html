@@ -345,8 +345,8 @@
          <div class="sala-legend">
             <span><i style="background:var(--bg); border:2px solid var(--border);"></i> Libre</span>
             <span><i style="background:rgba(245,158,11,0.4); border:2px solid var(--warning);"></i> Ocupada</span>
-            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> Pidió la cuenta (se libera en 15 min) / sentada hace rato</span>
-            <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Necesita ayuda</span>
+            <span><i style="background:rgba(239,68,68,0.4); border:2px solid var(--danger);"></i> Cuenta CONFIRMADA por el camarero (se libera en 15 min) / sentada hace rato</span>
+            <span><i style="background:rgba(59,130,246,0.4); border:2px solid var(--blue);"></i> Necesita ayuda / pidió la cuenta (sin confirmar aún)</span>
          </div>
        </div>
     </div>
@@ -492,8 +492,9 @@
   let isEditingMap = false;
   let freedTables = {}; // { "4": timestampMs }
   let autoFreedGuard = new Set(); // evita inserturi duplicate pt auto-liberare
+  let cleanedTablesGuard = new Set(); // evita sterge de mai multe ori aceleasi alerte
 
-  const AUTO_FREE_MINUTES = 15; // dupa ce se cere nota (cash/card), masa se elibereaza automat in 15 min
+  const AUTO_FREE_MINUTES = 15; // dupa ce OSPĂTARUL confirma cuenta (cash/card), masa se elibereaza automat in 15 min
   const PAYMENT_ALERT_REGEX = /Efectivo|Tarjeta|Cash|Card|Esp[eè]ces|Carte/i;
   const HELP_ALERT_REGEX = /Ayuda|Help|Aide/i;
 
@@ -835,31 +836,46 @@
   }
 
   // Determina statusul actual al unei mese: 'free' | 'yellow' | 'red' | 'blue'
-  // Logica: Libre -> Ocupada (al comandar) -> Ocupada (llega la comida, sigue ocupada) -> Ocupada (pide la cuenta) -> 15 min -> Libre
-  // La mesa NO se libera sola por servir/finalizar un pedido. Solo se libera manualmente o 15 min después de pedir la cuenta.
+  // Logica: Libre -> Ocupada (al comandar) -> Ocupada (llega la comida, sigue ocupada)
+  //         -> pide la cuenta (AZUL, esperando que el camarero la confirme)
+  //         -> el camarero confirma "Atendido" (ROJO, cuenta atrás de 15 min desde la confirmación)
+  //         -> 15 min -> Libre
+  // La mesa NO se libera sola por servir/finalizar un pedido normal. Solo se libera
+  // manualmente o 15 min después de que el CAMARERO confirme la petición de cuenta.
+  //
+  // IMPORTANTE: solo se tienen en cuenta los pedidos/alertas creados DESPUÉS de la
+  // última vez que la mesa fue liberada. Así, si la mesa se libera y luego entra un
+  // cliente nuevo, no quedan "restos" de la sesión anterior (alertas viejas, cuentas
+  // ya pedidas, etc.) confundiendo el color de la mesa.
   function getTableStatus(tableNr) {
       const strNr = String(tableNr);
-      // Todas las comandas de esta mesa (cualquier estado, menos las anuladas) mantienen la mesa ocupada
-      let ordersForTable = allOrders.filter(o => String(o.mesa) === strNr && o.status !== 'anulata');
+      const lastFreed = freedTables[strNr] || 0;
+
+      let ordersForTable = allOrders.filter(o => String(o.mesa) === strNr && o.status !== 'anulata' && new Date(o.created_at).getTime() > lastFreed);
 
       if(ordersForTable.length === 0) return { status:'free', label:'Libre' };
 
       let lastOrderTime = Math.max(...ordersForTable.map(o => new Date(o.created_at).getTime()));
-      let lastFreed = freedTables[strNr] || 0;
 
-      // Si se liberó (manual o automáticamente) DESPUÉS de la última comanda -> libre
-      if(lastFreed > lastOrderTime) return { status:'free', label:'Libre' };
-
-      // Alerta de ayuda: solo cuenta mientras no ha sido atendida (status 'noua')
+      // Ayuda: solo mientras el camarero no la ha marcado como atendida (status 'noua')
       let hasHelpAlert = ordersForTable.some(o => o.status === 'noua' && o.produse.some(p => p.nume.includes('ALERTĂ') && HELP_ALERT_REGEX.test(p.nume)));
-      if(hasHelpAlert) return { status:'blue', label:'Necesita ayuda' };
 
-      // Alerta de cuenta (cash/card): cuenta desde que se pulsó, sin importar si fue atendida o no
-      let paymentAlertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
-      if(paymentAlertOrders.length > 0) {
-          let lastPaymentTime = Math.max(...paymentAlertOrders.map(o => new Date(o.created_at).getTime()));
-          let remainingMin = Math.max(0, Math.ceil(AUTO_FREE_MINUTES - (Date.now() - lastPaymentTime) / 60000));
-          return { status:'red', label: remainingMin > 0 ? `Pidió la cuenta · se libera en ${remainingMin} min` : 'Pidió la cuenta · liberando...' };
+      // Cuenta pedida por el cliente pero AÚN NO confirmada por el camarero -> azul (pendiente)
+      let hasPendingPaymentAlert = ordersForTable.some(o => o.status === 'noua' && o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
+
+      if(hasHelpAlert || hasPendingPaymentAlert) {
+          if(hasHelpAlert && hasPendingPaymentAlert) return { status:'blue', label:'Ayuda + pidió la cuenta (sin confirmar)' };
+          if(hasHelpAlert) return { status:'blue', label:'Necesita ayuda' };
+          return { status:'blue', label:'Pidió la cuenta (sin confirmar)' };
+      }
+
+      // Cuenta YA confirmada por el camarero ("Atendido") -> ROJO, cuenta atrás de 15 min
+      // desde el momento de la CONFIRMACIÓN (confirmada_la), no desde que el cliente pidió.
+      let confirmedPaymentOrders = ordersForTable.filter(o => o.status === 'finalizata' && o.confirmada_la && o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
+      if(confirmedPaymentOrders.length > 0) {
+          let lastConfirmTime = Math.max(...confirmedPaymentOrders.map(o => new Date(o.confirmada_la).getTime()));
+          let remainingMin = Math.max(0, Math.ceil(AUTO_FREE_MINUTES - (Date.now() - lastConfirmTime) / 60000));
+          return { status:'red', label: remainingMin > 0 ? `Cuenta confirmada · se libera en ${remainingMin} min` : 'Cuenta confirmada · liberando...' };
       }
 
       // Ocupada normal (comió/está sentada, aún no pidió la cuenta)
@@ -867,26 +883,27 @@
       return isOld ? { status:'red', label:'Ocupada (sentada hace rato)' } : { status:'yellow', label:'Ocupada' };
   }
 
-  // Auto-liberare: la 15 min EXACT de la ultima cerere de "cuenta" (cash/card), masa se elibereaza singura,
-  // independent de starea comenzii (atendida sau no) si independent de daca a fost servita mancarea.
+  // Auto-liberare: la 15 min EXACT de la ULTIMA CONFIRMARE a ospatarului ("Atendido")
+  // pentru o alerta de cuenta (cash/card), masa se elibereaza singura.
   async function checkAutoFreeTables() {
       const strKeys = new Set();
       salaConfig.zones.forEach(z => z.mese.forEach(m => strKeys.add(String(m.numar))));
 
       for(const tableNr of strKeys) {
-          let ordersForTable = allOrders.filter(o => String(o.mesa) === tableNr && o.status !== 'anulata');
-          let alertOrders = ordersForTable.filter(o => o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
-          if(alertOrders.length === 0) continue;
+          const lastFreed = freedTables[tableNr] || 0;
+          let confirmedOrders = allOrders.filter(o => String(o.mesa) === tableNr && o.status === 'finalizata' && o.confirmada_la &&
+              new Date(o.confirmada_la).getTime() > lastFreed &&
+              o.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume)));
+          if(confirmedOrders.length === 0) continue;
 
-          let lastAlertTime = Math.max(...alertOrders.map(o => new Date(o.created_at).getTime()));
-          let lastFreed = freedTables[tableNr] || 0;
-          if(lastFreed > lastAlertTime) continue; // ya liberada tras esa petición de cuenta
-
-          const elapsedMin = (Date.now() - lastAlertTime) / 60000;
-          const guardKey = tableNr + ':' + lastAlertTime;
+          let lastConfirmTime = Math.max(...confirmedOrders.map(o => new Date(o.confirmada_la).getTime()));
+          const elapsedMin = (Date.now() - lastConfirmTime) / 60000;
+          const guardKey = tableNr + ':' + lastConfirmTime;
           if(elapsedMin >= AUTO_FREE_MINUTES && !autoFreedGuard.has(guardKey)) {
               autoFreedGuard.add(guardKey);
               await logActivity('mesa_liberada', null, { mesa: tableNr, automat: true });
+              freedTables[tableNr] = Date.now();
+              cleanupTableAlerts(tableNr);
           }
       }
   }
@@ -897,6 +914,27 @@
       renderTablesGrid();
       updateMapBadge();
       updatePaymentAlertBadge();
+      cleanupTableAlerts(tableNr);
+  }
+
+  // Elimina de Supabase los avisos "🔔 ALERTĂ OSPĂTAR: ..." de esa mesa que ya han
+  // quedado resueltos (atendidos o ya liberados). Estos avisos son solo BANDERAS
+  // (total 0€, no son comida/bebida real) usadas para pintar el color de la mesa,
+  // así que borrarlos no afecta ni a caja ni al historial de ventas — solo evita que
+  // se queden "restos" que luego confundan el cálculo del color/estado de la mesa
+  // cuando entra un cliente nuevo en la misma mesa.
+  async function cleanupTableAlerts(tableNr) {
+      const strNr = String(tableNr);
+      const key = strNr + ':' + Date.now();
+      try {
+          const toDelete = allOrders.filter(o => String(o.mesa) === strNr &&
+              o.produse.some(p => p.nume.includes('ALERTĂ')) &&
+              (o.status === 'finalizata' || o.status === 'noua'));
+          if(toDelete.length === 0) return;
+          const ids = toDelete.map(o => o.id);
+          const { error } = await _supabase.from('comenzi').delete().in('id', ids);
+          if(!error) allOrders = allOrders.filter(o => !ids.includes(o.id));
+      } catch(e) { console.log('cleanupTableAlerts error', e); }
   }
 
   document.getElementById('paymentAlertBanner').addEventListener('click', () => { switchTab('active'); });
@@ -1206,6 +1244,15 @@
       const order = allOrders.find(o => o.id === id);
       const updatePayload = { status };
       if((status === 'finalizata') && userRole === 'ospatar') updatePayload.preluat_de = currentUserEmail;
+
+      // Cuando el CAMARERO confirma que ha atendido una alerta de "quiere pagar",
+      // guardamos el momento exacto de la confirmación (confirmada_la). A partir de
+      // aquí el chenar rojo y la cuenta atrás de 15 min empiezan a contar — NO desde
+      // que el cliente pulsó el botón, sino desde que el camarero lo confirmó.
+      const isPaymentAlert = order && order.produse.some(p => p.nume.includes('ALERTĂ') && PAYMENT_ALERT_REGEX.test(p.nume));
+      if(status === 'finalizata' && userRole === 'ospatar' && isPaymentAlert) {
+          updatePayload.confirmada_la = new Date().toISOString();
+      }
 
       const { error } = await _supabase.from('comenzi').update(updatePayload).eq('id', id);
       if(!error) {
@@ -1580,6 +1627,12 @@
               renderOrders(); 
               if (currentTab === 'map') renderTablesGrid();
           }
+
+          // Si llega un pedido NUEVO normal (no alerta) a una mesa que tenía restos de
+          // alertas ya resueltas de una sesión anterior, los limpiamos para que no
+          // queden "restos" confundiendo el color de la mesa en esta nueva sesión.
+          if(!isAlert) cleanupTableAlerts(p.new.mesa);
+
           updateMapBadge();
           updatePaymentAlertBadge();
       })
@@ -1591,6 +1644,13 @@
               if (currentTab === 'map') renderTablesGrid();
               if (currentTab === 'admin') calculateDirectorStats(); 
           }
+          updateMapBadge();
+          updatePaymentAlertBadge();
+      })
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'comenzi' }, p => {
+          allOrders = allOrders.filter(o => o.id !== p.old.id);
+          renderOrders();
+          if (currentTab === 'map') renderTablesGrid();
           updateMapBadge();
           updatePaymentAlertBadge();
       })
