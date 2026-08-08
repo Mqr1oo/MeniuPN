@@ -211,8 +211,6 @@
       <p class="eyebrow" id="txtEyebrow">Menú digital</p>
       <h1 id="txtTitle">Á Libretto</h1>
       <p class="tag" id="txtTagline">Cócteles internacionales, bebidas selectas y platos deliciosos.</p>
-      <!-- Afisaj subtil pentru mese libere -->
-      <div id="freeTablesWrap" style="display:none; font-family:'Space Mono', monospace; font-size: 13px; font-weight:700; border: 1.5px solid transparent; padding: 6px 12px; border-radius: 8px; margin-top: 14px; align-items:center; justify-content:center; max-width: fit-content; text-align:center;"></div>
     </div>
   </div>
 </header>
@@ -347,7 +345,7 @@
     </div>
     <div id="fbGood" style="display:none; transition: opacity 0.3s;">
        <p id="fbGoogleText" style="margin-bottom:16px;">¡Genial! Nos ayudaría mucho una reseña en Google.</p>
-       <a href="https://search.google.com/local/writereview?placeid=ChIJc_yhyrB9Ng0R2dkWSDt5jIs" target="_blank" class="btn-submit" id="fbGoogleBtn" style="display:block; text-decoration:none; background:#4285F4; margin-bottom: 0;">Dejar reseña en Google</a>
+       <a href="https://maps.app.goo.gl/CExuDvVM4sihuBUk7" target="_blank" class="btn-submit" id="fbGoogleBtn" style="display:block; text-decoration:none; background:#4285F4; margin-bottom: 0;">Dejar reseña en Google</a>
     </div>
   </div>
 </div>
@@ -441,8 +439,7 @@
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
       privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
       busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
-      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google',
-      freeTablesFull: 'SALA COMPLETA', freeTables: (n) => `Mesas libres: ${n}`
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
@@ -466,8 +463,7 @@
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
       privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
       busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
-      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review',
-      freeTablesFull: 'FULLY BOOKED', freeTables: (n) => `Free tables: ${n}`
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -491,8 +487,7 @@
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
       privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).',
       busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
-      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google',
-      freeTablesFull: 'COMPLET', freeTables: (n) => `Tables libres: ${n}`
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -554,7 +549,7 @@
     document.getElementById('fbGoogleText').textContent = t.fbGoogle;
     document.getElementById('fbGoogleBtn').textContent = t.fbGoogleBtn;
 
-    renderTagFilters(); render(); updateBottomBar(); renderFreeTablesBadge();
+    renderTagFilters(); render(); updateBottomBar();
   }
 
   const langBtn = document.getElementById('langToggleBtn');
@@ -823,110 +818,6 @@
       }
   }
 
-  // Sincronizare locuri libere pentru badge
-  let localSalaConfig = null;
-  let localFreedTables = {};
-  let localTicketTables = {};
-  let localOrdersForTables = [];
-
-  async function initFreeTablesSync() {
-      const {data: configData} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'config_mese').order('created_at', {ascending:false}).limit(1);
-      if(configData && configData.length > 0) localSalaConfig = configData[0].detalii;
-
-      const {data: logs} = await _supabase.from('jurnal_activitate').select('actiune, created_at, detalii').in('actiune', ['mesa_liberada', 'ticket_confirmado']).order('created_at', {ascending:false}).limit(300);
-      if(logs) {
-          logs.forEach(l => {
-              const m = l.detalii?.mesa;
-              if(m) {
-                  const t = new Date(l.created_at).getTime();
-                  if(l.actiune === 'mesa_liberada' && !localFreedTables[m]) localFreedTables[m] = t;
-                  if(l.actiune === 'ticket_confirmado' && !localTicketTables[m]) localTicketTables[m] = t;
-              }
-          });
-      }
-
-      const {data: ords} = await _supabase.from('comenzi').select('mesa, created_at, status').in('status', ['noua', 'gata']);
-      if(ords) localOrdersForTables = ords;
-
-      renderFreeTablesBadge();
-
-      _supabase.channel('public:client_sync')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'jurnal_activitate' }, p => {
-          const act = p.new.actiune;
-          if(act === 'config_mese') { localSalaConfig = p.new.detalii; renderFreeTablesBadge(); }
-          if(act === 'mesa_liberada' && p.new.detalii?.mesa) { localFreedTables[p.new.detalii.mesa] = new Date(p.new.created_at).getTime(); renderFreeTablesBadge(); }
-          if(act === 'ticket_confirmado' && p.new.detalii?.mesa) { localTicketTables[p.new.detalii.mesa] = new Date(p.new.created_at).getTime(); renderFreeTablesBadge(); }
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, p => {
-          if (p.eventType === 'INSERT' && ['noua', 'gata'].includes(p.new.status)) {
-              localOrdersForTables.push({mesa: p.new.mesa, created_at: p.new.created_at, status: p.new.status});
-          } else if (p.eventType === 'UPDATE') {
-              if (['noua', 'gata'].includes(p.new.status)) {
-                  const idx = localOrdersForTables.findIndex(o => o.created_at === p.new.created_at);
-                  if(idx > -1) localOrdersForTables[idx] = p.new; else localOrdersForTables.push({mesa: p.new.mesa, created_at: p.new.created_at, status: p.new.status});
-              } else {
-                  localOrdersForTables = localOrdersForTables.filter(o => o.created_at !== p.old.created_at && o.created_at !== p.new.created_at);
-              }
-          } else if (p.eventType === 'DELETE') {
-              localOrdersForTables = localOrdersForTables.filter(o => o.created_at !== p.old.created_at);
-          }
-          renderFreeTablesBadge();
-      }).subscribe();
-      
-      setInterval(renderFreeTablesBadge, 60000);
-  }
-
-  function renderFreeTablesBadge() {
-      if(!localSalaConfig) return;
-      const t = I18N[currentLang];
-      let freeMesas = [];
-      localSalaConfig.zones.forEach(z => {
-          z.mese.forEach(m => {
-              const strNr = String(m.numar);
-              let tableOrders = localOrdersForTables.filter(o => String(o.mesa) === strNr);
-              let lastOrderTime = 0;
-              tableOrders.forEach(o => { const tm = new Date(o.created_at).getTime(); if(tm > lastOrderTime) lastOrderTime = tm; });
-              
-              let lastFreed = localFreedTables[strNr] || 0;
-              let lastTicket = localTicketTables[strNr] || 0;
-
-              let isFree = false;
-              if (lastFreed > lastOrderTime && lastFreed > lastTicket) {
-                  isFree = true;
-              } else if (tableOrders.length === 0) {
-                  if (lastTicket > lastFreed && lastTicket >= lastOrderTime) {
-                      if ((Date.now() - lastTicket) >= 15 * 60000) isFree = true;
-                  } else {
-                      isFree = true;
-                  }
-              }
-              if(isFree) freeMesas.push(m);
-          });
-      });
-
-      const badgeWrap = document.getElementById('freeTablesWrap');
-      if(!badgeWrap) return;
-      
-      if(freeMesas.length > 0) {
-          badgeWrap.style.display = 'flex';
-          if(freeMesas.length < 3) {
-              let details = freeMesas.map(m => `${m.scaune} pers.`).join(', ');
-              badgeWrap.innerHTML = `${t.freeTables(freeMesas.length)} <span style="font-size:12px; margin-left:6px; opacity:0.8; font-weight:400;">(${details})</span>`;
-          } else {
-              badgeWrap.innerHTML = t.freeTables(freeMesas.length);
-          }
-          badgeWrap.style.color = 'var(--pink-bright)';
-          badgeWrap.style.borderColor = 'var(--pink-main)';
-          badgeWrap.style.background = 'rgba(22,132,78,0.12)';
-      } else {
-          badgeWrap.style.display = 'flex';
-          badgeWrap.innerHTML = t.freeTablesFull;
-          badgeWrap.style.color = 'var(--coral)';
-          badgeWrap.style.borderColor = 'var(--coral)';
-          badgeWrap.style.background = 'rgba(255, 71, 87, 0.12)';
-      }
-  }
-
   let trackingOrderId = null;
   function startTrackingOrder(id) {
       trackingOrderId = id;
@@ -1046,13 +937,6 @@
       await _supabase.from('comenzi').insert([{ mesa: mesa, sectiune: 'bar', total: 0, produse: [{nume: '🔔 ALERTĂ OSPĂTAR: ' + payloadText, cantitate: 1, pret_unitar: 0}] }]);
       showCustomAlert("OK!", t.alertSent(mesa));
       callModal.classList.remove('open');
-      
-      if(tipKey === 'cash' || tipKey === 'card') {
-          setTimeout(() => {
-              document.getElementById('customAlertOverlay').classList.remove('open');
-              showFeedbackModal();
-          }, 2000);
-      }
   };
 
   document.getElementById('searchInput').addEventListener('input', render);
@@ -1069,7 +953,6 @@
 
       checkSettings();
       setInterval(checkSettings, 120000); 
-      initFreeTablesSync();
 
       if(currentLang) applyLanguage(currentLang);
   }).catch(() => { document.getElementById('emptyState').textContent = I18N[currentLang||'es'].emptyState; document.getElementById('emptyState').style.display = 'block'; });
@@ -1078,5 +961,3 @@
 </script>
 </body>
 </html>
-
-
