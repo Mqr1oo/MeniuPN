@@ -1076,8 +1076,11 @@
   }
 
   /* --- FETCH-UL CĂTRE menu.json --- */
-  fetch('menu.json?v=' + Date.now()).then(r => r.json()).then(async menuData => {
+  fetch('menu.json?v=' + Date.now(), { cache: 'no-store' })
+  .then(r => { document.title = 'STATUS:' + r.status; return r.json(); })
+  .then(async menuData => {
       allItems = menuData || [];
+      document.title = 'COUNT:' + allItems.length;
       console.log('DEBUG items count:', allItems.length);
       document.getElementById('emptyState').textContent = 'DEBUG count: ' + allItems.length;
       document.getElementById('emptyState').style.display = 'block';
