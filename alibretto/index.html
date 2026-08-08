@@ -134,9 +134,10 @@
   .global-fav-btn svg { width: 18px; height: 18px; fill: currentColor; }
   body.has-cart-bar .global-fav-btn { transform: translateY(-115px); }
 
-  .tables-badge { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; padding:7px 12px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18,18,18,0.6); backdrop-filter: blur(8px); color:var(--ink-soft); display:none; align-items:center; gap:6px; cursor:default; opacity:0.85; }
-  .tables-badge.badge-low { border-color: var(--pink-main); color: var(--pink-bright); }
-  .tables-badge.badge-full { border-color: var(--coral); color: var(--coral); }
+  .tables-badge { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; padding:7px 12px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18,18,18,0.6); backdrop-filter: blur(8px); color:var(--ink-soft); display:none; align-items:center; gap:6px; cursor:default; opacity:0.85; transition: all .2s; }
+  .tables-badge.badge-low { border-color: var(--pink-main); color: var(--pink-bright); opacity: 1; }
+  .tables-badge.badge-full { border-color: var(--coral); background: rgba(255,71,87,0.18); color: #fff; opacity: 1; font-size:12.5px; font-weight:700; padding:9px 16px; box-shadow: 0 0 0 rgba(255,71,87,0.5); animation: pulseFull 1.4s infinite; }
+  @keyframes pulseFull { 0% { box-shadow: 0 0 0 0 rgba(255,71,87,0.55); } 70% { box-shadow: 0 0 0 10px rgba(255,71,87,0); } 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0); } }
   .tables-badge-list { position:absolute; top:38px; right:0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 10px 12px; min-width: 160px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display:none; flex-direction:column; gap:4px; font-family:'Space Mono', monospace; font-size:12px; color: var(--ink-soft); z-index: 50; }
   .tables-badge-wrap { position:relative; }
   .tables-badge-wrap:hover .tables-badge-list, .tables-badge-wrap:active .tables-badge-list { display:flex; }
@@ -884,7 +885,8 @@
               progress.style.width = '100%';
               setTimeout(() => { 
                   tracker.classList.remove('show'); 
-                  setTimeout(showFeedbackModal, 2000);
+                  // Ya NO se pide review automáticamente al terminar el pedido.
+                  // El review solo se pide cuando el cliente pulsa "Quiero pagar" (cash/card).
               }, 6000);
           } else if (s === 'anulata') {
               statText.textContent = '❌ ' + (currentLang==='es'?'Cancelado': (currentLang==='fr'?'Annulé':'Canceled'));
@@ -1014,7 +1016,8 @@
   }
 
   async function loadActiveOrdersClient() {
-      const { data } = await _supabase.from('comenzi').select('mesa,status,created_at').in('status', ['noua','gata']).limit(300);
+      // Toate comenzile ne-anulate (inclusiv cele deja servite) tin masa ocupata pana se elibereaza
+      const { data } = await _supabase.from('comenzi').select('mesa,status,created_at').neq('status', 'anulata').order('created_at', { ascending: false }).limit(500);
       ordersForTablesClient = data || [];
   }
 
