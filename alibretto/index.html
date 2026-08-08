@@ -850,11 +850,11 @@
 
   async function checkSettings() {
       const {data} = await _supabase.from('jurnal_activitate').select('detalii').eq('actiune', 'setari_busy').order('created_at', {ascending:false}).limit(1);
-      if(data && data.length > 0 && data[0].detalii && data[0].detalii.isBusy) {
-          document.getElementById('busyBanner').style.display = 'block';
-      } else {
-          document.getElementById('busyBanner').style.display = 'none';
-      }
+      applyBusyState(data && data.length > 0 && data[0].detalii ? !!data[0].detalii.isBusy : false);
+  }
+
+  function applyBusyState(isBusy) {
+      document.getElementById('busyBanner').style.display = isBusy ? 'block' : 'none';
   }
 
   let trackingOrderId = null;
@@ -1082,6 +1082,7 @@
       _supabase.channel('mesas_live_client').on('postgres_changes', { event: '*', schema: 'public', table: 'comenzi' }, () => refreshTablesStatus())
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'jurnal_activitate' }, p => {
             if(p.new.actiune === 'mesa_liberada' || p.new.actiune === 'config_mese') refreshTablesStatus();
+            if(p.new.actiune === 'setari_busy') applyBusyState(p.new.detalii && !!p.new.detalii.isBusy);
         }).subscribe();
 
       if(currentLang) applyLanguage(currentLang);
