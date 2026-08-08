@@ -41,9 +41,9 @@
 
   .busy-banner { display: none; background: #f59e0b; color: #000; padding: 12px 20px; font-weight: 700; text-align: center; font-size: 14.5px; z-index: 100; position: relative; line-height: 1.3;}
 
-  /* --- REZOLVARE OVERLAP HEADER --- */
+  /* --- HEADER --- */
   .hero{ background: radial-gradient(ellipse at 80% 10%, rgba(22, 132, 78, 0.12), transparent 50%), var(--bg-base); color:var(--ink); padding:85px 0 0; overflow:hidden; position:relative; border-bottom: 1px solid var(--paper-dim); }
-  .top-actions{ position:absolute; top:20px; left:20px; z-index:2; display:flex; gap:8px; }
+  .top-actions{ position:absolute; top:20px; left:20px; right:20px; z-index:2; display:flex; justify-content: space-between; align-items: flex-start; gap:8px; }
   
   .lang-toggle-btn { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.04em; padding:8px 14px; min-height:40px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18, 18, 18, 0.7); backdrop-filter: blur(8px); color:var(--ink); cursor:pointer; transition:all .2s; display: flex; align-items: center; gap: 6px;}
   .lang-toggle-btn:active{ transform:scale(0.92); }
@@ -130,18 +130,21 @@
   .t-bar-bg { width: 100%; height: 5px; background: var(--paper-dim); border-radius: 10px; overflow: hidden; }
   .t-bar-fill { height: 100%; background: var(--pink-main); width: 10%; transition: width 0.5s; }
 
-  .global-fav-btn { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px; height: 46px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); padding: 0 18px; gap: 8px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 6px 20px rgba(22, 132, 78, 0.3); }
+  .global-fav-btn { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom)); right: 16px; height: 48px; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border: 1.5px solid var(--pink-main); padding: 0 20px; gap: 8px; color: var(--ink); font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; border-radius: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 6px 20px rgba(22, 132, 78, 0.4); }
   .global-fav-btn:active { transform: scale(0.92); }
   .global-fav-btn svg { width: 18px; height: 18px; fill: currentColor; }
   body.has-cart-bar .global-fav-btn { transform: translateY(-115px); }
 
-  .tables-badge { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; padding:7px 12px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18,18,18,0.6); backdrop-filter: blur(8px); color:var(--ink-soft); display:none; align-items:center; gap:6px; cursor:default; opacity:0.85; transition: all .2s; }
+  .tables-badge { font-family:'Space Mono', monospace; font-size:12px; letter-spacing:.03em; padding:8px 14px; border-radius:100px; border:1.5px solid var(--paper-dim); background:rgba(18,18,18,0.7); backdrop-filter: blur(8px); color:var(--ink-soft); display:none; align-items:center; gap:6px; cursor:pointer; opacity:0.85; transition: all .2s; }
+  .tables-badge:active { transform: scale(0.92); }
   .tables-badge.badge-low { border-color: var(--pink-main); color: var(--pink-bright); opacity: 1; }
-  .tables-badge.badge-full { border-color: var(--coral); background: rgba(255,71,87,0.18); color: #fff; opacity: 1; font-size:12.5px; font-weight:700; padding:9px 16px; box-shadow: 0 0 0 rgba(255,71,87,0.5); animation: pulseFull 1.4s infinite; }
+  .tables-badge.badge-full { border-color: var(--coral); background: rgba(255,71,87,0.18); color: #fff; opacity: 1; font-weight:700; box-shadow: 0 0 0 rgba(255,71,87,0.5); animation: pulseFull 1.4s infinite; }
   @keyframes pulseFull { 0% { box-shadow: 0 0 0 0 rgba(255,71,87,0.55); } 70% { box-shadow: 0 0 0 10px rgba(255,71,87,0); } 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0); } }
-  .tables-badge-list { position:absolute; top:38px; right:0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 10px 12px; min-width: 160px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display:none; flex-direction:column; gap:4px; font-family:'Space Mono', monospace; font-size:12px; color: var(--ink-soft); z-index: 50; }
+  
+  .tables-badge-list { position:absolute; top:48px; right:0; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 12px; padding: 10px; min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display:none; flex-direction:column; gap:6px; font-family:'Space Mono', monospace; font-size:13px; color: var(--ink-soft); z-index: 50; max-height: 300px; overflow-y: auto;}
+  .tables-badge-list.show { display:flex; }
+  .tables-badge-list span { padding: 6px 8px; border-radius: 6px; background: rgba(255,255,255,0.03); display: block; border-left: 3px solid var(--pink-main); color: var(--ink); }
   .tables-badge-wrap { position:relative; }
-  .tables-badge-wrap:hover .tables-badge-list, .tables-badge-wrap:active .tables-badge-list { display:flex; }
 
   .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:300; backdrop-filter: blur(8px); opacity:0; transition: opacity 0.3s;}
   .modal-overlay.open{ display:flex; opacity:1;}
@@ -179,9 +182,8 @@
   
   .gdpr-note { font-size: 12px; color: var(--coral); margin-top: -10px; margin-bottom: 20px; display: block; font-style: italic;}
 
-  /* --- REZOLVARE OVERLAP HEADER PENTRU MOBIL --- */
   @media (max-width:640px){
-    .hero{ padding-top:80px; } 
+    .hero{ padding-top:85px; } 
     .search-box { width: 100%; }
     .grid{ grid-template-columns:1fr; }
     
@@ -215,11 +217,14 @@
             <button class="lang-option" data-lang="fr"><span>🇫🇷</span> Français</button>
         </div>
     </div>
+    
+    <!-- WRAPPER BADGE MESE (acum dropdown la click) -->
     <div class="tables-badge-wrap">
-        <div class="tables-badge" id="tablesBadge"></div>
+        <button class="tables-badge" id="tablesBadge"></button>
         <div class="tables-badge-list" id="tablesBadgeList"></div>
     </div>
   </div>
+  
   <div class="wrap hero-inner">
     <div class="hero-text">
       <p class="eyebrow" id="txtEyebrow">Menú digital</p>
@@ -263,6 +268,7 @@
   </div>
 </div>
 
+<!-- BUTONUL SMART (va afisa Textul de Pagar/Ayuda sau Cart-ul) -->
 <button class="global-fav-btn" id="smartActionBtn"></button>
 
 <div class="modal-overlay" id="onboardingOverlay">
@@ -448,6 +454,7 @@
     saveFavorites();
   }
 
+  // --- I18N ACTUALIZAT (TEXTUL BUTONULUI) ---
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
@@ -466,12 +473,12 @@
       callCash:'💵 Quiero pagar (Efectivo)', callCard:'💳 Quiero pagar (Tarjeta)', callHelp:'🙋‍♂️ Necesito ayuda', 
       alertSent:(m)=>`¡Se ha llamado al camarero a la mesa ${m}!`, 
       catNames:{ entrante:'Entrantes', principal:'Plato Principal', coctel:'Cócteles', bebida:'Bebidas', postre:'Postres', otros:'Otros' }, 
-      smartWaiter: 'Camarero', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
+      smartWaiter: '💳 Pagar / Ayuda 🙋‍♂️', smartCart: 'Mi Pedido', splitTitle: 'Dividir la cuenta', splitDesc: 'Calcula rápido cuánto debe pagar cada persona.', sl1: 'Total del carrito:', sl2: 'Número de personas:', sl3: 'Propina (%):',
       badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
       privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
       busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
-      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'para'
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'plazas'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
@@ -490,12 +497,12 @@
       callCash:'💵 I want to pay (Cash)', callCard:'💳 I want to pay (Card)', callHelp:'🙋‍♂️ I need help', 
       alertSent:(m)=>`The waiter has been called to table ${m}!`, 
       catNames:{ entrante:'Starters', principal:'Main Course', coctel:'Cocktails', bebida:'Drinks', postre:'Desserts', otros:'Other' }, 
-      smartWaiter: 'Waiter', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
+      smartWaiter: '💳 Pay / Help 🙋‍♂️', smartCart: 'My Order', splitTitle: 'Split the bill', splitDesc: 'Quickly calculate how much each person pays.', sl1: 'Cart total:', sl2: 'Number of people:', sl3: 'Tip (%):',
       badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
       privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
       busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
-      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'for'
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'seats'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -514,12 +521,12 @@
       callCash:'💵 Je veux payer (Espèces)', callCard:'💳 Je veux payer (Carte)', callHelp:"🙋‍♂️ J'ai besoin d'aide", 
       alertSent:(m)=>`Le serveur a été appelé à la table ${m} !`, 
       catNames:{ entrante:'Entrées', principal:'Plat Principal', coctel:'Cocktails', bebida:'Boissons', postre:'Desserts', otros:'Autre' }, 
-      smartWaiter: 'Serveur', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
+      smartWaiter: '💳 Payer / Aide 🙋‍♂️', smartCart: 'Ma Commande', splitTitle: 'Partager l\'addition', splitDesc: 'Calculez rapidement la part de chacun.', sl1: 'Total du panier:', sl2: 'Nombre de personnes:', sl3: 'Pourboire (%):',
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
       privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).',
       busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
-      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'pour'
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places'
     }
   };
   const CATEGORY_KEYS = ['entrante', 'principal', 'coctel', 'bebida', 'postre'];
@@ -590,6 +597,19 @@
   langBtn.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('show'); });
   document.addEventListener('click', () => langDropdown.classList.remove('show'));
   
+  // EVENIMENT PENTRU DESCHIDERE DROPDOWN MESE LA CLICK
+  const tablesBadge = document.getElementById('tablesBadge');
+  const tablesBadgeList = document.getElementById('tablesBadgeList');
+  tablesBadge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tablesBadgeList.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+      if(!e.target.closest('.tables-badge-wrap')) {
+          tablesBadgeList.classList.remove('show');
+      }
+  });
+
   document.querySelectorAll('.lang-option').forEach(opt => {
       opt.addEventListener('click', () => { applyLanguage(opt.dataset.lang); });
   });
@@ -706,7 +726,8 @@
           smartBtn.style.background = 'var(--pink-main)';
           smartBtn.style.color = 'white';
       } else {
-          smartBtn.innerHTML = `🔔 <span style="margin-left: 6px;">${t.smartWaiter}</span>`;
+          // --- BUTONUL SMART PENTRU PAGAR/AYUDA ---
+          smartBtn.innerHTML = `<span>${t.smartWaiter}</span>`;
           smartBtn.onclick = () => document.getElementById('callWaiterOverlay').classList.add('open');
           smartBtn.style.background = 'rgba(18, 18, 18, 0.95)';
           smartBtn.style.color = 'var(--ink)';
@@ -1042,16 +1063,13 @@
       if(freeTables.length === 0) {
           badge.textContent = `🪑 ${t.tablesFull}`;
           badge.classList.add('badge-full');
-          list.style.display = 'none';
+          list.innerHTML = `<span>${t.tablesFull}</span>`;
       } else {
           badge.textContent = `🪑 ${freeTables.length}/${allTables.length} ${t.tablesFree}`;
-          if(freeTables.length <= 3) {
-              badge.classList.add('badge-low');
-              list.innerHTML = freeTables.map(m => `<span>#${m.numar} · ${t.tablesFor} ${m.scaune} 🪑</span>`).join('');
-              list.style.display = 'flex';
-          } else {
-              list.style.display = 'none';
-          }
+          badge.classList.add('badge-low');
+          
+          // GENERĂM LISTA ÎN DROPDOWN
+          list.innerHTML = freeTables.map(m => `<span>Mesa #${m.numar} · ${m.scaune} ${t.tablesFor}</span>`).join('');
       }
       badge.style.display = 'flex';
   }
@@ -1061,7 +1079,7 @@
       renderTablesBadge();
   }
 
-  /* --- AICI FACEM FETCH-UL CORECT CĂTRE menu.json SĂ EVITĂM CACHE-UL --- */
+  /* --- FETCH-UL CĂTRE menu.json --- */
   fetch('menu.json?v=' + Date.now()).then(r => r.json()).then(async menuData => {
       allItems = menuData || [];
       const { data: stocData } = await _supabase.from('stoc_produse').select('id_produs').eq('epuizat', true);
