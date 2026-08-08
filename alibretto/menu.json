@@ -1,544 +1,954 @@
 [
   {
     "imageNumber": 1,
-    "name": "Croquetas de Jamón Ibérico",
-    "price": 8.50,
-    "weight": "250 g",
-    "kcal": 480,
-    "description": "Croquetas caseras de jamón ibérico de bellota con bechamel cremosa y rebozado crujiente.",
-    "ingredients": [
-      "Jamón ibérico de bellota",
-      "Leche entera",
-      "Harina de trigo",
-      "Mantequilla",
-      "Pan rallado",
-      "Huevo"
-    ],
-    "allergens": ["Gluten", "Lácteos", "Huevo"],
-    "tags": ["entrante", "tradicional", "para compartir"],
+    "name": "Pan con Tomate",
+    "price": 3.50,
+    "weight": "150 g",
+    "kcal": 210,
+    "description": "Pan de cristal tostado con tomate natural rallado, ajo y aceite de oliva virgen extra.",
+    "ingredients": ["Pan de cristal", "Tomate rallado", "Ajo", "Aceite de oliva virgen extra", "Sal en escamas"],
+    "allergens": ["Gluten"],
+    "tags": ["entrante", "tradicional", "vegetariano"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Croquetas de Jamón Ibérico",
-        "description": "Croquetas caseras de jamón ibérico de bellota con bechamel cremosa y rebozado crujiente.",
-        "ingredients": ["Jamón ibérico de bellota", "Leche entera", "Harina de trigo", "Mantequilla", "Pan rallado", "Huevo"],
-        "allergens": ["Gluten", "Lácteos", "Huevo"]
-      },
-      "en": {
-        "name": "Iberian Ham Croquettes",
-        "description": "Homemade acorn-fed Iberian ham croquettes with creamy bechamel and a crispy coating.",
-        "ingredients": ["Iberian ham", "Whole milk", "Wheat flour", "Butter", "Breadcrumbs", "Egg"],
-        "allergens": ["Gluten", "Dairy", "Egg"]
-      },
-      "fr": {
-        "name": "Croquettes de Jambon Ibérique",
-        "description": "Croquettes maison au jambon ibérique bellota avec béchamel crémeuse et enrobage croustillant.",
-        "ingredients": ["Jambon ibérique", "Lait entier", "Farine de blé", "Beurre", "Chapelure", "Œuf"],
-        "allergens": ["Gluten", "Produits laitiers", "Œuf"]
-      }
+      "es": { "name": "Pan con Tomate", "description": "Pan de cristal tostado con tomate natural rallado, ajo y aceite de oliva virgen extra.", "ingredients": ["Pan de cristal", "Tomate rallado", "Ajo", "Aceite de oliva", "Sal"], "allergens": ["Gluten"] },
+      "en": { "name": "Spanish Tomato Bread", "description": "Toasted crystal bread with grated fresh tomato, garlic, and extra virgin olive oil.", "ingredients": ["Crystal bread", "Grated tomato", "Garlic", "Extra virgin olive oil", "Salt flakes"], "allergens": ["Gluten"] },
+      "fr": { "name": "Pain à la Tomate", "description": "Pain cristal grillé avec tomate fraîche râpée, ail et huile d'olive vierge extra.", "ingredients": ["Pain cristal", "Tomate râpée", "Ail", "Huile d'olive", "Fleur de sel"], "allergens": ["Gluten"] }
     }
   },
   {
     "imageNumber": 2,
-    "name": "Nachos con Guacamole y Queso",
-    "price": 9.50,
-    "weight": "380 g",
-    "kcal": 680,
-    "description": "Totopos de maíz crujientes con guacamole fresco, queso fundido, jalapeños y pico de gallo.",
-    "ingredients": [
-      "Totopos de maíz",
-      "Aguacate",
-      "Queso Cheddar fundido",
-      "Jalapeños",
-      "Tomate",
-      "Cebolla",
-      "Cilantro"
-    ],
-    "allergens": ["Lácteos"],
-    "tags": ["entrante", "para compartir", "sin gluten"],
+    "name": "Jamón Ibérico de Bellota",
+    "price": 18.50,
+    "weight": "100 g",
+    "kcal": 375,
+    "description": "Ración de jamón ibérico 100% de bellota cortado a cuchillo con picos artesanos.",
+    "ingredients": ["Jamón ibérico de bellota 100%", "Picos artesanos de pan"],
+    "allergens": ["Gluten"],
+    "tags": ["entrante", "especialidad", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Nachos con Guacamole y Queso",
-        "description": "Totopos de maíz crujientes con guacamole fresco, queso fundido, jalapeños y pico de gallo.",
-        "ingredients": ["Totopos de maíz", "Aguacate", "Queso Cheddar fundido", "Jalapeños", "Tomate", "Cebolla", "Cilantro"],
-        "allergens": ["Lácteos"]
-      },
-      "en": {
-        "name": "Nachos with Guacamole & Cheese",
-        "description": "Crispy corn tortilla chips topped with fresh guacamole, melted cheese, jalapeños, and pico de gallo.",
-        "ingredients": ["Corn tortilla chips", "Avocado", "Melted Cheddar cheese", "Jalapeños", "Tomato", "Onion", "Cilantro"],
-        "allergens": ["Dairy"]
-      },
-      "fr": {
-        "name": "Nachos au Guacamole et Fromage",
-        "description": "Chips de maïs croustillantes nappées de guacamole frais, fromage fondu, jalapeños et pico de gallo.",
-        "ingredients": ["Chips de maïs", "Avocat", "Cheddar fondu", "Jalapeños", "Tomate", "Oignon", "Coriandre"],
-        "allergens": ["Produits laitiers"]
-      }
+      "es": { "name": "Jamón Ibérico de Bellota", "description": "Ración de jamón ibérico 100% de bellota cortado a cuchillo con picos artesanos.", "ingredients": ["Jamón ibérico de bellota 100%", "Picos artesanos"], "allergens": ["Gluten"] },
+      "en": { "name": "100% Acorn-fed Iberian Ham", "description": "Hand-carved 100% acorn-fed Iberian ham served with artisan breadsticks.", "ingredients": ["100% Acorn-fed Iberian ham", "Artisan breadsticks"], "allergens": ["Gluten"] },
+      "fr": { "name": "Jambon Ibérique 100% Bellota", "description": "Portion de jambon ibérique 100% bellota coupé au couteau avec gressins artisanaux.", "ingredients": ["Jambon ibérique 100% bellota", "Gressins artisanaux"], "allergens": ["Gluten"] }
     }
   },
   {
     "imageNumber": 3,
-    "name": "Calamares a la Andaluza",
-    "price": 11.00,
-    "weight": "300 g",
-    "kcal": 520,
-    "description": "Calamares frescos fritos al estilo andaluz acompañados de alioli casero de ajo negro.",
-    "ingredients": [
-      "Calamares frescos",
-      "Harina de trigo",
-      "Aceite de oliva",
-      "Ajo negro",
-      "Mayonesa",
-      "Limón"
-    ],
-    "allergens": ["Moluscos", "Gluten", "Huevo"],
-    "tags": ["entrante", "marisco", "tradicional"],
+    "name": "Queso Manchego Curado",
+    "price": 12.00,
+    "weight": "150 g",
+    "kcal": 480,
+    "description": "Queso manchego D.O.P. curado con nueces y mermelada de higos.",
+    "ingredients": ["Queso manchego curado de oveja", "Nueces", "Mermelada de higos"],
+    "allergens": ["Lácteos", "Frutos de cáscara"],
+    "tags": ["entrante", "tradicional", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Calamares a la Andaluza",
-        "description": "Calamares frescos fritos al estilo andaluz acompañados de alioli casero de ajo negro.",
-        "ingredients": ["Calamares frescos", "Harina de trigo", "Aceite de oliva", "Ajo negro", "Mayonesa", "Limón"],
-        "allergens": ["Moluscos", "Gluten", "Huevo"]
-      },
-      "en": {
-        "name": "Andalusian Style Squid",
-        "description": "Fresh crispy fried squid served with homemade black garlic aioli.",
-        "ingredients": ["Fresh squid", "Wheat flour", "Olive oil", "Black garlic", "Mayonnaise", "Lemon"],
-        "allergens": ["Molluscs", "Gluten", "Egg"]
-      },
-      "fr": {
-        "name": "Calamars à l'Andalouse",
-        "description": "Calamars frais frits à l'andalouse servis avec de l'aïoli maison à l'ail noir.",
-        "ingredients": ["Calamars frais", "Farine de blé", "Huile d'olive", "Ail noir", "Mayonnaise", "Citron"],
-        "allergens": ["Mollusques", "Gluten", "Œuf"]
-      }
+      "es": { "name": "Queso Manchego Curado", "description": "Queso manchego D.O.P. curado con nueces y mermelada de higos.", "ingredients": ["Queso manchego curado", "Nueces", "Mermelada de higos"], "allergens": ["Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Aged Manchego Cheese", "description": "Cured P.D.O. Manchego sheep cheese served with walnuts and fig jam.", "ingredients": ["Aged Manchego cheese", "Walnuts", "Fig jam"], "allergens": ["Dairy", "Nuts"] },
+      "fr": { "name": "Fromage Manchego Affiné", "description": "Fromage de brebis Manchego A.O.P. affiné servi avec cerneaux de noix et confiture de figues.", "ingredients": ["Manchego affiné", "Noix", "Confiture de figues"], "allergens": ["Produits laitiers", "Fruits à coque"] }
     }
   },
   {
     "imageNumber": 4,
-    "name": "Tabla de Embutidos y Quesos",
-    "price": 16.00,
-    "weight": "400 g",
-    "kcal": 850,
-    "description": "Selección premium de embutidos ibéricos y quesos artesanos acompañados de pan de cristal con tomate.",
-    "ingredients": [
-      "Jamón ibérico",
-      "Lomo ibérico",
-      "Chorizo ibérico",
-      "Queso manchego curado",
-      "Queso de cabra",
-      "Pan de cristal",
-      "Tomate rallado"
-    ],
-    "allergens": ["Lácteos", "Gluten"],
-    "tags": ["entrante", "especialidad", "para compartir"],
+    "name": "Croquetas de Jamón Ibérico",
+    "price": 9.00,
+    "weight": "240 g",
+    "kcal": 460,
+    "description": "6 unidades de croquetas caseras de jamón ibérico con bechamel cremosa.",
+    "ingredients": ["Jamón ibérico", "Leche", "Harina de trigo", "Mantequilla", "Pan rallado", "Huevo"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["entrante", "tradicional", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Tabla de Embutidos y Quesos",
-        "description": "Selección premium de embutidos ibéricos y quesos artesanos acompañados de pan de cristal con tomate.",
-        "ingredients": ["Jamón ibérico", "Lomo ibérico", "Chorizo ibérico", "Queso manchego curado", "Queso de cabra", "Pan de cristal", "Tomate rallado"],
-        "allergens": ["Lácteos", "Gluten"]
-      },
-      "en": {
-        "name": "Cured Meats & Cheese Board",
-        "description": "Premium selection of cured Iberian meats and artisan cheeses served with crystal bread and tomato.",
-        "ingredients": ["Iberian ham", "Iberian pork loin", "Iberian chorizo", "Cured Manchego cheese", "Goat cheese", "Crystal bread", "Grated tomato"],
-        "allergens": ["Dairy", "Gluten"]
-      },
-      "fr": {
-        "name": "Planche de Charcuterie et Fromages",
-        "description": "Sélection premium de charcuteries ibériques et fromages artisanaux accompagnés de pain cristal à la tomate.",
-        "ingredients": ["Jambon ibérique", "Lomo ibérique", "Chorizo ibérique", "Manchego affiné", "Fromage de chèvre", "Pain cristal", "Tomate râpée"],
-        "allergens": ["Produits laitiers", "Gluten"]
-      }
+      "es": { "name": "Croquetas de Jamón Ibérico", "description": "6 unidades de croquetas caseras de jamón ibérico con bechamel cremosa.", "ingredients": ["Jamón ibérico", "Leche", "Harina", "Mantequilla", "Pan rallado", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Iberian Ham Croquettes", "description": "6 pieces of homemade creamy Iberian ham croquettes.", "ingredients": ["Iberian ham", "Milk", "Wheat flour", "Butter", "Breadcrumbs", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Croquettes de Jambon Ibérique", "description": "6 croquettes maison au jambon ibérique et béchamel onctueuse.", "ingredients": ["Jambon ibérique", "Lait", "Farine", "Beurre", "Chapelure", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
     }
   },
   {
     "imageNumber": 5,
-    "name": "Ensalada Burrata y Tomate",
-    "price": 12.00,
-    "weight": "320 g",
-    "kcal": 510,
-    "description": "Burrata fresca de búfala sobre tomates de huerta, pesto casero de albahaca y reducción de módena.",
-    "ingredients": [
-      "Burrata de búfala",
-      "Tomate de huerta",
-      "Pesto de albahaca",
-      "Piñones",
-      "Reducción de vinagre de Módena",
-      "Aceite de oliva virgen extra"
-    ],
-    "allergens": ["Lácteos", "Frutos de cáscara"],
-    "tags": ["ensalada", "fresco", "vegetariano"],
+    "name": "Croquetas de Boletus",
+    "price": 8.50,
+    "weight": "240 g",
+    "kcal": 420,
+    "description": "6 unidades de croquetas cremosas de setas boletus edulis.",
+    "ingredients": ["Boletus edulis", "Leche", "Harina de trigo", "Mantequilla", "Pan rallado", "Huevo"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["entrante", "vegetariano", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Ensalada Burrata y Tomate",
-        "description": "Burrata fresca de búfala sobre tomates de huerta, pesto casero de albahaca y reducción de módena.",
-        "ingredients": ["Burrata de búfala", "Tomate de huerta", "Pesto de albahaca", "Piñones", "Reducción de Módena", "Aceite de oliva"],
-        "allergens": ["Lácteos", "Frutos de cáscara"]
-      },
-      "en": {
-        "name": "Burrata & Tomato Salad",
-        "description": "Fresh buffalo burrata on heirloom tomatoes, basil pesto, and balsamic glaze reduction.",
-        "ingredients": ["Buffalo burrata", "Heirloom tomatoes", "Basil pesto", "Pine nuts", "Balsamic glaze", "Olive oil"],
-        "allergens": ["Dairy", "Nuts"]
-      },
-      "fr": {
-        "name": "Salade Burrata et Tomates",
-        "description": "Burrata fraîche de bufflonne sur tomates du verger, pesto de basilic et réduction de balsamique.",
-        "ingredients": ["Burrata de bufflonne", "Tomates du potager", "Pesto de basilic", "Pignons de pin", "Réduction de balsamique", "Huile d'olive"],
-        "allergens": ["Produits laitiers", "Fruits à coque"]
-      }
+      "es": { "name": "Croquetas de Boletus", "description": "6 unidades de croquetas cremosas de setas boletus edulis.", "ingredients": ["Boletus edulis", "Leche", "Harina", "Mantequilla", "Pan rallado", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Porcini Mushroom Croquettes", "description": "6 pieces of creamy wild porcini mushroom croquettes.", "ingredients": ["Boletus mushrooms", "Milk", "Wheat flour", "Butter", "Breadcrumbs", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Croquettes de Cèpes", "description": "6 croquettes crémeuses aux cèpes sauvages.", "ingredients": ["Cèpes", "Lait", "Farine", "Beurre", "Chapelure", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
     }
   },
   {
     "imageNumber": 6,
-    "name": "Ensalada Pokē de Salmón",
-    "price": 13.50,
-    "weight": "380 g",
-    "kcal": 560,
-    "description": "Base de arroz sushi, salmón fresco troceado, aguacate, edamame, mango jugoso y salsa ponzu.",
-    "ingredients": [
-      "Salmón fresco",
-      "Arroz de sushi",
-      "Aguacate",
-      "Edamame",
-      "Mango",
-      "Sésamo",
-      "Salsa ponzu"
-    ],
-    "allergens": ["Pescado", "Soja", "Sésamo"],
-    "tags": ["ensalada", "saludable", "especialidad"],
+    "name": "Patatas Bravas",
+    "price": 6.50,
+    "weight": "300 g",
+    "kcal": 480,
+    "description": "Patatas crujientes por fuera y tiernas por dentro con salsa brava picante casera y alioli.",
+    "ingredients": ["Patatas", "Salsa brava casera", "Alioli de ajo", "Aceite de oliva", "Pimentón de la Vera"],
+    "allergens": ["Huevo"],
+    "tags": ["entrante", "tradicional", "para compartir"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Ensalada Pokē de Salmón",
-        "description": "Base de arroz sushi, salmón fresco troceado, aguacate, edamame, mango jugoso y salsa ponzu.",
-        "ingredients": ["Salmón fresco", "Arroz de sushi", "Aguacate", "Edamame", "Mango", "Sésamo", "Salsa ponzu"],
-        "allergens": ["Pescado", "Soja", "Sésamo"]
-      },
-      "en": {
-        "name": "Salmon Poké Salad",
-        "description": "Sushi rice base, fresh diced salmon, avocado, edamame, juicy mango, and citrusy ponzu sauce.",
-        "ingredients": ["Fresh salmon", "Sushi rice", "Avocado", "Edamame", "Mango", "Sesame seeds", "Ponzu sauce"],
-        "allergens": ["Fish", "Soy", "Sesame"]
-      },
-      "fr": {
-        "name": "Poké Bowl au Saumon",
-        "description": "Riz à sushi, dés de saumon frais, avocat, edamame, mangue juteuse et sauce ponzu.",
-        "ingredients": ["Saumon frais", "Riz à sushi", "Avocat", "Edamame", "Mangue", "Sésame", "Sauce ponzu"],
-        "allergens": ["Poisson", "Soja", "Sésamo"]
-      }
+      "es": { "name": "Patatas Bravas", "description": "Patatas crujientes con salsa brava picante casera y alioli.", "ingredients": ["Patatas", "Salsa brava", "Alioli", "Aceite de oliva", "Pimentón"], "allergens": ["Huevo"] },
+      "en": { "name": "Patatas Bravas", "description": "Crispy potato cubes topped with homemade spicy brava sauce and garlic aioli.", "ingredients": ["Potatoes", "Spicy brava sauce", "Garlic aioli", "Olive oil", "Paprika"], "allergens": ["Egg"] },
+      "fr": { "name": "Patatas Bravas", "description": "Pommes de terre croustillantes avec sauce piquante maison et aïoli.", "ingredients": ["Pommes de terre", "Sauce brava", "Aïoli", "Huile d'olive", "Paprika"], "allergens": ["Œuf"] }
     }
   },
   {
     "imageNumber": 7,
-    "name": "Burger Trufada Wagyu",
-    "price": 15.00,
-    "weight": "450 g",
-    "kcal": 940,
-    "description": "Carne de Wagyu 200g, queso cheddar fundido, cebolla caramelizada y mayonesa de trufa en pan brioche artesanal.",
-    "ingredients": [
-      "Carne Wagyu 200g",
-      "Pan brioche artesanal",
-      "Queso Cheddar",
-      "Cebolla caramelizada",
-      "Mayonesa de trufa negra"
-    ],
-    "allergens": ["Gluten", "Lácteos", "Huevo"],
-    "tags": ["principal", "especialidad", "hamburguesa"],
+    "name": "Patatas Alioli",
+    "price": 6.00,
+    "weight": "300 g",
+    "kcal": 510,
+    "description": "Patatas cocidas en dados bañadas en suave alioli casero de ajo y perejil fresco.",
+    "ingredients": ["Patatas", "Alioli casero", "Ajo", "Perejil fresco", "Aceite de oliva"],
+    "allergens": ["Huevo"],
+    "tags": ["entrante", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Burger Trufada Wagyu",
-        "description": "Carne de Wagyu 200g, queso cheddar fundido, cebolla caramelizada y mayonesa de trufa en pan brioche artesanal.",
-        "ingredients": ["Carne Wagyu", "Pan brioche", "Queso Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
-        "allergens": ["Gluten", "Lácteos", "Huevo"]
-      },
-      "en": {
-        "name": "Truffle Wagyu Burger",
-        "description": "200g Wagyu patty, melted cheddar cheese, caramelized onions, and black truffle mayo on a brioche bun.",
-        "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar cheese", "Caramelized onion", "Truffle mayo"],
-        "allergens": ["Gluten", "Dairy", "Egg"]
-      },
-      "fr": {
-        "name": "Burger Wagyu à la Truffe",
-        "description": "Steak de Wagyu 200g, cheddar fondu, oignons caramélisés et mayonnaise à la truffe sur pain brioché.",
-        "ingredients": ["Bœuf Wagyu", "Pain brioché", "Cheddar", "Oignons caramélisés", "Mayonnaise à la truffe"],
-        "allergens": ["Gluten", "Produits laitiers", "Œuf"]
-      }
+      "es": { "name": "Patatas Alioli", "description": "Patatas en dados bañadas en suave alioli casero de ajo y perejil fresco.", "ingredients": ["Patatas", "Alioli", "Ajo", "Perejil", "Aceite de oliva"], "allergens": ["Huevo"] },
+      "en": { "name": "Garlic Aioli Potatoes", "description": "Diced potatoes tossed in smooth homemade garlic mayo and fresh parsley.", "ingredients": ["Potatoes", "Homemade aioli", "Garlic", "Fresh parsley", "Olive oil"], "allergens": ["Egg"] },
+      "fr": { "name": "Pommes de Terre Aïoli", "description": "Dés de pommes de terre nappés d'aïoli doux maison et persil frais.", "ingredients": ["Pommes de terre", "Aïoli maison", "Ail", "Persil", "Huile d'olive"], "allergens": ["Œuf"] }
     }
   },
   {
     "imageNumber": 8,
-    "name": "Chicken Crispy Burger",
+    "name": "Calamares a la Romana",
     "price": 11.50,
-    "weight": "400 g",
-    "kcal": 780,
-    "description": "Pechuga de pollo crujiente rebozada, lechuga fresca, tomate, pepinillos y salsa de miel y mostaza.",
-    "ingredients": [
-      "Pechuga de pollo crujiente",
-      "Pan brioche",
-      "Lechuga",
-      "Tomate",
-      "Pepinillos",
-      "Salsa de miel y mostaza"
-    ],
-    "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"],
-    "tags": ["principal", "hamburguesa"],
+    "weight": "250 g",
+    "kcal": 490,
+    "description": "Anillas de calamar fresco rebozadas al estilo tradicional acompañadas de rodaja de limón.",
+    "ingredients": ["Calamar fresco", "Harina de trigo", "Huevo", "Aceite de oliva", "Limón"],
+    "allergens": ["Moluscos", "Gluten", "Huevo"],
+    "tags": ["entrante", "marisco", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Chicken Crispy Burger",
-        "description": "Pechuga de pollo crujiente rebozada, lechuga fresca, tomate, pepinillos y salsa de miel y mostaza.",
-        "ingredients": ["Pollo crujiente", "Pan brioche", "Lechuga", "Tomate", "Pepinillos", "Salsa miel y mostaza"],
-        "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"]
-      },
-      "en": {
-        "name": "Crispy Chicken Burger",
-        "description": "Crispy fried chicken breast, fresh lettuce, tomato, pickles, and honey mustard sauce on a brioche bun.",
-        "ingredients": ["Crispy chicken", "Brioche bun", "Lettuce", "Tomato", "Pickles", "Honey mustard sauce"],
-        "allergens": ["Gluten", "Egg", "Mustard", "Dairy"]
-      },
-      "fr": {
-        "name": "Burger Poulet Croustillant",
-        "description": "Poitrine de poulet croustillante, laitue, tomate, cornichons et sauce miel-moutarde sur pain brioché.",
-        "ingredients": ["Poulet croustillant", "Pain brioché", "Laitue", "Tomate", "Cornichons", "Sauce miel-moutarde"],
-        "allergens": ["Gluten", "Œuf", "Moutarde", "Produits laitiers"]
-      }
+      "es": { "name": "Calamares a la Romana", "description": "Anillas de calamar fresco rebozadas al estilo tradicional con limón.", "ingredients": ["Calamar fresco", "Harina", "Huevo", "Aceite de oliva", "Limón"], "allergens": ["Moluscos", "Gluten", "Huevo"] },
+      "en": { "name": "Crispy Fried Squid Rings", "description": "Battered fresh squid rings fried golden served with fresh lemon slices.", "ingredients": ["Fresh squid", "Wheat flour", "Egg", "Olive oil", "Lemon"], "allergens": ["Molluscs", "Gluten", "Egg"] },
+      "fr": { "name": "Calamars à la Romaine", "description": "Rondelles de calamar frais en tempura croustillante servies avec du citron.", "ingredients": ["Calamar frais", "Farine de blé", "Œuf", "Huile d'olive", "Citron"], "allergens": ["Mollusques", "Gluten", "Œuf"] }
     }
   },
   {
     "imageNumber": 9,
-    "name": "Solomillo de Ternera a la Brasa",
-    "price": 19.50,
-    "weight": "420 g",
-    "kcal": 720,
-    "description": "Solomillo de ternera madurada a la brasa con patatas rústicas especiadas y pimientos del padrón.",
-    "ingredients": [
-      "Solomillo de ternera madurada",
-      "Patatas rústicas",
-      "Pimientos del Padrón",
-      "Sal escamada",
-      "Aceite de oliva virgen extra"
-    ],
-    "allergens": [],
-    "tags": ["principal", "carne", "especialidad", "sin gluten"],
+    "name": "Chipirones a la Plancha",
+    "price": 12.00,
+    "weight": "230 g",
+    "kcal": 310,
+    "description": "Chipirones frescos salteados a la plancha con majado de ajo, perejil y aceite de oliva.",
+    "ingredients": ["Chipirones frescos", "Ajo", "Perejil", "Aceite de oliva virgen extra", "Sal en escamas"],
+    "allergens": ["Moluscos"],
+    "tags": ["entrante", "marisco", "saludable"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Solomillo de Ternera a la Brasa",
-        "description": "Solomillo de ternera madurada a la brasa con patatas rústicas especiadas y pimientos del padrón.",
-        "ingredients": ["Solomillo de ternera", "Patatas rústicas", "Pimientos del Padrón", "Sal en escamas", "Aceite de oliva"],
-        "allergens": []
-      },
-      "en": {
-        "name": "Grilled Beef Tenderloin",
-        "description": "Grilled aged beef tenderloin served with seasoned rustic potatoes and Padrón peppers.",
-        "ingredients": ["Aged beef tenderloin", "Rustic potatoes", "Padrón peppers", "Sea salt flakes", "Olive oil"],
-        "allergens": []
-      },
-      "fr": {
-        "name": "Filet de Bœuf Grillé",
-        "description": "Filet de bœuf maffiné grillé servie avec pommes de terre rustiques et piments Padrón.",
-        "ingredients": ["Filet de bœuf", "Pommes de terre rustiques", "Piments Padrón", "Fleur de sel", "Huile d'olive"],
-        "allergens": []
-      }
+      "es": { "name": "Chipirones a la Plancha", "description": "Chipirones frescos salteados a la plancha con majado de ajo, perejil y aceite de oliva.", "ingredients": ["Chipirones", "Ajo", "Perejil", "Aceite de oliva", "Sal"], "allergens": ["Moluscos"] },
+      "en": { "name": "Grilled Baby Squid", "description": "Fresh grilled baby squid served with garlic, parsley, and extra virgin olive oil drizzle.", "ingredients": ["Baby squid", "Garlic", "Parsley", "Extra virgin olive oil", "Sea salt"], "allergens": ["Molluscs"] },
+      "fr": { "name": "Petits Calamars Grillés", "description": "Petits calamars frais sautés à la plancha avec persillade et huile d'olive.", "ingredients": ["Petits calamars", "Ail", "Persil", "Huile d'olive", "Sel"], "allergens": ["Mollusques"] }
     }
   },
   {
     "imageNumber": 10,
-    "name": "Risotto de Setas y Trufa",
-    "price": 14.00,
-    "weight": "360 g",
-    "kcal": 610,
-    "description": "Arroz cremoso Carnaroli con selección de setas silvestres de temporada, queso parmesano y aceite de trufa.",
-    "ingredients": [
-      "Arroz Carnaroli",
-      "Setas silvestres",
-      "Queso Parmesano",
-      "Mantequilla",
-      "Caldo vegetal",
-      "Aceite de trufa"
-    ],
-    "allergens": ["Lácteos"],
-    "tags": ["principal", "vegetariano", "especialidad"],
+    "name": "Gambas al Ajillo",
+    "price": 13.50,
+    "weight": "220 g",
+    "kcal": 380,
+    "description": "Gambas frescas salteadas en cazuela de barro con aceite de oliva, láminas de ajo y guindilla.",
+    "ingredients": ["Gambas peladas", "Ajo", "Guindilla", "Aceite de oliva virgen extra", "Perejil"],
+    "allergens": ["Marisco"],
+    "tags": ["entrante", "marisco", "tradicional"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Risotto de Setas y Trufa",
-        "description": "Arroz cremoso Carnaroli con selección de setas silvestres de temporada, queso parmesano y aceite de trufa.",
-        "ingredients": ["Arroz Carnaroli", "Setas silvestres", "Queso Parmesano", "Mantequilla", "Caldo vegetal", "Aceite de trufa"],
-        "allergens": ["Lácteos"]
-      },
-      "en": {
-        "name": "Mushroom & Truffle Risotto",
-        "description": "Creamy Carnaroli rice cooked with wild seasonal mushrooms, parmesan cheese, and truffle oil.",
-        "ingredients": ["Carnaroli rice", "Wild mushrooms", "Parmesan cheese", "Butter", "Vegetable broth", "Truffle oil"],
-        "allergens": ["Dairy"]
-      },
-      "fr": {
-        "name": "Risotto aux Champignons et Truffe",
-        "description": "Riz Carnaroli crémeux aux champignons sauvages de saison, parmesan et huile de truffe.",
-        "ingredients": ["Riz Carnaroli", "Champignons sauvages", "Parmesan", "Beurre", "Bouillon végétal", "Huile de truffe"],
-        "allergens": ["Produits laitiers"]
-      }
+      "es": { "name": "Gambas al Ajillo", "description": "Gambas frescas salteadas en cazuela de barro con aceite de oliva, ajo y guindilla.", "ingredients": ["Gambas", "Ajo", "Guindilla", "Aceite de oliva", "Perejil"], "allergens": ["Marisco"] },
+      "en": { "name": "Sizzling Garlic Prawns", "description": "Fresh prawns sautéed in hot olive oil with sliced garlic and chili pepper.", "ingredients": ["Prawns", "Garlic", "Chili pepper", "Extra virgin olive oil", "Parsley"], "allergens": ["Shellfish"] },
+      "fr": { "name": "Crevettes à l'Ail", "description": "Crevettes fraîches sautées à l'huile d'olive, ail émincé et piment en cassolette.", "ingredients": ["Crevettes", "Ail", "Piment", "Huile d'olive", "Persil"], "allergens": ["Crustacés"] }
     }
   },
   {
     "imageNumber": 11,
+    "name": "Pulpo a la Gallega",
+    "price": 17.50,
+    "weight": "280 g",
+    "kcal": 410,
+    "description": "Pata de pulpo cocido sobre cama de cachelos, aderezado con pimentón de la Vera y sal gorda.",
+    "ingredients": ["Pulpo cocido", "Patatas (cachelos)", "Pimentón dulce y picante", "Sal gorda", "Aceite de oliva virgen extra"],
+    "allergens": ["Moluscos"],
+    "tags": ["entrante", "especialidad", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pulpo a la Gallega", "description": "Pata de pulpo cocido sobre cama de cachelos con pimentón de la Vera y aceite de oliva.", "ingredients": ["Pulpo", "Patatas", "Pimentón de la Vera", "Sal gorda", "Aceite de oliva"], "allergens": ["Moluscos"] },
+      "en": { "name": "Galician Style Octopus", "description": "Tender octopus served over sliced boiled potatoes, sprinkled with paprika and olive oil.", "ingredients": ["Octopus", "Boiled potatoes", "Spanish paprika", "Coarse salt", "Olive oil"], "allergens": ["Molluscs"] },
+      "fr": { "name": "Poulpe a la Galicienne", "description": "Poulpe tendre servi sur lit de pommes de terre, paprika fumé et huile d'olive.", "ingredients": ["Poulpe", "Pommes de terre", "Paprika", "Gros sel", "Huile d'olive"], "allergens": ["Mollusques"] }
+    }
+  },
+  {
+    "imageNumber": 12,
+    "name": "Ensalada César Clásica",
+    "price": 10.50,
+    "weight": "320 g",
+    "kcal": 490,
+    "description": "Lechuga romana, pechuga de pollo a la plancha, picatostes, virutas de parmesano y salsa césar.",
+    "ingredients": ["Lechuga romana", "Pechuga de pollo", "Picatostes de pan", "Queso Parmesano", "Salsa César casera"],
+    "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"],
+    "tags": ["ensalada", "principal"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada César Clásica", "description": "Lechuga romana, pechuga de pollo, picatostes, parmesano y salsa césar casera.", "ingredients": ["Lechuga romana", "Pollo a la plancha", "Picatostes", "Parmesano", "Salsa César"], "allergens": ["Gluten", "Lácteos", "Huevo", "Pescado"] },
+      "en": { "name": "Classic Caesar Salad", "description": "Crisp romaine lettuce with grilled chicken breast, croutons, parmesan shavings, and Caesar dressing.", "ingredients": ["Romaine lettuce", "Grilled chicken", "Croutons", "Parmesan", "Caesar dressing"], "allergens": ["Gluten", "Dairy", "Egg", "Fish"] },
+      "fr": { "name": "Salade César Classique", "description": "Laitue romaine, poulet grillé, croûtons croustillants, copeaux de parmesan et sauce César.", "ingredients": ["Laitue romaine", "Poulet grillé", "Croûtons", "Parmesan", "Sauce César"], "allergens": ["Gluten", "Produits laitiers", "Œuf", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 13,
+    "name": "Ensalada Mixta de la Casa",
+    "price": 8.50,
+    "weight": "350 g",
+    "kcal": 280,
+    "description": "Mezclum de lechugas, tomate fresco, cebolla, atún, huevo cocido, aceitunas y maíz.",
+    "ingredients": ["Mezclum de lechugas", "Tomate", "Cebolla", "Atún en aceite", "Huevo cocido", "Aceitunas", "Maíz"],
+    "allergens": ["Pescado", "Huevo"],
+    "tags": ["ensalada", "fresco", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada Mixta de la Casa", "description": "Mezclum de lechugas, tomate fresco, cebolla, atún, huevo cocido, aceitunas y maíz.", "ingredients": ["Lechugas variadas", "Tomate", "Cebolla", "Atún", "Huevo cocido", "Aceitunas", "Maíz"], "allergens": ["Pescado", "Huevo"] },
+      "en": { "name": "House Mixed Salad", "description": "Mixed salad greens, fresh tomato, onion, tuna, boiled egg, olives, and sweetcorn.", "ingredients": ["Mixed greens", "Tomato", "Onion", "Tuna", "Boiled egg", "Olives", "Sweetcorn"], "allergens": ["Fish", "Egg"] },
+      "fr": { "name": "Salade Mixte Maison", "description": "Mélange de salades, tomate fraîche, oignon, thon, œuf dur, olives et maïs.", "ingredients": ["Mélange de salades", "Tomate", "Oignon", "Thon", "Œuf dur", "Olives", "Maïs"], "allergens": ["Poisson", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 14,
+    "name": "Ensalada Caprese con Burrata",
+    "price": 12.50,
+    "weight": "300 g",
+    "kcal": 520,
+    "description": "Burrata fresca 125g sobre rodajas de tomate rosa, pesto de albahaca casero y reducción de módena.",
+    "ingredients": ["Burrata fresca", "Tomate rosa", "Pesto de albahaca", "Piñones", "Reducción de Módena", "Aceite de oliva virgen extra"],
+    "allergens": ["Lácteos", "Frutos de cáscara"],
+    "tags": ["ensalada", "vegetariano", "fresco"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Ensalada Caprese con Burrata", "description": "Burrata fresca 125g sobre rodajas de tomate rosa, pesto de albahaca y reducción de módena.", "ingredients": ["Burrata fresca", "Tomate rosa", "Pesto de albahaca", "Piñones", "Reducción de Módena"], "allergens": ["Lácteos", "Frutos de cáscara"] },
+      "en": { "name": "Burrata Caprese Salad", "description": "Fresh 125g Burrata served over pink tomato slices, basil pesto, pine nuts, and balsamic glaze.", "ingredients": ["Fresh Burrata", "Pink tomato", "Basil pesto", "Pine nuts", "Balsamic glaze"], "allergens": ["Dairy", "Nuts"] },
+      "fr": { "name": "Salade Caprese à la Burrata", "description": "Burrata fraîche 125g sur tranches de tomate rose, pesto de basilic et réduction de balsamique.", "ingredients": ["Burrata fraîche", "Tomate rose", "Pesto de basilic", "Pignons de pin", "Réduction balsamique"], "allergens": ["Produits laitiers", "Fruits à coque"] }
+    }
+  },
+  {
+    "imageNumber": 15,
+    "name": "Gazpacho Andaluz",
+    "price": 5.50,
+    "weight": "300 ml",
+    "kcal": 160,
+    "description": "Sopa fría tradicional andaluza elaborada con tomates maduros, pepino, pimiento, ajo y aceite de oliva.",
+    "ingredients": ["Tomates maduros", "Pepino", "Pimiento verde", "Ajo", "Aceite de oliva virgen extra", "Vinagre de Jerez"],
+    "allergens": [],
+    "tags": ["entrante", "fresco", "tradicional", "vegan"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Gazpacho Andaluz", "description": "Sopa fría tradicional andaluza con tomates maduros, pepino, pimiento y aceite de oliva.", "ingredients": ["Tomates", "Pepino", "Pimiento", "Ajo", "Aceite de oliva", "Vinagre"], "allergens": [] },
+      "en": { "name": "Andalusian Gazpacho", "description": "Traditional Spanish chilled tomato soup blended with cucumber, pepper, garlic, and olive oil.", "ingredients": ["Ripe tomatoes", "Cucumber", "Green pepper", "Garlic", "Extra virgin olive oil", "Sherry vinegar"], "allergens": [] },
+      "fr": { "name": "Gaspacho Andalou", "description": "Soupe froide traditionnelle aux tomates mûres, concombre, poivron, ail et huile d'olive.", "ingredients": ["Tomates mûres", "Concombre", "Poivron vert", "Ail", "Huile d'olive", "Vinaigre"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 16,
+    "name": "Salmorejo Cordobés",
+    "price": 6.50,
+    "weight": "280 g",
+    "kcal": 310,
+    "description": "Crema fría espesa de tomate y pan decorada con virutas de jamón ibérico y huevo duro picado.",
+    "ingredients": ["Tomates maduros", "Pan de telera", "Aceite de oliva virgen extra", "Ajo", "Jamón ibérico", "Huevo duro"],
+    "allergens": ["Gluten", "Huevo"],
+    "tags": ["entrante", "fresco", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Salmorejo Cordobés", "description": "Crema fría espesa de tomate y pan con virutas de jamón ibérico y huevo duro.", "ingredients": ["Tomate", "Pan", "Aceite de oliva", "Ajo", "Jamón ibérico", "Huevo duro"], "allergens": ["Gluten", "Huevo"] },
+      "en": { "name": "Cordoban Salmorejo", "description": "Thick chilled tomato and bread cream topped with Iberian ham shavings and chopped hard-boiled egg.", "ingredients": ["Tomatoes", "Bread", "Extra virgin olive oil", "Garlic", "Iberian ham", "Hard-boiled egg"], "allergens": ["Gluten", "Egg"] },
+      "fr": { "name": "Salmorejo de Cordoue", "description": "Crème froide de tomate et pain garnie de copeaux de jambon ibérique et œuf dur haché.", "ingredients": ["Tomates", "Pain", "Huile d'olive", "Ail", "Jambon ibérique", "Œuf dur"], "allergens": ["Gluten", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 17,
+    "name": "Tartar de Atún Rojo",
+    "price": 16.50,
+    "weight": "220 g",
+    "kcal": 360,
+    "description": "Atún rojo fresco macerado en soja y sésamo sobre cama de aguacate y aliñado con toques cítricos.",
+    "ingredients": ["Atún rojo fresco", "Aguacate", "Salsa de soja", "Aceite de sésamo", "Semillas de sésamo", "Lima"],
+    "allergens": ["Pescado", "Soja", "Sésamo"],
+    "tags": ["entrante", "especialidad", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tartar de Atún Rojo", "description": "Atún rojo fresco macerado en soja y sésamo sobre cama de aguacate.", "ingredients": ["Atún rojo", "Aguacate", "Salsa de soja", "Aceite de sésamo", "Sésamo", "Lima"], "allergens": ["Pescado", "Soja", "Sésamo"] },
+      "en": { "name": "Red Tuna Tartare", "description": "Fresh bluefin tuna marinated in soy and sesame oil served over a layer of avocado.", "ingredients": ["Red tuna", "Avocado", "Soy sauce", "Sesame oil", "Sesame seeds", "Lime"], "allergens": ["Fish", "Soy", "Sesame"] },
+      "fr": { "name": "Tartare de Thon Rouge", "description": "Thon rouge frais mariné au soja et sésame servi sur lit d'avocat.", "ingredients": ["Thon rouge", "Avocat", "Sauce soja", "Huile de sésame", "Graines de sésame", "Citron vert"], "allergens": ["Poisson", "Soja", "Sésamo"] }
+    }
+  },
+  {
+    "imageNumber": 18,
+    "name": "Steak Tartar de Ternera",
+    "price": 17.50,
+    "weight": "230 g",
+    "kcal": 420,
+    "description": "Solomillo de ternera picado a cuchillo, macerado con yema de huevo, alcaparras, mostaza y toque picante.",
+    "ingredients": ["Solomillo de ternera", "Yema de huevo", "Alcaparras", "Pepinillos", "Mostaza de Dijon", "Salsa Tabasco y Perrins"],
+    "allergens": ["Huevo", "Mostaza"],
+    "tags": ["entrante", "especialidad", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Steak Tartar de Ternera", "description": "Solomillo picado a cuchillo con yema de huevo, alcaparras, mostaza y toque picante.", "ingredients": ["Solomillo de ternera", "Yema de huevo", "Alcaparras", "Pepinillos", "Mostaza", "Tabasco"], "allergens": ["Huevo", "Mostaza"] },
+      "en": { "name": "Beef Steak Tartare", "description": "Hand-cut beef tenderloin seasoned with egg yolk, capers, mustard, and spicy Worcestershire sauce.", "ingredients": ["Beef tenderloin", "Egg yolk", "Capers", "Pickles", "Dijon mustard", "Tabasco sauce"], "allergens": ["Egg", "Mustard"] },
+      "fr": { "name": "Tartare de Bœuf", "description": "Filet de bœuf coupé au couteau, assaisonné de jaune d'œuf, câpres, moutarde et épices.", "ingredients": ["Filet de bœuf", "Jaune d'œuf", "Câpres", "Cornichons", "Moutarde de Dijon", "Sauce piquante"], "allergens": ["Œuf", "Moutarde"] }
+    }
+  },
+  {
+    "imageNumber": 19,
+    "name": "Solomillo de Ternera a la Brasa",
+    "price": 21.00,
+    "weight": "350 g",
+    "kcal": 680,
+    "description": "Solomillo de ternera de 220g a la parrilla servido con patatas rústicas y pimientos del padrón.",
+    "ingredients": ["Solomillo de ternera (220g)", "Patatas rústicas", "Pimientos del Padrón", "Sal escamada", "Aceite de oliva virgen extra"],
+    "allergens": [],
+    "tags": ["principal", "carne", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Solomillo de Ternera a la Brasa", "description": "Solomillo de ternera a la parrilla servido con patatas rústicas y pimientos del padrón.", "ingredients": ["Solomillo de ternera", "Patatas rústicas", "Pimientos del Padrón", "Sal", "Aceite de oliva"], "allergens": [] },
+      "en": { "name": "Grilled Beef Tenderloin", "description": "220g grilled tenderloin steak served with rustic potato wedges and Padrón peppers.", "ingredients": ["Beef tenderloin", "Rustic potatoes", "Padrón peppers", "Flaky sea salt", "Olive oil"], "allergens": [] },
+      "fr": { "name": "Filet de Bœuf Grillé", "description": "Filet de bœuf 220g grillé au feu de bois servi avec pommes rustiques et piments Padrón.", "ingredients": ["Filet de bœuf", "Pommes de terre", "Piments Padrón", "Fleur de sel", "Huile d'olive"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 20,
+    "name": "Entrecot de Ternera Madurada",
+    "price": 18.50,
+    "weight": "400 g",
+    "kcal": 820,
+    "description": "Entrecot de ternera madurada de 300g cocinado a la plancha con mantequilla de hierbas y patatas.",
+    "ingredients": ["Entrecot de ternera (300g)", "Mantequilla de hierbas", "Patatas fritas caseras", "Sal gorda"],
+    "allergens": ["Lácteos"],
+    "tags": ["principal", "carne"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Entrecot de Ternera Madurada", "description": "Entrecot de 300g cocinado a la plancha con mantequilla de hierbas y patatas.", "ingredients": ["Entrecot de ternera", "Mantequilla de hierbas", "Patatas fritas", "Sal gorda"], "allergens": ["Lácteos"] },
+      "en": { "name": "Aged Ribeye Steak", "description": "300g dry-aged ribeye steak grilled with herb butter and served with thick-cut fries.", "ingredients": ["Aged ribeye steak", "Herb butter", "French fries", "Coarse sea salt"], "allergens": ["Dairy"] },
+      "fr": { "name": "Entrecôte Maturée", "description": "Entrecôte maturée de 300g grillée avec beurre aux herbes et frites maison.", "ingredients": ["Entrecôte de bœuf", "Beurre aux herbes", "Frites", "Gros sel"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 21,
+    "name": "Secreto Ibérico a la Parrilla",
+    "price": 15.50,
+    "weight": "380 g",
+    "kcal": 790,
+    "description": "Corte jugoso de secreto ibérico a la brasa servido con puré de patata trufado y mojo verde.",
+    "ingredients": ["Secreto ibérico", "Puré de patata trufado", "Mojo verde canario", "Sal marina"],
+    "allergens": ["Lácteos"],
+    "tags": ["principal", "carne", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Secreto Ibérico a la Parrilla", "description": "Corte jugoso de secreto ibérico a la brasa con puré de patata trufado y mojo verde.", "ingredients": ["Secreto ibérico", "Puré de patata trufado", "Mojo verde", "Sal"], "allergens": ["Lácteos"] },
+      "en": { "name": "Grilled Iberian Pork Secreto", "description": "Juicy grilled Iberian pork secreto served with truffled mashed potatoes and green mojo sauce.", "ingredients": ["Iberian pork secreto", "Truffled mashed potato", "Green mojo sauce", "Sea salt"], "allergens": ["Dairy"] },
+      "fr": { "name": "Secreto Ibérique Grillé", "description": "Morceau juteux de secreto ibérique grillé accompagné de purée truffée et mojo vert.", "ingredients": ["Secreto ibérique", "Purée truffée", "Mojo vert", "Sel"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 22,
+    "name": "Hamburguesa Wagyu Gourmet",
+    "price": 14.50,
+    "weight": "450 g",
+    "kcal": 920,
+    "description": "Carne de Wagyu 200g con cebolla caramelizada, cheddar fundido y mayonesa de trufa en pan brioche.",
+    "ingredients": ["Carne de Wagyu 200g", "Pan brioche", "Queso Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["principal", "hamburguesa", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Hamburguesa Wagyu Gourmet", "description": "Carne de Wagyu 200g con cebolla caramelizada, cheddar fundido y mayonesa de trufa en pan brioche.", "ingredients": ["Carne Wagyu", "Pan brioche", "Queso Cheddar", "Cebolla caramelizada", "Mayonesa de trufa"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Gourmet Wagyu Burger", "description": "200g Wagyu patty with caramelized onions, melted cheddar, and truffle mayo on brioche.", "ingredients": ["Wagyu beef", "Brioche bun", "Cheddar cheese", "Caramelized onion", "Truffle mayo"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Burger Wagyu Gourmet", "description": "Steak haché Wagyu 200g, oignons caramélisés, cheddar fondu et mayo truffée sur brioche.", "ingredients": ["Bœuf Wagyu", "Pain brioché", "Cheddar", "Oignons caramélisés", "Mayonnaise à la truffe"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 23,
+    "name": "Crispy Chicken Burger",
+    "price": 11.50,
+    "weight": "400 g",
+    "kcal": 780,
+    "description": "Pechuga de pollo crujiente con lechuga fresca, tomate, pepinillos y salsa de miel y mostaza.",
+    "ingredients": ["Pollo crujiente", "Pan brioche", "Lechuga", "Tomate", "Pepinillos", "Salsa de miel y mostaza"],
+    "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"],
+    "tags": ["principal", "hamburguesa"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Crispy Chicken Burger", "description": "Pechuga de pollo crujiente con lechuga, tomate, pepinillos y salsa de miel y mostaza.", "ingredients": ["Pollo crujiente", "Pan brioche", "Lechuga", "Tomate", "Pepinillos", "Salsa miel y mostaza"], "allergens": ["Gluten", "Huevo", "Mostaza", "Lácteos"] },
+      "en": { "name": "Crispy Chicken Burger", "description": "Crispy chicken breast with fresh lettuce, tomato, pickles, and honey mustard sauce.", "ingredients": ["Crispy chicken", "Brioche bun", "Lettuce", "Tomato", "Pickles", "Honey mustard sauce"], "allergens": ["Gluten", "Egg", "Mustard", "Dairy"] },
+      "fr": { "name": "Burger Poulet Croustillant", "description": "Poitrine de poulet croustillante, laitue, tomate, cornichons et sauce miel-moutarde.", "ingredients": ["Poulet croustillant", "Pain brioché", "Laitue", "Tomate", "Cornichons", "Sauce miel-moutarde"], "allergens": ["Gluten", "Œuf", "Moutarde", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 24,
+    "name": "Salmón a la Plancha",
+    "price": 15.50,
+    "weight": "320 g",
+    "kcal": 510,
+    "description": "Lomo de salmón fresco a la plancha sobre salteado de verduras de temporada y salsa teriyaki.",
+    "ingredients": ["Lomo de salmón fresco", "Calabacín", "Zanahoria", "Pimiento rojo", "Salsa teriyaki", "Sésamo"],
+    "allergens": ["Pescado", "Soja", "Sésamo"],
+    "tags": ["principal", "pescado", "saludable"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Salmón a la Plancha", "description": "Lomo de salmón fresco a la plancha con verduras salteadas y salsa teriyaki.", "ingredients": ["Salmón fresco", "Calabacín", "Zanahoria", "Pimiento", "Salsa teriyaki", "Sésamo"], "allergens": ["Pescado", "Soja", "Sésamo"] },
+      "en": { "name": "Grilled Salmon", "description": "Fresh salmon fillet grilled with sautéed seasonal vegetables and teriyaki drizzle.", "ingredients": ["Fresh salmon fillet", "Zucchini", "Carrot", "Red pepper", "Teriyaki sauce", "Sesame"], "allergens": ["Fish", "Soy", "Sesame"] },
+      "fr": { "name": "Saumon Grillé", "description": "Pavé de saumon frais grillé avec poêlée de légumes de saison et sauce teriyaki.", "ingredients": ["Pavé de saumon", "Courgette", "Carotte", "Poivron", "Sauce teriyaki", "Sésame"], "allergens": ["Poisson", "Soja", "Sésamo"] }
+    }
+  },
+  {
+    "imageNumber": 25,
+    "name": "Lubina a la Espalda",
+    "price": 17.00,
+    "weight": "380 g",
+    "kcal": 430,
+    "description": "Lubina fresca abierta a la espalda a la plancha con refrito de ajos, guindilla y patatas panaderas.",
+    "ingredients": ["Lubina fresca", "Ajo", "Guindilla", "Vinagre de vino blanco", "Patatas panaderas", "Aceite de oliva"],
+    "allergens": ["Pescado"],
+    "tags": ["principal", "pescado", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Lubina a la Espalda", "description": "Lubina fresca abierta a la espalda a la plancha con refrito de ajos y patatas panaderas.", "ingredients": ["Lubina", "Ajo", "Guindilla", "Vinagre", "Patatas panaderas", "Aceite de oliva"], "allergens": ["Pescado"] },
+      "en": { "name": "Butterflied Sea Bass", "description": "Fresh sea bass butterflied and grilled with a garlic, chili, and vinegar dressing, served with roasted potatoes.", "ingredients": ["Sea bass", "Garlic", "Chili", "Vinegar", "Baker's potatoes", "Olive oil"], "allergens": ["Fish"] },
+      "fr": { "name": "Bar Grillé en Crapaudine", "description": "Bar frais ouvert et grillé avec persillade d'ail, piment et pommes boulangères.", "ingredients": ["Bar frais", "Ail", "Piment", "Vinaigre", "Pommes boulangères", "Huile d'olive"], "allergens": ["Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 26,
+    "name": "Bacalao al Pil-Pil",
+    "price": 18.00,
+    "weight": "350 g",
+    "kcal": 590,
+    "description": "Lomo de bacalao confitado a fuego lento en emulsión de aceite de oliva, ajo y guindilla.",
+    "ingredients": ["Lomo de bacalao desalado", "Aceite de oliva virgen extra", "Ajo", "Guindilla"],
+    "allergens": ["Pescado"],
+    "tags": ["principal", "pescado", "especialidad", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Bacalao al Pil-Pil", "description": "Lomo de bacalao confitado a fuego lento en emulsión de aceite de oliva, ajo y guindilla.", "ingredients": ["Lomo de bacalao", "Aceite de oliva", "Ajo", "Guindilla"], "allergens": ["Pescado"] },
+      "en": { "name": "Cod in Pil-Pil Sauce", "description": "Traditional Basque cod loin slow-cooked in emulsified garlic and olive oil sauce.", "ingredients": ["Cod loin", "Extra virgin olive oil", "Garlic", "Chili pepper"], "allergens": ["Fish"] },
+      "fr": { "name": "Morue au Pil-Pil", "description": "Dos de cabillaud confit à feu doux dans une émulsion d'huile d'olive, ail et piment.", "ingredients": ["Dos de cabillaud", "Huile d'olive", "Ail", "Piment"], "allergens": ["Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 27,
+    "name": "Paella de Marisco",
+    "price": 16.00,
+    "weight": "450 g",
+    "kcal": 650,
+    "description": "Arroz bomba cocinado con caldo de pescado artesanal, gambas, mejillones, sepia y cigalas.",
+    "ingredients": ["Arroz bomba", "Caldo de pescado", "Gambas", "Mejillones", "Sepia", "Cigalas", "Azafrán"],
+    "allergens": ["Marisco", "Moluscos", "Pescado"],
+    "tags": ["principal", "arroz", "tradicional", "para compartir"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Paella de Marisco", "description": "Arroz bomba cocinado con caldo de pescado artesanal, gambas, mejillones y sepia.", "ingredients": ["Arroz bomba", "Fondo de pescado", "Gambas", "Mejillones", "Sepia", "Azafrán"], "allergens": ["Marisco", "Moluscos", "Pescado"] },
+      "en": { "name": "Seafood Paella", "description": "Traditional Spanish rice cooked in homemade fish broth with prawns, mussels, and cuttlefish.", "ingredients": ["Bomba rice", "Fish stock", "Prawns", "Mussels", "Cuttlefish", "Saffron"], "allergens": ["Shellfish", "Molluscs", "Fish"] },
+      "fr": { "name": "Paëlla aux Fruits de Mer", "description": "Riz traditionnel cuit dans un bouillon de poisson avec crevettes, moules et seiche.", "ingredients": ["Riz bomba", "Fumet de poisson", "Crevettes", "Moules", "Seiche", "Safran"], "allergens": ["Crustacés", "Mollusques", "Poisson"] }
+    }
+  },
+  {
+    "imageNumber": 28,
+    "name": "Arroz Negro con Sepia y Alioli",
+    "price": 15.50,
+    "weight": "420 g",
+    "kcal": 680,
+    "description": "Arroz en paella cocinado con tinta de calamar, trozos de sepia fresca y servido con alioli casero.",
+    "ingredients": ["Arroz bomba", "Tinta de calamar", "Sepia fresca", "Caldo de pescado", "Alioli casero"],
+    "allergens": ["Moluscos", "Pescado", "Huevo"],
+    "tags": ["principal", "arroz", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Arroz Negro con Sepia y Alioli", "description": "Arroz en paella cocinado con tinta de calamar, sepia fresca y servido con alioli.", "ingredients": ["Arroz bomba", "Tinta de calamar", "Sepia", "Caldo de pescado", "Alioli"], "allergens": ["Moluscos", "Pescado", "Huevo"] },
+      "en": { "name": "Black Rice with Cuttlefish", "description": "Squid ink infused rice cooked with fresh cuttlefish, served with homemade garlic aioli.", "ingredients": ["Bomba rice", "Squid ink", "Fresh cuttlefish", "Fish stock", "Garlic aioli"], "allergens": ["Molluscs", "Fish", "Egg"] },
+      "fr": { "name": "Riz Noir à la Seiche", "description": "Riz cuit à l'encre de seiche avec morceaux de seiche fraîche, servi avec aïoli maison.", "ingredients": ["Riz bomba", "Encre de seiche", "Seiche fraîche", "Bouillon de poisson", "Aïoli"], "allergens": ["Mollusques", "Poisson", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 29,
+    "name": "Spaghetti Carbonara Tradicional",
+    "price": 11.00,
+    "weight": "380 g",
+    "kcal": 740,
+    "description": "Spaghetti al dente elaborados según la receta romana con guanciale crujiente, yema de huevo y queso pecorino.",
+    "ingredients": ["Spaghetti de trigo", "Guanciale", "Yema de huevo", "Queso Pecorino Romano", "Pimienta negra molida"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["principal", "pasta", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Spaghetti Carbonara Tradicional", "description": "Spaghetti con guanciale crujiente, yema de huevo y queso pecorino al estilo romano.", "ingredients": ["Spaghetti", "Guanciale", "Yema de huevo", "Pecorino Romano", "Pimienta negra"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Traditional Spaghetti Carbonara", "description": "Authentic Roman recipe made with crispy guanciale, egg yolks, and Pecorino Romano cheese.", "ingredients": ["Spaghetti", "Guanciale", "Egg yolk", "Pecorino Romano", "Black pepper"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Spaghetti Carbonara Traditionnel", "description": "Recette romaine authentique au guanciale croustillant, jaunes d'œufs et fromage pecorino.", "ingredients": ["Spaghetti", "Guanciale", "Jaune d'œuf", "Pecorino Romano", "Poivre noir"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 30,
+    "name": "Lasaña de Carne Boloñesa",
+    "price": 12.00,
+    "weight": "420 g",
+    "kcal": 810,
+    "description": "Capas de pasta fresca intercaladas con ragú de carne picada de ternera, bechamel cremosa y queso gratinado.",
+    "ingredients": ["Placas de pasta de trigo", "Carne picada de ternera", "Salsa de tomate casera", "Salsa bechamel", "Queso Mozzarella"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["principal", "pasta", "tradicional"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Lasaña de Carne Boloñesa", "description": "Lasaña casera con ragú de ternera, bechamel cremosa y queso gratinado al horno.", "ingredients": ["Placas de pasta", "Carne picada de ternera", "Tomate casero", "Bechamel", "Mozzarella"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Beef Bolognese Lasagna", "description": "Oven-baked layers of fresh pasta, slow-cooked beef ragù, creamy béchamel, and melted cheese.", "ingredients": ["Pasta sheets", "Minced beef", "Homemade tomato sauce", "Béchamel sauce", "Mozzarella cheese"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Lasagne à la Viande Hachée", "description": "Pâtes fraîches superposées avec ragout de bœuf, béchamel crémeuse et fromage gratiné.", "ingredients": ["Plaques de lasagne", "Viande hachée de bœuf", "Sauce tomate", "Béchamel", "Mozzarella"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 31,
     "name": "Pizza Margherita Verace",
     "price": 9.00,
     "weight": "420 g",
     "kcal": 810,
     "description": "Auténtica pizza estilo napolitana con salsa de tomate San Marzano, mozzarella fior di latte y albahaca.",
-    "ingredients": [
-      "Masa artesanal de pizza",
-      "Salsa de tomate San Marzano",
-      "Mozzarella Fior di Latte",
-      "Albahaca fresca",
-      "Aceite de oliva virgen extra"
-    ],
+    "ingredients": ["Masa artesanal de pizza", "Salsa de tomate San Marzano", "Mozzarella Fior di Latte", "Albahaca fresca", "Aceite de oliva virgen extra"],
     "allergens": ["Gluten", "Lácteos"],
     "tags": ["pizza", "principal", "tradicional", "vegetariano"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Pizza Margherita Verace",
-        "description": "Auténtica pizza estilo napolitana con salsa de tomate San Marzano, mozzarella fior di latte y albahaca.",
-        "ingredients": ["Masa artesanal", "Tomate San Marzano", "Mozzarella Fior di Latte", "Albahaca fresca", "Aceite de oliva"],
-        "allergens": ["Gluten", "Lácteos"]
-      },
-      "en": {
-        "name": "Pizza Margherita Verace",
-        "description": "Authentic Neapolitan-style pizza with San Marzano tomato sauce, fior di latte mozzarella, and fresh basil.",
-        "ingredients": ["Artisanal pizza dough", "San Marzano tomatoes", "Fior di Latte mozzarella", "Fresh basil", "Olive oil"],
-        "allergens": ["Gluten", "Dairy"]
-      },
-      "fr": {
-        "name": "Pizza Margherita Verace",
-        "description": "Authentique pizza napolitaine avec sauce tomate San Marzano, mozzarella fior di latte et basilic frais.",
-        "ingredients": ["Pâte à pizza artisanale", "Tomates San Marzano", "Mozzarella Fior di Latte", "Basilic frais", "Huile d'olive"],
-        "allergens": ["Gluten", "Produits laitiers"]
-      }
+      "es": { "name": "Pizza Margherita Verace", "description": "Auténtica pizza estilo napolitana con salsa de tomate San Marzano, mozzarella fior di latte y albahaca.", "ingredients": ["Masa artesanal", "Tomate San Marzano", "Mozzarella Fior di Latte", "Albahaca fresca", "Aceite de oliva"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Pizza Margherita Verace", "description": "Authentic Neapolitan-style pizza with San Marzano tomato sauce, fior di latte mozzarella, and fresh basil.", "ingredients": ["Artisanal pizza dough", "San Marzano tomatoes", "Fior di Latte mozzarella", "Fresh basil", "Olive oil"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Margherita Verace", "description": "Authentique pizza napolitaine avec sauce tomate San Marzano, mozzarella fior di latte et basilic frais.", "ingredients": ["Pâte à pizza artisanale", "Tomates San Marzano", "Mozzarella Fior di Latte", "Basilic frais", "Huile d'olive"], "allergens": ["Gluten", "Produits laitiers"] }
     }
   },
   {
-    "imageNumber": 12,
+    "imageNumber": 32,
+    "name": "Pizza Quattro Formaggi",
+    "price": 12.00,
+    "weight": "440 g",
+    "kcal": 910,
+    "description": "Base fina de masa de pizza con mozzarella, queso gorgonzola cremoso, parmesano rallado y queso de cabra.",
+    "ingredients": ["Masa artesanal", "Mozzarella", "Gorgonzola", "Parmesano", "Queso de cabra"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["pizza", "principal", "vegetariano"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pizza Quattro Formaggi", "description": "Pizza artesanal con mozzarella, gorgonzola, parmesano y queso de cabra.", "ingredients": ["Masa artesanal", "Mozzarella", "Gorgonzola", "Parmesano", "Queso de cabra"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Four Cheese Pizza", "description": "Thin crust pizza topped with mozzarella, creamy gorgonzola, shaved parmesan, and goat cheese.", "ingredients": ["Artisan dough", "Mozzarella", "Gorgonzola", "Parmesan", "Goat cheese"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Quatre Fromages", "description": "Pizza artisanale garnie de mozzarella, gorgonzola crémeux, parmesan et fromage de chèvre.", "ingredients": ["Pâte artisanale", "Mozzarella", "Gorgonzola", "Parmesan", "Fromage de chèvre"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 33,
+    "name": "Pizza Prosciutto e Funghi",
+    "price": 11.50,
+    "weight": "430 g",
+    "kcal": 830,
+    "description": "Salsa de tomate, mozzarella fior di latte, jamón cocido de alta calidad y champiñones frescos fritos.",
+    "ingredients": ["Masa artesanal", "Salsa de tomate", "Mozzarella", "Jamón cocido", "Champiñones frescos"],
+    "allergens": ["Gluten", "Lácteos"],
+    "tags": ["pizza", "principal"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Pizza Prosciutto e Funghi", "description": "Salsa de tomate, mozzarella, jamón cocido y champiñones frescos.", "ingredients": ["Masa de pizza", "Salsa de tomate", "Mozzarella", "Jamón cocido", "Champiñones"], "allergens": ["Gluten", "Lácteos"] },
+      "en": { "name": "Ham and Mushroom Pizza", "description": "Tomato sauce, fior di latte mozzarella, cooked ham, and fresh sliced mushrooms.", "ingredients": ["Pizza dough", "Tomato sauce", "Mozzarella", "Cooked ham", "Fresh mushrooms"], "allergens": ["Gluten", "Dairy"] },
+      "fr": { "name": "Pizza Jambon Champignons", "description": "Sauce tomate, mozzarella, jambon blanc de qualité et champignons frais.", "ingredients": ["Pâte à pizza", "Sauce tomate", "Mozzarella", "Jambon blanc", "Champignons frais"], "allergens": ["Gluten", "Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 34,
+    "name": "Tiramisú Tradicional",
+    "price": 5.50,
+    "weight": "180 g",
+    "kcal": 420,
+    "description": "Postre italiano elaborado con bizcochos savoiardi empapados en café espresso y capas de crema mascarpone.",
+    "ingredients": ["Queso Mascarpone", "Bizcochos Savoiardi", "Café espresso", "Cacao amargo en polvo", "Huevo", "Azúcar"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["postre", "tradicional", "casero"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Tiramisú Tradicional", "description": "Bizcochos empapados en café espresso con crema ligera de queso mascarpone y cacao.", "ingredients": ["Mascarpone", "Bizcochos Savoiardi", "Café espresso", "Cacao en polvo", "Huevo"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Traditional Tiramisu", "description": "Classic Italian dessert made of espresso-dipped ladyfingers layered with mascarpone cream.", "ingredients": ["Mascarpone cheese", "Ladyfinger biscuits", "Espresso coffee", "Cocoa powder", "Egg"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Tiramisu Traditionnel", "description": "Biscuits cuillère imbibés d'espresso et couches de crème mascarpone saupoudrées de cacao.", "ingredients": ["Mascarpone", "Biscuits cuillère", "Café espresso", "Cacao en poudre", "Œuf"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 35,
     "name": "Tarta de Queso Cremosa",
     "price": 6.00,
-    "weight": "190 g",
-    "kcal": 490,
-    "description": "Tarta de queso horneada al estilo donostiarra con corazón cremoso, acompañada de mermelada de frutos rojos.",
-    "ingredients": [
-      "Queso crema",
-      "Nata líquida",
-      "Huevo",
-      "Azúcar",
-      "Mermelada de frutos rojos"
-    ],
+    "weight": "200 g",
+    "kcal": 510,
+    "description": "Tarta de queso horneada al estilo de San Sebastián, suave y fluida en el centro, con salsa de frutos rojos.",
+    "ingredients": ["Queso crema", "Nata fresca", "Huevo", "Azúcar", "Coulis de frutos rojos"],
     "allergens": ["Lácteos", "Huevo"],
     "tags": ["postre", "especialidad", "casero"],
     "sectiune": "bucatarie",
     "translations": {
-      "es": {
-        "name": "Tarta de Queso Cremosa",
-        "description": "Tarta de queso horneada al estilo donostiarra con corazón cremoso, acompañada de mermelada de frutos rojos.",
-        "ingredients": ["Queso crema", "Nata líquida", "Huevo", "Azúcar", "Mermelada de frutos rojos"],
-        "allergens": ["Lácteos", "Huevo"]
-      },
-      "en": {
-        "name": "Creamy Baked Cheesecake",
-        "description": "Basque-style baked cheesecake with a soft creamy center, served with berry jam.",
-        "ingredients": ["Cream cheese", "Heavy cream", "Egg", "Sugar", "Red berry jam"],
-        "allergens": ["Dairy", "Egg"]
-      },
-      "fr": {
-        "name": "Cheesecake Crémeux",
-        "description": "Gâteau au fromage cuit au four style basque au cœur fondant, servi avec confiture de fruits rouges.",
-        "ingredients": ["Fromage frais", "Crème liquide", "Œuf", "Sucre", "Confiture de fruits rouges"],
-        "allergens": ["Produits laitiers", "Œuf"]
-      }
+      "es": { "name": "Tarta de Queso Cremosa", "description": "Tarta de queso horneada estilo San Sebastián con centro cremoso y frutos rojos.", "ingredients": ["Queso crema", "Nata fresca", "Huevo", "Azúcar", "Frutos rojos"], "allergens": ["Lácteos", "Huevo"] },
+      "en": { "name": "Creamy Basque Cheesecake", "description": "Basque-style baked cheesecake with a silky molten center, served with berry coulis.", "ingredients": ["Cream cheese", "Heavy cream", "Egg", "Sugar", "Berry coulis"], "allergens": ["Dairy", "Egg"] },
+      "fr": { "name": "Cheesecake Crémeux Basque", "description": "Gâteau au fromage cuit façon Saint-Sébastien au cœur fondant et coulis de fruits rouges.", "ingredients": ["Fromage frais", "Crème fraîche", "Œuf", "Sucre", "Coulis de fruits rouges"], "allergens": ["Produits laitiers", "Œuf"] }
     }
   },
   {
-    "imageNumber": 13,
+    "imageNumber": 36,
+    "name": "Coulant de Chocolate con Helado",
+    "price": 6.50,
+    "weight": "190 g",
+    "kcal": 580,
+    "description": "Bizcocho caliente de chocolate negro con corazón líquido fundido, acompañado de bola de helado de vainilla.",
+    "ingredients": ["Chocolate negro 70%", "Mantequilla", "Harina de trigo", "Huevo", "Helado de vainilla de Madagascar"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["postre", "casero"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Coulant de Chocolate con Helado", "description": "Bizcocho caliente de chocolate con corazón fundido y bola de helado de vainilla.", "ingredients": ["Chocolate negro", "Mantequilla", "Harina", "Huevo", "Helado de vainilla"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Chocolate Lava Cake", "description": "Warm chocolate fondant with a molten center, served with a scoop of Madagascar vanilla ice cream.", "ingredients": ["Dark chocolate", "Butter", "Wheat flour", "Egg", "Vanilla ice cream"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Fondant au Chocolat et Glace", "description": "Gâteau chaud au chocolat noir à cœur coulant servi avec une boule de glace vanille.", "ingredients": ["Chocolat noir", "Beurre", "Farine de blé", "Œuf", "Glace vanille"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 37,
+    "name": "Torrija Caramelizada",
+    "price": 6.00,
+    "weight": "210 g",
+    "kcal": 530,
+    "description": "Pan brioche infusionado en leche con canela y cítricos, caramelizado a la pala con helado de canela.",
+    "ingredients": ["Pan brioche", "Leche", "Canela en rama", "Cáscara de naranja", "Azúcar caramelizado", "Helado de canela"],
+    "allergens": ["Gluten", "Lácteos", "Huevo"],
+    "tags": ["postre", "tradicional", "especialidad"],
+    "sectiune": "bucatarie",
+    "translations": {
+      "es": { "name": "Torrija Caramelizada", "description": "Pan brioche infusionado en leche y canela, caramelizado con helado de canela.", "ingredients": ["Pan brioche", "Leche", "Canela", "Naranja", "Azúcar", "Helado de canela"], "allergens": ["Gluten", "Lácteos", "Huevo"] },
+      "en": { "name": "Caramelized Spanish French Toast", "description": "Soaked brioche infused with cinnamon milk, caramelised on top and served with cinnamon ice cream.", "ingredients": ["Brioche bread", "Milk", "Cinnamon", "Orange peel", "Caramelized sugar", "Cinnamon ice cream"], "allergens": ["Gluten", "Dairy", "Egg"] },
+      "fr": { "name": "Pain Perdu Caramelisé", "description": "Brioche imbibée de lait à la cannelle, caramélisée au sucre et servie avec glace cannelle.", "ingredients": ["Brioche", "Lait", "Cannelle", "Zeste d'orange", "Sucre caramélisé", "Glace cannelle"], "allergens": ["Gluten", "Produits laitiers", "Œuf"] }
+    }
+  },
+  {
+    "imageNumber": 38,
     "name": "Mojito Clásico",
     "price": 7.50,
     "weight": "330 ml",
     "kcal": 190,
-    "description": "Refrescante cóctel caribeño elaborado con ron blanco, lima fresca majada, hojas de menta, azúcar de caña y soda.",
-    "ingredients": [
-      "Ron blanco",
-      "Zumo de lima fresca",
-      "Hojas de menta fresca",
-      "Azúcar de caña",
-      "Agua con gas / Soda"
-    ],
+    "description": "Ron blanco, lima fresca machacada, hojas de buena hierba, azúcar de caña y toque de soda.",
+    "ingredients": ["Ron blanco", "Lima fresca", "Menta / Hierbabuena", "Azúcar de caña", "Soda"],
     "allergens": [],
     "tags": ["coctel", "bebida", "refrescante"],
     "sectiune": "bar",
     "translations": {
-      "es": {
-        "name": "Mojito Clásico",
-        "description": "Refrescante cóctel caribeño elaborado con ron blanco, lima fresca majada, hojas de menta, azúcar de caña y soda.",
-        "ingredients": ["Ron blanco", "Zumo de lima fresca", "Hojas de menta", "Azúcar de caña", "Soda"],
-        "allergens": []
-      },
-      "en": {
-        "name": "Classic Mojito",
-        "description": "Refreshing Cuban cocktail made with white rum, muddled fresh lime, mint leaves, cane sugar, and soda water.",
-        "ingredients": ["White rum", "Fresh lime juice", "Mint leaves", "Cane sugar", "Soda water"],
-        "allergens": []
-      },
-      "fr": {
-        "name": "Mojito Classique",
-        "description": "Cocktail rafraîchissant à base de rhum blanc, citron vert pilonné, menthe fraîche, sucre de canne et eau gazeuse.",
-        "ingredients": ["Rhum blanc", "Jus de citron vert", "Feuilles de menthe", "Sucre de canne", "Eau gazeuse"],
-        "allergens": []
-      }
+      "es": { "name": "Mojito Clásico", "description": "Ron blanco, lima fresca, menta, azúcar de caña y soda.", "ingredients": ["Ron blanco", "Lima", "Hierbabuena", "Azúcar", "Soda"], "allergens": [] },
+      "en": { "name": "Classic Mojito", "description": "White rum, muddled fresh lime, fresh mint, cane sugar, and a splash of soda.", "ingredients": ["White rum", "Fresh lime", "Mint leaves", "Cane sugar", "Soda water"], "allergens": [] },
+      "fr": { "name": "Mojito Classique", "description": "Rhum blanc, citron vert pilonné, menthe fraîche, sucre de canne et eau gazeuse.", "ingredients": ["Rhum blanc", "Citron vert", "Menthe fraîche", "Sucre de canne", "Soda"], "allergens": [] }
     }
   },
   {
-    "imageNumber": 14,
-    "name": "Limonada Casera con Menta",
-    "price": 3.50,
-    "weight": "350 ml",
-    "kcal": 110,
-    "description": "Limonada natural hecha en casa con zumo de limón recién exprimido, agua, azúcar de caña y hojas de menta fresca.",
-    "ingredients": [
-      "Zumo de limón natural",
-      "Agua mineral",
-      "Azúcar de caña",
-      "Hojas de menta fresca"
-    ],
-    "allergens": [],
-    "tags": ["bebida", "sin alcohol", "casero", "refrescante"],
+    "imageNumber": 39,
+    "name": "Aperol Spritz",
+    "price": 7.00,
+    "weight": "300 ml",
+    "kcal": 170,
+    "description": "Aperol aperitivo, Prosecco espumoso, toque de agua con gas y rodaja de naranja fresca.",
+    "ingredients": ["Aperol", "Prosecco", "Agua con gas", "Rodaja de naranja"],
+    "allergens": ["Sulfitos"],
+    "tags": ["coctel", "bebida", "aperitivo"],
     "sectiune": "bar",
     "translations": {
-      "es": {
-        "name": "Limonada Casera con Menta",
-        "description": "Limonada natural hecha en casa con zumo de limón recién exprimido, agua, azúcar de caña y hojas de menta fresca.",
-        "ingredients": ["Zumo de limón", "Agua", "Azúcar de caña", "Menta fresca"],
-        "allergens": []
-      },
-      "en": {
-        "name": "Homemade Mint Lemonade",
-        "description": "Freshly squeezed homemade lemonade with mineral water, cane sugar, and fresh mint leaves.",
-        "ingredients": ["Fresh lemon juice", "Water", "Cane sugar", "Fresh mint"],
-        "allergens": []
-      },
-      "fr": {
-        "name": "Limonade Maison à la Menthe",
-        "description": "Limonade naturelle faite maison avec jus de citron pressé, eau, sucre de canne et menthe fraîche.",
-        "ingredients": ["Jus de citron frais", "Eau", "Sucre de canne", "Menthe fraîche"],
-        "allergens": []
-      }
+      "es": { "name": "Aperol Spritz", "description": "Aperol aperitivo, Prosecco espumoso, agua con gas y rodaja de naranja.", "ingredients": ["Aperol", "Prosecco", "Agua con gas", "Naranja"], "allergens": ["Sulfitos"] },
+      "en": { "name": "Aperol Spritz", "description": "Aperol, sparkling Prosecco, dash of club soda, and an orange wheel.", "ingredients": ["Aperol", "Prosecco", "Club soda", "Orange slice"], "allergens": ["Sulfites"] },
+      "fr": { "name": "Aperol Spritz", "description": "Aperol, Prosecco pétillant, un trait d'eau gazeuse et tranche d'orange.", "ingredients": ["Aperol", "Prosecco", "Eau gazeuse", "Tranche d'orange"], "allergens": ["Sulfites"] }
+    }
+  },
+  {
+    "imageNumber": 40,
+    "name": "Margarita Clásica",
+    "price": 8.00,
+    "weight": "200 ml",
+    "kcal": 220,
+    "description": "Tequila reposado, licor de naranja Cointreau, zumo de lima recién exprimido y borde de sal.",
+    "ingredients": ["Tequila reposado", "Licor Cointreau", "Zumo de lima", "Sal fina"],
+    "allergens": [],
+    "tags": ["coctel", "bebida", "especialidad"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Margarita Clásica", "description": "Tequila reposado, Cointreau, zumo de lima y borde de sal.", "ingredients": ["Tequila", "Cointreau", "Zumo de lima", "Sal"], "allergens": [] },
+      "en": { "name": "Classic Margarita", "description": "Reposado Tequila, Cointreau triple sec, freshly squeezed lime juice, and salted rim.", "ingredients": ["Tequila", "Cointreau", "Fresh lime juice", "Salt"], "allergens": [] },
+      "fr": { "name": "Margarita Classique", "description": "Tequila reposado, Cointreau, jus de citron vert frais et bord givré au sel.", "ingredients": ["Tequila", "Cointreau", "Jus de citron vert", "Sel"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 41,
+    "name": "Espresso Martini",
+    "price": 8.50,
+    "weight": "150 ml",
+    "kcal": 210,
+    "description": "Vodka premium, licor de café Kahlúa, café espresso recién elaborado y sirope de azúcar.",
+    "ingredients": ["Vodka premium", "Licor de café Kahlúa", "Café espresso", "Sirope de azúcar"],
+    "allergens": [],
+    "tags": ["coctel", "bebida"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Espresso Martini", "description": "Vodka premium, licor de café, espresso recién elaborado y sirope de azúcar.", "ingredients": ["Vodka", "Licor de café", "Espresso", "Sirope de azúcar"], "allergens": [] },
+      "en": { "name": "Espresso Martini", "description": "Premium vodka, Kahlúa coffee liqueur, freshly brewed espresso, and simple syrup.", "ingredients": ["Vodka", "Coffee liqueur", "Espresso", "Simple syrup"], "allergens": [] },
+      "fr": { "name": "Espresso Martini", "description": "Vodka premium, liqueur de café, espresso fraîchement extrait et sirop de sucre.", "ingredients": ["Vodka", "Liqueur de café", "Espresso", "Sirop de sucre"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 42,
+    "name": "Piña Colada",
+    "price": 8.00,
+    "weight": "350 ml",
+    "kcal": 320,
+    "description": "Mezcla cremosa de ron blanco, crema de coco concentrada y zumo natural de piña.",
+    "ingredients": ["Ron blanco", "Crema de coco", "Zumo de piña natural", "Hielo picado"],
+    "allergens": [],
+    "tags": ["coctel", "bebida", "dulce"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Piña Colada", "description": "Mezcla cremosa de ron blanco, crema de coco y zumo natural de piña.", "ingredients": ["Ron blanco", "Crema de coco", "Zumo de piña", "Hielo"], "allergens": [] },
+      "en": { "name": "Piña Colada", "description": "Creamy tropical blend of white rum, coconut cream, and natural pineapple juice.", "ingredients": ["White rum", "Coconut cream", "Pineapple juice", "Crushed ice"], "allergens": [] },
+      "fr": { "name": "Piña Colada", "description": "Mélange onctueux de rhum blanc, crème de coco et jus d'ananas naturel.", "ingredients": ["Rhum blanc", "Crème de coco", "Jus d'ananas", "Glace pilée"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 43,
+    "name": "Sangría de Vino de la Casa (1L)",
+    "price": 12.00,
+    "weight": "1000 ml",
+    "kcal": 650,
+    "description": "Jarra de sangría casera con vino tinto, licor, zumo de naranja, refresco y fruta de temporada troceada.",
+    "ingredients": ["Vino tinto", "Licor Cointreau", "Refresco de naranja", "Manzana", "Naranja", "Canela en rama"],
+    "allergens": ["Sulfitos"],
+    "tags": ["coctel", "bebida", "para compartir", "tradicional"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Sangría de Vino de la Casa (1L)", "description": "Jarra de sangría casera con vino tinto, frutas troceadas y toque de licor.", "ingredients": ["Vino tinto", "Licor", "Refresco de naranja", "Fruta troceada", "Canela"], "allergens": ["Sulfitos"] },
+      "en": { "name": "House Wine Sangria Pitcher (1L)", "description": "1 liter pitcher of homemade red wine sangria loaded with diced fresh fruits and a splash of liquor.", "ingredients": ["Red wine", "Triple sec", "Orange soda", "Diced apples & oranges", "Cinnamon stick"], "allergens": ["Sulfites"] },
+      "fr": { "name": "Pichet de Sangria au Vin (1L)", "description": "Pichet de sangria maison au vin rouge, fruits frais coupés en dés et touche de liqueur.", "ingredients": ["Vin rouge", "Liqueur", "Soda orange", "Fruits frais", "Cannelle"], "allergens": ["Sulfites"] }
+    }
+  },
+  {
+    "imageNumber": 44,
+    "name": "Cerveza de Barril Caña",
+    "price": 2.50,
+    "weight": "250 ml",
+    "kcal": 110,
+    "description": "Caña de cerveza rubia de barril tirada fría con crema suave.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo"],
+    "allergens": ["Gluten"],
+    "tags": ["bebida", "cerveza", "refrescante"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Cerveza de Barril Caña", "description": "Caña de cerveza rubia de barril tirada fría.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo"], "allergens": ["Gluten"] },
+      "en": { "name": "Draft Beer Small (Caña)", "description": "Cold small glass of Spanish lager draft beer.", "ingredients": ["Water", "Barley malt", "Hops"], "allergens": ["Gluten"] },
+      "fr": { "name": "Demi Pression (Caña)", "description": "Petit verre de bière blonde pression bien fraîche.", "ingredients": ["Eau", "Malt d'orge", "Houblon"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 45,
+    "name": "Cerveza de Barril Pinta",
+    "price": 4.50,
+    "weight": "500 ml",
+    "kcal": 220,
+    "description": "Pinta grande de cerveza rubia de barril, refrescante y bien fría.",
+    "ingredients": ["Agua", "Malta de cebada", "Lúpulo"],
+    "allergens": ["Gluten"],
+    "tags": ["bebida", "cerveza", "refrescante"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Cerveza de Barril Pinta", "description": "Pinta grande de cerveza rubia de barril.", "ingredients": ["Agua", "Malta de cebada", "Lúpulo"], "allergens": ["Gluten"] },
+      "en": { "name": "Draft Beer Pint", "description": "Large pint of cold Spanish lager draft beer.", "ingredients": ["Water", "Barley malt", "Hops"], "allergens": ["Gluten"] },
+      "fr": { "name": "Pinte de Bière Pression", "description": "Grande pinte de bière blonde pression bien fraîche.", "ingredients": ["Eau", "Malt d'orge", "Houblon"], "allergens": ["Gluten"] }
+    }
+  },
+  {
+    "imageNumber": 46,
+    "name": "Coca-Cola",
+    "price": 2.80,
+    "weight": "330 ml",
+    "kcal": 140,
+    "description": "Refresco clásico de cola en formato lata, servido con hielo y rodaja de limón.",
+    "ingredients": ["Agua carbonatada", "Azúcar", "Colorante E-150d", "Ácido fosfórico", "Aromas naturales", "Cafeína"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Coca-Cola", "description": "Refresco clásico de cola.", "ingredients": ["Agua carbonatada", "Azúcar", "Aromas"], "allergens": [] },
+      "en": { "name": "Coca-Cola", "description": "Classic cola soft drink.", "ingredients": ["Carbonated water", "Sugar", "Flavorings"], "allergens": [] },
+      "fr": { "name": "Coca-Cola", "description": "Boisson gazeuse classique au cola.", "ingredients": ["Eau gazéifiée", "Sucre", "Arômes"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 47,
+    "name": "Coca-Cola Zero",
+    "price": 2.80,
+    "weight": "330 ml",
+    "kcal": 1,
+    "description": "Refresco de cola sin azúcar y sin calorías, servido frío con hielo.",
+    "ingredients": ["Agua carbonatada", "Edulcorantes", "Colorante E-150d", "Ácido fosfórico", "Aromas naturales", "Cafeína"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "refresco", "cero calorias"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Coca-Cola Zero", "description": "Refresco de cola sin azúcar.", "ingredients": ["Agua carbonatada", "Edulcorantes", "Aromas"], "allergens": [] },
+      "en": { "name": "Coca-Cola Zero", "description": "Zero sugar cola soft drink.", "ingredients": ["Carbonated water", "Sweeteners", "Flavorings"], "allergens": [] },
+      "fr": { "name": "Coca-Cola Zéro", "description": "Boisson au cola sans sucre.", "ingredients": ["Eau gazéifiée", "Édulcorants", "Arômes"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 48,
+    "name": "Fanta Naranja",
+    "price": 2.80,
+    "weight": "330 ml",
+    "kcal": 130,
+    "description": "Refresco con zumo de naranja, sabor frutal refrescante y burbujas.",
+    "ingredients": ["Agua carbonatada", "Zumo de naranja", "Azúcar", "Acidulantes", "Aromas naturales"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Fanta Naranja", "description": "Refresco con zumo de naranja.", "ingredients": ["Agua carbonatada", "Zumo de naranja", "Azúcar"], "allergens": [] },
+      "en": { "name": "Fanta Orange", "description": "Orange flavored carbonated soft drink.", "ingredients": ["Carbonated water", "Orange juice", "Sugar"], "allergens": [] },
+      "fr": { "name": "Fanta Orange", "description": "Boisson gazeuse à l'orange.", "ingredients": ["Eau gazéifiée", "Jus d'orange", "Sucre"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 49,
+    "name": "Fanta Limón",
+    "price": 2.80,
+    "weight": "330 ml",
+    "kcal": 130,
+    "description": "Refresco con zumo de limón, sabor cítrico refrescante.",
+    "ingredients": ["Agua carbonatada", "Zumo de limón", "Azúcar", "Acidulantes", "Aromas naturales"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Fanta Limón", "description": "Refresco con zumo de limón.", "ingredients": ["Agua carbonatada", "Zumo de limón", "Azúcar"], "allergens": [] },
+      "en": { "name": "Fanta Lemon", "description": "Lemon flavored carbonated soft drink.", "ingredients": ["Carbonated water", "Lemon juice", "Sugar"], "allergens": [] },
+      "fr": { "name": "Fanta Citron", "description": "Boisson gazeuse au citron.", "ingredients": ["Eau gazéifiée", "Jus de citron", "Sucre"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 50,
+    "name": "Sprite",
+    "price": 2.80,
+    "weight": "330 ml",
+    "kcal": 135,
+    "description": "Refresco transparente con sabor a lima-limón, crujiente y refrescante.",
+    "ingredients": ["Agua carbonatada", "Azúcar", "Acidulante", "Aromas naturales de lima-limón"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "refresco"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Sprite", "description": "Refresco sabor lima-limón.", "ingredients": ["Agua carbonatada", "Azúcar", "Aromas lima-limón"], "allergens": [] },
+      "en": { "name": "Sprite", "description": "Lemon-lime flavored soft drink.", "ingredients": ["Carbonated water", "Sugar", "Lemon-lime flavors"], "allergens": [] },
+      "fr": { "name": "Sprite", "description": "Boisson gazeuse citron-citron vert.", "ingredients": ["Eau gazéifiée", "Sucre", "Arômes citron-citron vert"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 51,
+    "name": "Agua Mineral Natural",
+    "price": 2.00,
+    "weight": "500 ml",
+    "kcal": 0,
+    "description": "Botella de agua mineral natural sin gas, servida fría o del tiempo.",
+    "ingredients": ["Agua mineral natural"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "agua"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Agua Mineral Natural", "description": "Agua mineral natural sin gas.", "ingredients": ["Agua mineral"], "allergens": [] },
+      "en": { "name": "Still Mineral Water", "description": "Bottle of still natural mineral water.", "ingredients": ["Mineral water"], "allergens": [] },
+      "fr": { "name": "Eau Minérale Plate", "description": "Bouteille d'eau minérale naturelle plate.", "ingredients": ["Eau minérale"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 52,
+    "name": "Agua con Gas",
+    "price": 2.20,
+    "weight": "500 ml",
+    "kcal": 0,
+    "description": "Botella de agua mineral con gas carbónico añadido para mayor frescura.",
+    "ingredients": ["Agua mineral natural", "Gas carbónico"],
+    "allergens": [],
+    "tags": ["bebida", "sin alcohol", "agua"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Agua con Gas", "description": "Agua mineral con gas.", "ingredients": ["Agua mineral", "Gas"], "allergens": [] },
+      "en": { "name": "Sparkling Water", "description": "Bottle of sparkling mineral water.", "ingredients": ["Mineral water", "Carbonation"], "allergens": [] },
+      "fr": { "name": "Eau Gazeuse", "description": "Bouteille d'eau minérale pétillante.", "ingredients": ["Eau minérale", "Gaz carbonique"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 53,
+    "name": "Café Solo Espresso",
+    "price": 1.80,
+    "weight": "40 ml",
+    "kcal": 5,
+    "description": "Café 100% arábica de tueste natural extraído en caliente.",
+    "ingredients": ["Café molido 100% arábica", "Agua mineral"],
+    "allergens": [],
+    "tags": ["bebida", "cafe", "hot"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Café Solo Espresso", "description": "Café 100% arábica de tueste natural.", "ingredients": ["Café 100% arábica", "Agua"], "allergens": [] },
+      "en": { "name": "Single Espresso", "description": "Rich and intense shot of 100% arabica roasted coffee.", "ingredients": ["100% Arabica ground coffee", "Water"], "allergens": [] },
+      "fr": { "name": "Café Espresso Single", "description": "Espresso intense 100% café torréfié arabica.", "ingredients": ["Café moulu 100% arabica", "Eau"], "allergens": [] }
+    }
+  },
+  {
+    "imageNumber": 54,
+    "name": "Café Cortado",
+    "price": 1.90,
+    "weight": "60 ml",
+    "kcal": 25,
+    "description": "Shot de espresso 'cortado' con una pequeña cantidad de leche caliente.",
+    "ingredients": ["Café espresso", "Un toque de leche"],
+    "allergens": ["Lácteos"],
+    "tags": ["bebida", "cafe", "hot"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Café Cortado", "description": "Espresso cortado con un poco de leche caliente.", "ingredients": ["Café espresso", "Leche"], "allergens": ["Lácteos"] },
+      "en": { "name": "Cortado Coffee", "description": "Espresso shot 'cut' with a small amount of warm milk.", "ingredients": ["Espresso", "Dash of milk"], "allergens": ["Dairy"] },
+      "fr": { "name": "Café Noisette", "description": "Espresso allongé avec un nuage de lait chaud.", "ingredients": ["Café espresso", "Nuage de lait"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 55,
+    "name": "Café con Leche",
+    "price": 2.20,
+    "weight": "180 ml",
+    "kcal": 90,
+    "description": "Espresso combinado con leche entera vaporizada y espuma ligera.",
+    "ingredients": ["Café espresso", "Leche entera vaporizada"],
+    "allergens": ["Lácteos"],
+    "tags": ["bebida", "cafe", "hot"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Café con Leche", "description": "Espresso con leche entera vaporizada.", "ingredients": ["Café espresso", "Leche entera"], "allergens": ["Lácteos"] },
+      "en": { "name": "White Coffee (Café con Leche)", "description": "Espresso combined with steamed whole milk and light foam.", "ingredients": ["Espresso coffee", "Steamed whole milk"], "allergens": ["Dairy"] },
+      "fr": { "name": "Café au Lait", "description": "Espresso combiné avec du lait entier chaud émulsionné.", "ingredients": ["Café espresso", "Lait entier chaud"], "allergens": ["Produits laitiers"] }
+    }
+  },
+  {
+    "imageNumber": 56,
+    "name": "Infusión / Té",
+    "price": 2.00,
+    "weight": "250 ml",
+    "kcal": 2,
+    "description": "Selección de infusiones calientes (Té Verde, Té Rojo, Manzanilla, Menta poleo).",
+    "ingredients": ["Bolsita de té/infusión", "Agua mineral caliente"],
+    "allergens": [],
+    "tags": ["bebida", "hot", "saludable"],
+    "sectiune": "bar",
+    "translations": {
+      "es": { "name": "Infusión / Té", "description": "Selección de infusiones calientes.", "ingredients": ["Té/Infusión", "Agua caliente"], "allergens": [] },
+      "en": { "name": "Herbal Tea / Infusion", "description": "Selection of hot teas and herbal infusions.", "ingredients": ["Tea bag", "Hot water"], "allergens": [] },
+      "fr": { "name": "Infusion / Thé", "description": "Sélection de thés chauds et infusions.", "ingredients": ["Sachet de thé", "Eau chaude"], "allergens": [] }
     }
   }
 ]
