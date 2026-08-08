@@ -562,6 +562,42 @@
     } catch(e) {}
   }
 
+  // --- Traducción automática de notas al español (para leerlas en voz alta) ---
+  const translationCache = {};
+  async function translateToSpanish(text) {
+      const key = text.trim().toLowerCase();
+      if (translationCache[key]) return translationCache[key];
+      try {
+          const resp = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=${encodeURIComponent(text)}`);
+          const data = await resp.json();
+          if (data && Array.isArray(data[0])) {
+              const translated = data[0].map(chunk => chunk[0]).join('');
+              translationCache[key] = translated;
+              return translated;
+          }
+      } catch(e) { console.log('Translate error:', e); }
+      return text; // fallback: devuelve el texto original si falla la traducción
+  }
+
+  async function speakOrderNotes(order) {
+      try {
+          if (!soundEnabled || !('speechSynthesis' in window)) return;
+          const notes = (order.produse || []).filter(p => p.cantitate === 0 && p.nume.startsWith('📝'));
+          if (notes.length === 0) return;
+          let cleanMesa = String(order.mesa).replace('Tk:', 'Takeaway').replace('#', '');
+          for (const n of notes) {
+              const rawNote = n.nume.replace('📝', '').trim();
+              if (!rawNote) continue;
+              const translated = await translateToSpanish(rawNote);
+              const text = `Atención, nota en mesa ${cleanMesa}: ${translated}`;
+              const utterance = new SpeechSynthesisUtterance(text);
+              utterance.lang = 'es-ES';
+              utterance.rate = 1.0;
+              window.speechSynthesis.speak(utterance);
+          }
+      } catch(e) { console.log('speakOrderNotes error:', e); }
+  }
+
   function playAlertAndVibrate(order) {
     try {
       if (userRole === 'ospatar') {
@@ -586,6 +622,8 @@
               
               window.speechSynthesis.cancel(); 
               window.speechSynthesis.speak(utterance);
+
+              speakOrderNotes(order);
           } else if (userRole === 'bar' || userRole === 'director') {
               const ctx = new (window.AudioContext || window.webkitAudioContext)();
               const osc = ctx.createOscillator(); 
@@ -601,6 +639,8 @@
               
               osc.start(ctx.currentTime); 
               osc.stop(ctx.currentTime + 0.8);
+
+              if (userRole === 'bar') speakOrderNotes(order);
           }
       }
       
@@ -1637,6 +1677,9 @@
           updatePaymentAlertBadge();
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'comenzi' }, p => {
+          const idxPrev = allOrders.findIndex(o => o.id === p.new.id);
+          const prevStatus = idxPrev > -1 ? allOrders[idxPrev].status : null;
+
           const idx = allOrders.findIndex(o => o.id === p.new.id);
           if(idx > -1) { 
               allOrders[idx] = p.new; 
@@ -1646,6 +1689,16 @@
           }
           updateMapBadge();
           updatePaymentAlertBadge();
+
+          // El camarero recibe vibración + notificación en cuanto cocina o barra
+          // marcan el pedido como "Listo" (gata), sin necesitar sonido activado.
+          if (userRole === 'ospatar' && p.new.status === 'gata' && prevStatus !== 'gata') {
+              if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 800]);
+              const validItems = (p.new.produse || []).filter(x => x.cantitate > 0);
+              const title = '🍽️ Pedido Listo';
+              const body = `Mesa ${p.new.mesa}: ` + validItems.map(x => x.nume).join(', ');
+              showBackgroundAlert(title, body);
+          }
       })
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'comenzi' }, p => {
           allOrders = allOrders.filter(o => o.id !== p.old.id);
