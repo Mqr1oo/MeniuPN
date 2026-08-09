@@ -109,6 +109,15 @@
   .price{ font-family:'Space Mono', monospace; font-weight:700; color:var(--pink-bright); font-size:1.05rem; flex-shrink:0; background: rgba(22, 132, 78, 0.15); padding: 4px 8px; border-radius: 6px;}
   .desc{ font-size:13.5px; color:var(--ink-soft); margin:0; line-height: 1.4;}
 
+  .card-meta{ display:flex; align-items:center; gap:10px; font-family:'Space Mono', monospace; font-size:11.5px; color:var(--ink-soft); margin:2px 0 0; }
+  .card-meta .meta-pill{ background:rgba(255,255,255,0.06); border:1px solid var(--paper-dim); padding:3px 9px; border-radius:100px; white-space:nowrap; }
+  .card-ingredients{ font-size:12.5px; color:var(--ink-soft); margin:6px 0 0; line-height:1.4; }
+  .card-ingredients b{ color:var(--ink); font-weight:600; }
+  .card-allergens{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:8px 0 0; }
+  .card-allergens .allergen-label{ font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; margin-right:2px; }
+  .card-allergens .allergen-tag{ background:rgba(255,71,87,0.14); border:1px solid rgba(255,71,87,0.4); color:#ff8a94; font-family:'Space Mono', monospace; font-size:11px; padding:3px 8px; border-radius:6px; }
+  .card-allergens .allergen-none{ font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); font-style:italic; }
+
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'Space Mono', monospace; font-size:15px; }
 
   .total-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--paper-dim); padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 10px; z-index: 100; transform: translateY(120%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.8); }
@@ -380,6 +389,7 @@
     <button class="modal-close" onclick="document.getElementById('privacyOverlay').classList.remove('open')">&times;</button>
     <h2 id="privacyTitle">Política de Privacidad</h2>
     <p id="privacyText" style="font-size:15px; color: var(--ink-soft); line-height: 1.5; margin-top: 10px;">Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.</p>
+    <p id="privacyTextAllergens" style="font-size:13px; color: var(--ink-soft); line-height: 1.55; margin-top: -8px; text-align:left;"></p>
     <button class="btn-submit" onclick="document.getElementById('privacyOverlay').classList.remove('open')" style="margin-top: 20px;">Cerrar</button>
   </div>
 </div>
@@ -485,7 +495,9 @@
     const tr = item.translations && item.translations[currentLang];
     return {
       name: (tr && tr.name) || item.name,
-      description: (tr && tr.description) || item.description || ''
+      description: (tr && tr.description) || item.description || '',
+      ingredients: (tr && tr.ingredients) || item.ingredients || [],
+      allergens: (tr && tr.allergens) || item.allergens || []
     };
   }
 
@@ -570,8 +582,10 @@
       badgeEpuizat: 'Agotado', ribbonEsp: 'Especialidad',
       alertPayload: { cash: 'Cuenta (Efectivo)', card: 'Cuenta (Tarjeta)', help: 'Ayuda / Otro' },
       privacyTitle: 'Política de Privacidad (GDPR)', privacyText: 'Recopilamos su nombre y teléfono únicamente para gestionar su pedido de Takeaway. Los datos se eliminan automáticamente de nuestros servidores en 48 horas conforme al RGPD.', privacyBtn: 'Política de Privacidad', gdprNote: 'Tus datos se borrarán automáticamente en 48h (GDPR).',
+      privacyAllergensText: 'Aviso sobre gramajes, valores nutricionales y alérgenos: los pesos (gramajes), los valores calóricos (kcal) y la relación de ingredientes y alérgenos que aparecen en este menú digital tienen carácter meramente orientativo e informativo. Dichos datos son introducidos, actualizados y validados exclusivamente por el establecimiento (el restaurante), siendo este el único responsable de su exactitud, veracidad y actualización, de conformidad con el Reglamento (UE) n.º 1169/2011 sobre información alimentaria facilitada al consumidor y demás normativa aplicable en materia de seguridad alimentaria y protección del consumidor. La plataforma tecnológica que aloja y muestra este menú digital actúa únicamente como proveedor de la herramienta de visualización y pedido, sin intervenir en la elaboración, supervisión ni verificación del contenido nutricional o de alérgenos introducido por el establecimiento, quedando expresamente exonerada de cualquier responsabilidad derivada de errores, omisiones, variaciones de receta, contaminación cruzada en cocina o desactualización de dichos datos. Debido a la elaboración artesanal y manual de los platos, los pesos finales servidos y los valores calóricos pueden sufrir variaciones respecto a los indicados. Se recomienda encarecidamente a los clientes con alergias, intolerancias o necesidades dietéticas especiales que lo comuniquen directamente al personal del establecimiento antes de realizar su pedido, para obtener información actualizada y personalizada.',
       busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
-      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'plazas'
+      fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'plazas',
+      weightLabel:'Peso', kcalLabel:'kcal', ingredientsLabel:'Ingredientes', allergensLabel:'Alérgenos', noAllergens:'Sin alérgenos declarados'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
@@ -603,8 +617,10 @@
       badgeEpuizat: 'Sold Out', ribbonEsp: 'Specialty',
       alertPayload: { cash: 'Bill (Cash)', card: 'Bill (Card)', help: 'Help / Other' },
       privacyTitle: 'Privacy Policy (GDPR)', privacyText: 'We collect your name and phone number solely to manage your takeaway order. Data is automatically deleted from our servers within 48 hours in compliance with GDPR.', privacyBtn: 'Privacy Policy', gdprNote: 'Your data will be auto-deleted in 48h (GDPR).',
+      privacyAllergensText: 'Notice regarding weights, nutritional values and allergens: the weights, calorie (kcal) values, and the list of ingredients and allergens shown in this digital menu are provided for guidance and informational purposes only. This information is entered, updated, and validated exclusively by the establishment (the restaurant), which is solely responsible for its accuracy and for keeping it up to date, in accordance with EU Regulation No. 1169/2011 on the provision of food information to consumers and any other applicable food-safety and consumer-protection regulations. The technology platform hosting and displaying this digital menu acts solely as the provider of the display and ordering tool; it does not take part in preparing, supervising, or verifying the nutritional or allergen content entered by the establishment, and is therefore expressly released from any liability arising from errors, omissions, recipe variations, cross-contact in the kitchen, or outdated information. Because dishes are prepared by hand, the actual weight served and calorie values may vary from those indicated. Customers with allergies, intolerances, or special dietary needs are strongly advised to inform staff directly before ordering, to receive current, personalized information.',
       busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
-      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'seats'
+      fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'seats',
+      weightLabel:'Weight', kcalLabel:'kcal', ingredientsLabel:'Ingredients', allergensLabel:'Allergens', noAllergens:'No declared allergens'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -636,8 +652,10 @@
       badgeEpuizat: 'Épuisé', ribbonEsp: 'Spécialité',
       alertPayload: { cash: 'L\'addition (Espèces)', card: 'L\'addition (Carte)', help: 'Aide / Autre' },
       privacyTitle: 'Politique de confidentialité (RGPD)', privacyText: 'Nous collectons votre nom et votre numéro de téléphone uniquement pour gérer votre commande à emporter. Les données sont automatiquement supprimées de nos serveurs dans les 48 heures conformément au RGPD.', privacyBtn: 'Politique de confidentialité', gdprNote: 'Vos données seront supprimées sous 48h (RGPD).',
+      privacyAllergensText: 'Avis relatif aux poids, valeurs nutritionnelles et allergènes : les poids, les valeurs caloriques (kcal) ainsi que la liste des ingrédients et des allergènes indiqués dans ce menu numérique sont fournis à titre purement indicatif et informatif. Ces données sont saisies, mises à jour et validées exclusivement par l\'établissement (le restaurant), qui est seul responsable de leur exactitude et de leur actualisation, conformément au Règlement (UE) n° 1169/2011 concernant l\'information des consommateurs sur les denrées alimentaires et à toute autre réglementation applicable en matière de sécurité alimentaire et de protection des consommateurs. La plateforme technologique qui héberge et affiche ce menu numérique agit uniquement en tant que fournisseur de l\'outil d\'affichage et de commande ; elle n\'intervient pas dans l\'élaboration, la supervision ou la vérification du contenu nutritionnel ou des allergènes saisis par l\'établissement, et se trouve donc expressément exonérée de toute responsabilité découlant d\'erreurs, d\'omissions, de variations de recettes, de contaminations croisées en cuisine ou de données obsolètes. En raison de la préparation artisanale et manuelle des plats, le poids réellement servi et les valeurs caloriques peuvent varier par rapport aux indications fournies. Il est vivement recommandé aux clients souffrant d\'allergies, d\'intolérances ou ayant des besoins alimentaires particuliers d\'en informer directement le personnel de l\'établissement avant de passer commande, afin d\'obtenir des informations actualisées et personnalisées.',
       busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
-      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places'
+      fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places',
+      weightLabel:'Poids', kcalLabel:'kcal', ingredientsLabel:'Ingrédients', allergensLabel:'Allergènes', noAllergens:'Aucun allergène déclaré'
     }
   };
 
@@ -689,6 +707,7 @@
     document.getElementById('btnPrivacyPolicy').textContent = t.privacyBtn;
     document.getElementById('privacyTitle').textContent = t.privacyTitle;
     document.getElementById('privacyText').textContent = t.privacyText;
+    document.getElementById('privacyTextAllergens').textContent = t.privacyAllergensText;
     document.getElementById('txtGdprNote').textContent = t.gdprNote;
     
     document.getElementById('busyBanner').textContent = t.busyBanner;
@@ -794,6 +813,15 @@
             <div class="card-body">
               <div class="card-top"><h3>${loc.name}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
               <p class="desc">${loc.description}</p>
+              <div class="card-meta">
+                ${item.weight ? `<span class="meta-pill">⚖️ ${item.weight}</span>` : ''}
+                ${(item.kcal !== undefined && item.kcal !== null) ? `<span class="meta-pill">🔥 ${item.kcal} ${t.kcalLabel}</span>` : ''}
+              </div>
+              ${loc.ingredients && loc.ingredients.length ? `<p class="card-ingredients"><b>${t.ingredientsLabel}:</b> ${loc.ingredients.join(', ')}</p>` : ''}
+              <div class="card-allergens">
+                <span class="allergen-label">${t.allergensLabel}:</span>
+                ${loc.allergens && loc.allergens.length ? loc.allergens.map(a => `<span class="allergen-tag">${a}</span>`).join('') : `<span class="allergen-none">${t.noAllergens}</span>`}
+              </div>
             </div>
           </article>
         `;
