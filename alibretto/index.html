@@ -478,6 +478,61 @@
     return 'otros';
   }
 
+  // --- FALLBACK IMAGINI (fără librării, fără API key) ---
+  // Poze generice de rezervă per categorie, folosite doar dacă imaginea locală
+  // ȘI căutarea pe Wikipedia eșuează amândouă. Cel puțin se potrivesc pe tip de mâncare.
+  const CATEGORY_FALLBACK_IMG = {
+    'Antipasti/ Entrantes': 'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=700&q=80&auto=format&fit=crop',
+    'Ensaladas': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&q=80&auto=format&fit=crop',
+    'Pastas': 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=700&q=80&auto=format&fit=crop',
+    'Carnes': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80&auto=format&fit=crop',
+    'Pizzas': 'https://images.unsplash.com/photo-1548365328-9f547fb0953b?w=700&q=80&auto=format&fit=crop',
+    'Postres': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=700&q=80&auto=format&fit=crop',
+    'Bebidas': 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=700&q=80&auto=format&fit=crop',
+    'otros': 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80&auto=format&fit=crop'
+  };
+
+  // Cache simplu ca să nu interogăm Wikipedia de mai multe ori pentru același produs
+  const wikiImgCache = {};
+
+  // Caută pe Wikipedia (API public, gratuit, CORS activat via origin=*) o poză
+  // pentru textul dat. Returnează URL-ul thumbnail-ului sau null dacă nu găsește.
+  async function getWikiThumb(query){
+    if(wikiImgCache[query] !== undefined) return wikiImgCache[query];
+    try{
+      const url = `https://en.wikipedia.org/w/api.php?origin=*&action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&gsrnamespace=0&prop=pageimages&piprop=thumbnail&pithumbsize=700&format=json`;
+      const res = await fetch(url);
+      if(!res.ok){ wikiImgCache[query] = null; return null; }
+      const data = await res.json();
+      const pages = data.query && data.query.pages;
+      if(!pages){ wikiImgCache[query] = null; return null; }
+      const first = Object.values(pages)[0];
+      const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
+      wikiImgCache[query] = thumb;
+      return thumb;
+    }catch(e){ wikiImgCache[query] = null; return null; }
+  }
+
+  // Handler apelat din onerror al <img>. Treapta 1: încearcă Wikipedia (numele EN al produsului).
+  // Treapta 2 (dacă și aia eșuează): poza generică de categorie, care nu mai poate da eroare.
+  window.handleImgError = async function(imgEl, id){
+    const item = allItems.find(i => i.imageNumber === id);
+    if(!item){ imgEl.onerror = null; return; }
+
+    if(imgEl.dataset.stage !== 'wiki-tried'){
+      imgEl.dataset.stage = 'wiki-tried';
+      const query = (item.translations && item.translations.en && item.translations.en.name) || item.name;
+      const wikiUrl = await getWikiThumb(query);
+      if(wikiUrl){
+        imgEl.onerror = function(){ this.onerror = null; this.src = CATEGORY_FALLBACK_IMG[getMainCategory(item)] || CATEGORY_FALLBACK_IMG.otros; };
+        imgEl.src = wikiUrl;
+        return;
+      }
+    }
+    imgEl.onerror = null;
+    imgEl.src = CATEGORY_FALLBACK_IMG[getMainCategory(item)] || CATEGORY_FALLBACK_IMG.otros;
+  };
+
   const I18N = {
     es: { 
       flag:'🇪🇸', code:'ES', eyebrow:'Menú digital', title:'Á Libretto', tagline:'Cócteles internacionales, bebidas selectas y platos deliciosos.', 
@@ -718,7 +773,7 @@
             <div class="card-img-wrap">
               ${isEpuizat ? `<div class="badge-epuizat"><span>${t.badgeEpuizat}</span></div>` : ''}
               ${(item.tags||[]).includes('especialidad') ? `<div class="ribbon">${t.ribbonEsp}</div>` : ''}
-              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${item.name}" loading="lazy" onerror="this.src='https://loremflickr.com/600/450/food?lock=${item.imageNumber}'">
+              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${item.name}" loading="lazy" onerror="handleImgError(this, ${item.imageNumber})">
               <div class="card-qty-controls ${q>0?'has-items':''}">
                 <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
                 <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
