@@ -581,16 +581,25 @@
       return text; // fallback: devuelve el texto original si falla la traducción
   }
 
-  // Devuelve lo que se debe DECIR en voz alta para identificar la mesa/pedido.
-  // Para Takeaway/pedidos a domicilio NUNCA se recita el nombre ni el teléfono del cliente,
-  // solo se anuncia genéricamente "para llevar". El nombre/teléfono se sigue viendo en pantalla igual que antes.
+  // Devuelve true si la mesa corresponde a un pedido para llevar (Takeaway).
   function isTakeawayMesa(mesa) {
       const str = String(mesa);
       return str.startsWith('Tk:') || str === 'Takeaway';
   }
-  function getSpokenMesaLabel(mesa) {
-      if (isTakeawayMesa(mesa)) return null; // null = no mencionar mesa, se usa frase genérica aparte
-      return String(mesa).replace('#', '');
+
+  // Para pedidos Takeaway, la BUCATARIE (cocina) nunca debe oír el nombre/teléfono del cliente,
+  // solo el número de pedido y los productos. La BARRA sí puede oír el detalle completo (nombre/teléfono),
+  // porque es quien entrega el pedido al cliente. Las mesas normales se anuncian igual para todos.
+  function getSpokenLocationLabel(order) {
+      const takeaway = isTakeawayMesa(order.mesa);
+      if (!takeaway) {
+          return 'mesa ' + String(order.mesa).replace('#', '');
+      }
+      if (userRole === 'bucatarie') {
+          return `pedido para llevar número ${order.id}`;
+      }
+      // Barra / director / otros: se permite el detalle completo (nombre/teléfono si está en el campo mesa)
+      return 'pedido para llevar: ' + String(order.mesa).replace('Tk:', '').trim();
   }
 
   async function speakOrderNotes(order) {
@@ -598,15 +607,12 @@
           if (!soundEnabled || !('speechSynthesis' in window)) return;
           const notes = (order.produse || []).filter(p => p.cantitate === 0 && p.nume.startsWith('📝'));
           if (notes.length === 0) return;
-          const takeaway = isTakeawayMesa(order.mesa);
-          let cleanMesa = takeaway ? '' : String(order.mesa).replace('#', '');
+          const locationLabel = getSpokenLocationLabel(order);
           for (const n of notes) {
               const rawNote = n.nume.replace('📝', '').trim();
               if (!rawNote) continue;
               const translated = await translateToSpanish(rawNote);
-              const text = takeaway
-                  ? `Atención, nota en pedido para llevar: ${translated}`
-                  : `Atención, nota en mesa ${cleanMesa}: ${translated}`;
+              const text = `Atención, nota en ${locationLabel}: ${translated}`;
               const utterance = new SpeechSynthesisUtterance(text);
               utterance.lang = 'es-ES';
               utterance.rate = 1.0;
@@ -632,8 +638,9 @@
               const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
               const takeaway = isTakeawayMesa(order.mesa);
 
+              // La bucătărie NU rostește niciodată numele/telefonul clientului: doar numărul comenzii pt takeaway.
               const text = takeaway
-                  ? `Nuevo pedido para llevar. ${itemNames}`
+                  ? `Nuevo pedido para llevar, número ${order.id}. ${itemNames}`
                   : `Nuevo pedido, mesa ${String(order.mesa).replace('#', '')}. ${itemNames}`;
               const utterance = new SpeechSynthesisUtterance(text);
               utterance.lang = 'es-ES'; 
