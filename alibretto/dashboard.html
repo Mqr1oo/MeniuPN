@@ -581,17 +581,32 @@
       return text; // fallback: devuelve el texto original si falla la traducción
   }
 
+  // Devuelve lo que se debe DECIR en voz alta para identificar la mesa/pedido.
+  // Para Takeaway/pedidos a domicilio NUNCA se recita el nombre ni el teléfono del cliente,
+  // solo se anuncia genéricamente "para llevar". El nombre/teléfono se sigue viendo en pantalla igual que antes.
+  function isTakeawayMesa(mesa) {
+      const str = String(mesa);
+      return str.startsWith('Tk:') || str === 'Takeaway';
+  }
+  function getSpokenMesaLabel(mesa) {
+      if (isTakeawayMesa(mesa)) return null; // null = no mencionar mesa, se usa frase genérica aparte
+      return String(mesa).replace('#', '');
+  }
+
   async function speakOrderNotes(order) {
       try {
           if (!soundEnabled || !('speechSynthesis' in window)) return;
           const notes = (order.produse || []).filter(p => p.cantitate === 0 && p.nume.startsWith('📝'));
           if (notes.length === 0) return;
-          let cleanMesa = String(order.mesa).replace('Tk:', 'Takeaway').replace('#', '');
+          const takeaway = isTakeawayMesa(order.mesa);
+          let cleanMesa = takeaway ? '' : String(order.mesa).replace('#', '');
           for (const n of notes) {
               const rawNote = n.nume.replace('📝', '').trim();
               if (!rawNote) continue;
               const translated = await translateToSpanish(rawNote);
-              const text = `Atención, nota en mesa ${cleanMesa}: ${translated}`;
+              const text = takeaway
+                  ? `Atención, nota en pedido para llevar: ${translated}`
+                  : `Atención, nota en mesa ${cleanMesa}: ${translated}`;
               const utterance = new SpeechSynthesisUtterance(text);
               utterance.lang = 'es-ES';
               utterance.rate = 1.0;
@@ -615,9 +630,11 @@
           if (userRole === 'bucatarie' && 'speechSynthesis' in window) {
               const validItems = order.produse.filter(p => p.cantitate > 0);
               const itemNames = validItems.map(p => `${p.cantitate} de ${p.nume}`).join(', ');
-              let cleanMesa = order.mesa.replace('Tk:', 'Takeaway').replace('#', '');
-              
-              const text = `Nuevo pedido, mesa ${cleanMesa}. ${itemNames}`;
+              const takeaway = isTakeawayMesa(order.mesa);
+
+              const text = takeaway
+                  ? `Nuevo pedido para llevar. ${itemNames}`
+                  : `Nuevo pedido, mesa ${String(order.mesa).replace('#', '')}. ${itemNames}`;
               const utterance = new SpeechSynthesisUtterance(text);
               utterance.lang = 'es-ES'; 
               utterance.rate = 1.0; 
@@ -1728,4 +1745,3 @@
 </script>
 </body>
 </html>
-
