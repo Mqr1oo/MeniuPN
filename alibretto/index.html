@@ -478,6 +478,17 @@
     return 'otros';
   }
 
+  // Ia numele/descrierea produsului în limba curentă din menu.json -> translations.
+  // Dacă produsul nu are traducere pentru limba activă, cade automat pe câmpurile
+  // implicite (name/description) ca să nu rămână niciodată gol.
+  function getLocalized(item){
+    const tr = item.translations && item.translations[currentLang];
+    return {
+      name: (tr && tr.name) || item.name,
+      description: (tr && tr.description) || item.description || ''
+    };
+  }
+
   // --- FALLBACK IMAGINI (fără librării, fără API key) ---
   // Poze generice de rezervă per categorie, folosite doar dacă imaginea locală
   // ȘI căutarea pe Wikipedia eșuează amândouă. Cel puțin se potrivesc pe tip de mâncare.
@@ -492,42 +503,37 @@
     'otros': 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80&auto=format&fit=crop'
   };
 
-  // Cache simplu ca să nu interogăm Wikipedia de mai multe ori pentru același produs
-  const wikiImgCache = {};
-
-  // Caută pe Wikipedia (API public, gratuit, CORS activat via origin=*) o poză
-  // pentru textul dat. Returnează URL-ul thumbnail-ului sau null dacă nu găsește.
-  async function getWikiThumb(query){
-    if(wikiImgCache[query] !== undefined) return wikiImgCache[query];
-    try{
-      const url = `https://en.wikipedia.org/w/api.php?origin=*&action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&gsrnamespace=0&prop=pageimages&piprop=thumbnail&pithumbsize=700&format=json`;
-      const res = await fetch(url);
-      if(!res.ok){ wikiImgCache[query] = null; return null; }
-      const data = await res.json();
-      const pages = data.query && data.query.pages;
-      if(!pages){ wikiImgCache[query] = null; return null; }
-      const first = Object.values(pages)[0];
-      const thumb = (first && first.thumbnail && first.thumbnail.source) || null;
-      wikiImgCache[query] = thumb;
-      return thumb;
-    }catch(e){ wikiImgCache[query] = null; return null; }
+  // Construiește tag-urile de căutare pentru librăria foto, din numele EN al produsului
+  // (curățat de diacritice/simboluri), plus cuvântul "food" ca să rămână relevant culinar.
+  function buildPhotoTags(item){
+    const enName = (item.translations && item.translations.en && item.translations.en.name) || item.name;
+    const cleaned = enName
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // scoate accentele
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 3) // max 3 cuvinte cheie, ca să rămână căutarea precisă
+      .join(',');
+    return cleaned ? `${cleaned},food` : 'food';
   }
 
-  // Handler apelat din onerror al <img>. Treapta 1: încearcă Wikipedia (numele EN al produsului).
-  // Treapta 2 (dacă și aia eșuează): poza generică de categorie, care nu mai poate da eroare.
-  window.handleImgError = async function(imgEl, id){
+  // Handler apelat din onerror al <img>. Treapta 1: o librărie foto dedicată mâncării
+  // (LoremFlickr — gratuită, fără cheie API, CORS ok) căutată după numele produsului.
+  // Parametrul "lock" fixează aceeași poză pentru același produs la fiecare încărcare,
+  // ca imaginea să nu "sară" la fiecare refresh. Treapta 2 (dacă și aia eșuează):
+  // poza generică de categorie, care nu mai poate da eroare.
+  window.handleImgError = function(imgEl, id){
     const item = allItems.find(i => i.imageNumber === id);
     if(!item){ imgEl.onerror = null; return; }
 
-    if(imgEl.dataset.stage !== 'wiki-tried'){
-      imgEl.dataset.stage = 'wiki-tried';
-      const query = (item.translations && item.translations.en && item.translations.en.name) || item.name;
-      const wikiUrl = await getWikiThumb(query);
-      if(wikiUrl){
-        imgEl.onerror = function(){ this.onerror = null; this.src = CATEGORY_FALLBACK_IMG[getMainCategory(item)] || CATEGORY_FALLBACK_IMG.otros; };
-        imgEl.src = wikiUrl;
-        return;
-      }
+    if(imgEl.dataset.stage !== 'lib-tried'){
+      imgEl.dataset.stage = 'lib-tried';
+      const tags = buildPhotoTags(item);
+      imgEl.onerror = function(){ this.onerror = null; this.src = CATEGORY_FALLBACK_IMG[getMainCategory(item)] || CATEGORY_FALLBACK_IMG.otros; };
+      imgEl.src = `https://loremflickr.com/700/560/${tags}/all?lock=${item.imageNumber}`;
+      return;
     }
     imgEl.onerror = null;
     imgEl.src = CATEGORY_FALLBACK_IMG[getMainCategory(item)] || CATEGORY_FALLBACK_IMG.otros;
@@ -743,7 +749,11 @@
   function render(){
     const t = I18N[currentLang];
     const query = document.getElementById('searchInput').value.trim().toLowerCase();
-    let filtered = allItems.filter(i => { let txt = (i.name + ' ' + (i.description||'')).toLowerCase(); return txt.includes(query); });
+    let filtered = allItems.filter(i => {
+      const loc = getLocalized(i);
+      let txt = (loc.name + ' ' + loc.description + ' ' + i.name + ' ' + (i.description||'')).toLowerCase();
+      return txt.includes(query);
+    });
 
     if(activeFilter === 'favorites') filtered = filtered.filter(i => getQty(i) > 0);
     else if(activeFilter !== 'all') filtered = filtered.filter(i => (i.tags || []).includes(activeFilter));
@@ -768,12 +778,13 @@
         const isEpuizat = outOfStockIds.has(item.imageNumber.toString());
         if(isEpuizat && getQty(item) > 0) { delete favoritesQty[item.imageNumber]; saveFavorites(); }
         const q = getQty(item);
+        const loc = getLocalized(item);
         html += `
           <article class="card ${isEpuizat ? 'out-of-stock' : ''}">
             <div class="card-img-wrap">
               ${isEpuizat ? `<div class="badge-epuizat"><span>${t.badgeEpuizat}</span></div>` : ''}
               ${(item.tags||[]).includes('especialidad') ? `<div class="ribbon">${t.ribbonEsp}</div>` : ''}
-              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${item.name}" loading="lazy" onerror="handleImgError(this, ${item.imageNumber})">
+              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${loc.name}" loading="lazy" onerror="handleImgError(this, ${item.imageNumber})">
               <div class="card-qty-controls ${q>0?'has-items':''}">
                 <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
                 <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
@@ -781,8 +792,8 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="card-top"><h3>${item.name}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
-              <p class="desc">${item.description || ''}</p>
+              <div class="card-top"><h3>${loc.name}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
+              <p class="desc">${loc.description}</p>
             </div>
           </article>
         `;
