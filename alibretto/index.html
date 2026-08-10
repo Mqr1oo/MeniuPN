@@ -1148,6 +1148,17 @@
       }
 
       const items = allItems.filter(i => getQty(i) > 0);
+
+      if(items.length === 0) {
+          showCustomAlert(
+            currentLang === 'es' ? 'Carrito vacío' : (currentLang === 'fr' ? 'Panier vide' : 'Empty cart'),
+            currentLang === 'es' ? 'Añade al menos un producto antes de enviar el pedido.' :
+            (currentLang === 'fr' ? 'Ajoutez au moins un produit avant d\'envoyer la commande.' :
+            'Add at least one product before sending the order.')
+          );
+          return;
+      }
+
       const btn = document.getElementById('sendOrderBtn');
       btn.textContent = t.sendingText; btn.disabled = true;
 
@@ -1159,15 +1170,22 @@
       const barItems = items.filter(i => (i.sectiune || 'bar') === 'bar');
       const kitchenItems = items.filter(i => i.sectiune === 'bucatarie');
 
+      // IMPORTANT: nota se atașează DOAR la secțiunile care au efectiv produse în comandă.
+      // Astfel:
+      //  - comandă doar cu mâncare + notă  -> se creează O SINGURĂ comandă (bucătărie), cu nota inclusă
+      //  - comandă doar cu băutură + notă  -> se creează O SINGURĂ comandă (bar), cu nota inclusă
+      //  - comandă cu ambele + notă        -> se creează DOUĂ comenzi (bar + bucătărie), fiecare cu propria
+      //                                        copie a notei, legate prin același grup_comanda
+      // Nu se mai creează comenzi "goale" doar pentru a căra nota către o secțiune fără produse.
       let payloads = [];
-      if(barItems.length > 0 || noteItem.length > 0) {
+      if(barItems.length > 0) {
         payloads.push({
           mesa: finalTableNr, sectiune: 'bar', grup_comanda: grupId,
           total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
           produse: [...barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
         });
       }
-      if(kitchenItems.length > 0 || noteItem.length > 0) {
+      if(kitchenItems.length > 0) {
         payloads.push({
           mesa: finalTableNr, sectiune: 'bucatarie', grup_comanda: grupId,
           total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
