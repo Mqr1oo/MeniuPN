@@ -432,6 +432,17 @@
   const SUPABASE_ANON_KEY = 'sb_publishable_yCycz19M9_HmXlRN1xjn1Q_5YhFtZPh';
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+  // Helper de protecție XSS - previne executarea de cod malițios trimis din exterior
+  function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+  }
+
   let allItems = [];
   let outOfStockIds = new Set();
   let activeFilter = 'all';
@@ -851,7 +862,7 @@
             <div class="card-img-wrap">
               ${isEpuizat ? `<div class="badge-epuizat"><span>${t.badgeEpuizat}</span></div>` : ''}
               ${(item.tags||[]).includes('especialidad') ? `<div class="ribbon">${t.ribbonEsp}</div>` : ''}
-              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${loc.name}" loading="lazy" onerror="handleImgError(this, ${item.imageNumber})">
+              <img src="images/${item.imageNumber}.webp" class="card-img" alt="${escapeHTML(loc.name)}" loading="lazy" onerror="handleImgError(this, ${item.imageNumber})">
               <div class="card-qty-controls ${q>0?'has-items':''}">
                 <button class="c-qty-btn" onclick="appUpdateQty(${item.imageNumber}, -1)">−</button>
                 <span class="c-qty-val" id="qty-${item.imageNumber}">${q}</span>
@@ -859,16 +870,16 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="card-top"><h3>${loc.name}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
-              <p class="desc">${loc.description}</p>
+              <div class="card-top"><h3>${escapeHTML(loc.name)}</h3><span class="price">${item.price.toFixed(2)} €</span></div>
+              <p class="desc">${escapeHTML(loc.description)}</p>
               <div class="card-meta">
-                ${item.weight ? `<span class="meta-pill">⚖️ ${item.weight}</span>` : ''}
-                ${(item.kcal !== undefined && item.kcal !== null) ? `<span class="meta-pill">🔥 ${item.kcal} ${t.kcalLabel}</span>` : ''}
+                ${item.weight ? `<span class="meta-pill">⚖️ ${escapeHTML(item.weight)}</span>` : ''}
+                ${(item.kcal !== undefined && item.kcal !== null) ? `<span class="meta-pill">🔥 ${escapeHTML(item.kcal)} ${t.kcalLabel}</span>` : ''}
               </div>
-              ${loc.ingredients && loc.ingredients.length ? `<p class="card-ingredients"><b>${t.ingredientsLabel}:</b> ${loc.ingredients.join(', ')}</p>` : ''}
+              ${loc.ingredients && loc.ingredients.length ? `<p class="card-ingredients"><b>${t.ingredientsLabel}:</b> ${loc.ingredients.map(escapeHTML).join(', ')}</p>` : ''}
               <div class="card-allergens">
                 <span class="allergen-label">${t.allergensLabel}:</span>
-                ${loc.allergens && loc.allergens.length ? loc.allergens.map(a => `<span class="allergen-tag">${a}</span>`).join('') : `<span class="allergen-none">${t.noAllergens}</span>`}
+                ${loc.allergens && loc.allergens.length ? loc.allergens.map(a => `<span class="allergen-tag">${escapeHTML(a)}</span>`).join('') : `<span class="allergen-none">${t.noAllergens}</span>`}
               </div>
             </div>
           </article>
@@ -1257,11 +1268,11 @@
       if(freeTables.length === 0) {
           badge.textContent = `🪑 ${t.tablesFull}`;
           badge.classList.add('badge-full');
-          list.innerHTML = `<span>${t.tablesFull}</span>`;
+          list.innerHTML = `<span>${escapeHTML(t.tablesFull)}</span>`;
       } else {
           badge.textContent = `🪑 ${freeTables.length}/${allTables.length} ${t.tablesFree}`;
           badge.classList.add('badge-low');
-          list.innerHTML = freeTables.map(m => `<span>Mesa #${m.numar} · ${m.scaune} ${t.tablesFor}</span>`).join('');
+          list.innerHTML = freeTables.map(m => `<span>Mesa #${escapeHTML(m.numar)} · ${escapeHTML(m.scaune)} ${t.tablesFor}</span>`).join('');
       }
       badge.style.display = 'flex';
   }
