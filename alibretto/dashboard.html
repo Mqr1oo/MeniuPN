@@ -179,6 +179,35 @@
   .chart-bar:hover { background: var(--accent-hover); }
   .chart-label { font-size: 10px; color: var(--text-muted); margin-top: 6px; font-family: 'Space Mono', monospace; }
 
+  /* --- Reporte por empleado / cancelaciones --- */
+  .staff-table { width:100%; border-collapse: collapse; font-size: 14px; }
+  .staff-table th { text-align:left; padding: 10px 12px; color: var(--text-muted); font-weight:600; border-bottom:1px solid var(--border); font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; }
+  .staff-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); font-family:'Space Mono', monospace; }
+  .staff-table td.name-col { font-family:'Inter', sans-serif; font-weight:600; }
+  .rate-pill { padding: 3px 10px; border-radius: 100px; font-weight: 700; font-size: 12.5px; display:inline-block; }
+  .rate-ok { background: rgba(16,185,129,0.15); color: var(--success); }
+  .rate-warn { background: rgba(245,158,11,0.15); color: var(--warning); }
+  .rate-bad { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+  .fraud-item { border-left: 3px solid var(--danger); background: rgba(239,68,68,0.06); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; }
+  .fraud-item .fi-top { display:flex; justify-content:space-between; font-size:13.5px; font-weight:700; color:var(--danger); }
+  .fraud-item .fi-meta { font-size:12px; color:var(--text-muted); margin-top:4px; font-family:'Space Mono', monospace; }
+
+  .linked-cancel-badge { margin-top:10px; background: rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); color:#fca5a5; font-size:12px; font-weight:700; padding:8px 10px; border-radius:10px; display:flex; align-items:center; gap:6px; }
+
+  /* --- Heatmap --- */
+  .heatmap-wrap { overflow-x: auto; }
+  .heatmap-table { border-collapse: collapse; margin-top: 6px; }
+  .heatmap-table th { font-size: 10.5px; color: var(--text-muted); font-weight:600; padding: 3px 5px; text-align:center; font-family:'Space Mono', monospace; }
+  .heatmap-table td { text-align:center; }
+  .heatmap-hourlabel { font-size: 10.5px; color: var(--text-muted); font-family:'Space Mono', monospace; padding-right: 8px; text-align:right !important; white-space:nowrap; }
+  .heatmap-cell { width: 30px; height: 22px; border-radius: 5px; cursor: default; }
+  .heatmap-legend { display:flex; align-items:center; gap:8px; margin-top:14px; font-size:12px; color:var(--text-muted); }
+  .heatmap-legend .hl-scale { display:flex; }
+  .heatmap-legend .hl-scale div { width:18px; height:12px; }
+  .heatmap-best { margin-top:14px; padding:14px 16px; background: rgba(22,132,78,0.1); border:1px solid rgba(22,132,78,0.3); border-radius: 12px; font-size: 13.5px; color: var(--text); }
+  .heatmap-best b { color: var(--accent); }
+
   @media (max-width: 800px) {
       body { flex-direction: column; }
       header { height: 60px; padding: 0 20px; border-bottom: 1px solid var(--border); justify-content: space-between;}
@@ -226,6 +255,9 @@
       .table-card .t-num { font-size: 16px; }
       .table-card .t-seats { font-size: 10px; }
       .top-item { font-size: 13.5px; padding: 10px 0; }
+      .staff-table { font-size: 12.5px; }
+      .staff-table th, .staff-table td { padding: 8px 6px; }
+      .heatmap-cell { width: 22px; height: 18px; }
   }
 </style>
 </head>
@@ -371,6 +403,20 @@
          <div class="chart-container" id="revenueChartBars"></div>
       </div>
 
+      <div class="dash-panel">
+         <h3>🔥 Heatmap de Horas Punta</h3>
+         <p style="color:var(--text-muted); font-size:13px; margin-bottom:6px;">Número de pedidos por día de la semana y hora, de los últimos 60 días. Cuanto más oscuro, más movimiento — úsalo para decidir cuándo poner más personal.</p>
+         <div class="heatmap-wrap">
+            <div id="heatmapContainer">Cargando...</div>
+         </div>
+         <div class="heatmap-legend">
+            <span>Menos</span>
+            <div class="hl-scale" id="heatmapScale"></div>
+            <span>Más</span>
+         </div>
+         <div class="heatmap-best" id="heatmapBest"></div>
+      </div>
+
       <div class="dash-panel" style="border-color: var(--warning);">
          <h3 style="color: var(--warning);">🔥 Horas Punta (Aviso Cocina)</h3>
          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -382,6 +428,25 @@
       <div class="dash-panel">
           <h3>🏆 Top 5 Productos</h3>
           <ul class="top-list" id="topProductsList"></ul>
+      </div>
+
+      <div class="dash-panel">
+          <h3>👤 Reporte por Empleado</h3>
+          <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">Ingresos generados, pedidos gestionados y tasa de cancelación por cada miembro del staff, en el periodo seleccionado (Hoy / Este mes).</p>
+          <div class="table-responsive">
+            <table class="staff-table">
+              <thead>
+                <tr><th>Empleado</th><th>Pedidos</th><th>Ingresos</th><th>Cancelados</th><th>% Cancelación</th></tr>
+              </thead>
+              <tbody id="staffReportList"></tbody>
+            </table>
+          </div>
+      </div>
+
+      <div class="dash-panel" style="border-color: var(--danger);">
+          <h3 style="color: var(--danger);">🚩 Cancelaciones sospechosas (después de "Listo")</h3>
+          <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px;">Pedidos que salieron de cocina/barra como "Listo" y luego fueron cancelados. Es el patrón más común de fraude (producto entregado, comanda anulada). Se muestra quién hizo la cancelación.</p>
+          <div id="fraudList"><span style="color:var(--text-muted); font-size:13.5px;">Analizando historial...</span></div>
       </div>
 
       <div class="dash-panel" id="feedbackPanel" style="display:none;">
@@ -792,6 +857,7 @@
         document.getElementById('pageTitle').textContent = 'Panel de Jefe';
         document.getElementById('adminView').style.display = 'block';
         calculateDirectorStats();
+        renderHeatmap();
     } else if(tab === 'meniu') {
         document.getElementById('navMeniu').classList.add('active');
         document.getElementById('pageTitle').textContent = 'Menú - Pedido Rápido';
@@ -1126,6 +1192,15 @@
     updatePaymentAlertBadge();
   }
 
+  // Devuelve, para un pedido dado, si algún otro pedido del mismo grupo (mismo grup_comanda,
+  // es decir la parte de Bar o la de Cocina de la MISMA comanda del cliente) fue cancelado.
+  // Así el jefe ve enlazadas las dos partes: si cancelan la de bar, se nota también en la de cocina y viceversa.
+  function getLinkedCancelledSibling(order) {
+      if(!order.grup_comanda) return null;
+      const sibling = allOrders.find(o => o.id !== order.id && o.grup_comanda === order.grup_comanda && o.status === 'anulata');
+      return sibling || null;
+  }
+
   function renderOrders() {
     if(currentTab !== 'active' && currentTab !== 'history') return;
     const container = document.getElementById('ordersView'); container.innerHTML = '';
@@ -1232,6 +1307,19 @@
           mesaDisp = '#' + mesaDisp;
       }
 
+      // Aviso de comanda "hermana" (mismo grup_comanda, en Bar/Cocina) que fue cancelada.
+      // Así, si por ejemplo cancelan la parte de Bar de una mesa, en la tarjeta de la parte
+      // de Cocina de la MISMA comanda (y en la vista del director) aparece un aviso enlazado.
+      let linkedHtml = '';
+      if(!isAlert && order.status !== 'anulata') {
+          const sibling = getLinkedCancelledSibling(order);
+          if(sibling) {
+              const sibSectionLabel = sibling.sectiune === 'bucatarie' ? 'Cocina' : 'Bar';
+              const sibTime = new Date(sibling.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+              linkedHtml = `<div class="linked-cancel-badge">⚠️ La parte de ${sibSectionLabel} de esta misma comanda fue CANCELADA (${sibTime}, por ${escapeHTML(sibling.preluat_de || sibling.creat_de || sibling.utilizator || '—')})</div>`;
+          }
+      }
+
       card.innerHTML = `
         <div class="o-head">
           <div class="table-nr">${mesaDisp}</div>
@@ -1242,6 +1330,7 @@
         </div>
         <ul class="o-items">${itemsHtml}</ul>
         ${staffLine}
+        ${linkedHtml}
         <div class="o-foot" style="margin-top:16px;">${footerHtml}</div>
       `;
       container.appendChild(card);
@@ -1291,7 +1380,7 @@
           renderOrders();
           updateMapBadge();
           updatePaymentAlertBadge();
-          logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null });
+          logActivity(status === 'anulata' ? 'pedido_cancelado' : 'estado_cambiado', id, { status, mesa: order ? order.mesa : null, productos: order ? order.produse : null, sectiune: order ? order.sectiune : null, grup_comanda: order ? order.grup_comanda : null });
       }
   };
 
@@ -1511,6 +1600,200 @@
       const sortedPending = Object.entries(pendingByStaff).sort((a,b) => b[1]-a[1]);
       if(sortedPending.length === 0) pendingListEl.innerHTML = '<li class="top-item" style="color:var(--text-muted);">Sin tickets pendientes 👍</li>';
       sortedPending.forEach(([n, c]) => pendingListEl.innerHTML += `<li class="top-item"><span class="top-name">${escapeHTML(n)}</span><span class="badge-count" style="margin-left:0; background: ${c>=3?'var(--danger)':'var(--warning)'}; color: white;">${c}</span></li>`);
+
+      renderStaffReport(cutoff);
+      renderFraudList(cutoff);
+  }
+
+  // --- REPORTE POR EMPLEADO + TASA DE CANCELACIÓN ---
+  // Agrupa por el empleado responsable de cada comanda (quien la creó, o quien la tomó/sirvió).
+  // Para cada uno calcula: nº de pedidos, ingresos generados (igual criterio que las stats generales:
+  // finalizados, con ticket, sin ser regalo), nº de cancelados y % de cancelación sobre su total gestionado.
+  function renderStaffReport(cutoff) {
+      const relevant = allOrders.filter(o => {
+          if(o.produse.some(p => p.nume.includes('ALERTĂ'))) return false;
+          if(new Date(o.created_at).getTime() < cutoff) return false;
+          return o.status === 'finalizata' || o.status === 'anulata';
+      });
+
+      let staffMap = {}; // { email: { pedidos, ingresos, cancelados } }
+      relevant.forEach(o => {
+          const staff = o.creat_de || o.preluat_de || 'Cliente (menú digital)';
+          if(!staffMap[staff]) staffMap[staff] = { pedidos: 0, ingresos: 0, cancelados: 0 };
+          staffMap[staff].pedidos++;
+          if(o.status === 'anulata') {
+              staffMap[staff].cancelados++;
+          } else if(o.bon_scos && !o.comp_motiv) {
+              staffMap[staff].ingresos += Number(o.total);
+          }
+      });
+
+      const tbody = document.getElementById('staffReportList');
+      const entries = Object.entries(staffMap).sort((a,b) => b[1].ingresos - a[1].ingresos);
+
+      if(entries.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted); text-align:center; font-family:'Inter',sans-serif;">Sin datos para este periodo</td></tr>`;
+          return;
+      }
+
+      tbody.innerHTML = entries.map(([staff, s]) => {
+          const rate = s.pedidos > 0 ? (s.cancelados / s.pedidos * 100) : 0;
+          let rateClass = 'rate-ok';
+          if(rate >= 20) rateClass = 'rate-bad';
+          else if(rate >= 8) rateClass = 'rate-warn';
+          return `
+            <tr>
+              <td class="name-col">${escapeHTML(staff)}</td>
+              <td>${s.pedidos}</td>
+              <td>${s.ingresos.toFixed(2)} €</td>
+              <td>${s.cancelados}</td>
+              <td><span class="rate-pill ${rateClass}">${rate.toFixed(0)}%</span></td>
+            </tr>
+          `;
+      }).join('');
+  }
+
+  // --- DETECCIÓN DE CANCELACIONES SOSPECHOSAS (después de "Listo") ---
+  // Usa el jurnal_activitate (que registra cada cambio de estado) para reconstruir el historial
+  // de cada comanda y detectar si pasó por "gata" (Listo) ANTES de ser "anulata" (Cancelada).
+  // Ese patrón es la señal clásica de fraude: el producto salió de cocina/barra pero la comanda
+  // se anuló en el sistema. Se atribuye al usuario que hizo el cambio a "anulata" (el log.utilizator
+  // real de esa acción, no necesariamente quien creó el pedido).
+  async function renderFraudList(cutoff) {
+      const listEl = document.getElementById('fraudList');
+      try {
+          const { data: logs, error } = await _supabase.from('jurnal_activitate')
+            .select('*')
+            .eq('actiune', 'estado_cambiado')
+            .order('created_at', { ascending: true })
+            .limit(1000);
+          if(error || !logs) { listEl.innerHTML = '<span style="color:var(--text-muted); font-size:13.5px;">No se pudo cargar el historial.</span>'; return; }
+
+          let byOrder = {};
+          logs.forEach(l => {
+              if(!l.comanda_id) return;
+              if(!byOrder[l.comanda_id]) byOrder[l.comanda_id] = [];
+              byOrder[l.comanda_id].push(l);
+          });
+
+          let suspicious = [];
+          Object.entries(byOrder).forEach(([comandaId, history]) => {
+              const gataEntry = history.find(h => h.detalii && h.detalii.status === 'gata');
+              const anulataEntry = history.find(h => h.detalii && h.detalii.status === 'anulata');
+              if(gataEntry && anulataEntry && new Date(gataEntry.created_at).getTime() < new Date(anulataEntry.created_at).getTime()) {
+                  if(new Date(anulataEntry.created_at).getTime() >= cutoff) {
+                      suspicious.push({
+                          comandaId, gataEntry, anulataEntry,
+                          mesa: anulataEntry.detalii.mesa || gataEntry.detalii.mesa || '—',
+                          sectiune: anulataEntry.detalii.sectiune || ''
+                      });
+                  }
+              }
+          });
+
+          suspicious.sort((a,b) => new Date(b.anulataEntry.created_at) - new Date(a.anulataEntry.created_at));
+
+          // Agregado por empleado que canceló, para verlo también junto al reporte por empleado
+          let byStaff = {};
+          suspicious.forEach(s => { byStaff[s.anulataEntry.utilizator] = (byStaff[s.anulataEntry.utilizator] || 0) + 1; });
+
+          if(suspicious.length === 0) {
+              listEl.innerHTML = '<span style="color:var(--success); font-size:13.5px;">✅ Ninguna cancelación sospechosa en este periodo.</span>';
+              return;
+          }
+
+          let summaryHtml = `<div style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Total: <b style="color:var(--danger)">${suspicious.length}</b> caso(s)` +
+              (Object.keys(byStaff).length ? ' · ' + Object.entries(byStaff).sort((a,b)=>b[1]-a[1]).map(([u,c]) => `${escapeHTML(u)} (${c})`).join(', ') : '') +
+              `</div>`;
+
+          listEl.innerHTML = summaryHtml + suspicious.slice(0, 30).map(s => {
+              const t = new Date(s.anulataEntry.created_at).toLocaleString('es-ES', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+              const tGata = new Date(s.gataEntry.created_at).toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+              return `
+                <div class="fraud-item">
+                  <div class="fi-top"><span>Mesa ${escapeHTML(s.mesa)} · Comanda #${escapeHTML(s.comandaId)}</span><span>${t}</span></div>
+                  <div class="fi-meta">Marcado "Listo" a las ${tGata} por ${escapeHTML(s.gataEntry.utilizator)} → Cancelado a las ${t.split(' ').pop()} por <b>${escapeHTML(s.anulataEntry.utilizator)}</b> ${s.sectiune ? '· ' + escapeHTML(s.sectiune) : ''}</div>
+                </div>
+              `;
+          }).join('');
+      } catch(e) {
+          listEl.innerHTML = '<span style="color:var(--text-muted); font-size:13.5px;">Error analizando el historial.</span>';
+      }
+  }
+
+  // --- HEATMAP DE HORAS PUNTA (día de la semana x hora) ---
+  // Cuenta pedidos (finalizados, no alertas) de los últimos 60 días agrupados por día de la semana
+  // y hora de creación. Sirve para decidir cuándo conviene reforzar personal (ej. viernes/sábado noche).
+  async function renderHeatmap() {
+      const container = document.getElementById('heatmapContainer');
+      const scaleEl = document.getElementById('heatmapScale');
+      const bestEl = document.getElementById('heatmapBest');
+      container.innerHTML = 'Cargando...';
+
+      try {
+          const since = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString();
+          const { data, error } = await _supabase.from('comenzi').select('created_at, produse').gte('created_at', since).limit(5000);
+          if(error || !data) { container.innerHTML = '<span style="color:var(--text-muted); font-size:13px;">No se pudo cargar el heatmap.</span>'; return; }
+
+          const relevant = data.filter(o => !(o.produse || []).some(p => p.nume && p.nume.includes('ALERTĂ')));
+
+          // matrix[weekday][hour] = count. Weekday: 0=Domingo ... 6=Sábado
+          let matrix = Array.from({length:7}, () => Array(24).fill(0));
+          relevant.forEach(o => {
+              const d = new Date(o.created_at);
+              matrix[d.getDay()][d.getHours()]++;
+          });
+
+          const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+          let maxVal = 0;
+          matrix.forEach(row => row.forEach(v => { if(v > maxVal) maxVal = v; }));
+
+          function colorFor(v) {
+              if(v === 0 || maxVal === 0) return 'rgba(255,255,255,0.04)';
+              const intensity = v / maxVal;
+              const alpha = 0.12 + intensity * 0.78;
+              return `rgba(22, 132, 78, ${alpha.toFixed(2)})`;
+          }
+
+          // Sólo mostramos horas con algo de actividad histórica (10:00 - 01:00) para no alargar la tabla innecesariamente
+          const hoursToShow = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1];
+
+          let html = '<table class="heatmap-table"><thead><tr><th></th>';
+          dayNames.forEach(d => html += `<th>${d}</th>`);
+          html += '</tr></thead><tbody>';
+
+          hoursToShow.forEach(h => {
+              html += `<tr><td class="heatmap-hourlabel">${String(h).padStart(2,'0')}:00</td>`;
+              for(let day = 0; day < 7; day++) {
+                  const v = matrix[day][h];
+                  html += `<td><div class="heatmap-cell" style="background:${colorFor(v)};" title="${dayNames[day]} ${String(h).padStart(2,'0')}:00 — ${v} pedido(s)"></div></td>`;
+              }
+              html += '</tr>';
+          });
+          html += '</tbody></table>';
+          container.innerHTML = html;
+
+          scaleEl.innerHTML = '';
+          for(let i = 0; i <= 5; i++) {
+              const alpha = 0.12 + (i/5) * 0.78;
+              scaleEl.innerHTML += `<div style="background: rgba(22,132,78,${alpha.toFixed(2)});"></div>`;
+          }
+
+          // Encuentra el top 3 combinaciones día+hora con más pedidos, para dar una recomendación directa
+          let flat = [];
+          matrix.forEach((row, day) => row.forEach((v, h) => { if(v > 0) flat.push({day, h, v}); }));
+          flat.sort((a,b) => b.v - a.v);
+          const top3 = flat.slice(0,3);
+
+          if(top3.length === 0) {
+              bestEl.innerHTML = 'Aún no hay suficientes pedidos históricos para calcular las horas punta.';
+          } else {
+              bestEl.innerHTML = '📌 Momentos de más movimiento (recomendado reforzar personal): ' +
+                  top3.map(x => `<b>${dayNames[x.day]} ${String(x.h).padStart(2,'0')}:00h</b> (${x.v} pedidos)`).join(' · ');
+          }
+      } catch(e) {
+          container.innerHTML = '<span style="color:var(--text-muted); font-size:13px;">Error calculando el heatmap.</span>';
+      }
   }
 
   async function loadMeniuForOspatar() {
@@ -1663,6 +1946,7 @@
               if (log.actiune === 'feedback_client') detText += `(${escapeHTML(log.detalii.rating)} Estrellas)`;
               if (log.actiune === 'setari_busy') detText += log.detalii.isBusy ? '(Activado)' : '(Desactivado)';
               if (log.actiune === 'mesa_liberada') detText += log.detalii.automat ? '(Automático)' : '(Manual)';
+              if (log.actiune === 'estado_cambiado' && log.detalii.status) detText += `→ ${escapeHTML(log.detalii.status)} `;
           }
 
           return `
@@ -1718,6 +2002,12 @@
               const title = '🍽️ Pedido Listo';
               const body = `Mesa ${p.new.mesa}: ` + validItems.map(x => x.nume).join(', ');
               showBackgroundAlert(title, body);
+          }
+
+          // Si se cancela un pedido, refrescamos las tarjetas activas para que la parte
+          // "hermana" (bar/cocina de la misma comanda) muestre el aviso enlazado al instante.
+          if (p.new.status === 'anulata' && prevStatus !== 'anulata') {
+              renderOrders();
           }
       })
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'comenzi' }, p => {
