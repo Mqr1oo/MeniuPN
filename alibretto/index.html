@@ -218,6 +218,20 @@
     .search-box { max-width: 360px; }
     .grid{ grid-template-columns:repeat(2, 1fr); }
   }
+
+  /* --- SPLIT BILL: modo por producto --- */
+  .split-mode-toggle { display:flex; background: var(--bg-base); border-radius: 100px; padding: 4px; border: 1.5px solid var(--paper-dim); margin-bottom: 20px; }
+  .split-mode-toggle button { flex:1; background: transparent; border: none; color: var(--ink-soft); padding: 10px 8px; border-radius: 100px; cursor: pointer; font-weight: 700; font-size: 13px; font-family: 'Work Sans', sans-serif; transition: all 0.2s; }
+  .split-mode-toggle button.active { background: var(--pink-main); color: #fff; }
+  .split-product-list { max-height: 280px; overflow-y: auto; margin-bottom: 16px; text-align: left; }
+  .split-product-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding: 10px 0; border-bottom: 1px solid var(--paper-dim); }
+  .split-product-row .sp-name { font-size: 13.5px; flex: 1; min-width: 0; }
+  .split-product-row .sp-name small { display:block; color: var(--ink-soft); font-family:'Space Mono', monospace; font-size: 11px; margin-top:2px; }
+  .split-person-select { display:flex; align-items:center; gap: 6px; flex-shrink: 0; }
+  .split-person-select select { background: var(--bg-panel); color: var(--ink); border: 1.5px solid var(--paper-dim); border-radius: 8px; padding: 6px 8px; font-family:'Space Mono', monospace; font-size: 13px; }
+  .split-per-person-results { display:flex; flex-direction:column; gap:8px; margin-top: 16px; text-align: left; }
+  .split-per-person-row { display:flex; justify-content:space-between; align-items:center; background: var(--bg-panel); border: 1px solid var(--paper-dim); border-radius: 10px; padding: 10px 14px; font-family:'Space Mono', monospace; font-size: 14px; }
+  .split-per-person-row b { color: var(--pink-bright); }
 </style>
 </head>
 <body>
@@ -341,29 +355,58 @@
     <button class="modal-close" id="closeSplitBill">&times;</button>
     <h2 id="splitTitle">Dividir la cuenta</h2>
     <p id="splitDesc" style="color:var(--text-muted); font-size: 14px;">Calcula rápido cuánto debe pagar cada persona.</p>
-    
-    <div class="split-row">
-        <span id="splitL1">Total del carrito:</span>
-        <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 €</span>
-    </div>
-    <div class="split-row">
-        <span id="splitL2">Número de personas:</span>
-        <div class="split-ctrl">
-            <button class="split-btn" onclick="adjSplitPersons(-1)">-</button>
-            <span id="sbPersons" style="color:white; width: 20px; text-align:center;">2</span>
-            <button class="split-btn" onclick="adjSplitPersons(1)">+</button>
-        </div>
-    </div>
-    <div class="split-row">
-        <span id="splitL3">Propina (%):</span>
-        <div class="split-ctrl">
-            <button class="split-btn" onclick="adjSplitTip(-5)">-</button>
-            <span id="sbTip" style="color:white; width: 40px; text-align:center;">10%</span>
-            <button class="split-btn" onclick="adjSplitTip(5)">+</button>
-        </div>
+
+    <div class="split-mode-toggle">
+        <button id="splitModeEqualBtn" class="active" data-mode="equal">➗ <span id="splitModeEqualTxt">Partes iguales</span></button>
+        <button id="splitModeProductBtn" data-mode="product">🍽️ <span id="splitModeProductTxt">Por producto</span></button>
     </div>
     
-    <div class="split-total" id="sbPerPerson">0.00 € / pers.</div>
+    <div id="splitEqualView">
+      <div class="split-row">
+          <span id="splitL1">Total del carrito:</span>
+          <span id="sbTotalCos" style="color:white; font-weight:700;">0.00 €</span>
+      </div>
+      <div class="split-row">
+          <span id="splitL2">Número de personas:</span>
+          <div class="split-ctrl">
+              <button class="split-btn" onclick="adjSplitPersons(-1)">-</button>
+              <span id="sbPersons" style="color:white; width: 20px; text-align:center;">2</span>
+              <button class="split-btn" onclick="adjSplitPersons(1)">+</button>
+          </div>
+      </div>
+      <div class="split-row">
+          <span id="splitL3">Propina (%):</span>
+          <div class="split-ctrl">
+              <button class="split-btn" onclick="adjSplitTip(-5)">-</button>
+              <span id="sbTip" style="color:white; width: 40px; text-align:center;">10%</span>
+              <button class="split-btn" onclick="adjSplitTip(5)">+</button>
+          </div>
+      </div>
+      
+      <div class="split-total" id="sbPerPerson">0.00 € / pers.</div>
+    </div>
+
+    <div id="splitProductView" style="display:none;">
+      <div class="split-row">
+          <span id="splitPL2">Número de personas:</span>
+          <div class="split-ctrl">
+              <button class="split-btn" onclick="adjSplitProductPersons(-1)">-</button>
+              <span id="spPersons" style="color:white; width: 20px; text-align:center;">2</span>
+              <button class="split-btn" onclick="adjSplitProductPersons(1)">+</button>
+          </div>
+      </div>
+      <div class="split-row">
+          <span id="splitPL3">Propina (%):</span>
+          <div class="split-ctrl">
+              <button class="split-btn" onclick="adjSplitProductTip(-5)">-</button>
+              <span id="spTip" style="color:white; width: 40px; text-align:center;">10%</span>
+              <button class="split-btn" onclick="adjSplitProductTip(5)">+</button>
+          </div>
+      </div>
+      <p id="splitProductHint" style="font-size:12.5px; color:var(--ink-soft); margin: 4px 0 10px; text-align:left;">Asigna cada producto a una persona.</p>
+      <div class="split-product-list" id="splitProductList"></div>
+      <div class="split-per-person-results" id="splitPerPersonResults"></div>
+    </div>
   </div>
 </div>
 
@@ -621,7 +664,8 @@
       cookieBannerText: 'Utilizamos almacenamiento local del navegador, técnicamente necesario, para recordar tu idioma, tu mesa y los productos de tu pedido. No usamos cookies de publicidad ni de seguimiento. Al continuar navegando aceptas su uso.', cookieAcceptBtn: 'Aceptar y continuar', cookieInfoBtn: 'Más info',
       busyBanner: '🔥 Cocina con alta demanda. Tiempos de espera ligeramente mayores a lo habitual.',
       fbTitle: '¿Qué tal la comida?', fbPlaceholder: '¿Qué podemos mejorar?', fbBtn: 'Enviar Feedback', fbThanks: '¡Gracias por ayudarnos a mejorar!', fbGoogle: '¡Genial! Nos ayudaría mucho una reseña en Google.', fbGoogleBtn: 'Dejar reseña en Google', fbDirectTitle: '¡Gracias por tu visita!', tablesFree: 'mesas libres', tablesFull: 'Sin mesas libres', tablesFor: 'plazas',
-      weightLabel:'Peso', kcalLabel:'kcal', ingredientsLabel:'Ingredientes', allergensLabel:'Alérgenos', noAllergens:'Sin alérgenos declarados'
+      weightLabel:'Peso', kcalLabel:'kcal', ingredientsLabel:'Ingredientes', allergensLabel:'Alérgenos', noAllergens:'Sin alérgenos declarados',
+      splitModeEqual: 'Partes iguales', splitModeProduct: 'Por producto', splitProductHint: 'Asigna cada producto a una persona.', personLabel: 'Persona'
     },
     en: { 
       flag:'🇬🇧', code:'EN', eyebrow:'Digital menu', title:'Á Libretto', tagline:'International cocktails, refined drinks and delicious dishes.', 
@@ -659,7 +703,8 @@
       cookieBannerText: 'We use browser local storage, technically necessary, to remember your language, your table and the items in your order. We do not use advertising or tracking cookies. By continuing to browse you accept its use.', cookieAcceptBtn: 'Accept and continue', cookieInfoBtn: 'More info',
       busyBanner: '🔥 Kitchen is very busy right now. Waiting times are slightly longer than usual.',
       fbTitle: 'How was your food?', fbPlaceholder: 'What can we improve?', fbBtn: 'Send Feedback', fbThanks: 'Thank you for your feedback!', fbGoogle: 'Great! We would love a review on Google.', fbGoogleBtn: 'Leave Google Review', fbDirectTitle: 'Thanks for visiting us!', tablesFree: 'tables free', tablesFull: 'No tables free', tablesFor: 'seats',
-      weightLabel:'Weight', kcalLabel:'kcal', ingredientsLabel:'Ingredients', allergensLabel:'Allergens', noAllergens:'No declared allergens'
+      weightLabel:'Weight', kcalLabel:'kcal', ingredientsLabel:'Ingredients', allergensLabel:'Allergens', noAllergens:'No declared allergens',
+      splitModeEqual: 'Equal parts', splitModeProduct: 'By product', splitProductHint: 'Assign each product to a person.', personLabel: 'Person'
     },
     fr: { 
       flag:'🇫🇷', code:'FR', eyebrow:'Menu numérique', title:'Á Libretto', tagline:'Cocktails internationaux, boissons raffinées et plats délicieux.', 
@@ -697,7 +742,8 @@
       cookieBannerText: 'Nous utilisons le stockage local du navigateur, techniquement nécessaire, pour mémoriser votre langue, votre table et les articles de votre commande. Nous n\'utilisons pas de cookies publicitaires ni de suivi. En continuant à naviguer, vous acceptez leur utilisation.', cookieAcceptBtn: 'Accepter et continuer', cookieInfoBtn: 'Plus d\'infos',
       busyBanner: '🔥 La cuisine est très occupée. Le temps d\'attente est allongé.',
       fbTitle: 'Comment était votre repas ?', fbPlaceholder: 'Que pouvons-nous améliorer ?', fbBtn: 'Envoyer', fbThanks: 'Merci pour votre retour !', fbGoogle: 'Super ! Laissez-nous un avis sur Google.', fbGoogleBtn: 'Avis Google', fbDirectTitle: 'Merci de votre visite !', tablesFree: 'tables libres', tablesFull: 'Aucune table libre', tablesFor: 'places',
-      weightLabel:'Poids', kcalLabel:'kcal', ingredientsLabel:'Ingrédients', allergensLabel:'Allergènes', noAllergens:'Aucun allergène déclaré'
+      weightLabel:'Poids', kcalLabel:'kcal', ingredientsLabel:'Ingrédients', allergensLabel:'Allergènes', noAllergens:'Aucun allergène déclaré',
+      splitModeEqual: 'Parts égales', splitModeProduct: 'Par produit', splitProductHint: 'Attribuez chaque produit à une personne.', personLabel: 'Personne'
     }
   };
 
@@ -745,6 +791,11 @@
     document.getElementById('splitL1').textContent = t.sl1;
     document.getElementById('splitL2').textContent = t.sl2;
     document.getElementById('splitL3').textContent = t.sl3;
+    document.getElementById('splitPL2').textContent = t.sl2;
+    document.getElementById('splitPL3').textContent = t.sl3;
+    document.getElementById('splitModeEqualTxt').textContent = t.splitModeEqual;
+    document.getElementById('splitModeProductTxt').textContent = t.splitModeProduct;
+    document.getElementById('splitProductHint').textContent = t.splitProductHint;
 
     document.getElementById('btnPrivacyPolicy').textContent = t.privacyBtn;
     document.getElementById('privacyTitle').textContent = t.privacyTitle;
@@ -941,16 +992,23 @@
 
   const splitModal = document.getElementById('splitBillOverlay');
   let sbPersons = 2; let sbTip = 10;
-  
+  let spPersons = 2; let spTip = 10;
+  let splitMode = 'equal';
+  let productAssignments = {}; // { imageNumber: personIndex (1-based) }
+
   document.getElementById('btnOpenSplitBill').addEventListener('click', () => {
       document.getElementById('sbTotalCos').textContent = `${cartTotalValue.toFixed(2)} €`;
       updateSplitUI();
+      setSplitMode('equal');
+      renderSplitProductView();
       splitModal.classList.add('open');
   });
   document.getElementById('closeSplitBill').addEventListener('click', () => splitModal.classList.remove('open'));
   
   window.adjSplitPersons = function(val) { sbPersons = Math.max(1, sbPersons + val); updateSplitUI(); }
   window.adjSplitTip = function(val) { sbTip = Math.max(0, Math.min(100, sbTip + val)); updateSplitUI(); }
+  window.adjSplitProductPersons = function(val) { spPersons = Math.max(1, spPersons + val); renderSplitProductView(); }
+  window.adjSplitProductTip = function(val) { spTip = Math.max(0, Math.min(100, spTip + val)); renderSplitProductView(); }
   
   function updateSplitUI() {
       document.getElementById('sbPersons').textContent = sbPersons;
@@ -958,6 +1016,88 @@
       const totalWithTip = cartTotalValue * (1 + (sbTip / 100));
       const perPerson = totalWithTip / sbPersons;
       document.getElementById('sbPerPerson').textContent = `${perPerson.toFixed(2)} €`;
+  }
+
+  function setSplitMode(mode) {
+      splitMode = mode;
+      document.getElementById('splitModeEqualBtn').classList.toggle('active', mode === 'equal');
+      document.getElementById('splitModeProductBtn').classList.toggle('active', mode === 'product');
+      document.getElementById('splitEqualView').style.display = mode === 'equal' ? 'block' : 'none';
+      document.getElementById('splitProductView').style.display = mode === 'product' ? 'block' : 'none';
+  }
+  document.getElementById('splitModeEqualBtn').addEventListener('click', () => setSplitMode('equal'));
+  document.getElementById('splitModeProductBtn').addEventListener('click', () => setSplitMode('product'));
+
+  // Dividir por producto: cada producto del carrito se asigna a una persona (1..spPersons).
+  // El total de cada persona se calcula sumando sus productos + su parte proporcional de propina.
+  function renderSplitProductView() {
+      const t = I18N[currentLang];
+      document.getElementById('spPersons').textContent = spPersons;
+      document.getElementById('spTip').textContent = spTip + '%';
+
+      const cartItems = allItems.filter(i => getQty(i) > 0);
+      const listEl = document.getElementById('splitProductList');
+      listEl.innerHTML = '';
+
+      cartItems.forEach(item => {
+          const qty = getQty(item);
+          const loc = getLocalized(item);
+          for(let unit = 1; unit <= qty; unit++) {
+              const unitKey = item.imageNumber + '-' + unit;
+              if(!productAssignments[unitKey]) productAssignments[unitKey] = 1;
+              if(productAssignments[unitKey] > spPersons) productAssignments[unitKey] = 1;
+
+              let options = '';
+              for(let p = 1; p <= spPersons; p++) {
+                  options += `<option value="${p}" ${productAssignments[unitKey] == p ? 'selected' : ''}>${t.personLabel} ${p}</option>`;
+              }
+
+              const row = document.createElement('div');
+              row.className = 'split-product-row';
+              row.innerHTML = `
+                <div class="sp-name">${escapeHTML(loc.name)} ${qty > 1 ? `(${unit}/${qty})` : ''}<small>${item.price.toFixed(2)} €</small></div>
+                <div class="split-person-select"><select data-unit="${unitKey}">${options}</select></div>
+              `;
+              listEl.appendChild(row);
+          }
+      });
+
+      listEl.querySelectorAll('select').forEach(sel => {
+          sel.addEventListener('change', (e) => {
+              productAssignments[e.target.dataset.unit] = parseInt(e.target.value);
+              calcSplitProductResults();
+          });
+      });
+
+      calcSplitProductResults();
+  }
+
+  function calcSplitProductResults() {
+      const cartItems = allItems.filter(i => getQty(i) > 0);
+      let personTotals = {};
+      for(let p = 1; p <= spPersons; p++) personTotals[p] = 0;
+
+      cartItems.forEach(item => {
+          const qty = getQty(item);
+          for(let unit = 1; unit <= qty; unit++) {
+              const unitKey = item.imageNumber + '-' + unit;
+              const person = productAssignments[unitKey] || 1;
+              if(!personTotals[person]) personTotals[person] = 0;
+              personTotals[person] += item.price;
+          }
+      });
+
+      const resultsEl = document.getElementById('splitPerPersonResults');
+      resultsEl.innerHTML = '';
+      const t = I18N[currentLang];
+      for(let p = 1; p <= spPersons; p++) {
+          const subtotal = personTotals[p] || 0;
+          const withTip = subtotal * (1 + (spTip / 100));
+          const row = document.createElement('div');
+          row.className = 'split-per-person-row';
+          row.innerHTML = `<span>${t.personLabel} ${p}</span><b>${withTip.toFixed(2)} €</b>`;
+          resultsEl.appendChild(row);
+      }
   }
 
   const onboardingOverlay = document.getElementById('onboardingOverlay');
@@ -1204,6 +1344,7 @@
         document.getElementById('takeawayNameInput').value = '';
         document.getElementById('takeawayPhoneInput').value = '';
         favoritesQty = {}; saveFavorites(); 
+        productAssignments = {};
         activeFilter = 'all'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); document.querySelector('.chip[data-filter="all"]').classList.add('active');
         render(); window.scrollTo(0,0);
         
