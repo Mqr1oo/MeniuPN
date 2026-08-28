@@ -8,7 +8,7 @@
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.jpg">
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -50,6 +50,11 @@
   
   .user-info { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted); line-height: 1.6;}
   .logout-btn { color: var(--danger); cursor: pointer; padding: 8px 0 0; font-weight: 600; display: inline-block;}
+  .btn-notif { display:block; width:100%; margin-top:10px; padding:9px 10px; border:1px solid var(--border, rgba(255,255,255,.15));
+    border-radius:10px; background:transparent; color:var(--text-muted, #9aa); font-size:12.5px; font-weight:600;
+    cursor:pointer; text-align:left; transition: background .18s ease, color .18s ease, border-color .18s ease; }
+  .btn-notif:hover { background: rgba(255,255,255,.06); }
+  .btn-notif.notif-activ { color:#4dbb84; border-color: rgba(77,187,132,.45); background: rgba(77,187,132,.10); }
 
   main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
   
@@ -313,6 +318,7 @@
     <div style="opacity: 0.7; margin-bottom: 4px;">Sesión iniciada:</div>
     <b id="userEmailDisplay" style="color: var(--text); font-size: 14px;">...</b>
     <div class="logout-btn" id="btnLogout">Cerrar sesión</div>
+    <button id="btnNotificari" class="btn-notif">🔕 Activar notificaciones</button>
     <div style="margin-top:10px;"><a href="#" onclick="document.getElementById('privacyOverlay').classList.add('open')" style="color:var(--text-muted); font-size:11px; text-decoration:underline;">Política de Privacidad</a></div>
   </div>
 </aside>
@@ -608,23 +614,153 @@
     } catch(e) { console.log('Error log:', e); }
   }
 
-  function ensureNotificationPermission() {
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission().catch(()=>{});
+  // =========================================================================
+  // NOTIFICĂRI
+  //
+  // De ce nu funcționau înainte:
+  //  1. Service worker-ul nu se instala niciodată (căi absolute în sw.js →
+  //     cache.addAll respingea tot). `navigator.serviceWorker.ready` rămânea
+  //     în așteptare la infinit, deci showNotification nu se apela nicicând.
+  //  2. Permisiunea se cerea automat la încărcare, fără gest de utilizator.
+  //     Chrome și Safari ignoră asta; pe iOS e obligatoriu un click.
+  //  3. Notificarea se afișa doar cât timp pagina era încă deschisă în fundal.
+  //     Cu aplicația închisă, websocket-ul e mort și nu ajunge nimic.
+  //
+  // Acum: Web Push real, cu abonament salvat pe server. Ajunge pe telefon și
+  // cu aplicația complet închisă.
+  // =========================================================================
+
+  const VAPID_PUBLIC_KEY = 'BHKSXTQuMn8UiJ4E4udL6kNbE74nAhjHYzs5DYE9m2OIeLFNJNiClyUfbeSr3iexGcxS3IQgnF6wmYYplYVa3lU';
+
+  function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const raw = atob(base64);
+    return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+  }
+
+  function esteIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  function esteInstalata() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true;
+  }
+
+  async function salveazaAbonament(sub) {
+    const { data: { user } } = await _supabase.auth.getUser();
+    if (!user) return false;
+    const j = sub.toJSON();
+    const { error } = await _supabase.from('push_subscriptions').upsert({
+      endpoint: j.endpoint,
+      uid: user.id,
+      rol: userRole,               // rescris server-side din staff_roles
+      p256dh: j.keys.p256dh,
+      auth_key: j.keys.auth,
+      user_agent: navigator.userAgent.slice(0, 250),
+      ultima_utilizare: new Date().toISOString()
+    }, { onConflict: 'endpoint' });
+    if (error) { console.error('Abonament push:', error.message); return false; }
+    return true;
+  }
+
+  // Trebuie apelată dintr-un click. Fără gest, browserele o ignoră.
+  async function activeazaNotificari(silentios) {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      if (!silentios) alert('Este navegador no soporta notificaciones.');
+      return false;
+    }
+    if (esteIOS() && !esteInstalata()) {
+      if (!silentios) {
+        alert('En iPhone las notificaciones solo funcionan si añades la app a la pantalla de inicio:\n\nCompartir → Añadir a pantalla de inicio, y luego abre la app desde el icono.');
+      }
+      return false;
+    }
+
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm !== 'granted') {
+        if (!silentios) alert('Notificaciones bloqueadas. Actívalas en los ajustes del navegador.');
+        return false;
+      }
+
+      const reg = await navigator.serviceWorker.ready;
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub) {
+        sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+      }
+      const ok = await salveazaAbonament(sub);
+      actualizeazaButonNotificari();
+      if (ok && !silentios) alert('✅ Notificaciones activadas en este dispositivo.');
+      return ok;
+    } catch (e) {
+      console.error('activeazaNotificari:', e);
+      if (!silentios) alert('No se pudieron activar las notificaciones: ' + e.message);
+      return false;
     }
   }
 
+  async function actualizeazaButonNotificari() {
+    const btn = document.getElementById('btnNotificari');
+    if (!btn) return;
+    let activ = false;
+    try {
+      if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+        const reg = await navigator.serviceWorker.ready;
+        activ = !!(await reg.pushManager.getSubscription());
+      }
+    } catch (e) {}
+    btn.textContent = activ ? '🔔 Notificaciones activas' : '🔕 Activar notificaciones';
+    btn.classList.toggle('notif-activ', activ);
+  }
+
+  // Reînnoire tăcută când browserul invalidează abonamentul
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', ev => {
+      if (ev.data && ev.data.tip === 'push-resubscribe') {
+        navigator.serviceWorker.ready.then(reg => reg.pushManager.getSubscription())
+          .then(s => { if (s) salveazaAbonament(s); });
+      }
+    });
+  }
+
+  function ensureNotificationPermission() {
+    // Dacă dispozitivul era deja abonat, doar reîmprospătăm rolul pe server.
+    if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+      navigator.serviceWorker.ready.then(reg => reg.pushManager.getSubscription())
+        .then(s => { if (s) salveazaAbonament(s); })
+        .catch(() => {});
+    }
+    actualizeazaButonNotificari();
+  }
+
+  // Notificare locală, pentru cazul în care aplicația e deschisă în alt tab.
+  // Push-ul de pe server acoperă restul situațiilor.
   function showBackgroundAlert(title, body) {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
-    try {
-      if (navigator.serviceWorker && navigator.serviceWorker.ready) {
-        navigator.serviceWorker.ready.then(reg => {
-          reg.showNotification(title, { body, silent: true, vibrate: [400,200,400,200,800], icon: 'icons/icon-192.png', tag: 'alibretto-alert' });
-        }).catch(() => { try { new Notification(title, { body, silent: true }); } catch(e){} });
-      } else {
-        new Notification(title, { body, silent: true });
-      }
-    } catch(e) {}
+    if (!('serviceWorker' in navigator)) {
+      try { new Notification(title, { body }); } catch (e) {}
+      return;
+    }
+    // timeout, ca să nu rămână blocat dacă service worker-ul nu e gata
+    const gata = navigator.serviceWorker.ready;
+    const limita = new Promise((_, rej) => setTimeout(() => rej(new Error('SW timeout')), 2500));
+    Promise.race([gata, limita])
+      .then(reg => reg.showNotification(title, {
+        body,
+        icon: 'icons/icon-192.jpg',
+        badge: 'icons/icon-192.jpg',
+        vibrate: [400, 200, 400, 200, 800],
+        tag: 'alibretto-alert',
+        renotify: true,
+        requireInteraction: true
+      }))
+      .catch(() => { try { new Notification(title, { body }); } catch (e) {} });
   }
 
   const translationCache = {};
@@ -735,9 +871,34 @@
     } catch(e) { console.error('Alert error:', e); }
   }
 
+  // Rolul vine din tabela `staff_roles` (aceeasi sursa pe care o folosesc politicile
+  // RLS din baza de date), NU din sirul continut de email. Daca utilizatorul nu are
+  // rand in staff_roles, sesiunea se inchide: fail-closed.
+  async function fetchStaffRole() {
+    const { data, error } = await _supabase
+      .from('staff_roles')
+      .select('rol')
+      .maybeSingle();
+    if (error || !data || !data.rol) return null;
+    return data.rol;
+  }
+
+  async function startSession(email) {
+    const rol = await fetchStaffRole();
+    if (!rol) {
+      await _supabase.auth.signOut();
+      alert("Esta cuenta no tiene un rol asignado. Contacta con el responsable.");
+      document.getElementById('authOverlay').style.display = 'flex';
+      return false;
+    }
+    document.getElementById('authOverlay').style.display = 'none';
+    setupUserEnvironment(email, rol);
+    return true;
+  }
+
   async function checkAuth() {
     const { data: { session } } = await _supabase.auth.getSession();
-    if (session) { document.getElementById('authOverlay').style.display = 'none'; setupUserEnvironment(session.user.email); }
+    if (session) await startSession(session.user.email);
   }
 
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -747,8 +908,7 @@
         password: document.getElementById('passwordInput').value 
     });
     if (!error) {
-        document.getElementById('authOverlay').style.display = 'none';
-        setupUserEnvironment(data.user.email);
+        await startSession(data.user.email);
     } else {
         alert("¡Fallo en la autenticación! Revisa email/contraseña.");
     }
@@ -758,16 +918,15 @@
   document.getElementById('btnLogout').addEventListener('click', logoutFn);
   document.getElementById('btnMobileLogout').addEventListener('click', logoutFn);
 
-  function setupUserEnvironment(email) {
+  document.getElementById('btnNotificari').addEventListener('click', () => activeazaNotificari(false));
+
+  function setupUserEnvironment(email, rol) {
     currentUserEmail = email;
     document.getElementById('userEmailDisplay').textContent = email;
     document.getElementById('mobileUserDisplay').textContent = email;
-    const emailLower = email.toLowerCase();
-    
-    if(emailLower.includes('director') || emailLower.includes('admin') || emailLower.includes('jefe')) userRole = 'director';
-    else if(emailLower.includes('bucatarie') || emailLower.includes('cocina')) userRole = 'bucatarie';
-    else if(emailLower.includes('ospatar') || emailLower.includes('camarero')) userRole = 'ospatar';
-    else userRole = 'bar'; 
+
+    // rolul e cel din staff_roles; UI-ul si RLS-ul vad acum acelasi lucru
+    userRole = ['director','bucatarie','ospatar','bar'].includes(rol) ? rol : 'ospatar';
 
     if(userRole === 'bucatarie' || userRole === 'bar' || userRole === 'director') {
         document.getElementById('navStock').style.display = 'flex';
@@ -1185,10 +1344,32 @@
       }).join('');
   }
 
+  // Numele si telefonul clientilor de takeaway nu mai stau in coloana publica `mesa`,
+  // ci in tabela `contacte_takeaway`, vizibila DOAR personalului autentificat.
+  // Se ataseaza aici, in memorie, ca restul interfetei sa functioneze la fel.
+  async function attachTakeawayContacts(orders) {
+    try {
+      const ids = orders.filter(o => String(o.mesa || '').includes('Takeaway')).map(o => o.id);
+      if(ids.length === 0) return orders;
+      const { data } = await _supabase.from('contacte_takeaway').select('comanda_id,nume,telefon').in('comanda_id', ids);
+      if(!data) return orders;
+      const map = {};
+      data.forEach(c => { map[c.comanda_id] = c; });
+      orders.forEach(o => {
+        const c = map[o.id];
+        if(c) o.mesa = '🥡 Tk: ' + (c.nume || '?') + ' / ' + (c.telefon || '?');
+      });
+    } catch(e) { console.log('contacte takeaway:', e); }
+    return orders;
+  }
+
   async function loadOrders() {
     const { data, error } = await _supabase.from('comenzi').select('*').order('created_at', { ascending: false }).limit(500);
     if(error) console.error("Error loading orders:", error);
-    if(data) { allOrders = data; renderOrders(); if (currentTab === 'map') renderTablesGrid(); updateMapBadge(); }
+    if(data) {
+      allOrders = await attachTakeawayContacts(data);
+      renderOrders(); if (currentTab === 'map') renderTablesGrid(); updateMapBadge();
+    }
     updatePaymentAlertBadge();
   }
 
@@ -1876,7 +2057,7 @@
 
       let payloads = [];
       if(barItems.length > 0) {
-          let produseBar = barItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
+          let produseBar = barItems.map(x => ({ id_produs: String(x.item.imageNumber), nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
           if (notaText) produseBar.push({ nume: '📝 ' + notaText, cantitate: 0, pret_unitar: 0 });
           
           payloads.push({
@@ -1886,7 +2067,7 @@
           });
       }
       if(kitchenItems.length > 0) {
-          let produseBuc = kitchenItems.map(x => ({ nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
+          let produseBuc = kitchenItems.map(x => ({ id_produs: String(x.item.imageNumber), nume: x.item.name, cantitate: x.q, pret_unitar: x.item.price }));
           if (notaText) produseBuc.push({ nume: '📝 ' + notaText, cantitate: 0, pret_unitar: 0 });
           
           payloads.push({
@@ -1965,6 +2146,9 @@
       
       channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comenzi' }, p => {
           allOrders.unshift(p.new); 
+          if(String(p.new.mesa || '').includes('Takeaway')) {
+              attachTakeawayContacts([p.new]).then(() => renderOrders());
+          }
           const isAlert = p.new.produse.some(prod => prod.nume.includes('ALERTĂ'));
           
           if (userRole === 'director' || 
