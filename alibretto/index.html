@@ -8,7 +8,7 @@
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16844e">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.jpg">
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1396,14 +1396,14 @@
         payloads.push({
           mesa: finalTableNr, sectiune: 'bar', grup_comanda: grupId,
           total: barItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
-          produse: [...barItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
+          produse: [...barItems.map(i => ({ id_produs: String(i.imageNumber), nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
         });
       }
       if(kitchenItems.length > 0) {
         payloads.push({
           mesa: finalTableNr, sectiune: 'bucatarie', grup_comanda: grupId,
           total: kitchenItems.reduce((acc, i) => acc + (i.price * getQty(i)), 0),
-          produse: [...kitchenItems.map(i => ({ nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
+          produse: [...kitchenItems.map(i => ({ id_produs: String(i.imageNumber), nume: i.name, cantitate: getQty(i), pret_unitar: i.price })), ...noteItem]
         });
       }
 
