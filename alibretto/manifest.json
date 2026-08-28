@@ -2,7 +2,7 @@
   "name": "Álibretto - Menú Digital",
   "short_name": "Álibretto",
   "description": "Menú digital y pedidos para Álibretto.",
-  "start_url": "./index.html",
+  "start_url": "./dashboard.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050505",
